@@ -1,0 +1,12 @@
+[submodule "lib/vendor/symfony"]
+	path = lib/vendor/symfony
+	url = https://github.com/symfony/symfony1.git
+[submodule "plugins/sfFormExtraPlugin"]
+	path = plugins/sfFormExtraPlugin
+	url = git@tgprojets.fr:/sfFormExtraPlugin.git
+[submodule "plugins/sfThumbnailPlugin"]
+	path = plugins/sfThumbnailPlugin
+	url = git@tgprojets.fr:/sfThumbnailPlugin.git
+[submodule "plugins/sfDoctrineGuardPlugin"]
+	path = plugins/sfDoctrineGuardPlugin
+	url = git@tgprojets.fr:/sfGuardDoctrinePlugin.git

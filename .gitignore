@@ -1,0 +1,13 @@
+/cache/*
+/log/*
+/config/databases.yml
+/lib/*/doctrine/base/
+/lib/*/doctrine/*/base
+/data/sql/*
+/data/dump/*
+/web/uploads/*
+/web/cache/*
+web/sfFormExtraPlugin
+web/sfDoctrinePlugin
+Capfile
+/config/deploy.rb
