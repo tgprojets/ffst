@@ -1,0 +1,119 @@
+.sb_bar_menu_connexion {
+  position: relative;
+  float: right;
+  margin: 10px 0 0 20px;
+  padding: 4px;
+  text-align: right;
+  background-color: #083a99;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+}
+.sb_bar_menu_connexion form {
+  position: relative;
+  float: right;
+  overflow: hidden;
+}
+.sb_connexion {
+  position: relative;
+  float: right;
+  text-align: right;
+  min-width: 300px;
+  width: auto !important;
+  margin: 10px 0 0 10px;
+  padding-bottom: 4px;
+  background-color: #083a99;
+  -webkit-border-radius:16px;
+  -moz-border-radius:16px;
+  border-radius: 16px;
+}
+.sb_deconnexion  {
+  position: relative;
+  float: left;
+  height:16px;
+  width: auto;
+  color: #fff;
+  padding-left:10px;
+}
+.sb_deconnexion_btn  {
+  position: relative;
+  float: left;
+  background: url('../images/power.png') no-repeat;
+  height:16px;
+  width: 16px;
+  margin-left: 4px;
+  text-decoration: none;
+}
+
+#sb_nav_login ul {
+  height: 20px;
+  list-style: none;
+  margin: 0px;
+  padding-top: 2px;
+  left: 25px;
+  margin-left: 10px;
+}
+#sb_nav_login li {
+  color: #000;
+  float: left;
+  font-size: 0.8em;
+  font-variant: small-caps;
+  margin: 0;
+  min-width: 26px;
+  width: auto !important;
+  padding: 3px 2px 0px;
+  text-align: center;
+  text-transform: capitalize;
+}
+#sb_nav_login input {
+  width:80px;
+  border: 0;
+  margin-right: 5px;
+}
+#sb_nav_login label {
+  color: #fff;
+}
+
+#sb_nav_login input[type=submit]:hover {
+  cursor: pointer;
+}
+ /** login header **/
+ ul.sb_nav_login  {
+  position: relative;
+  float: right;
+  height: 20px;
+  width: auto;
+  list-style: none;
+  margin: 0px;
+  padding: 0 5px 0 5px;
+  list-style: none;
+}
+.sb_nav_login li {
+  color: #fff;
+  float: left;
+  font-size: 0.8em;
+  margin: 0px;
+  min-width: 26px;
+  width: auto !important;
+  width: 26px;
+  padding: 3px 2px 0px;
+  text-align: center;
+}
+.sb_nav_login label {
+  padding: 0 2px;
+  color: #fff;
+}
+
+.sb_nav_login input {
+  width:60px;
+  border: 0;
+}
+
+.sb_nav_login input[type=submit] {
+  min-width: 20px;
+  width: auto !important;
+  width: 20px;
+  background: url('../images/ok.png') no-repeat;
+}
+.sb_nav_login input[type=submit]:hover {
+  cursor: pointer;
+}
