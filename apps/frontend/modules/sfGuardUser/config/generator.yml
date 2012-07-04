@@ -1,0 +1,65 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           sfGuardUser
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sf_guard_user
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        first_name:
+          label: First name
+        last_name:
+          label: Last name
+        email_address:
+          label: Email
+        username:
+          label: User
+        is_active:
+          label: Activated account
+        is_super_admin:
+          label: Super user
+        last_login:
+          label: Last connexion
+        created_at:
+          label: Created at
+        groups_list:
+          label: Group list
+          help: To connect to the admin console, choose admin
+        permissions_list:
+          label: Permissions list
+        is_super_admin:
+          label: Super admin
+
+
+      list:
+        title: Users list
+        display: [username, is_active, is_super_admin, last_login, created_at]
+        batch_actions: {}
+      filter:
+        display: [first_name, last_name, email_address]
+      form:
+      edit:
+        title: Edit user %%username%%
+        display: [first_name, last_name, email_address, username, is_active, is_super_admin, groups_list]
+        actions:
+          _list:
+          _delete:
+          _save:
+          _save_and_list:
+      new:
+        title: New user for admin console
+        display: [first_name, last_name, email_address, username, password, is_active, is_super_admin, groups_list]
+        actions:
+          _list:
+          _delete:
+          _save:
+          _save_and_list:
