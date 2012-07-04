@@ -1,12 +1,55 @@
 sfGuardUser:
   User_admin:
     first_name:     Thomas
-    last_name:      GILBERT
+    last_name:      Gilbert
     email_address:  tgilbert@tgprojets.fr
     username:       admin
     password:       admin
     is_super_admin: true
     Groups:         [Group_admin]
+  User_tresorier:
+    first_name:     Denis
+    last_name:      Chéoux
+    email_address:  contact@tgprojets.fr
+    username:       dcheoux
+    password:       dcheoux
+    is_super_admin: true
+    Groups:         [Group_admin, Group_tresorier]
+  User_federal1:
+    first_name:     federal1
+    last_name:      federal1
+    email_address:  federal1@tgprojets.fr
+    username:       federal1
+    password:       federal1
+    Groups:         [Group_federal_affiliation]
+  User_federal2:
+    first_name:     federal2
+    last_name:      federal2
+    email_address:  federal2@tgprojets.fr
+    username:       federal2
+    password:       federal2
+    Groups:         [Group_federal_licence]
+  User_teco:
+    first_name:     teco
+    last_name:      teco
+    email_address:  teco@tgprojets.fr
+    username:       teco
+    password:       teco
+    Groups:         [Group_technique]
+  User_stats:
+    first_name:     stats
+    last_name:      stats
+    email_address:  stats@tgprojets.fr
+    username:       stats
+    password:       stats
+    Groups:         [Group_federal_statistique]
+  User_visuel:
+    first_name:     visuel
+    last_name:      visuel
+    email_address:  visuel@tgprojets.fr
+    username:       visuel
+    password:       visuel
+    Groups:         [Group_federal]
 
 sfGuardGroup:
   Group_admin:
@@ -24,19 +67,19 @@ sfGuardGroup:
   Group_federal_licence:
     name:           N2C
     description:    Administrateur fédéral licences
-    Permissions:    [Permission_admin]
+    Permissions:    [Permission_licencie]
   Group_technique:
     name:           N2D
     description:    Administrateur Group_technique
-    Permissions:    [Permission_admin]
+    Permissions:    [Permission_categorie]
   Group_federal_statistique:
     name:           N3
     description:    Administrateur fédéral statistique
-    Permissions:    [Permission_admin]
+    Permissions:    [Permission_stats]
   Group_federal:
     name:           N4
     description:    Administrateur fédéral visuel
-    Permissions:    [Permission_admin]
+    Permissions:    [Permission_visuel]
 
 sfGuardPermission:
   Permission_admin:
