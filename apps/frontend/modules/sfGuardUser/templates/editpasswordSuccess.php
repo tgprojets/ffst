@@ -2,9 +2,9 @@
 <div class="noname_connexion">
 <h1><?php echo __('Edit your password') ?></h1>
 
-<form action="<?php echo url_for('sfGuardUser/editpassword'); ?>" method="post" id="myform" height="250px">
+<form action="<?php echo url_for('sfGuardUser/listEditPassword', $oUser); ?>" method="post" id="myform" height="250px">
     <fieldset>
-        
+
 		<ul class='formRegister'>
 
 			<?php if ($form->hasGlobalErrors()): ?>

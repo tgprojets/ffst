@@ -33,7 +33,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
     {
 
       $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
-      try {        
+      try {
         $sf_guard_user = $form->save();
       } catch (Doctrine_Validator_Exception $e) {
 
@@ -72,5 +72,20 @@ class sfGuardUserActions extends autoSfGuardUserActions
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
   }
+  public function executeListEditPassword(sfWebRequest $request)
+  {
+    $this->oUser = $this->getRoute()->getObject();
+    $this->form = new ModifpasswordForm(array(), array('modifpassword["id"]' => $this->oUser->getId()));
+    if ($request->isMethod('post')) {
+        $this->form->bind($request->getParameter('modifpassword'));
+        if ($this->form->isValid())
+        {
+           $aValues = $this->form->getValues();
+           $this->oUser->setPassword($aValues['password_forgot']);
 
+           $this->redirect('@sfGuardUser');
+        }
+    }
+    $this->setTemplate('editpassword');
+  }
 }
