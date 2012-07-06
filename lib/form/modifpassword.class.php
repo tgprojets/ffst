@@ -12,23 +12,22 @@ class ModifpasswordForm extends sfForm
 
   public function setup()
   {
+      $nIdUser = $this->options['id'];
       $this->setWidgets(array(
       'id'                        => new sfWidgetFormInputHidden(),
-      'password_old'              => new sfWidgetFormInputPassword(),
       'password_forgot'           => new sfWidgetFormInputPassword(),
       'repassword'                => new sfWidgetFormInputPassword()
           ));
       $this->widgetSchema->setLabels(array(
-      'password_old'      => 'Votre mot de passe actuel',
       'password_forgot'   => 'Nouveau mot de passe',
       'repassword'        => 'Confirmer votre mot de passe'
           ));
       $this->setValidators(array(
-      'password_old' => new sfValidatorString(
-                                          array('required' => true),
-                                          array(
-                                'required' => 'Mot de passe requis',
-                                'invalid' => 'Le mot de passe doit etre compris entre 6 et 20 caractères')
+      'id' => new sfValidatorString(
+        array('required' => true),
+          array(
+            'required' => 'Utilisateur requis',
+          )
       ),
       'password_forgot'      => new sfValidatorString(
                     array('required' => true, 'min_length' => 5, 'max_length' => 20),
@@ -48,12 +47,11 @@ class ModifpasswordForm extends sfForm
                             'invalid' => 'Le mot de passe doit etre compris entre 5 et 20 caractères'
                             )
     )));
+    $this->setDefault('id', $nIdUser);
       $this->validatorSchema->setPostValidator(new sfValidatorAnd(
-                   array(
-                     new sfValidatorSchemaCompare('password_forgot',  sfValidatorSchemaCompare::EQUAL, 'repassword'),
-                     new sfValidatorCallback(array('callback'=> array($this, 'checkPassword')))
-                    ))
-              );
+      array(
+        new sfValidatorSchemaCompare('password_forgot',  sfValidatorSchemaCompare::EQUAL, 'repassword'),
+      )));
 
       $this->widgetSchema->setNameFormat('modifpassword[%s]');
 
@@ -61,10 +59,10 @@ class ModifpasswordForm extends sfForm
 
       $this->widgetSchema->setFormFormatterName('list');
   }
-
+  /*
   public function checkPassword($validator, $values) {
         if (! empty($values['password_old'])) {
-           $oUser = sfContext::getInstance()->getUser();
+           $oUser = Doctrine::getTable('sf_guard_user')->find($this->getValue('id'));
            $bCheck = $oUser->checkPassword($values['password_old']);
             if ($bCheck) {
                     // Login dispo
@@ -74,5 +72,5 @@ class ModifpasswordForm extends sfForm
                throw new sfValidatorError($validator, 'Mot de passe incorrecte');
            }
        }
-   }
+   }*/
 }

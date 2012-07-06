@@ -43,7 +43,7 @@ generator:
 
       list:
         title: Liste des utilisateurs
-        display: [username, is_active, is_super_admin, last_login, created_at]
+        display: [username, is_active, is_super_admin, last_login, created_at, updated_at]
         batch_actions: {}
         object_actions:
           _edit:

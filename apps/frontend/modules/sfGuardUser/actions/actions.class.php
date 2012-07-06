@@ -13,17 +13,24 @@ require_once dirname(__FILE__).'/../lib/sfGuardUserGeneratorHelper.class.php';
  */
 class sfGuardUserActions extends autoSfGuardUserActions
 {
-  public function executeEditpassword(sfWebRequest $request) {
-    $this->form = new ModifpasswordForm();
-    if ($request->isMethod('post')) {
-        $this->form->bind($request->getParameter('modifpassword'));
-        if ($this->form->isValid())
-        {
-           $aValues = $this->form->getValues();
-           $this->getUser()->setPassword($aValues['password_forgot']);
-
-           $this->redirect('main/index');
-        }
+  public function executeEditPassword(sfWebRequest $request) {
+    if ($request->hasParameter('id'))
+    {
+      $this->oUser = Doctrine::getTable('sfGuardUser')->find($request->getParameter('id'));
+      $this->form = new ModifpasswordForm(array(), array('id' => $this->oUser->getId()));
+      if ($request->isMethod('post')) {
+          $this->form->bind($request->getParameter('modifpassword'));
+          if ($this->form->isValid())
+          {
+             $aValues = $this->form->getValues();
+             $this->oUser->setPassword($aValues['password_forgot']);
+             $this->oUser->save();
+             $this->redirect('@sf_guard_user');
+          }
+      }
+      $this->setTemplate('editpassword');
+    } else {
+      $this->redirect('@sf_guard_user');
     }
   }
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -75,17 +82,8 @@ class sfGuardUserActions extends autoSfGuardUserActions
   public function executeListEditPassword(sfWebRequest $request)
   {
     $this->oUser = $this->getRoute()->getObject();
-    $this->form = new ModifpasswordForm(array(), array('modifpassword["id"]' => $this->oUser->getId()));
-    if ($request->isMethod('post')) {
-        $this->form->bind($request->getParameter('modifpassword'));
-        if ($this->form->isValid())
-        {
-           $aValues = $this->form->getValues();
-           $this->oUser->setPassword($aValues['password_forgot']);
-
-           $this->redirect('@sfGuardUser');
-        }
-    }
-    $this->setTemplate('editpassword');
+    $request->setParameter('id', $this->oUser->getId());
+    $this->forward('sfGuardUser', 'editPassword');
   }
+
 }
