@@ -85,5 +85,15 @@ class sfGuardUserActions extends autoSfGuardUserActions
     $request->setParameter('id', $this->oUser->getId());
     $this->forward('sfGuardUser', 'editPassword');
   }
-
+  /**
+   * Active ou désactive un client
+   *
+   * @param sfWebRequest $request
+   */
+  public function executeListActivate(sfWebRequest $request) {
+    $oUser = $this->getRoute()->getObject();
+    $oUser->setIsActive(!$oUser->getIsActive());
+    $oUser->save();
+    $this->redirect('@sf_guard_user');
+  }
 }

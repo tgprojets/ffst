@@ -1,6 +1,6 @@
 <?php use_stylesheet('formulaire_connexion.css') ?>
-<div class="noname_connexion">
-<h1><?php echo __('Edit your password') ?></h1>
+<div class="sb_connexion_login">
+<h1>Utilisateur <?php echo $oUser->getName() ?></h1>
 
 <form action="<?php echo url_for('sfGuardUser/editPassword', $oUser); ?><?php echo '?id='.$oUser->getId() ?>" method="post" id="myform" height="250px">
     <fieldset>
@@ -35,9 +35,9 @@
 			<?php endforeach; ?>
 		</ul>
 
-        <div class="noname_center">
-            <?php echo button_to(__('Cancel'), '@homepage', array('class' => 'icone_cancel noname_button')) ?>
-            <input type="submit" class='icone_valider noname_button' value=<?php echo __("Validate") ?> />
+        <div class="sb_btn_center sb_bouton_a">
+            <?php echo link_to('Annuler', '@homepage', array('class' => 'sb_bouton_a')) ?>
+            <input type="submit" class='icone_valider noname_button' value="Enregistrer" />
         </div>
     </fieldset>
 </form>

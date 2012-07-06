@@ -43,15 +43,19 @@ generator:
 
       list:
         title: Liste des utilisateurs
-        display: [username, is_active, is_super_admin, last_login, created_at, updated_at]
+        display: [username, is_active, is_super_admin, last_login, created_at]
         batch_actions: {}
         object_actions:
+          activate:
+            label: Activer/Désactiver
+            params:
+              class: icone_power
+          editPassword:
+            label: 'Modifier mot de passe'
           _edit:
             label: Modifier
           _delete:
             label: Supprimer
-          editPassword:
-            label: 'Modifier mot de passe'
       filter:
         display: [username, first_name, last_name, email_address]
       form:
