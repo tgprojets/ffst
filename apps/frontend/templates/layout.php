@@ -34,7 +34,12 @@
                   </div>
                   <ul id="sb_nav">
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Accueil', '@homepage') ?></li>
-                      <li <?php echo $sf_params->get('module')=="sfGuardUser"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion utilisateur', '@sf_guard_user') ?></li>
+                      <?php if ($sf_user->hasCredential('admin')): ?>
+                        <li <?php echo $sf_params->get('module')=="sfGuardUser"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion utilisateur', '@sf_guard_user') ?></li>
+                        <?php endif; ?>
+                      <?php if ($sf_user->hasPermission('connexion_history')): ?>
+                        <li <?php echo $sf_params->get('module')=="tracability"?'class="sb_menu_select"':''?>><?php echo link_to('Connexion historique', '@tbl_tracability') ?></li>
+                      <?php endif; ?>
                   </ul>
                   <div class="sb_bord_menu_droite">
                   </div>

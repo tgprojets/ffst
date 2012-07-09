@@ -1,3 +1,12 @@
+tbl_tracability:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_tracability
+    module:               tracability
+    prefix_path:          /tracability
+    column:               id
+    with_wildcard_routes: true
+
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 

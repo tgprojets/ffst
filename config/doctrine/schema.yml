@@ -1,0 +1,9 @@
+tbl_tracability:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    date_connexion: { type: timestamp }
+    username:       { type: string(50) }
+    ip:             { type: string(50) }
+    is_connected:   { type: boolean, default: false }

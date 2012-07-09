@@ -59,7 +59,7 @@ sfGuardGroup:
   Group_tresorier:
     name:           N2A
     description:    Administrateur tresorier
-    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence]
+    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence, Permission_connexion]
   Group_federal_affiliation:
     name:           N2B
     description:    Administrateur fédéral affiliation
@@ -85,6 +85,9 @@ sfGuardPermission:
   Permission_admin:
     name:           admin
     description:    Administrator permission
+  Permission_connexion:
+    name:           connexion_history
+    description:    Permission module liste des connexions
   Permission_pxunit:
     name:           pxunit
     description:    Permission module prix unit

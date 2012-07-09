@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_tracability
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_tracability
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Liste des connexion
+        table_method: retrieveSortDate
+        display: [username, ip, date_connexion, is_connected]
+        max_per_page: 20
+        batch_actions: {}
+        actions: {}
+        object_actions: {}
+      filter:
+        display: [date_connexion]
+      form:    ~
+      edit:    ~
+      new:     ~
