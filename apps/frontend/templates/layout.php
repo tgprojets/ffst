@@ -12,7 +12,7 @@
     <div id="conteneur">
       <div class="sb_bandeau">
           <div class="sb_logo">
-            <img src="images/logo.png" alt="" />
+            <img src="/images/logo.png" alt="" />
           </div>
           <div class="sb_titre">
             <h1>FFST</h1>
@@ -34,6 +34,7 @@
                   </div>
                   <ul id="sb_nav">
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Accueil', '@homepage') ?></li>
+                      <li <?php echo $sf_params->get('module')=="sfGuardUser"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion utilisateur', '@sf_guard_user') ?></li>
                   </ul>
                   <div class="sb_bord_menu_droite">
                   </div>

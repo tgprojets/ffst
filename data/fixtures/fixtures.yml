@@ -53,7 +53,7 @@ sfGuardUser:
 
 sfGuardGroup:
   Group_admin:
-    name:           admin
+    name:           N1
     description:    Super Administrateur
     Permissions:    [Permission_admin]
   Group_tresorier:
