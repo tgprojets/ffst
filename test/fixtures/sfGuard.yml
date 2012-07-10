@@ -7,6 +7,14 @@ sfGuardUser:
     password:       admin
     is_super_admin: true
     Groups:         [Group_admin]
+  User_admin_N1:
+    first_name:     AdminN1
+    last_name:      AdminN1
+    email_address:  AdminN1@tgprojets.fr
+    username:       adminN1
+    password:       adminN1
+    is_super_admin: false
+    Groups:         [Group_admin]
   User_tresorier:
     first_name:     Denis
     last_name:      Chéoux
@@ -112,3 +120,7 @@ sfGuardPermission:
   Permission_visuel:
     name:           visuel
     description:    "Permission pour visualiser l'ensemble des clubs, licenciés, catégories"
+tbl_tracability:
+  tbl_tracability_1:
+    ip: 1.0.0.0.1
+    username: admin

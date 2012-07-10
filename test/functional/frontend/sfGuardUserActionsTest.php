@@ -66,10 +66,21 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
   end();
-
+$browser->info('admin N1')->connexion('adminN1', 'adminN1');
+$browser->
+  get('/sfGuardUser/index')->
+  with('response')->begin()->
+    isStatusCode(200)->
+  end();
+$browser->deconnexion();
 /**
 * Nouveau utilisateur
-*
+* 1. Nouveau utlisateur
+* 2. Formulaire invalide 3 erreurs requis
+* 3. Formulaire invalide 1 erreurs utilisateur existant
+* 4. Formulaire invalide 1 erreurs Email existant
+* 5. Formulaire correct
+* 6. Connexion avec le nouveau utilisateur
 *
 **/
 $oGroupN1 = Doctrine::getTable('sfGuardGroup')->findOneBy('name', 'N1');
@@ -111,6 +122,72 @@ $browser->get('/sfGuardUser/new')->
   end();
 $browser->deconnexion();
 $browser->info('plop')->connexion('plop', 'admin');
+$browser->
+  get('/sfGuardUser/index')->
+  with('response')->begin()->
+    isStatusCode(200)->
+  end();
+$browser->deconnexion();
+
+/**
+* 1. Connexion admin
+* 2. Désactiver compte federal1
+* 3. Connexion compte federal1
+* 4. Erreur connexion impossible
+* 5. Connexion admin
+* 6. Activer compte federal1
+* 7. Changer mot de passe
+* 8. Connexion compte federal1 avec nouveau mot de passe
+* 9. Statut 200
+*
+*
+**/
+$oUserFederal1 = Doctrine::getTable('sfGuardUser')->findOneBy('username', 'federal1');
+$browser->info('Désactiver compte')->connexion('admin', 'admin');
+$browser->get('/sfGuardUser/'.$oUserFederal1->getId().'/listActivate');
+$browser->deconnexion();
+$browser->
+  get('/sfGuardAuth/signin')->
+  click('Se connecter', array('signin' => array(
+    'username' => 'federal1',
+    'password' => 'federal1',
+  )))->
+  with('form')->begin()->
+    hasErrors(1)->
+  end();
+$browser->deconnexion();
+$browser->info('Changer mot de passe federal1 compte')->connexion('admin', 'admin');
+$browser->get('/sfGuardUser/'.$oUserFederal1->getId().'/listActivate');
+$browser->get('/sfGuardUser/'.$oUserFederal1->getId().'/listEditPassword')->
+  click('Enregistrer', array('modifpassword' => array(
+    'password_forgot' => 'test33',
+    'repassword'      => 'test33',
+  )))->
+  with('form')->begin()->
+    hasErrors(false)->
+  end();
+$browser->deconnexion();
+$browser->info('Désactiver compte')->connexion('federal1', 'test33');
+$browser->deconnexion();
+
+
+/**
+* Edition du compte
+*
+*
+**/
+$browser->info('Edition compte')->connexion('admin', 'admin');
+$browser->get('/sfGuardUser/'.$oUserFederal1->getId().'/edit')->
+  click('Mettre à jour', array('sf_guard_user' => array(
+    'first_name'    => 'Fede',
+    'last_name'     => 'Fede',
+    'groups_list'     => array($oGroupN1->getId())
+  )))->
+  with('form')->begin()->
+    hasErrors(false)->
+  end();
+$browser->deconnexion();
+$browser->connexion('federal1', 'test33');
 $browser->
   get('/sfGuardUser/index')->
   with('response')->begin()->

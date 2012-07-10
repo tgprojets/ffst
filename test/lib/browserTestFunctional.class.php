@@ -9,7 +9,7 @@ class browserTestFunctional extends sfTestFunctional
   public function deconnexion() {
     $this->get('/sfGuardAuth/signout');
   }
-  public function connexion($psUser, $psPassword) {
+  public function connexion($psUser, $psPassword, $bValide = false) {
       $this->
       get('/sfGuardAuth/signin')->
       info('Module connexion')->
@@ -22,7 +22,7 @@ class browserTestFunctional extends sfTestFunctional
         'password'      => $psPassword,
       )))->
       with('form')->begin()->
-        hasErrors(false)->
+        hasErrors($bValide)->
       end();
   }
   public function testPage($psModule, $psAction, $psModuleRedirect="moncompte", $psActionRedirect="index") {
