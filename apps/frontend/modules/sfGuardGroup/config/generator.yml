@@ -34,10 +34,11 @@ generator:
       filter:
         class: false
       form:
-        display: [_name_disable, description, users_list, permissions_list]
 
       edit:
         title: Edition du groupe "%%name%%"
+        display: [_name_disable, description, users_list, permissions_list]
 
       new:
         title: Nouveau groupe
+        display: [name, description, users_list, permissions_list]

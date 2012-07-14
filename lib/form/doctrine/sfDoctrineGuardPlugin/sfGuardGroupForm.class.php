@@ -13,7 +13,16 @@ class sfGuardGroupForm extends PluginsfGuardGroupForm
   public function configure()
   {
     if (!$this->isNew()) {
-        unset($this['name']);
+        unset($this['name'], $this['created_at'], $this['updated_at']);
+    } else {
+        unset($this['created_at'], $this['updated_at']);
+        $this->setValidator('name', new sfValidatorString(array('max_length' => 255, 'required' => true),
+            array(
+                'max_length' => 'Le libellé est trop long. 255 caractères maximum',
+                'required' => 'Libellé requis',
+            )));
+
+        $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
     }
   }
 }

@@ -35,9 +35,7 @@ generator:
         class: false
       edit:
         title: Edition de la permission "%%name%%"
-
+        display: [_name_disable, description, groups_list]
       new:
         title: Nouvelle permission
-
-      form:
-        display: [_name_disable, description, groups_list]
+        display: [name, description, groups_list]

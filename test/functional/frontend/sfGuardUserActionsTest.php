@@ -66,6 +66,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
   end();
+$browser->deconnexion();
 $browser->info('admin N1')->connexion('adminN1', 'adminN1');
 $browser->
   get('/sfGuardUser/index')->
@@ -83,6 +84,7 @@ $browser->deconnexion();
 * 6. Connexion avec le nouveau utilisateur
 *
 **/
+$browser->info('admin')->connexion('admin', 'admin');
 $oGroupN1 = Doctrine::getTable('sfGuardGroup')->findOneBy('name', 'N1');
 $browser->get('/sfGuardUser/new')->
   info('Nouveau utilisateur')->
