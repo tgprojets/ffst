@@ -1,9 +1,18 @@
 <?php
-
+/**
+* Scénario
+*
+* 1. page accueil
+* 2. Page 401 not authorize
+* 3. Connexion user admin
+* 4. Page 200
+*
+**/
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
-
+ob_start();
+$browser = new browserTestFunctional(new sfBrowser());
+$browser->loadData('sfGuard.yml');
 $browser->
   get('/main/index')->
 
@@ -13,7 +22,12 @@ $browser->
   end()->
 
   with('response')->begin()->
+    isStatusCode(401)->
+  end();
+$browser->connexion('admin', 'admin');
+$browser->
+  get('/main/index')->
+
+  with('response')->begin()->
     isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
-  end()
-;
+  end();

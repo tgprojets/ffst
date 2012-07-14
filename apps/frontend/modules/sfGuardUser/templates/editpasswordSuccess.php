@@ -36,7 +36,7 @@
 		</ul>
 
         <div class="sb_btn_center sb_bouton_a">
-            <?php echo link_to('Annuler', '@homepage', array('class' => 'sb_bouton_a')) ?>
+            <?php echo link_to('Annuler', '@sf_guard_user', array('class' => 'sb_bouton_a')) ?>
             <input type="submit" class='icone_valider noname_button' value="Enregistrer" />
         </div>
     </fieldset>
