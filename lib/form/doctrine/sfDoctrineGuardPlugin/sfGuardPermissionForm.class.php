@@ -12,5 +12,8 @@ class sfGuardPermissionForm extends PluginsfGuardPermissionForm
 {
   public function configure()
   {
+    if (!$this->isNew()) {
+        unset($this['name']);
+    }
   }
 }

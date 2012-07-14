@@ -12,5 +12,8 @@ class sfGuardGroupForm extends PluginsfGuardGroupForm
 {
   public function configure()
   {
+    if (!$this->isNew()) {
+        unset($this['name']);
+    }
   }
 }

@@ -21,6 +21,10 @@ generator:
           label: Liste des utilisateurs
         permissions:
           label: Liste des permissions
+        created_at:
+          label: Créé le
+        updated_at:
+          label: Modifié le
       list:
         title: List des groupes
         display: [=name, description]
@@ -30,7 +34,7 @@ generator:
       filter:
         class: false
       form:
-        display: [name, description, users_list, permissions_list]
+        display: [_name_disable, description, users_list, permissions_list]
 
       edit:
         title: Edition du groupe "%%name%%"
