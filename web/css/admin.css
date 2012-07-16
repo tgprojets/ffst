@@ -293,7 +293,7 @@ input[type=submit] {
 .sf_admin_actions .sf_admin_action_new a:hover, .sf_admin_actions .sf_admin_action_delete a:hover, .sf_admin_actions .sf_admin_action_list a:hover, .sf_admin_actions .sf_admin_action_managetree a:hover, input[type=submit]:hover
 {
    border-top-color: #80cd80;
-   background: #cd5858;
+   background: #636fe0;
    cursor: pointer;
    color: #E9E338;
    text-shadow: 2px 2px 4px black;

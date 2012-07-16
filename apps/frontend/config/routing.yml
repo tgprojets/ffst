@@ -1,3 +1,30 @@
+tbl_category:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_category
+    module:               category
+    prefix_path:          /category
+    column:               id
+    with_wildcard_routes: true
+
+tbl_prixunit:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_prixunit
+    module:               prixunit
+    prefix_path:          /prixunit
+    column:               id
+    with_wildcard_routes: true
+
+tbl_typelicence:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_typelicence
+    module:               typelicence
+    prefix_path:          /typelicence
+    column:               id
+    with_wildcard_routes: true
+
 tbl_club:
   class: sfDoctrineRouteCollection
   options:
