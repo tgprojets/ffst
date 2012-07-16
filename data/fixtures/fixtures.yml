@@ -95,6 +95,14 @@ sfGuardGroup:
     name:           N4
     description:    Administrateur fédéral visuel
     Permissions:    [Permission_visuel]
+  Group_club:
+    name:           CLUB
+    description:    Droit concernant les Clubs
+    Permissions:    [Permission_club_account]
+  Group_ligue:
+    name:           LIGUE
+    description:    Droit concernant les ligues
+    Permissions:    [Permission_ligue_account]
 
 sfGuardPermission:
   Permission_admin:
@@ -127,6 +135,12 @@ sfGuardPermission:
   Permission_visuel:
     name:           visuel
     description:    "Permission pour visualiser l'ensemble des clubs, licenciés, catégories"
+  Permission_club_account:
+    name:           account_club
+    description:    "Club pouvant ajouter ses Licenciés"
+  Permission_ligue_account:
+    name:           account_ligue
+    description:    "Ligue pouvant voir les Licenciés de ses clubs"
 tbl_tracability:
   tbl_tracability_1:
     ip: 1.0.0.0.1

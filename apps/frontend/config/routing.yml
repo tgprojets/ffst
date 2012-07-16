@@ -1,3 +1,21 @@
+tbl_club:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_club
+    module:               club
+    prefix_path:          /club
+    column:               id
+    with_wildcard_routes: true
+
+tbl_ligue:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_ligue
+    module:               ligue
+    prefix_path:          /ligue
+    column:               id
+    with_wildcard_routes: true
+
 tbl_tracability:
   class: sfDoctrineRouteCollection
   options:

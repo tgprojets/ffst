@@ -13,8 +13,8 @@ tbl_ligue:
     Timestampable: ~
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
-    name:           { type: string(50), notnull: true }
-    aff:            { type: string(50), notnull: true }
+    name:           { type: string(50), notnull: true, unique: true }
+    aff:            { type: string(50), notnull: true, unique: true }
     pdt:            { type: boolean }
     sigle:          { type: string(50) }
     logo:           { type: string(250) }

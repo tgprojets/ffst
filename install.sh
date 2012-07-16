@@ -15,6 +15,10 @@ if [ ! -d web/uploads/thumbnail ]; then
   mkdir -p web/uploads/thumbnail
   chmod -R 777 web/uploads/thumbnail
 fi
+if [ ! -d web/uploads/logo ]; then
+  mkdir -p web/uploads/logo
+  chmod -R 777 web/uploads/logo
+fi
 if [ ! -d web/sf ]; then
   ln -s ./../lib/vendor/symfony/data/web/sf ./web/
 fi
