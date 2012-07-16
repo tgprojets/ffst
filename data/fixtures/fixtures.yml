@@ -1,3 +1,10 @@
+tbl_gen:
+  tbl_gen_1:
+    lib: Mr
+  tbl_gen_2:
+    lib: Mme
+  tbl_gen_3:
+    lib: Mlle
 sfGuardUser:
   User_admin:
     first_name:     Thomas

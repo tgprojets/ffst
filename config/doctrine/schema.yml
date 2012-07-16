@@ -7,3 +7,104 @@ tbl_tracability:
     username:       { type: string(50) }
     ip:             { type: string(50) }
     is_connected:   { type: boolean, default: false }
+
+tbl_ligue:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    name:           { type: string(50), notnull: true }
+    aff:            { type: string(50), notnull: true }
+    pdt:            { type: boolean }
+    sigle:          { type: string(50) }
+    logo:           { type: string(250) }
+    id_address:     { type: integer(4) }
+    id_user:        { type: integer(4) }
+    id_gen:         { type: integer(2) }
+  relations:
+    sfGuardUser: { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_ligue }
+    tbl_address: { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_ligue }
+    tbl_gen:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_gen, foreign: id, foreignAlias: tbl_ligue }
+
+tbl_club:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    name:           { type: string(50), notnull: true }
+    aff:            { type: string(50), notnull: true }
+    pdt:            { type: boolean }
+    sigle:          { type: string(50) }
+    logo:           { type: string(250) }
+    id_address:     { type: integer(4) }
+    id_user:        { type: integer(4) }
+    id_gen:         { type: integer(2) }
+    id_ligue:       { type: integer(4) }
+  relations:
+    sfGuardUser: { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_club }
+    tbl_address: { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_club }
+    tbl_gen:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_gen, foreign: id, foreignAlias: tbl_club }
+    tbl_ligue:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_club }
+
+tbl_address:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    address1:       { type: string(250), notnull: true }
+    address2:       { type: string(250) }
+    tel:            { type: string(20) }
+    gsm:            { type: string(20) }
+    fax:            { type: string(20) }
+    id_codepostaux: { type: integer(6) }
+  relations:
+    tbl_codepostaux:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_codepostaux, foreign: id, foreignAlias: tbl_address }
+
+tbl_codepostaux:
+  options:
+    symfony:
+      form:   false
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    code_postaux:   { type: string(10), notnull: true }
+    ville:          { type: string(250) }
+
+tbl_gen:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(2), primary: true,  autoincrement: true }
+    lib:            { type: string(4), notnull: true }
+
+tbl_typelicence:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    lib:            { type: string(250), notnull: true }
+    code:           { type: string(10), notnull: true }
+    id_prixunit:    { type: integer(4) }
+  relations:
+    tbl_prixunit:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_prixunit, foreign: id, foreignAlias: tbl_typelicence }
+
+tbl_category:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    lib:            { type: string(250), notnull: true }
+    code:           { type: string(10), notnull: true }
+
+tbl_prixunit:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    lib:            { type: string(250), notnull: true }
+    prix:           { type: float(5), notnull: true }
