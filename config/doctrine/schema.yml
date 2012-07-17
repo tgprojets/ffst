@@ -64,11 +64,10 @@ tbl_codepostaux:
   options:
     symfony:
       form:   false
-  actAs:
-    Timestampable: ~
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
-    code_postaux:   { type: string(10), notnull: true }
+    insee:          { type: string(5) }
+    code_postaux:   { type: string(5), notnull: true }
     ville:          { type: string(250) }
 
 tbl_gen:
