@@ -55,11 +55,13 @@ class tbl_ligueForm extends Basetbl_ligueForm
                  ->setTel($aValues['tel'])
                  ->setGsm($aValues['gsm'])
                  ->setFax($aValues['fax'])
+                 ->setIdCodepostaux($aValues['id_codepostaux'])
                  ->save();
 
         $oLigue->setName($aValues['name'])
-               ->setAff($aValues['aff'])
-               ->setPdt($aValues['pdt'])
+               ->setNum($aValues['num'])
+               ->setAffiliation($aValues['affiliation'])
+               ->setIdAffectation($aValues['id_affectation'])
                ->setSigle($aValues['sigle'])
                ->setLogo($aValues['logo'])
                ->setIdGen($aValues['id_gen'])
@@ -83,6 +85,12 @@ class tbl_ligueForm extends Basetbl_ligueForm
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
       $this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      $this->widgetSchema['id_codepostaux']            = new sfWidgetFormChoice(array(
+          'label'            => 'Code postal - Ville',
+          'choices'          => array(),
+          'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
+          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
+      ));
       $sFileThumbnailPicture = "";
       if ($this->getObject()->getLogo()) {
         $sFileThumbnailPicture = '/uploads/'.sfConfig::get('app_images_logo').DIRECTORY_SEPARATOR.$this->getObject()->getLogo();
@@ -124,13 +132,14 @@ class tbl_ligueForm extends Basetbl_ligueForm
         array(
           'required' => 'Adresse est requis'
         )));
-    $this->setValidator('address2', new sfValidatorString(array('max_length' => 250, 'required' => false)));
-    $this->setValidator('tel', new sfValidatorString(array('max_length' => 50, 'required' => false)));
-    $this->setValidator('gsm', new sfValidatorString(array('max_length' => 50, 'required' => false)));
-    $this->setValidator('fax', new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('address2',       new sfValidatorString(array('max_length' => 250, 'required' => false)));
+    $this->setValidator('tel',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('gsm',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('fax',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
     //Validator manque vérification username / email
-    $this->validatorSchema['id_user']    = new sfValidatorString(array('required' => false));
-    $this->validatorSchema['id_address'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['id_user']        = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
     $this->validatorSchema['logo'] = new sfValidatorFile(array(
       'required'   => false,
       'mime_types' => 'web_images',
@@ -144,7 +153,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
               new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkUsername'))),
               new sfValidatorDoctrineUnique(array('model' => 'tbl_ligue', 'column' => array('name'))),
-              new sfValidatorDoctrineUnique(array('model' => 'tbl_ligue', 'column' => array('aff'))),
+              new sfValidatorDoctrineUnique(array('model' => 'tbl_ligue', 'column' => array('num'))),
        ))
     );
 
@@ -163,6 +172,8 @@ class tbl_ligueForm extends Basetbl_ligueForm
         $this->setDefault('tel', $oAddress->getTel());
         $this->setDefault('fax', $oAddress->getFax());
         $this->setDefault('gsm', $oAddress->getGsm());
+        $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
+          //->getVille().' ('.$oAddress->getTblCodepostaux()->getCodePostaux().')');
     }
   }
 

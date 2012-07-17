@@ -14,7 +14,7 @@ default:
 
   stylesheets:    [main.css, menu_bandeau.css]
 
-  javascripts:    []
+  javascripts:    [jquery-1.7.1.js]
 
   has_layout:     true
   layout:         layout

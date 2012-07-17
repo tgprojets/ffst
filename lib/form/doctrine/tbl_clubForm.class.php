@@ -58,8 +58,9 @@ class tbl_clubForm extends Basetbl_clubForm
                  ->save();
 
         $oClub->setName($aValues['name'])
-              ->setAff($aValues['aff'])
-              ->setPdt($aValues['pdt'])
+              ->setNum($aValues['num'])
+              ->setAffiliation($aValues['affiliation'])
+              ->setIdAffectation($aValues['id_affectation'])
               ->setSigle($aValues['sigle'])
               ->setLogo($aValues['logo'])
               ->setIdGen($aValues['id_gen'])
@@ -145,7 +146,7 @@ class tbl_clubForm extends Basetbl_clubForm
               new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkUsername'))),
               new sfValidatorDoctrineUnique(array('model' => 'tbl_club', 'column' => array('name'))),
-              new sfValidatorDoctrineUnique(array('model' => 'tbl_club', 'column' => array('aff'))),
+              new sfValidatorDoctrineUnique(array('model' => 'tbl_club', 'column' => array('num'))),
        ))
     );
 

@@ -1,0 +1,5 @@
+default:
+
+  stylesheets:    [main.css, menu_bandeau.css, /sfFormExtraPlugin/css/jquery.autocompleter.css]
+
+  javascripts:    [/sfFormExtraPlugin/js/jquery.autocompleter.js]

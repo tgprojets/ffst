@@ -1,3 +1,13 @@
+tbl_affectation:
+  tbl_affectation_1:
+    code: N
+    lib: Neige
+  tbl_affectation_2:
+    code: T
+    lib: Terre
+  tbl_affectation_3:
+    code: M
+    lib: Terre
 tbl_gen:
   tbl_gen_1:
     lib: Mr

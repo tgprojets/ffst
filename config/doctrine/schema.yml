@@ -14,37 +14,49 @@ tbl_ligue:
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     name:           { type: string(50), notnull: true, unique: true }
-    aff:            { type: string(50), notnull: true, unique: true }
-    pdt:            { type: boolean }
-    sigle:          { type: string(50) }
+    num:            { type: string(3), notnull: true, unique: true }
+    affiliation:    { type: string(4), notnull: true }
+    sigle:          { type: string(3) }
     logo:           { type: string(250) }
+    organisation:   { type: boolean }
     id_address:     { type: integer(4) }
     id_user:        { type: integer(4) }
     id_gen:         { type: integer(2) }
+    id_affectation: { type: integer(2) }
   relations:
-    sfGuardUser: { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_ligue }
-    tbl_address: { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_ligue }
-    tbl_gen:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_gen, foreign: id, foreignAlias: tbl_ligue }
+    sfGuardUser:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_ligue }
+    tbl_address:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_ligue }
+    tbl_gen:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_gen, foreign: id, foreignAlias: tbl_ligue }
+    tbl_affectation: { onDelete: CASCADE, onUpdate: CASCADE, local: id_affectation, foreign: id, foreignAlias: tbl_club }
 
 tbl_club:
   actAs:
     Timestampable: ~
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
-    name:           { type: string(50), notnull: true }
-    aff:            { type: string(50), notnull: true }
-    pdt:            { type: boolean }
-    sigle:          { type: string(50) }
+    name:           { type: string(50), notnull: true, unique: true }
+    num:            { type: string(3), notnull: true, unique: true }
+    affiliation:    { type: string(4), notnull: true }
+    sigle:          { type: string(3) }
     logo:           { type: string(250) }
+    organisation:   { type: boolean }
     id_address:     { type: integer(4) }
     id_user:        { type: integer(4) }
     id_gen:         { type: integer(2) }
     id_ligue:       { type: integer(4) }
+    id_affectation: { type: integer(2) }
   relations:
-    sfGuardUser: { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_club }
-    tbl_address: { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_club }
-    tbl_gen:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_gen, foreign: id, foreignAlias: tbl_club }
-    tbl_ligue:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_club }
+    sfGuardUser:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_club }
+    tbl_address:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_club }
+    tbl_gen:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_gen, foreign: id, foreignAlias: tbl_club }
+    tbl_ligue:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_club }
+    tbl_affectation: { onDelete: CASCADE, onUpdate: CASCADE, local: id_affectation, foreign: id, foreignAlias: tbl_club }
+
+tbl_affectation:
+  columns:
+    id:             { type: integer(2), primary: true,  autoincrement: true }
+    code:           { type: string(1), notnull: true }
+    lib:            { type: string(50), notnull: true }
 
 tbl_address:
   actAs:
@@ -75,8 +87,6 @@ tbl_gen:
     symfony:
       form:   false
       filter: false
-  actAs:
-    Timestampable: ~
   columns:
     id:             { type: integer(2), primary: true,  autoincrement: true }
     lib:            { type: string(4), notnull: true }
