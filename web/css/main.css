@@ -30,7 +30,7 @@ img {
 #contenant {
   position: relative;
   float: left;
-  width:1000px;
+  width:800px;
   padding:22px 0px;
 }
 #margepied {
@@ -62,7 +62,7 @@ img {
   position: relative;
   float: left;
   clear:both;
-  width:280px;
+  width:220px;
   padding:22px 0px;
 }
 .sb_logo {
@@ -171,7 +171,7 @@ img {
 
 .sb_content {
   position: relative;
-  width: 1000px;
+  width: 800px;
   min-height: 550px;
   margin-left: auto;
   margin-right: auto;
