@@ -32,6 +32,6 @@ class tbl_ligue extends Basetbl_ligue
   }
   public function __toString()
   {
-    return $this->getName().' '.$this->getAff();
+    return $this->getName().' '.$this->getNum().'/'.$this->getAffiliation().'/'.$this->getTblAffectation()->getCode();
   }
 }

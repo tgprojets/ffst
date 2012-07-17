@@ -1,3 +1,16 @@
+ajax_getCitys:
+  url:   /ajax/getCitys
+  param:  { module: codepostaux, action: getCitys }
+
+tbl_codepostaux:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_codepostaux
+    module:               codepostaux
+    prefix_path:          /codepostaux
+    column:               id
+    with_wildcard_routes: true
+
 tbl_category:
   class: sfDoctrineRouteCollection
   options:

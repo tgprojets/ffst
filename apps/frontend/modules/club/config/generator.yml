@@ -30,8 +30,8 @@ generator:
           label: Titre
         name:
           label: Nom du club
-        aff:
-          label: Code
+        affiliation:
+          label: Affiliation
         image_logo:
           label: Logo
         tbl_address:
@@ -40,18 +40,22 @@ generator:
           label: Utilisateur
         id_ligue:
           label: Ligue
+        id_affectation:
+          label: Affectation
+        num:
+          label: Numéro
         tbl_ligue:
           label: Ligue
       list:
         title: Liste des clubs
-        display: [_image_logo, name, aff, sfGuardUser, tbl_address, tbl_ligue]
+        display: [_image_logo, name, sfGuardUser, tbl_address, tbl_ligue]
         max_per_page: 20
         batch_actions: {}
       filter:
-        display: [name, aff, id_ligue]
+        display: [name, affiliation, id_ligue]
       form:
         display:
-          "NONE": [name, aff, id_ligue, pdt, sigle, logo]
+          "NONE": [name, num, affiliation, id_affectation, id_ligue, sigle, logo]
           "Information utilisateur": [id_gen, email, username, nom, prenom]
           "Adresse": [address1, address2, tel, gsm, fax]
       edit:
