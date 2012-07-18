@@ -1,3 +1,7 @@
+generate_password:
+  url:   /ajax/generate_password
+  param:  { module: main, action: generatePassword }
+
 ajax_getCitys:
   url:   /ajax/getCitys
   param:  { module: codepostaux, action: getCitys }

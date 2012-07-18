@@ -44,6 +44,8 @@ class tbl_ligueForm extends Basetbl_ligueForm
                      ->setLastName($aValues['nom'])
                      ->save();
         if ($this->isNew()) {
+            $oSfGuardUser->setPassword($aValues['password']);
+            $oSfGuardUser->save();
             $oGroup = Doctrine::getTable('sfGuardGroup')->findOneBy('name', 'LIGUE');
             $oUserGroup = new sfGuardUserGroup();
             $oUserGroup->setUserId($oSfGuardUser->getId())
@@ -75,6 +77,9 @@ class tbl_ligueForm extends Basetbl_ligueForm
 
   public function buildWidget()
   {
+      if ($this->isNew()) {
+        $this->widgetSchema['password']                     = new sfWidgetFormInputText();
+      }
       $this->widgetSchema['email']                     = new sfWidgetFormInputText();
       $this->widgetSchema['username']                  = new sfWidgetFormInputText();
       $this->widgetSchema['nom']                       = new sfWidgetFormInputText();
@@ -107,6 +112,16 @@ class tbl_ligueForm extends Basetbl_ligueForm
   }
   public function buildValidator()
   {
+    if ($this->isNew()) {
+      $this->setValidator('password', new sfValidatorString(
+        array('required' => true, 'min_length' => 5, 'max_length' => 20),
+        array(
+                    'min_length' => 'Le mot de passe est trop court. 5 caractères minimum.',
+                    'max_length' => 'Le mot de passe est trop long. 20 caractères maximum',
+                    'required' => 'Mot de passe requis',
+                    'invalid' => 'Le mot de passe doit etre compris entre 5 et 20 caractères'
+      )));
+    }
     $this->setValidator('email', new sfValidatorEmail(
         array('required' => true),
         array(
