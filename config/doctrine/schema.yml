@@ -92,15 +92,12 @@ tbl_gen:
     lib:            { type: string(4), notnull: true }
 
 tbl_typelicence:
-  actAs:
-    Timestampable: ~
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }
     code:           { type: string(10), notnull: true }
-    id_prixunit:    { type: integer(4) }
-  relations:
-    tbl_prixunit:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_prixunit, foreign: id, foreignAlias: tbl_typelicence }
+    description:    { type: string(2000) }
+    prix:           { type: float(5), notnull: true }
 
 tbl_category:
   actAs:
@@ -111,8 +108,6 @@ tbl_category:
     code:           { type: string(10), notnull: true }
 
 tbl_prixunit:
-  actAs:
-    Timestampable: ~
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }

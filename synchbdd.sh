@@ -8,7 +8,7 @@ else
 fi
 ./symfony doctrine:data-load data/fixtures/fixtures.yml
 
--codepostaux="data/sql/codepostaux.sql"
+codepostaux="data/sql/codepostaux.sql"
 
 export PGUSER=userdev;
 export PGPASSWORD=dev_projets;

@@ -14,9 +14,31 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
-      filter:  ~
-      form:    ~
-      edit:    ~
-      new:     ~
+      fields:
+        code:
+          label: code licence
+      list:
+        title: Liste des prix de licences
+        display: [code, lib, prix]
+        max_per_page: 20
+        batch_actions: {}
+      filter:
+        display: [code]
+      form:
+        fields:
+          code:
+            label: code licence
+            help: requis
+          lib:
+            label: Libellé de la licence
+            help: requis
+          prix:
+            label: prix de la licence
+            help: requis (en €)
+          description:
+            help: faculatif
+        display: [code, lib, prix, description]
+      edit:
+        title: Edition du type de licence %%lib%%
+      new:
+        title: Nouveau type de la licence

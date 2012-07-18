@@ -20,7 +20,7 @@ generator:
         prix:
           label: Prix en €
       list:
-        title: Liste des prix
+        title: Liste prix des articles
         max_per_page: 20
         batch_actions: {}
       filter:
