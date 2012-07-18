@@ -19,4 +19,12 @@ class mainActions extends sfActions
   {
 
   }
+  public function executeGeneratePassword(sfWebRequest $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+       $jsonresponse['password'] = myGenerique::generatePassword();
+       return $this->renderText(json_encode($jsonresponse));
+    }
+    $this->redirect404();
+  }
 }
