@@ -55,6 +55,7 @@ class tbl_clubForm extends Basetbl_clubForm
                  ->setTel($aValues['tel'])
                  ->setGsm($aValues['gsm'])
                  ->setFax($aValues['fax'])
+                 ->setIdCodepostaux($aValues['id_codepostaux'])
                  ->save();
 
         $oClub->setName($aValues['name'])
@@ -65,6 +66,7 @@ class tbl_clubForm extends Basetbl_clubForm
               ->setLogo($aValues['logo'])
               ->setIdGen($aValues['id_gen'])
               ->setIdLigue($aValues['id_ligue'])
+              ->setOrganisation($aValues['organisation'])
               ->setIdAddress($oAddress->getId())
               ->setIdUser($oSfGuardUser->getId())
               ->save();
@@ -85,6 +87,12 @@ class tbl_clubForm extends Basetbl_clubForm
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
       $this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      $this->widgetSchema['id_codepostaux']            = new sfWidgetFormChoice(array(
+          'label'            => 'Ville (Code postal)',
+          'choices'          => array(),
+          'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
+          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
+      ));
       $sFileThumbnailPicture = "";
       if ($this->getObject()->getLogo()) {
         $sFileThumbnailPicture = '/uploads/'.sfConfig::get('app_images_logo').DIRECTORY_SEPARATOR.$this->getObject()->getLogo();
@@ -130,6 +138,7 @@ class tbl_clubForm extends Basetbl_clubForm
     $this->setValidator('tel', new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('gsm', new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('fax', new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
     //Validator manque vérification username / email
     $this->validatorSchema['id_user']    = new sfValidatorString(array('required' => false));
     $this->validatorSchema['id_address'] = new sfValidatorString(array('required' => false));
@@ -165,6 +174,7 @@ class tbl_clubForm extends Basetbl_clubForm
         $this->setDefault('tel', $oAddress->getTel());
         $this->setDefault('fax', $oAddress->getFax());
         $this->setDefault('gsm', $oAddress->getGsm());
+        $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
     }
   }
 

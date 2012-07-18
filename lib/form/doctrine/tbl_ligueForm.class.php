@@ -63,6 +63,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
                ->setAffiliation($aValues['affiliation'])
                ->setIdAffectation($aValues['id_affectation'])
                ->setSigle($aValues['sigle'])
+               ->setOrganisation($aValues['organisation'])
                ->setLogo($aValues['logo'])
                ->setIdGen($aValues['id_gen'])
                ->setIdAddress($oAddress->getId())
@@ -86,7 +87,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
       $this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
       $this->widgetSchema['id_codepostaux']            = new sfWidgetFormChoice(array(
-          'label'            => 'Code postal - Ville',
+          'label'            => 'Ville (Code postal)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
           'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
@@ -173,7 +174,6 @@ class tbl_ligueForm extends Basetbl_ligueForm
         $this->setDefault('fax', $oAddress->getFax());
         $this->setDefault('gsm', $oAddress->getGsm());
         $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
-          //->getVille().' ('.$oAddress->getTblCodepostaux()->getCodePostaux().')');
     }
   }
 
