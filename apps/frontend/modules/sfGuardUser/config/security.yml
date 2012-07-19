@@ -1,4 +1,4 @@
 all:
   credentials: [[admin, superuser]]
 editpassword:
-  credentials: [admin]
+  credentials: [[admin, club, ligue]]

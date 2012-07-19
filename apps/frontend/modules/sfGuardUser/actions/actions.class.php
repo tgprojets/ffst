@@ -14,6 +14,7 @@ require_once dirname(__FILE__).'/../lib/sfGuardUserGeneratorHelper.class.php';
 class sfGuardUserActions extends autoSfGuardUserActions
 {
   public function executeEditPassword(sfWebRequest $request) {
+    $sBack = $this->getUser()->getAttribute('back_password');
     if ($request->hasParameter('id'))
     {
       $this->oUser = Doctrine::getTable('sfGuardUser')->find($request->getParameter('id'));
@@ -25,12 +26,12 @@ class sfGuardUserActions extends autoSfGuardUserActions
              $aValues = $this->form->getValues();
              $this->oUser->setPassword($aValues['password_forgot']);
              $this->oUser->save();
-             $this->redirect('@sf_guard_user');
+             $this->redirect($sBack);
           }
       }
       $this->setTemplate('editpassword');
     } else {
-      $this->redirect('@sf_guard_user');
+      $this->redirect($sBack);
     }
   }
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -82,6 +83,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
   public function executeListEditPassword(sfWebRequest $request)
   {
     $this->oUser = $this->getRoute()->getObject();
+    $this->getUser()->setAttribute('back_password', '@sf_guard_user');
     $request->setParameter('id', $this->oUser->getId());
     $this->forward('sfGuardUser', 'editPassword');
   }

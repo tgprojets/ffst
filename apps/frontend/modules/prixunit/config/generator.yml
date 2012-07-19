@@ -23,6 +23,10 @@ generator:
         title: Liste prix des articles
         max_per_page: 20
         batch_actions: {}
+        object_actions:
+          _edit: ~
+          _delete:
+            credentials: [admin]
       filter:
         class: false
       form:    ~

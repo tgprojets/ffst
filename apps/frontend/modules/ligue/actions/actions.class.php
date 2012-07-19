@@ -13,4 +13,12 @@ require_once dirname(__FILE__).'/../lib/ligueGeneratorHelper.class.php';
  */
 class ligueActions extends autoLigueActions
 {
+  public function executeListEditPassword(sfWebRequest $request)
+  {
+    $this->oLigue = $this->getRoute()->getObject();
+    $this->oUser = $this->oLigue->getSfGuardUser();
+    $this->getUser()->setAttribute('back_password', '@tbl_ligue');
+    $request->setParameter('id', $this->oUser->getId());
+    $this->forward('sfGuardUser', 'editPassword');
+  }
 }

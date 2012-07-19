@@ -22,8 +22,9 @@ generator:
         batch_actions: {}
         actions: {}
         object_actions:
-          _edit:
-            label: Modifier
+          _edit: ~
+          _delete:
+            credentials: [admin]
       filter:
         display: [ville, code_postaux]
       form:

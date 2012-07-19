@@ -13,4 +13,12 @@ require_once dirname(__FILE__).'/../lib/clubGeneratorHelper.class.php';
  */
 class clubActions extends autoClubActions
 {
+  public function executeListEditPassword(sfWebRequest $request)
+  {
+    $this->oClub = $this->getRoute()->getObject();
+    $this->oUser = $this->oClub->getSfGuardUser();
+    $this->getUser()->setAttribute('back_password', '@tbl_club');
+    $request->setParameter('id', $this->oUser->getId());
+    $this->forward('sfGuardUser', 'editPassword');
+  }
 }

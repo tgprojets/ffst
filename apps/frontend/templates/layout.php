@@ -32,8 +32,8 @@
               </div>
             </div>
       </div>
+      <?php if ($sf_user->isAuthenticated()): ?>
       <div class="sb_bar">
-          <?php if ($sf_user->isAuthenticated()): ?>
             <ul class="sb_menu_admin">
                 <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Accueil', '@homepage') ?></li>
                 <?php if ($sf_user->hasCredential('admin')): ?>
@@ -77,13 +77,18 @@
                 </ul>
                 <?php endif; ?>
             </ul>
-          <?php endif; ?>
           <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>
       </div>
       <div id="contenant">
                <?php echo $sf_content ?>
         <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>
       </div>
+      <?php else: ?>
+      <div id="contenant_center">
+               <?php echo $sf_content ?>
+        <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>
+      </div>
+      <?php endif; ?>
     </div>
     <div class="sb_baspage">
       <?php //echo link_to('Copyright', 'main/copyright') ?> - Thomas GILBERT -

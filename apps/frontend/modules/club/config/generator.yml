@@ -53,6 +53,12 @@ generator:
         display: [_image_logo, name, sfGuardUser, tbl_address, tbl_ligue]
         max_per_page: 20
         batch_actions: {}
+        object_actions:
+          _edit: ~
+          edit_password:
+            label: Modifier mot de passe
+          _delete:
+            credentials: [admin]
       filter:
         display: [name, num, affiliation, id_affectation, id_ligue]
       form:
