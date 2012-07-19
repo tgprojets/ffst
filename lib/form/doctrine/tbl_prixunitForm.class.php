@@ -12,6 +12,6 @@ class tbl_prixunitForm extends Basetbl_prixunitForm
 {
   public function configure()
   {
-    unset($this['created_at'], $this['updated_at']);
+
   }
 }

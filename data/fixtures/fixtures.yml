@@ -80,27 +80,27 @@ sfGuardGroup:
   Group_admin:
     name:           N1
     description:    Super Administrateur
-    Permissions:    [Permission_admin]
+    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_tresorier:
     name:           N2A
     description:    Administrateur tresorier
-    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence, Permission_connexion]
+    Permissions:    [Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_federal_affiliation:
     name:           N2B
     description:    Administrateur fédéral affiliation
-    Permissions:    [Permission_club_all, Permission_ligue_all]
+    Permissions:    [Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_federal_licence:
     name:           N2C
     description:    Administrateur fédéral licences
-    Permissions:    [Permission_licencie]
+    Permissions:    [Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_technique:
     name:           N2D
     description:    Administrateur Group_technique
-    Permissions:    [Permission_categorie]
+    Permissions:    [Permission_categorie, Permission_stats, Permission_visuel]
   Group_federal_statistique:
     name:           N3
     description:    Administrateur fédéral statistique
-    Permissions:    [Permission_stats]
+    Permissions:    [Permission_stats, Permission_visuel]
   Group_federal:
     name:           N4
     description:    Administrateur fédéral visuel

@@ -1,3 +1,20 @@
+tbl_affectation:
+  tbl_affectation_1:
+    code: N
+    lib: Neige
+  tbl_affectation_2:
+    code: T
+    lib: Terre
+  tbl_affectation_3:
+    code: M
+    lib: Terre
+tbl_gen:
+  tbl_gen_1:
+    lib: Mr
+  tbl_gen_2:
+    lib: Mme
+  tbl_gen_3:
+    lib: Mlle
 sfGuardUser:
   User_admin:
     first_name:     Thomas
@@ -63,31 +80,39 @@ sfGuardGroup:
   Group_admin:
     name:           N1
     description:    Super Administrateur
-    Permissions:    [Permission_admin]
+    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_tresorier:
     name:           N2A
     description:    Administrateur tresorier
-    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence, Permission_connexion]
+    Permissions:    [Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_federal_affiliation:
     name:           N2B
     description:    Administrateur fédéral affiliation
-    Permissions:    [Permission_club_all, Permission_ligue_all]
+    Permissions:    [Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_federal_licence:
     name:           N2C
     description:    Administrateur fédéral licences
-    Permissions:    [Permission_licencie]
+    Permissions:    [Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
   Group_technique:
     name:           N2D
     description:    Administrateur Group_technique
-    Permissions:    [Permission_categorie]
+    Permissions:    [Permission_categorie, Permission_stats, Permission_visuel]
   Group_federal_statistique:
     name:           N3
     description:    Administrateur fédéral statistique
-    Permissions:    [Permission_stats]
+    Permissions:    [Permission_stats, Permission_visuel]
   Group_federal:
     name:           N4
     description:    Administrateur fédéral visuel
     Permissions:    [Permission_visuel]
+  Group_club:
+    name:           CLUB
+    description:    Droit concernant les Clubs
+    Permissions:    [Permission_club_account]
+  Group_ligue:
+    name:           LIGUE
+    description:    Droit concernant les ligues
+    Permissions:    [Permission_ligue_account]
 
 sfGuardPermission:
   Permission_admin:
@@ -120,6 +145,12 @@ sfGuardPermission:
   Permission_visuel:
     name:           visuel
     description:    "Permission pour visualiser l'ensemble des clubs, licenciés, catégories"
+  Permission_club_account:
+    name:           account_club
+    description:    "Club pouvant ajouter ses Licenciés"
+  Permission_ligue_account:
+    name:           account_ligue
+    description:    "Ligue pouvant voir les Licenciés de ses clubs"
 tbl_tracability:
   tbl_tracability_1:
     ip: 1.0.0.0.1
