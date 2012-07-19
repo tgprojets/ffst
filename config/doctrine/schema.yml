@@ -73,9 +73,6 @@ tbl_address:
     tbl_codepostaux:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_codepostaux, foreign: id, foreignAlias: tbl_address }
 
 tbl_codepostaux:
-  options:
-    symfony:
-      form:   false
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     insee:          { type: string(5) }

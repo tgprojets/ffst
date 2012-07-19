@@ -71,6 +71,9 @@
                 <li> <h3>Divers</h3> </li>
                 <ul class="sb_ssmenu_admin">
                   <li <?php echo $sf_params->get('module')=="category"?'class="sb_menu_select"':''?>><?php echo link_to('Catégorie', '@tbl_category') ?></li>
+                  <?php if ($sf_user->hasCredential('admin')): ?>
+                    <li <?php echo $sf_params->get('module')=="codepostaux"?'class="sb_menu_select"':''?>><?php echo link_to('Code postaux', '@tbl_codepostaux') ?></li>
+                  <?php endif; ?>
                 </ul>
                 <?php endif; ?>
             </ul>

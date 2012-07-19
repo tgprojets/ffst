@@ -86,7 +86,7 @@ $browser->info('admin N1')->connexion('adminN1', 'adminN1');
 $browser->
   get('/tracability/index')->
   with('response')->begin()->
-    isStatusCode(403)->
+    isStatusCode(200)->
   end();
 $browser->deconnexion();
 $browser->info('dcheoux')->connexion('dcheoux', 'dcheoux');

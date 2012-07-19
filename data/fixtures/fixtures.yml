@@ -1,3 +1,60 @@
+tbl_typelicence:
+  tbl_typelicence_1:
+    lib: Attelage
+    code: AT
+    prix: 100
+  tbl_typelicence_2:
+    lib: Attelage Junior
+    code: ATJ
+    prix: 80
+  tbl_typelicence_3:
+    lib: Monochien
+    code: MOC
+    prix: 120
+  tbl_typelicence_4:
+    lib: Monochien Junior
+    code: MOCJ
+    prix: 100
+  tbl_typelicence_5:
+    lib: "Dirigeant & Professionnel"
+    code: DP
+    prix: 200
+  tbl_typelicence_6:
+    lib: Sport-Loisir
+    code: SP
+    prix: 100
+
+tbl_category:
+  tbl_category_1:
+    lib: CC
+    code: CC
+  tbl_category_2:
+    lib: BJ
+    code: BJ
+  tbl_category_3:
+    lib: SPJ
+    code: SPJ
+  tbl_category_4:
+    lib: 2
+    code: 2
+  tbl_category_5:
+    lib: 4
+    code: 4
+  tbl_category_6:
+    lib: 6
+    code: 6
+  tbl_category_7:
+    lib: 8
+    code: 8
+  tbl_category_8:
+    lib: U
+    code: U
+  tbl_category_9:
+    lib: MD
+    code: MD
+  tbl_category_10:
+    lib: LD
+    code: LD
 tbl_affectation:
   tbl_affectation_1:
     code: N
@@ -75,7 +132,20 @@ sfGuardUser:
     username:       visuel
     password:       visuel
     Groups:         [Group_federal]
-
+  User_club_1:
+    first_name:     club1
+    last_name:      club1
+    email_address:  club1@tgprojets.fr
+    username:       club1
+    password:       club1
+    Groups:         [Group_club]
+  User_ligue_1:
+    first_name:     ligue1
+    last_name:      ligue1
+    email_address:  ligue1@tgprojets.fr
+    username:       ligue1
+    password:       ligue1
+    Groups:         [Group_ligue]
 sfGuardGroup:
   Group_admin:
     name:           N1
@@ -155,3 +225,37 @@ tbl_tracability:
   tbl_tracability_1:
     ip: 1.0.0.0.1
     username: admin
+
+tbl_address:
+  tbl_address_1:
+    address1: 10 rue André P..
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_2:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+
+tbl_club:
+  tbl_club_1:
+    name: DEC
+    num: 300
+    affiliation: 001
+    sfGuardUser: User_club_1
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_1
+    tbl_gen: tbl_gen_1
+
+tbl_ligue:
+  tbl_ligue_1:
+    name: PEC
+    num: 400
+    affiliation: 101
+    sfGuardUser: User_ligue_1
+    tbl_address: tbl_address_2
+    tbl_affectation: tbl_affectation_1
+    tbl_gen: tbl_gen_1

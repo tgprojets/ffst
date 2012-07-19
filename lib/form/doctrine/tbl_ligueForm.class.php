@@ -57,9 +57,10 @@ class tbl_ligueForm extends Basetbl_ligueForm
                  ->setTel($aValues['tel'])
                  ->setGsm($aValues['gsm'])
                  ->setFax($aValues['fax'])
-                 ->setIdCodepostaux($aValues['id_codepostaux'])
                  ->save();
-
+        if ($aValues['id_codepostaux'] != '') {
+          $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
+        }
         $oLigue->setName($aValues['name'])
                ->setNum($aValues['num'])
                ->setAffiliation($aValues['affiliation'])
