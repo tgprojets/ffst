@@ -100,8 +100,6 @@ tbl_typelicence:
     prix:           { type: float(5), notnull: true }
 
 tbl_category:
-  actAs:
-    Timestampable: ~
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }

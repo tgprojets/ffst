@@ -14,13 +14,22 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        code:
+          label: code catégorie
       list:
         title: Liste des catégories
         max_per_page: 20
         batch_actions: {}
       filter:  ~
-      form:    ~
+      form:
+        fields:
+          code:
+            label: code catégorie
+            help: requis
+          lib:
+            label: Libellé de la licence
+            help: requis
       edit:
         title: Edition de la catégorie %%lib%%
       new:
