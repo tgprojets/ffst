@@ -3,6 +3,7 @@ generator:
   param:
     model_class:           tbl_codepostaux
     theme:                 admin
+    css:                   admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -14,8 +15,18 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
-      filter:  ~
-      form:    ~
+      list:
+        title: Liste des villes
+        display: [insee, ville, code_postaux]
+        max_per_page: 40
+        batch_actions: {}
+        actions: {}
+        object_actions:
+          _edit:
+            label: Modifier
+      filter:
+        display: [ville, code_postaux]
+      form:
+        display: [ville, code_postaux]
       edit:    ~
       new:     ~

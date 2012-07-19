@@ -57,8 +57,11 @@ class tbl_clubForm extends Basetbl_clubForm
                  ->setTel($aValues['tel'])
                  ->setGsm($aValues['gsm'])
                  ->setFax($aValues['fax'])
-                 ->setIdCodepostaux($aValues['id_codepostaux'])
                  ->save();
+        if ($aValues['id_codepostaux'] != '') {
+
+          $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
+        }
 
         $oClub->setName($aValues['name'])
               ->setNum($aValues['num'])

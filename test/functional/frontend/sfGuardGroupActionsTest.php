@@ -106,11 +106,5 @@ $browser->get('/sfGuardGroup/new')->
       isParameter('module', 'sfGuardGroup')->
       isParameter('action', 'edit')->
     end();
-    /*click('Mettre à jour', array('tbl_slider' => array(
-      'title' => 'Titre image new 1',
-      'link'  => 'http://www.google.com'
-    )))->
-    with('response')->isRedirected()->
-    followRedirect();*/
 $browser->deconnexion();
 
