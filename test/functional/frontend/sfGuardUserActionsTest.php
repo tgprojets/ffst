@@ -162,8 +162,7 @@ $browser->info('Changer mot de passe federal1 compte')->connexion('admin', 'admi
 $browser->get('/sfGuardUser/'.$oUserFederal1->getId().'/listActivate');
 $browser->get('/sfGuardUser/'.$oUserFederal1->getId().'/listEditPassword')->
   click('Enregistrer', array('modifpassword' => array(
-    'password_forgot' => 'test33',
-    'repassword'      => 'test33',
+    'password' => 'test33',
   )))->
   with('form')->begin()->
     hasErrors(false)->

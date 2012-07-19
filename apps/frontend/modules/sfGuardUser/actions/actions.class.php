@@ -24,7 +24,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
           if ($this->form->isValid())
           {
              $aValues = $this->form->getValues();
-             $this->oUser->setPassword($aValues['password_forgot']);
+             $this->oUser->setPassword($aValues['password']);
              $this->oUser->save();
              $this->redirect($sBack);
           }
