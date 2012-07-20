@@ -1,3 +1,12 @@
+tbl_licence:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_licence
+    module:               licence
+    prefix_path:          /licence
+    column:               id
+    with_wildcard_routes: true
+
 generate_password:
   url:   /ajax/generate_password
   param:  { module: main, action: generatePassword }

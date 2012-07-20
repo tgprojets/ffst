@@ -1,0 +1,38 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_licence
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_licence
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Liste des licenciés
+        display: [num, tbl_profil, _valid, id_typelicence, id_category]
+        max_per_page: 20
+        batch_actions: {}
+        actions:
+          _new:
+            credentials: [licence]
+          commande:
+            credentials: [[account_club, account_ligue]]
+        object_actions:
+          _edit: ~
+          valid_licence:
+            credentials: [ValidLicence]
+          _delete:
+            credentials: [admin]
+      filter:
+        display: [num]
+      form:    ~
+      edit:    ~
+      new:     ~

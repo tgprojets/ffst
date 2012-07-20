@@ -107,3 +107,41 @@ tbl_prixunit:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }
     prix:           { type: float(5), notnull: true }
+
+tbl_profil:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    last_name:         { type: string(50), notnull: true  }
+    first_name:        { type: string(50), notnull: true  }
+    id_address:        { type: integer(4) }
+    email:             { type: string(150), notnull: true  }
+    birthday:          { type: timestamp, notnull: true  }
+    sexe:              { type: string(20) }
+  relations:
+    tbl_address:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_profil }
+
+tbl_licence:
+  actAs:
+    Timestampable: ~
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    num:               { type: string(17), notnull: true }
+    is_new:            { type: boolean, default: true }
+    international:     { type: boolean, default: false }
+    race_nordique:     { type: boolean, default: false }
+    is_familly:        { type: boolean, default: false }
+    cnil:              { type: boolean, default: false }
+    date_medical:      { type: timestamp }
+    date_validation:   { type: timestamp }
+    year_licence:      { type: timestamp }
+    id_profil:         { type: integer(4), notnull: true  }
+    id_club:           { type: integer(4), notnull: true  }
+    id_category:       { type: integer(4), notnull: true  }
+    id_typelicence:    { type: integer(4), notnull: true  }
+  relations:
+    tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_licence }
+    tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_licence }
+    tbl_category:      { onDelete: CASCADE, onUpdate: CASCADE, local: id_category, foreign: id, foreignAlias: tbl_licence }
+    tbl_typelicence:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typelicence, foreign: id, foreignAlias: tbl_licence }
