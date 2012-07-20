@@ -34,7 +34,11 @@ generator:
       filter:
         display: [num, id_typelicence, id_category]
       form:    ~
-      edit:    ~
+      edit:
+        display:
+          "Profile": [email, last_name, first_name, birthday]
+          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Licence": [id_club, id_category, id_typelicence, international, race_nordique, is_familly, cnil, date_medical]
       new:
         display:
           "Profile": [email, last_name, first_name, birthday]

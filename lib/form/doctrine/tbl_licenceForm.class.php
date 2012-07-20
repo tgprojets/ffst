@@ -97,6 +97,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'format' => '%day% %month% %year%',
           'years' => array_combine($years, $years)
       ));
+      $this->widgetSchema['date_medical']              = new sfWidgetFormI18nDate(array(
+          'culture' => $sCulture,
+          'format' => '%day% %month% %year%',
+      ));
   }
 
   public function buildValidator()
@@ -128,6 +132,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('fax',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
     $this->setValidator('birthday',       new sfValidatorDate(array('required' => true)));
+    $this->setValidator('date_medical',   new sfValidatorDate(array('required' => false)));
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
