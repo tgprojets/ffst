@@ -17,7 +17,7 @@ generator:
       fields:  ~
       list:
         title: Liste des licenciés
-        display: [num, tbl_profil, _valid, id_typelicence, id_category]
+        display: [num, tbl_profil, tbl_typelicence, tbl_category]
         max_per_page: 20
         batch_actions: {}
         actions:
@@ -32,7 +32,15 @@ generator:
           _delete:
             credentials: [admin]
       filter:
-        display: [num]
+        display: [num, id_typelicence, id_category]
       form:    ~
-      edit:    ~
-      new:     ~
+      edit:
+        display:
+          "Profile": [email, last_name, first_name, birthday, id_profil]
+          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Licence": [id_club, id_category, id_typelicence, international, race_nordique, is_familly, cnil, date_medical]
+      new:
+        display:
+          "Profile": [email, last_name, first_name, birthday]
+          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Licence": [id_club, id_category, id_typelicence, international, race_nordique, is_familly, cnil, date_medical]
