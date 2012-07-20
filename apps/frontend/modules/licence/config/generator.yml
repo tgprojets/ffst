@@ -36,7 +36,7 @@ generator:
       form:    ~
       edit:
         display:
-          "Profile": [email, last_name, first_name, birthday]
+          "Profile": [email, last_name, first_name, birthday, id_profil]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [id_club, id_category, id_typelicence, international, race_nordique, is_familly, cnil, date_medical]
       new:

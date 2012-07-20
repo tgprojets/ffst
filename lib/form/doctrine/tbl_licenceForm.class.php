@@ -12,9 +12,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
 {
   public function configure()
   {
-    unset($this['created_at'], $this['updated_at']);
+    unset($this['num'], $this['created_at'], $this['updated_at']);
     if ($this->isNew()) {
-        unset($this['num'], $this['id_profil']);
+        unset( $this['id_profil']);
     }
     $this->buildWidget();
     $this->buildValidator();
@@ -35,7 +35,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
         //Calcul num licence
         $oClub = Doctrine::getTable('tbl_club')->find($aValues['id_club']);
-        $sNum = $oClub->getNum().'.001.2012/2013';
+        $nMember = Doctrine::getTable('tbl_licence')->countLicenceClub($aValues['id_club']);
+        $nMember = str_pad($nMember,3,"0",STR_PAD_LEFT);
+        $sNum = $oClub->getNum().'.'.$nMember.'.'.$this->getDateLicence();
     } else {
         $oLicence = Doctrine::getTable('tbl_licence')->find($aValues['id']);
         $sNum = $oLicence->getNum();
@@ -93,12 +95,12 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
       ));
       $this->widgetSchema['birthday']                  = new sfWidgetFormI18nDate(array(
-          'culture' => $sCulture,
+          'culture' => 'fr',
           'format' => '%day% %month% %year%',
           'years' => array_combine($years, $years)
       ));
       $this->widgetSchema['date_medical']              = new sfWidgetFormI18nDate(array(
-          'culture' => $sCulture,
+          'culture' => 'fr',
           'format' => '%day% %month% %year%',
       ));
   }
@@ -159,5 +161,19 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $this->setDefault('gsm', $oAddress->getGsm());
         $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
     }
+  }
+  public function getDateLicence()
+  {
+    $dateToDay = new DateTime('now');
+    if (date('d') >= 1 && date('m') >= 7) {
+      $startDate = date('Y');
+      $endDate   = date('Y')+1;
+    } else {
+      $startDate = date('Y')-1;
+      $endDate   = date('Y');
+    }
+    $sDate = (string) $startDate.'/'.(string) $endDate;
+
+    return $sDate;
   }
 }
