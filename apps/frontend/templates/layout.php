@@ -67,6 +67,12 @@
                     <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Article', '@tbl_prixunit') ?></li>
                   </ul>
                 <?php endif; ?>
+                <?php if ($sf_user->hasCredential('licence') || $sf_user->hasCredential('account_club') || $sf_user->hasCredential('account_ligue')): ?>
+                <li> <h3>Gestion des licences</h3> </li>
+                <ul class="sb_ssmenu_admin">
+                  <li <?php echo $sf_params->get('module')=="category"?'class="sb_menu_select"':''?>><?php echo link_to('Licence', '@tbl_licence') ?></li>
+                </ul>
+                <?php endif; ?>
                 <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('categorie')): ?>
                 <li> <h3>Divers</h3> </li>
                 <ul class="sb_ssmenu_admin">
