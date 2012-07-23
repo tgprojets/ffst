@@ -44,11 +44,11 @@ generator:
       list:
         title: Liste des licenciés
         display: [num, tbl_profil, tbl_typelicence, tbl_category]
+        table_method: retrieveByClub
         max_per_page: 20
         batch_actions: {}
         actions:
           _new:
-            credentials: [licence]
           commande:
             credentials: [[account_club, account_ligue]]
         object_actions:

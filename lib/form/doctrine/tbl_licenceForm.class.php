@@ -85,6 +85,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
   }
   public function buildWidget()
   {
+      if (sfContext::getInstance()->getUser()->isClub()) {
+        $this->widgetSchema['id_club']                = new sfWidgetFormInputHidden();
+      }
       $sNow18 = date('Y', strtotime('-10 years'));
       $years = range($sNow18, 1910);
       $this->widgetSchema['email']                     = new sfWidgetFormInputText();
@@ -116,7 +119,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
             'label'            => 'Cherche licencié (Nom prénom)',
             'choices'          => array(),
             'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-            'renderer_options' => array('model' => 'tbl_licence', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
+            'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
         ));
         $this->widgetSchema['is_checked']           = new sfWidgetFormInputHidden();
       }
@@ -182,6 +185,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
     } else {
       $this->setDefault('is_checked', '0');
+      if (sfContext::getInstance()->getUser()->isClub()) {
+        $oClub = sfContext::getInstance()->getUser()->getClub();
+        $this->setDefault('id_club', $oClub->getId());
+      }
     }
   }
   public function getDateLicence()

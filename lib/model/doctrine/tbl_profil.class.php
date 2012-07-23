@@ -14,6 +14,7 @@ class tbl_profil extends Basetbl_profil
 {
     public function __toString()
     {
+
         return $this->getFirstName().' '.$this->getLastName();
     }
 }
