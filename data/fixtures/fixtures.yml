@@ -259,3 +259,19 @@ tbl_ligue:
     tbl_address: tbl_address_2
     tbl_affectation: tbl_affectation_1
     tbl_gen: tbl_gen_1
+
+tbl_profil:
+  tbl_profil1:
+    email: gilbert@free.fr
+    last_name: Gilbert
+    first_name: Thomas
+    birthday: '1978-04-29'
+    sexe: M
+    tbl_address: tbl_address_1
+  tbl_profil2:
+    email: scorcess@free.fr
+    last_name: Scorcess
+    first_name: Frank
+    birthday: '1948-02-20'
+    sexe: M
+    tbl_address: tbl_address_1

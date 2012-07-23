@@ -7,9 +7,17 @@ tbl_licence:
     column:               id
     with_wildcard_routes: true
 
+check_profil:
+  url:   /ajax/check_profil
+  param:  { module: main, action: checkProfil }
+
 generate_password:
   url:   /ajax/generate_password
   param:  { module: main, action: generatePassword }
+
+ajax_getLicence:
+  url:   /ajax/getLicence
+  param:  { module: main, action: getLicence }
 
 ajax_getCitys:
   url:   /ajax/getCitys
