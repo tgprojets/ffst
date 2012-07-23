@@ -142,7 +142,7 @@ $browser->get('/club/new')->
     end()->
     info('Identifiant club existant')->
     click('Mettre à jour', array('tbl_club' => array(
-    'name'             => 'DEC',
+    'name'             => 'DE1',
     'num'              => '100',
     'affiliation'      => 'TTT',
     'email'            => 'test@test.fr',

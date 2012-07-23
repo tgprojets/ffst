@@ -139,6 +139,28 @@ sfGuardUser:
     username:       club1
     password:       club1
     Groups:         [Group_club]
+  User_club_2:
+    first_name:     club2
+    last_name:      club2
+    email_address:  club2@tgprojets.fr
+    username:       club2
+    password:       club2
+    Groups:         [Group_club]
+  User_club_3:
+    first_name:     club3
+    last_name:      club3
+    email_address:  club3@tgprojets.fr
+    username:       club3
+    password:       club3
+    Groups:         [Group_club]
+  User_club_4:
+    first_name:     club4
+    last_name:      club4
+    email_address:  club4@tgprojets.fr
+    username:       club4
+    password:       club4
+    Groups:         [Group_club]
+
   User_ligue_1:
     first_name:     ligue1
     last_name:      ligue1
@@ -146,6 +168,14 @@ sfGuardUser:
     username:       ligue1
     password:       ligue1
     Groups:         [Group_ligue]
+  User_ligue_2:
+    first_name:     ligue2
+    last_name:      ligue2
+    email_address:  ligue2@tgprojets.fr
+    username:       ligue2
+    password:       ligue2
+    Groups:         [Group_ligue]
+
 sfGuardGroup:
   Group_admin:
     name:           N1
@@ -242,13 +272,44 @@ tbl_address:
 
 tbl_club:
   tbl_club_1:
-    name: DEC
+    name: DE1
     num: 300
     affiliation: 001
     sfGuardUser: User_club_1
     tbl_address: tbl_address_1
     tbl_affectation: tbl_affectation_1
     tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_1
+
+  tbl_club_2:
+    name: DE2
+    num: 311
+    affiliation: 002
+    sfGuardUser: User_club_2
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_2
+    tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_2
+
+  tbl_club_3:
+    name: DE3
+    num: 312
+    affiliation: 002
+    sfGuardUser: User_club_3
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_2
+    tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_2
+
+  tbl_club_4:
+    name: DE4
+    num: 313
+    affiliation: 003
+    sfGuardUser: User_club_4
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_1
+    tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_1
 
 tbl_ligue:
   tbl_ligue_1:
@@ -258,6 +319,14 @@ tbl_ligue:
     sfGuardUser: User_ligue_1
     tbl_address: tbl_address_2
     tbl_affectation: tbl_affectation_1
+    tbl_gen: tbl_gen_1
+  tbl_ligue_2:
+    name: PE1
+    num: 411
+    affiliation: 103
+    sfGuardUser: User_ligue_2
+    tbl_address: tbl_address_2
+    tbl_affectation: tbl_affectation_2
     tbl_gen: tbl_gen_1
 
 tbl_profil:

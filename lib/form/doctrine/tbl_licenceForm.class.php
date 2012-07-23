@@ -24,8 +24,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
         //Enregistre l'utilisateur
         if ($aValues['id_profil'] == "" && $aValues['is_checked'] == 1) {
           $oProfil = Doctrine::getTable('tbl_profil')->find($aValues['id_profil']);
+          $bIsNew = false;
         } else {
           $oProfil = new tbl_profil();
+          $bIsNew = true;
         }
 
         //Enregistre l'addresse
@@ -74,6 +76,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->setIdCategory($aValues['id_category'])
                ->setIdTypelicence($aValues['id_typelicence'])
                ->save();
+      if ($this->isNew()) {
+        $oLicence->setIsNew($bIsNew)->save();
+      }
+
     }
     return $oLicence;
   }
