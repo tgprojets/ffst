@@ -19,6 +19,33 @@ class mainActions extends sfActions
   {
 
   }
+
+  public function executeCheckProfil(sfWebRequest $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $nId = $request->getParameter('nIdProfil');
+      $oProfil = Doctrine::getTable('tbl_profil')->find($nId);
+      $oAddress = $oProfil->getTblAddress();
+      $jsonresponse['profil']['email'] = $oProfil->getEmail();
+      $jsonresponse['profil']['last_name'] = $oProfil->getLastName();
+      $jsonresponse['profil']['first_name'] = $oProfil->getFirstName();
+      $Birthday  = $oProfil->getBirthday();
+      $jsonresponse['profil']['birthday_day'] = substr($Birthday, 8, 2);
+      $jsonresponse['profil']['birthday_month'] = (int) substr($Birthday, 5, 2);
+      $jsonresponse['profil']['birthday_year'] = substr($Birthday, 0, 4);
+      $jsonresponse['profil']['id_codepostaux'] = $oAddress->getTblCodepostaux()->getId();
+      $jsonresponse['profil']['ville'] = $oAddress->getTblCodepostaux()->getVille().'('.$oAddress->getTblCodepostaux()->getCodePostaux().')';
+      $jsonresponse['profil']['address1'] = $oAddress->getAddress1();
+      $jsonresponse['profil']['address2'] = $oAddress->getAddress1();
+      $jsonresponse['profil']['tel'] = $oAddress->getTel();
+      $jsonresponse['profil']['gsm'] = $oAddress->getGsm();
+      $jsonresponse['profil']['fax'] = $oAddress->getFax();
+
+      return $this->renderText(json_encode($jsonresponse));
+    }
+    $this->redirect404();
+  }
+
   public function executeGeneratePassword(sfWebRequest $request)
   {
     if ($request->isXmlHttpRequest()) {
@@ -26,5 +53,29 @@ class mainActions extends sfActions
        return $this->renderText(json_encode($jsonresponse));
     }
     $this->redirect404();
+  }
+  /**
+   * Récupère la liste des villes en ajax
+   *
+   * @param sfWebRequest $request
+   * @return Json return Json array of matching City objects converted to string
+   */
+  public function executeGetLicence(sfWebRequest $request)
+  {
+    $keyword = $request->getParameter('q');
+
+    $limit = $request->getParameter('limit');
+    if (strlen($keyword) <= 2) {
+      return $this->renderText(json_encode(array()));
+    }
+    $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
+    $list = array();
+    foreach($oProfils as $oProfil)
+    {
+      $Birthday  = $oProfil->getBirthday();
+      $sBirthday = substr($Birthday, 8, 2).'/'.substr($Birthday, 5, 2).'/'.substr($Birthday, 0, 4);
+      $list[$oProfil->getId()] = sprintf('%s %s %s', $oProfil->getLastName(), $oProfil->getFirstName(), $sBirthday);
+    }
+    return $this->renderText(json_encode($list));
   }
 }

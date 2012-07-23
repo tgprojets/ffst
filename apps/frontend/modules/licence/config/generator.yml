@@ -14,15 +14,41 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
+        birthday:
+          label: Date anniversaire
+        address1:
+          label: Adresse
+        address2:
+          label: Adresse complémentaire
+        tel:
+          label: Téléphone
+        gsm:
+          label: Portable
+        fax:
+          label: Fax
+        id_club:
+          label: Club
+        id_category:
+          label: Catégorie
+        id_typelicence:
+          label: Type de licence
+        is_familly:
+          label: Famille
+        date_medical:
+          label: Date certificat médical
       list:
         title: Liste des licenciés
         display: [num, tbl_profil, tbl_typelicence, tbl_category]
+        table_method: retrieveByClub
         max_per_page: 20
         batch_actions: {}
         actions:
           _new:
-            credentials: [licence]
           commande:
             credentials: [[account_club, account_ligue]]
         object_actions:
@@ -41,6 +67,7 @@ generator:
           "Licence": [id_club, id_category, id_typelicence, international, race_nordique, is_familly, cnil, date_medical]
       new:
         display:
+          "Chercher profil": [id_profil, _profil_exist]
           "Profile": [email, last_name, first_name, birthday]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [id_club, id_category, id_typelicence, international, race_nordique, is_familly, cnil, date_medical]

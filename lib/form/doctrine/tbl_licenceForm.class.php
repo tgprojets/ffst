@@ -13,9 +13,6 @@ class tbl_licenceForm extends Basetbl_licenceForm
   public function configure()
   {
     unset($this['num'], $this['created_at'], $this['updated_at']);
-    if ($this->isNew()) {
-        unset( $this['id_profil']);
-    }
     $this->buildWidget();
     $this->buildValidator();
     $this->defaultsWidget();
@@ -25,7 +22,13 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $aValues = $this->processValues($this->getValues());
     if ($this->isNew()) {
         //Enregistre l'utilisateur
-        $oProfil = new tbl_profil();
+        if ($aValues['id_profil'] == "" && $aValues['is_checked'] == 1) {
+          $oProfil = Doctrine::getTable('tbl_profil')->find($aValues['id_profil']);
+          $bIsNew = false;
+        } else {
+          $oProfil = new tbl_profil();
+          $bIsNew = true;
+        }
 
         //Enregistre l'addresse
         $oAddress = new tbl_address();
@@ -45,7 +48,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $oAddress = $oProfil->getTblAddress();
     }
     if ($this->isValid()) {
-
+      if ($this->isNew() && $aValues['id_profil'] != '') {
         $oAddress->setAddress1($aValues['address1'])
                  ->setAddress2($aValues['address2'])
                  ->setTel($aValues['tel'])
@@ -61,22 +64,30 @@ class tbl_licenceForm extends Basetbl_licenceForm
                 ->setBirthday($aValues['birthday'])
                 ->setIdAddress($oAddress->getId())
                 ->save();
-        $oLicence->setNum($sNum)
-                 ->setInternational($aValues['international'])
-                 ->setRaceNordique($aValues['race_nordique'])
-                 ->setIsFamilly($aValues['is_familly'])
-                 ->setCnil($aValues['cnil'])
-                 ->setDateMedical($aValues['date_medical'])
-                 ->setIdClub($aValues['id_club'])
-                 ->setIdProfil($oProfil->getId())
-                 ->setIdCategory($aValues['id_category'])
-                 ->setIdTypelicence($aValues['id_typelicence'])
-                 ->save();
+      }
+      $oLicence->setNum($sNum)
+               ->setInternational($aValues['international'])
+               ->setRaceNordique($aValues['race_nordique'])
+               ->setIsFamilly($aValues['is_familly'])
+               ->setCnil($aValues['cnil'])
+               ->setDateMedical($aValues['date_medical'])
+               ->setIdClub($aValues['id_club'])
+               ->setIdProfil($oProfil->getId())
+               ->setIdCategory($aValues['id_category'])
+               ->setIdTypelicence($aValues['id_typelicence'])
+               ->save();
+      if ($this->isNew()) {
+        $oLicence->setIsNew($bIsNew)->save();
+      }
+
     }
     return $oLicence;
   }
   public function buildWidget()
   {
+      if (sfContext::getInstance()->getUser()->isClub()) {
+        $this->widgetSchema['id_club']                = new sfWidgetFormInputHidden();
+      }
       $sNow18 = date('Y', strtotime('-10 years'));
       $years = range($sNow18, 1910);
       $this->widgetSchema['email']                     = new sfWidgetFormInputText();
@@ -103,6 +114,15 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
       ));
+      if ($this->isNew()) {
+        $this->widgetSchema['id_profil']            = new sfWidgetFormChoice(array(
+            'label'            => 'Cherche licencié (Nom prénom)',
+            'choices'          => array(),
+            'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
+            'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
+        ));
+        $this->widgetSchema['is_checked']           = new sfWidgetFormInputHidden();
+      }
   }
 
   public function buildValidator()
@@ -137,7 +157,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('date_medical',   new sfValidatorDate(array('required' => false)));
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
-
+    if ($this->isNew()) {
+      $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
+      $this->setValidator('is_checked', new sfValidatorString(array('required' => false)));
+    }
     // $this->validatorSchema->setPostValidator(new sfValidatorAnd(
     //         array(
     //           new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
@@ -160,11 +183,16 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $this->setDefault('fax', $oAddress->getFax());
         $this->setDefault('gsm', $oAddress->getGsm());
         $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
+    } else {
+      $this->setDefault('is_checked', '0');
+      if (sfContext::getInstance()->getUser()->isClub()) {
+        $oClub = sfContext::getInstance()->getUser()->getClub();
+        $this->setDefault('id_club', $oClub->getId());
+      }
     }
   }
   public function getDateLicence()
   {
-    $dateToDay = new DateTime('now');
     if (date('d') >= 1 && date('m') >= 7) {
       $startDate = date('Y');
       $endDate   = date('Y')+1;
