@@ -22,10 +22,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $aValues = $this->processValues($this->getValues());
     if ($this->isNew()) {
         //Enregistre l'utilisateur
-        if ($aValues['id_profil'] == "") {
-          $oProfil = new tbl_profil();
-        } else {
+        if ($aValues['id_profil'] == "" && $aValues['is_checked'] == 1) {
           $oProfil = Doctrine::getTable('tbl_profil')->find($aValues['id_profil']);
+        } else {
+          $oProfil = new tbl_profil();
         }
 
         //Enregistre l'addresse
@@ -112,6 +112,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
             'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
             'renderer_options' => array('model' => 'tbl_licence', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
         ));
+        $this->widgetSchema['is_checked']           = new sfWidgetFormInputHidden();
       }
   }
 
@@ -149,6 +150,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
     if ($this->isNew()) {
       $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
+      $this->setValidator('is_checked', new sfValidatorString(array('required' => false)));
     }
     // $this->validatorSchema->setPostValidator(new sfValidatorAnd(
     //         array(
@@ -172,6 +174,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $this->setDefault('fax', $oAddress->getFax());
         $this->setDefault('gsm', $oAddress->getGsm());
         $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
+    } else {
+      $this->setDefault('is_checked', '0');
     }
   }
   public function getDateLicence()

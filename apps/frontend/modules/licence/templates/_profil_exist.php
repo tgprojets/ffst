@@ -32,6 +32,7 @@
         $('#tbl_licence_fax').attr('disabled', false);
 
         $('#tbl_licence_id_profil').val('');
+        $('#tbl_licence_is_checked').val('0');
         $('#autocomplete_tbl_licence_id_profil').val('');
 
         return false;
@@ -66,6 +67,7 @@
                     $('#tbl_licence_tel').val(profil.tel);
                     $('#tbl_licence_gsm').val(profil.gsm);
                     $('#tbl_licence_fax').val(profil.fax);
+                    $('#tbl_licence_is_checked').val('1');
 
                     $('#tbl_licence_email').attr('disabled', true);
                     $('#tbl_licence_last_name').attr('disabled', true);
@@ -80,7 +82,6 @@
                     $('#tbl_licence_tel').attr('disabled', true);
                     $('#tbl_licence_gsm').attr('disabled', true);
                     $('#tbl_licence_fax').attr('disabled', true);
-
                   }
                 },
                 error: function (sData) {
