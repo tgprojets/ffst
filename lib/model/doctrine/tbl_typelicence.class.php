@@ -16,4 +16,100 @@ class tbl_typelicence extends Basetbl_typelicence
     {
         return $this->getLib();
     }
+  public function delete(Doctrine_Connection $conn = null)
+  {
+
+    $doctrineCollection = Doctrine::getTable('tbl_typelicence')->getTypeLicenceRank();
+
+    $rank = 0;
+    $nCompteur=0;
+    foreach ($doctrineCollection as $item)
+    {
+      if ($item->getId() != $this->getId())
+      {
+        $item->setRank($nCompteur);
+        $item->save();
+        $nCompteur++;
+      }
+    }
+    return parent::delete($conn);
+  }
+  public function save(Doctrine_Connection $conn = null)
+  {
+    if ($this->isNew()) {
+        $oTypeLicence = Doctrine::getTable('tbl_typelicence')->getTypeLicenceRank();
+        $nCount = $oTypeLicence->count();
+        $this->setRank($nCount);
+    }
+    return parent::save($conn);
+  }
+  public function moveUp()
+  {
+    $this->move('up');
+  }
+
+  public function moveDown()
+  {
+    $this->move('down');
+  }
+
+  private function move($dir = 'up')
+  {
+    if ('up' == $dir)
+    {
+      if ($this->isFirst())
+      {
+        return;
+      }
+
+      $rank = -1;
+    }
+    elseif ('down' == $dir)
+    {
+      if ($this->isLast())
+      {
+        return;
+      }
+
+      $rank = +1;
+    }
+    else
+    {
+      throw new RuntimeException('The value of $dir must be "up" or "down".');
+    }
+
+    $this->setRank($this->getRank() + $rank);
+    $this->save();
+
+    $doctrineCollection = Doctrine::getTable('tbl_typelicence')->getTypeLicenceRank();
+
+    $rank = 0;
+    foreach ($doctrineCollection as $item)
+    {
+      if ($item->getId() == $this->getId())
+      {
+        continue;
+      }
+      if ($rank == ($this->getRank()))
+      {
+        $rank++;
+      }
+
+      $item->setRank($rank);
+      $item->save();
+      $rank++;
+    }
+  }
+  public function isFirst()
+  {
+    return $this->getRank() == 0;
+  }
+
+  public function isLast()
+  {
+    $oTypeLicence = Doctrine::getTable('tbl_typelicence')->getTypeLicenceRank();
+    $nCount = $oTypeLicence->count();
+    return ($this->getRank() == $nCount - 1);
+  }
+
 }

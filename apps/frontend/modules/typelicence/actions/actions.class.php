@@ -13,4 +13,16 @@ require_once dirname(__FILE__).'/../lib/typelicenceGeneratorHelper.class.php';
  */
 class typelicenceActions extends autoTypelicenceActions
 {
+  public function executeListMovedown(sfWebRequest $request)
+  {
+    $this->oTypeLicence = $this->getRoute()->getObject();
+    $this->oTypeLicence->moveDown();
+    $this->redirect('@tbl_typelicence');
+  }
+  public function executeListMoveup(sfWebRequest $request)
+  {
+    $this->oTypeLicence = $this->getRoute()->getObject();
+    $this->oTypeLicence->moveUp();
+    $this->redirect('@tbl_typelicence');
+  }
 }

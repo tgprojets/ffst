@@ -1,28 +1,28 @@
 tbl_typelicence:
   tbl_typelicence_1:
-    lib: Attelage
-    code: AT
-    prix: 100
-  tbl_typelicence_2:
     lib: Attelage Junior
     code: ATJ
     prix: 80
+  tbl_typelicence_2:
+    lib: Attelage
+    code: AT
+    prix: 100
   tbl_typelicence_3:
+    lib: Monochien Junior
+    code: MOCJ
+    prix: 110
+  tbl_typelicence_4:
     lib: Monochien
     code: MOC
     prix: 120
-  tbl_typelicence_4:
-    lib: Monochien Junior
-    code: MOCJ
-    prix: 100
   tbl_typelicence_5:
+    lib: Sport-Loisir
+    code: SP
+    prix: 180
+  tbl_typelicence_6:
     lib: "Dirigeant & Professionnel"
     code: DP
     prix: 200
-  tbl_typelicence_6:
-    lib: Sport-Loisir
-    code: SP
-    prix: 100
 
 tbl_category:
   tbl_category_1:
