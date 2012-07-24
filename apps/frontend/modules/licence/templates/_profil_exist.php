@@ -63,7 +63,10 @@
         $('#tbl_licence_tel').val('');
         $('#tbl_licence_gsm').val('');
         $('#tbl_licence_fax').val('');
-
+        $('#tbl_licence_international').attr('checked', false);
+        $('#tbl_licence_race_nordique').attr('checked', false);
+        $('#tbl_licence_is_familly').attr('checked', false);
+        $('#tbl_licence_cnil').attr('checked', false);
 
         $('#tbl_licence_id_profil').val('');
         $('#tbl_licence_is_checked').val('0');
@@ -103,6 +106,12 @@
                     $('#tbl_licence_tel').val(profil.tel);
                     $('#tbl_licence_gsm').val(profil.gsm);
                     $('#tbl_licence_fax').val(profil.fax);
+                    $('#tbl_licence_id_category').val(profil.id_category);
+                    $('#tbl_licence_id_typelicence').val(profil.id_typelicence);
+                    if (profil.international == 1) { $('#tbl_licence_international').attr('checked', true); }
+                    if (profil.race_nordique == 1) { $('#tbl_licence_race_nordique').attr('checked', true); }
+                    if (profil.is_familly == 1) { $('#tbl_licence_is_familly').attr('checked', true); }
+                    if (profil.cnil == 1) { $('#tbl_licence_cnil').attr('checked', true); }
                     $('#tbl_licence_is_checked').val('1');
                     disabledForm();
 

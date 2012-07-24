@@ -26,8 +26,8 @@ class mainActions extends sfActions
       $nId     = $request->getParameter('nIdProfil');
       $nIdClub = $request->getParameter('nIdClub');
       $oProfil = Doctrine::getTable('tbl_profil')->find($nId);
+      $oLicence = $oProfil->getTblLicence()->getLast();
       if ($this->getUser()->isClub() || $this->getUser()->isLigue()) {
-        $oLicence = $oProfil->getTblLicence()->getLast();
 
         if ($nIdClub != $oLicence->getTblClub()->getId()) {
           $jsonresponse['error'] = 'Vous ne pouvez pas transférer ce profil';
@@ -49,6 +49,13 @@ class mainActions extends sfActions
       $jsonresponse['profil']['tel'] = $oAddress->getTel();
       $jsonresponse['profil']['gsm'] = $oAddress->getGsm();
       $jsonresponse['profil']['fax'] = $oAddress->getFax();
+
+      $jsonresponse['profil']['id_category'] = $oLicence->getTblCategory()->getId();
+      $jsonresponse['profil']['id_typelicence'] = $oLicence->getTblTypelicence()->getId();
+      $jsonresponse['profil']['international'] = $oLicence->getInternational();
+      $jsonresponse['profil']['race_nordique'] = $oLicence->getRaceNordique();
+      $jsonresponse['profil']['is_familly'] = $oLicence->getIsFamilly();
+      $jsonresponse['profil']['cnil'] = $oLicence->getCnil();
 
       return $this->renderText(json_encode($jsonresponse));
     }
