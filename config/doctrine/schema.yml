@@ -94,6 +94,7 @@ tbl_typelicence:
     lib:            { type: string(250), notnull: true }
     code:           { type: string(10), notnull: true }
     description:    { type: string(2000) }
+    rank:           { type: integer }
     prix:           { type: float(5), notnull: true }
 
 tbl_category:

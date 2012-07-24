@@ -19,10 +19,14 @@ generator:
           label: code licence
       list:
         title: Liste des prix de licences
-        display: [code, lib, prix]
-        max_per_page: 20
+        table_method: retrieveSortTypeLicenceList
+        display: [rank, code, lib, prix]
         batch_actions: {}
         object_actions:
+          movedown:
+            label: 'down'
+          moveup:
+            label: 'up'
           _edit: ~
           _delete:
             credentials: [admin]
