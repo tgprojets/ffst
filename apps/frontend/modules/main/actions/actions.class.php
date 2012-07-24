@@ -23,8 +23,17 @@ class mainActions extends sfActions
   public function executeCheckProfil(sfWebRequest $request)
   {
     if ($request->isXmlHttpRequest()) {
-      $nId = $request->getParameter('nIdProfil');
+      $nId     = $request->getParameter('nIdProfil');
+      $nIdClub = $request->getParameter('nIdClub');
       $oProfil = Doctrine::getTable('tbl_profil')->find($nId);
+      if ($this->getUser()->isClub() || $this->getUser()->isLigue()) {
+        $oLicence = $oProfil->getTblLicence()->getLast();
+
+        if ($nIdClub != $oLicence->getTblClub()->getId()) {
+          $jsonresponse['error'] = 'Vous ne pouvez pas transférer ce profil';
+          return $this->renderText(json_encode($jsonresponse));
+        }
+      }
       $oAddress = $oProfil->getTblAddress();
       $jsonresponse['profil']['email'] = $oProfil->getEmail();
       $jsonresponse['profil']['last_name'] = $oProfil->getLastName();

@@ -426,130 +426,114 @@ tbl_ligue:
     tbl_gen: tbl_gen_1
 
 tbl_profil:
-  tbl_profil1:
-    email: gilbert@free.fr
-    last_name: Gilbert
-    first_name: Thomas
-    birthday: '1978-04-29'
-    sexe: M
-    tbl_address: tbl_address_1
-  tbl_profil2:
-    email: scorcess@free.fr
-    last_name: Scorcess
-    first_name: Frank
-    birthday: '1948-02-20'
-    sexe: M
-    tbl_address: tbl_address_1
-
-tbl_profil:
   tbl_profil_1:
-    last_name: Damien
-    first_name: Lasperche
+    first_name: Damien
+    last_name: Lasperche
     email: damien.lasperche@free.fr
     birthday: '1968-04-20'
     sexe: Masculin
     tbl_address: tbl_address_3
   tbl_profil_2:
-    last_name: Pierre
-    first_name: Richard
+    first_name: Pierre
+    last_name: Richard
     email: pierre.richard@free.fr
     birthday: '1978-03-10'
     sexe: Masculin
     tbl_address: tbl_address_4
   tbl_profil_3:
-    last_name: Francis
-    first_name: Lemesle
+    first_name: Francis
+    last_name: Lemesle
     email: francis.lemesle@free.fr
     birthday: '1949-07-22'
     sexe: Masculin
     tbl_address: tbl_address_5
   tbl_profil_4:
-    last_name: Sebastien
-    first_name: Gain
+    first_name: Sebastien
+    last_name: Gain
     email: sebastien.gain@free.fr
     birthday: '1982-07-01'
     sexe: Masculin
     tbl_address: tbl_address_6
   tbl_profil_5:
-    last_name: Stéphane
-    first_name: Panis
+    first_name: Stéphane
+    last_name: Panis
     email: stephane.panis@free.fr
     birthday: '1993-08-28'
     sexe: Masculin
     tbl_address: tbl_address_7
   tbl_profil_6:
-    last_name: Valérie
-    first_name: Master
+    first_name: Valérie
+    last_name: Master
     email: valerie.master@free.fr
     birthday: '1976-01-20'
     sexe: Féminin
     tbl_address: tbl_address_8
   tbl_profil_7:
-    last_name: Pascal
-    first_name: plus
+    first_name: Pascal
+    last_name: plus
     email: pascal.plus@free.fr
     birthday: '1955-09-04'
     sexe: Masculin
     tbl_address: tbl_address_9
   tbl_profil_8:
-    last_name: Fabien
-    first_name: Melun
+    first_name: Fabien
+    last_name: Melun
     email: fabien.melun@free.fr
     birthday: '1995-04-20'
     sexe: Masculin
     tbl_address: tbl_address_10
   tbl_profil_9:
-    last_name: Jean
-    first_name: Lafleur
+    first_name: Jean
+    last_name: Lafleur
     email: jean.lafleur@free.fr
     birthday: '1968-01-20'
     sexe: Masculin
     tbl_address: tbl_address_11
   tbl_profil_10:
-    last_name: Isabelle
-    first_name: Mutte
+    first_name: Isabelle
+    last_name: Mutte
     email: isabelle.mutte@free.fr
     birthday: '1968-04-20'
     sexe: Féminin
     tbl_address: tbl_address_12
   tbl_profil_11:
-    last_name: Yvan
-    first_name: Corneille
+    first_name: Yvan
+    last_name: Corneille
     email: yvan.corneille@free.fr
     birthday: '1987-09-12'
     sexe: Masculin
     tbl_address: tbl_address_13
   tbl_profil_12:
-    last_name: Stéphane
-    first_name: Blanchard
+    first_name: Stéphane
+    last_name: Blanchard
     email: stephane.blanchard@free.fr
     birthday: '1988-10-13'
     sexe: Masculin
     tbl_address: tbl_address_14
   tbl_profil_13:
-    last_name: Fabrice
-    first_name: Carré
+    first_name: Fabrice
+    last_name: Carré
     email: fabrice.carre@free.fr
     birthday: '1972-06-20'
     sexe: Masculin
     tbl_address: tbl_address_15
   tbl_profil_14:
-    last_name: David
-    first_name: Carré
+    first_name: David
+    last_name: Carré
     email: david.carre@free.fr
     birthday: '1998-02-20'
     sexe: Masculin
     tbl_address: tbl_address_16
   tbl_profil_15:
-    last_name: Stéphanie
-    first_name: Carré
+    first_name: Stéphanie
+    last_name: Carré
     email: stephanie.carre@free.fr
     birthday: '1996-04-20'
     sexe: Féminin
     tbl_address: tbl_address_17
   tbl_profil_16:
-    last_name: Sophie
-    first_name: Panter
+    first_name: Sophie
+    last_name: Panter
     email: sophie.panter@free.fr
     birthday: '1967-04-20'
     sexe: Masculin

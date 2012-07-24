@@ -22,7 +22,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $aValues = $this->processValues($this->getValues());
     if ($this->isNew()) {
         //Enregistre l'utilisateur
-        if ($aValues['id_profil'] == "" && $aValues['is_checked'] == 1) {
+        if ($aValues['id_profil'] != "" && $aValues['is_checked'] == 1) {
           $oProfil = Doctrine::getTable('tbl_profil')->find($aValues['id_profil']);
           $bIsNew = false;
         } else {
@@ -48,7 +48,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $oAddress = $oProfil->getTblAddress();
     }
     if ($this->isValid()) {
-      if ($this->isNew() && $aValues['id_profil'] != '') {
+      if ($this->isNew() && $aValues['is_checked'] == 0) {
         $oAddress->setAddress1($aValues['address1'])
                  ->setAddress2($aValues['address2'])
                  ->setTel($aValues['tel'])
@@ -87,6 +87,14 @@ class tbl_licenceForm extends Basetbl_licenceForm
   {
       if (sfContext::getInstance()->getUser()->isClub()) {
         $this->widgetSchema['id_club']                = new sfWidgetFormInputHidden();
+      }
+      if (sfContext::getInstance()->getUser()->isLigue()) {
+        $this->widgetSchema['id_club']                = new sfWidgetFormDoctrineChoice(
+        array(
+          'model'        => $this->getRelatedModelName('tbl_club'),
+          'add_empty'    => false,
+          'table_method' => 'getClubLigue'
+        ));
       }
       $sNow18 = date('Y', strtotime('-10 years'));
       $years = range($sNow18, 1910);
@@ -161,11 +169,12 @@ class tbl_licenceForm extends Basetbl_licenceForm
       $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
       $this->setValidator('is_checked', new sfValidatorString(array('required' => false)));
     }
-    // $this->validatorSchema->setPostValidator(new sfValidatorAnd(
-    //         array(
-    //           new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
-    //    ))
-    // );
+    $this->validatorSchema->setPostValidator(new sfValidatorAnd(
+            array(
+              new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
+       ))
+    );
 
   }
   public function defaultsWidget()
@@ -203,5 +212,76 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $sDate = (string) $startDate.'/'.(string) $endDate;
 
     return $sDate;
+  }
+
+  public function checkEmail($validator, $values)
+  {
+    if (! empty($values['email'])) {
+      if ($this->isNew() && $values['is_checked'] == 0) {
+        $nbr = Doctrine_Query::create()
+          ->from('tbl_profil p')
+          ->where("p.email = ?", $values['email'])
+          ->count();
+
+        if ($nbr==0) {
+          // Login dispo
+          return $values;
+        } else {
+          // Login pas dispo
+          throw new sfValidatorError($validator, 'Cet addresse mail existe déjà.');
+        }
+      } else {
+        $nbr = Doctrine_Query::create()
+          ->from('tbl_profil p')
+          ->where("p.email = ?", $values['email'])
+          ->andWhere("p.id <> ?", $values['id_profil'])
+          ->count();
+
+        if ($nbr==0) {
+          // Login dispo
+          return $values;
+        } else {
+          // Login pas dispo
+          throw new sfValidatorError($validator, 'Cet addresse mail existe déjà.');
+        }
+      }
+    }
+  }
+  public function checkNameBirthday($validator, $values)
+  {
+    if (! empty($values['last_name']) && ! empty($values['first_name']) && ! empty($values['birthday'])) {
+      if ($this->isNew() && $values['is_checked'] == 0) {
+        $nbr = Doctrine_Query::create()
+          ->from('tbl_profil p')
+          ->where('upper(p.first_name) LIKE ?', mb_strtoupper($values['first_name']).'%')
+          ->andWhere('upper(p.last_name) LIKE ?', mb_strtoupper($values['last_name']).'%')
+          ->andWhere('p.birthday = ?', $values['birthday'])
+          ->count();
+
+        if ($nbr==0) {
+          // Login dispo
+          return $values;
+        } else {
+          // Login pas dispo
+          throw new sfValidatorError($validator, 'Ce licencié existe déjà.');
+        }
+      } else {
+        $nbr = Doctrine_Query::create()
+          ->from('tbl_profil p')
+          ->where('upper(p.first_name) LIKE ?', mb_strtoupper($values['first_name']).'%')
+          ->andWhere('upper(p.last_name) LIKE ?', mb_strtoupper($values['last_name']).'%')
+          ->andWhere("p.id <> ?", $values['id_profil'])
+          ->andWhere('p.birthday = ?', $values['birthday'])
+          ->count();
+
+        if ($nbr==0) {
+          // Login dispo
+          return $values;
+        } else {
+          // Login pas dispo
+          throw new sfValidatorError($validator, 'Ce licencié existe déjà.');
+        }
+      }
+    }
   }
 }

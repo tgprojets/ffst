@@ -41,9 +41,21 @@ generator:
           label: Famille
         date_medical:
           label: Date certificat médical
+        tbl_club:
+          label: Club
+        tbl_category:
+          label: Catégorie
+        tbl_typelicence:
+          label: Type de licence
+        check_date:
+          label: Validation
+        tbl_profil:
+          label: Licencié
+        num:
+          label: Numéro de licence
       list:
         title: Liste des licenciés
-        display: [num, tbl_profil, tbl_typelicence, tbl_category]
+        display: [num, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
         table_method: retrieveByClub
         max_per_page: 20
         batch_actions: {}
