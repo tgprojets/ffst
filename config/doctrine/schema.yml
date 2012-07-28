@@ -107,6 +107,14 @@ tbl_prixunit:
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }
+    code:           { type: string(4), notnull: true }
+    prix:           { type: float(5), notnull: true }
+
+tbl_tarifreduit:
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    lib:            { type: string(250), notnull: true }
+    code:           { type: string(4), notnull: true }
     prix:           { type: float(5), notnull: true }
 
 tbl_profil:

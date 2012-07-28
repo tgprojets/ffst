@@ -1,14 +1,14 @@
 generator:
   class: sfDoctrineGenerator
   param:
-    model_class:           tbl_prixunit
+    model_class:           tbl_tarifreduit
     theme:                 admin
     css:                   admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
     plural:                ~
-    route_prefix:          tbl_prixunit
+    route_prefix:          tbl_tarifreduit
     with_doctrine_route:   true
     actions_base_class:    sfActions
 
@@ -20,7 +20,7 @@ generator:
         prix:
           label: Prix en €
       list:
-        title: Liste prix des articles
+        title: Liste tarifs réduits
         max_per_page: 20
         batch_actions: {}
         actions: {}

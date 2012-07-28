@@ -12,6 +12,6 @@ class tbl_typelicenceForm extends Basetbl_typelicenceForm
 {
   public function configure()
   {
-
+    unset($this['created_at'], $this['updated_at'], $this['rank']);
   }
 }

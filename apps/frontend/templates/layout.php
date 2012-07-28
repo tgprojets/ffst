@@ -65,6 +65,7 @@
                   <ul class="sb_ssmenu_admin">
                     <li <?php echo $sf_params->get('module')=="typelicence"?'class="sb_menu_select"':''?>><?php echo link_to('Type de licence', '@tbl_typelicence') ?></li>
                     <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Article', '@tbl_prixunit') ?></li>
+                    <li <?php echo $sf_params->get('module')=="tarifreduit"?'class="sb_menu_select"':''?>><?php echo link_to('Tarif réduit', '@tbl_tarifreduit') ?></li>
                   </ul>
                 <?php endif; ?>
                 <?php if ($sf_user->hasCredential('licence') || $sf_user->hasCredential('account_club') || $sf_user->hasCredential('account_ligue')): ?>
