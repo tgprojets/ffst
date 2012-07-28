@@ -31,14 +31,10 @@ img {
 #contenant {
   position: relative;
   float: left;
-  width:800px;
+  min-width:800px;
   padding:22px 0px;
 }
-#contenant {
-  width:800px;
-  margin: auto;
-  padding:22px 0px;
-}
+
 #margepied {
   height:200px;/* hauteur du pied de page */
   clear:both;/* pour etirer le conteneur  si flottant */
