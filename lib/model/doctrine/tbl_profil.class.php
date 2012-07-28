@@ -17,4 +17,8 @@ class tbl_profil extends Basetbl_profil
 
         return $this->getFirstName().' '.$this->getLastName();
     }
+    public function getName()
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
 }

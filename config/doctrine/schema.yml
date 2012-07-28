@@ -107,6 +107,14 @@ tbl_prixunit:
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }
+    code:           { type: string(4), notnull: true }
+    prix:           { type: float(5), notnull: true }
+
+tbl_tarifreduit:
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    lib:            { type: string(250), notnull: true }
+    code:           { type: string(4), notnull: true }
     prix:           { type: float(5), notnull: true }
 
 tbl_profil:
@@ -134,6 +142,7 @@ tbl_licence:
     international:     { type: boolean, default: false }
     race_nordique:     { type: boolean, default: false }
     is_familly:        { type: boolean, default: false }
+    id_familly:        { type: integer(4) }
     cnil:              { type: boolean, default: false }
     date_medical:      { type: timestamp }
     date_validation:   { type: timestamp }
@@ -147,19 +156,20 @@ tbl_licence:
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_licence }
     tbl_category:      { onDelete: CASCADE, onUpdate: CASCADE, local: id_category, foreign: id, foreignAlias: tbl_licence }
     tbl_typelicence:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typelicence, foreign: id, foreignAlias: tbl_licence }
+    tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_familly, foreign: id, foreignAlias: tbl_licence }
 
 tbl_payment:
   actAs:
     Timestampable: ~
   columns:
     id:                { type: integer(4), primary: true,  autoincrement: true }
-    num:               { type: string(17), notnull: true }
+    num:               { type: string(17) }
     date_payment:      { type: timestamp }
     is_payed:          { type: boolean, default: false }
     lib:               { type: string(50) }
     description:       { type: string(250) }
     relation_table:    { type: string(50) }
-    type_payment:      { type: integer(4) }
+    id_typepayment:    { type: integer(4) }
     amount:            { type: float(4) }
     id_licence:        { type: integer(4) }
     id_club:           { type: integer(4) }
@@ -168,6 +178,7 @@ tbl_payment:
     tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_licence, foreign: id, foreignAlias: tbl_payment }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_payment }
     tbl_ligue:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_payment }
+    tbl_typepayment:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typepayment, foreign: id, foreignAlias: tbl_payment }
 
 tbl_typepayment:
   options:
@@ -189,9 +200,11 @@ tbl_avoir:
     Timestampable: ~
   columns:
     id:                { type: integer(4), primary: true,  autoincrement: true }
+    lib:               { type: string(50) }
     amount:            { type: float(4) }
+    relation_table:    { type: string(50) }
     is_used:           { type: boolean, default: false }
-    type_payment:      { type: integer(4) }
+    id_typepayment:    { type: integer(4) }
     id_licence:        { type: integer(4) }
     id_club:           { type: integer(4) }
     id_ligue:          { type: integer(4) }
@@ -199,3 +212,4 @@ tbl_avoir:
     tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_licence, foreign: id, foreignAlias: tbl_avoir }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_avoir }
     tbl_ligue:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_avoir }
+    tbl_typepayment:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typepayment, foreign: id, foreignAlias: tbl_avoir }

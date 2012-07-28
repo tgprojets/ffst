@@ -12,7 +12,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
 {
   public function configure()
   {
-    unset($this['num'], $this['created_at'], $this['updated_at']);
+    unset($this['num'], $this['created_at'], $this['updated_at'], $this['is_familly']);
     $this->buildWidget();
     $this->buildValidator();
     $this->defaultsWidget();
@@ -68,7 +68,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
       $oLicence->setNum($sNum)
                ->setInternational($aValues['international'])
                ->setRaceNordique($aValues['race_nordique'])
-               ->setIsFamilly($aValues['is_familly'])
+               ->setIsFamilly($aValues['id_familly']!=""?true:false)
+               ->setIdFamilly($aValues['id_familly'])
                ->setCnil($aValues['cnil'])
                ->setDateMedical($aValues['date_medical'])
                ->setIdClub($aValues['id_club'])
@@ -77,26 +78,14 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->setIdTypelicence($aValues['id_typelicence'])
                ->save();
       if ($this->isNew()) {
-        $oLicence->setIsNew($bIsNew)->save();
-        //Il faut récupérer le prix (calculer)
-        //Il faut récupérer le lib
-        $oPayment = new tbl_payment();
-        $oPayment->setLib('Nouvelle licence')
-                 ->setDescription('Nouvelle licence')
-                 ->setRelationTable('tbl_licence')
-                 ->setAmount(100)
-                 ->setIdLicence($oLicence->getId())
+        $oLicence->setIsBrouillon(true)
+                 ->setIsNew($bIsNew)
                  ->save();
+        $oCalcul = new CalculLicence($oLicence->getId());
+        $oCalcul->calcCotisationLicence();
+        $oCalcul->calcLicence();
       } else {
-        //Il faut récupérer le prix (calculer)
-        //Il faut récupérer le lib
-        $oPayment = new tbl_payment();
-        $oPayment->setLib('Modification licence')
-                 ->setDescription('Modification licence')
-                 ->setRelationTable('tbl_licence')
-                 ->setAmount(100)
-                 ->setIdLicence($oLicence->getId())
-                 ->save();
+
       }
 
     }

@@ -22,7 +22,11 @@ class tbl_licenceTable extends Doctrine_Table
         $q = $this->createQuery('l');
         $q->where('id_club = ?', $nIdClub);
         $nMember = $q->execute()->count();
-        return $nMember;
+        if ($nMember == 0) {
+            return 1;
+        } else {
+            return $nMember+1;
+        }
     }
     public function retrieveByClub(Doctrine_Query $q) {
         $q = $this->createQuery('q');
@@ -44,5 +48,61 @@ class tbl_licenceTable extends Doctrine_Table
         }
 
         return $q;
+    }
+
+    public function validSaisie($isClub, $isLigue, $nKey)
+    {
+        $q = $this->createQuery('q');
+        if ($isClub) {
+            $q->where('id_club = ?', $nKey);
+        } elseif ($isLigue) {
+            $oLigue = Doctrine::getTable('tbl_ligue')->find($nKey);
+            $aClub = array();
+            foreach ($oLigue->getTblClub() as $oClub)
+            {
+                $aClub[] = $oClub->getId();
+            }
+            if (empty($aClub))
+            {
+                $aClub[] = 0;
+            }
+            $q->andWhereIn('id_club', $aClub);
+        }
+        $q->andWhere('is_brouillon = ?', true);
+
+        $oLicences = $q->execute();
+
+        foreach ($oLicences as $oLicence)
+        {
+            $oLicence->setIsBrouillon(false)->save();
+        }
+    }
+
+    public function cancelSaisie($isClub, $isLigue, $nKey)
+    {
+        $q = $this->createQuery('q');
+        if ($isClub) {
+            $q->where('id_club = ?', $nKey);
+        } elseif ($isLigue) {
+            $oLigue = Doctrine::getTable('tbl_ligue')->find($nKey);
+            $aClub = array();
+            foreach ($oLigue->getTblClub() as $oClub)
+            {
+                $aClub[] = $oClub->getId();
+            }
+            if (empty($aClub))
+            {
+                $aClub[] = 0;
+            }
+            $q->andWhereIn('id_club', $aClub);
+        }
+        $q->andWhere('is_brouillon = ?', true);
+
+        $oLicences = $q->execute();
+
+        foreach ($oLicences as $oLicence)
+        {
+            $oLicence->delete();
+        }
     }
 }

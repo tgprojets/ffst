@@ -1,3 +1,12 @@
+tbl_tarifreduit:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_tarifreduit
+    module:               tarifreduit
+    prefix_path:          /tarifreduit
+    column:               id
+    with_wildcard_routes: true
+
 tbl_licence:
   class: sfDoctrineRouteCollection
   options:

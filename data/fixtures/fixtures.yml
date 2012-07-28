@@ -1,3 +1,38 @@
+tbl_tarifreduit:
+  tbl_tarifreduit_1:
+    lib: Moins de 18 an
+    code: MIN
+    prix: 10
+  tbl_tarifreduit_2:
+    lib: Famille à partir 2ème licence
+    code: FM
+    prix: 5
+tbl_prixunit:
+  tbl_prixunit_1:
+    lib: Cotisation annuel
+    code: CA
+    prix: 30
+  tbl_prixunit_2:
+    lib: Cotisation Tranche 1
+    code: CT1
+    prix: 15
+  tbl_prixunit_3:
+    lib: Cotisation Tranche 2
+    code: CT2
+    prix: 2
+  tbl_prixunit_4:
+    lib: Cotisation Tranche 3
+    code: CT3
+    prix: 4
+  tbl_prixunit_5:
+    lib: Majoration dépassement de délai
+    code: MDD
+    prix: 5
+  tbl_prixunit_6:
+    lib: Supplément option international
+    code: INT
+    prix: 20
+
 tbl_typelicence:
   tbl_typelicence_1:
     lib: Attelage Junior
@@ -23,7 +58,15 @@ tbl_typelicence:
     lib: "Dirigeant & Professionnel"
     code: DP
     prix: 200
-
+tbl_typepayment:
+  tbl_typepayment_1:
+    lib: Paypal
+  tbl_typepayment_2:
+    lib: Chèque
+  tbl_typepayment_3:
+    lib: CB
+  tbl_typepayment_4:
+    lib: Espèce
 tbl_category:
   tbl_category_1:
     lib: CC
