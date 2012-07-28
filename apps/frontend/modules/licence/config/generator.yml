@@ -53,9 +53,11 @@ generator:
           label: Licencié
         num:
           label: Numéro de licence
+        is_brouillon:
+          label: Brouillon (encours de saisie)
       list:
         title: Liste des licenciés
-        display: [num, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
+        display: [num, is_brouillon, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
         table_method: retrieveByClub
         max_per_page: 20
         batch_actions: {}
