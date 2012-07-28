@@ -11,3 +11,4 @@ web/sfFormExtraPlugin
 web/sfDoctrinePlugin
 Capfile
 /config/deploy.rb
+.tags

@@ -78,6 +78,25 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->save();
       if ($this->isNew()) {
         $oLicence->setIsNew($bIsNew)->save();
+        //Il faut récupérer le prix (calculer)
+        //Il faut récupérer le lib
+        $oPayment = new tbl_payment();
+        $oPayment->setLib('Nouvelle licence')
+                 ->setDescription('Nouvelle licence')
+                 ->setRelationTable('tbl_licence')
+                 ->setAmount(100)
+                 ->setIdLicence($oLicence->getId())
+                 ->save();
+      } else {
+        //Il faut récupérer le prix (calculer)
+        //Il faut récupérer le lib
+        $oPayment = new tbl_payment();
+        $oPayment->setLib('Modification licence')
+                 ->setDescription('Modification licence')
+                 ->setRelationTable('tbl_licence')
+                 ->setAmount(100)
+                 ->setIdLicence($oLicence->getId())
+                 ->save();
       }
 
     }
