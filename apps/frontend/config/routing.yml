@@ -1,3 +1,7 @@
+paypal_url:
+  url:   /paypal_url.php
+  param: { module: payment, action: paypalDev }
+
 tbl_tarifreduit:
   class: sfDoctrineRouteCollection
   options:

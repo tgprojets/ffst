@@ -15,6 +15,7 @@ class licenceActions extends autoLicenceActions
 {
   public function executeListValidSaisie(sfWebRequest $request)
   {
+    $this->nValider = true;
     if ($this->getUser()->isClub())
     {
         $oClub = $this->getUser()->getClub();
@@ -56,10 +57,14 @@ class licenceActions extends autoLicenceActions
   }
   public function executeListSaisie(sfWebRequest $request)
   {
+    $this->nValider = false;
     if ($this->getUser()->isClub())
     {
         $oClub = $this->getUser()->getClub();
-        $this->oLicences = Doctrine::getTable('tbl_licence')->findSaisie(true, false, $oClub->getId());
+        $this->oPaymentLic  = Doctrine::getTable('tbl_payment')->findPaymentLicByClub($oClub->getId());
+        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
+        $this->oAvoirLic  = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
+        $this->oAvoirClub = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
     } elseif ($this->getUser()->isLigue()) {
         $oLigue = $this->getUser()->getLigue();
         $this->oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $oLigue->getId());
@@ -69,7 +74,7 @@ class licenceActions extends autoLicenceActions
         $this->redirect('@tbl_licence');
     }
 
-    $this->setTemplate('saisie');
+    $this->setTemplate('validSaisie');
   }
 
   public function executeListPaypal(sfWebRequest $request)
@@ -84,10 +89,37 @@ class licenceActions extends autoLicenceActions
         $this->nAmountLic     = Doctrine::getTable('tbl_payment')->getAmountLicByClub($oClub->getId());
         $this->nAmountClub    = Doctrine::getTable('tbl_payment')->getAmountClub($oClub->getId());
         $this->nAmountTotal   = $this->nAmountLic+$this->nAmountClub;
+        $this->oBordereau = $this->createBordereau($this->nAmountTotal);
+        $this->linkBordereau($this->oPaymentLic, $this->oBordereau->getId());
+        $this->linkBordereau($this->oPaymentClub, $this->oBordereau->getId());
+        $this->linkBordereau($this->oAvoirLic, $this->oBordereau->getId());
+        $this->linkBordereau($this->oAvoirClub, $this->oBordereau->getId());
     } else {
         $this->redirect('@tbl_licence');
     }
 
     $this->setTemplate('paypal');
+  }
+
+  private function createBordereau($nAmount)
+  {
+    $nIdUser = $this->getUser()->getGuardUser()->getId();
+    $oBordereaux = Doctrine::getTable('tbl_bordereau')->findBySql('id_user='.$nIdUser.' and is_payed = false');
+    foreach ($oBordereaux as $oBordereau) {
+        $oBordereau->delete();
+    }
+    $oBordereau     = new tbl_bordereau();
+    $oBordereau->setLib('Paiement Licence')
+                     ->setAmount($nAmount)
+                     ->setIdUser($nIdUser)
+                     ->save();
+    return $oBordereau;
+  }
+
+  private function linkBordereau($oElements, $nIdBordereau)
+  {
+    foreach ($oElements as $oElement) {
+        $oElement->setIdBordereau($nIdBordereau)->save();
+    }
   }
 }

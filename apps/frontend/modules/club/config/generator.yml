@@ -57,6 +57,9 @@ generator:
           _edit: ~
           edit_password:
             label: Modifier mot de passe
+          regulation:
+            label: Règlement encours
+            credentials: [admin]
           _delete:
             credentials: [admin]
       filter:
