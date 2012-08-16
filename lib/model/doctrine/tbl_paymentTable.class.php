@@ -34,4 +34,28 @@ class tbl_paymentTable extends Doctrine_Table
 
         return $q->execute();
     }
+
+    public function getAmountLicByClub($nIdClub)
+    {
+        $q = Doctrine_Query::create()
+          ->select('SUM(p.amount) AS AmountTotal')
+          ->from('tbl_payment p')
+          ->leftJoin('p.tbl_licence l')
+          ->andWhere('l.id_club = ?', $nIdClub)
+          ->andWhere('p.is_payed = ?', false);
+        $result = $q->fetchOne();
+        return $result['AmountTotal'];
+    }
+
+    public function getAmountClub($nIdClub)
+    {
+        $q = Doctrine_Query::create()
+          ->select('SUM(p.amount) AS AmountTotal')
+          ->from('tbl_payment p')
+          ->andWhere('p.id_club = ?', $nIdClub)
+          ->andWhere('p.is_payed = ?', false);
+        $result = $q->fetchOne();
+        return $result['AmountTotal'];
+    }
+
 }
