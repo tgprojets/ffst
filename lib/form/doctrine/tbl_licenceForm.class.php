@@ -38,7 +38,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
         //Calcul num licence
         $oClub = Doctrine::getTable('tbl_club')->find($aValues['id_club']);
-        $nMember = Doctrine::getTable('tbl_licence')->countLicenceClub($aValues['id_club']);
+        $nMember = Doctrine::getTable('tbl_licence')->countLicenceClub($aValues['id_club'], $this->getDateLicence());
         $nMember = str_pad($nMember,3,"0",STR_PAD_LEFT);
         $sNum = $oClub->getNum().'.'.$nMember.'.'.$this->getDateLicence();
     } else {
@@ -79,6 +79,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->save();
       if ($this->isNew()) {
         $oLicence->setIsBrouillon(true)
+                 ->setYearLicence($this->getDateLicence())
                  ->setIsNew($bIsNew)
                  ->save();
         $oCalcul = new CalculLicence($oLicence->getId());
@@ -181,6 +182,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
             array(
               new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
        ))
     );
 
@@ -254,6 +256,23 @@ class tbl_licenceForm extends Basetbl_licenceForm
         }
       }
     }
+  }
+  public function checkYearLicence($validator, $values)
+  {
+    if ($this->isNew() && !empty($values['id_profil']))
+    {
+
+      $nbr = Doctrine_Query::create()
+          ->from('tbl_licence l')
+          ->where("l.id_profil = ?", $values['id_profil'])
+          ->andWhere("l.year_licence = ?", $this->getDateLicence())
+          ->count();
+      if ($nbr>0) {
+        throw new sfValidatorError($validator, 'Ce licencié a déjà une licence.');
+      }
+
+    }
+    return $values;
   }
   public function checkNameBirthday($validator, $values)
   {

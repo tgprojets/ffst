@@ -17,10 +17,11 @@ class tbl_licenceTable extends Doctrine_Table
         return Doctrine_Core::getTable('tbl_licence');
     }
 
-    public function countLicenceClub($nIdClub)
+    public function countLicenceClub($nIdClub, $sYearLicence)
     {
         $q = $this->createQuery('l');
-        $q->where('id_club = ?', $nIdClub);
+        $q->where('id_club = ?', $nIdClub)
+          ->andWhere("l.year_licence = ?", $sYearLicence);
         $nMember = $q->execute()->count();
         if ($nMember == 0) {
             return 1;

@@ -592,6 +592,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-10-04'
+    year_licence: '2011/2012'
     date_validation: '2011-10-02'
     tbl_profil: tbl_profil_1
     tbl_club: tbl_club_1
@@ -606,6 +607,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-11-02'
+    year_licence: '2011/2012'
     date_validation: '2011-10-25'
     tbl_profil: tbl_profil_2
     tbl_club: tbl_club_1
@@ -620,6 +622,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-11-04'
+    year_licence: '2011/2012'
     date_validation: '2011-11-01'
     tbl_profil: tbl_profil_3
     tbl_club: tbl_club_1
@@ -634,6 +637,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-11-10'
+    year_licence: '2011/2012'
     date_validation: '2011-11-10'
     tbl_profil: tbl_profil_4
     tbl_club: tbl_club_1
@@ -648,6 +652,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-09-04'
+    year_licence: '2011/2012'
     date_validation: '2011-09-02'
     tbl_profil: tbl_profil_5
     tbl_club: tbl_club_2
@@ -662,6 +667,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-09-20'
+    year_licence: '2011/2012'
     date_validation: '2011-09-25'
     tbl_profil: tbl_profil_6
     tbl_club: tbl_club_2
@@ -676,6 +682,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-10-04'
+    year_licence: '2011/2012'
     date_validation: '2011-10-01'
     tbl_profil: tbl_profil_7
     tbl_club: tbl_club_2
@@ -690,6 +697,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-12-10'
+    year_licence: '2011/2012'
     date_validation: '2011-12-20'
     tbl_profil: tbl_profil_8
     tbl_club: tbl_club_2
@@ -704,6 +712,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-09-15'
+    year_licence: '2011/2012'
     date_validation: '2011-09-15'
     tbl_profil: tbl_profil_9
     tbl_club: tbl_club_3
@@ -718,6 +727,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-09-20'
+    year_licence: '2011/2012'
     date_validation: '2011-09-25'
     tbl_profil: tbl_profil_10
     tbl_club: tbl_club_3
@@ -732,6 +742,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-10-14'
+    year_licence: '2011/2012'
     date_validation: '2011-10-15'
     tbl_profil: tbl_profil_11
     tbl_club: tbl_club_3
@@ -746,6 +757,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2012-01-10'
+    year_licence: '2011/2012'
     date_validation: '2012-01-12'
     tbl_profil: tbl_profil_12
     tbl_club: tbl_club_3
@@ -760,6 +772,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
+    year_licence: '2011/2012'
     date_validation: '2011-11-15'
     tbl_profil: tbl_profil_13
     tbl_club: tbl_club_4
@@ -774,6 +787,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
+    year_licence: '2011/2012'
     date_validation: '2011-11-15'
     tbl_profil: tbl_profil_14
     tbl_club: tbl_club_4
@@ -788,6 +802,7 @@ tbl_licence:
     is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
+    year_licence: '2011/2012'
     date_validation: '2011-11-15'
     tbl_profil: tbl_profil_15
     tbl_club: tbl_club_4
@@ -801,6 +816,7 @@ tbl_licence:
     is_familly: false
     is_brouillon: false
     cnil: false
+    year_licence: '2011/2012'
     tbl_profil: tbl_profil_16
     tbl_club: tbl_club_4
     tbl_category: tbl_category_1

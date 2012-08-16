@@ -146,7 +146,7 @@ tbl_licence:
     cnil:              { type: boolean, default: false }
     date_medical:      { type: timestamp }
     date_validation:   { type: timestamp }
-    year_licence:      { type: timestamp }
+    year_licence:      { type: string(9) }
     id_profil:         { type: integer(4), notnull: true  }
     id_club:           { type: integer(4), notnull: true  }
     id_category:       { type: integer(4), notnull: true  }
