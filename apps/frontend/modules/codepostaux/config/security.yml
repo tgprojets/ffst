@@ -1,2 +1,4 @@
+getCitys:
+  is_secure: false
 all:
   credentials: [[admin, superuser]]

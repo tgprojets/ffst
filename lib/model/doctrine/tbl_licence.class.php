@@ -16,4 +16,15 @@ class tbl_licence extends Basetbl_licence
     {
         return $this->getTblProfil()->getName();
     }
+
+    public function delete(Doctrine_Connection $conn = null)
+    {
+        if ($this->getIsBrouillon()) {
+            $oProfil = $this->getTblProfil();
+            if ($oProfil->getTblLicence()->count() == 1) {
+                $oProfil->delete();
+            }
+        }
+        return parent::delete($conn);
+    }
 }

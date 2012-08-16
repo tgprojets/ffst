@@ -105,4 +105,27 @@ class tbl_licenceTable extends Doctrine_Table
             $oLicence->delete();
         }
     }
+
+    public function findSaisie($isClub, $isLigue, $nKey)
+    {
+        $q = $this->createQuery('q');
+        if ($isClub) {
+            $q->where('id_club = ?', $nKey);
+        } elseif ($isLigue) {
+            $oLigue = Doctrine::getTable('tbl_ligue')->find($nKey);
+            $aClub = array();
+            foreach ($oLigue->getTblClub() as $oClub)
+            {
+                $aClub[] = $oClub->getId();
+            }
+            if (empty($aClub))
+            {
+                $aClub[] = 0;
+            }
+            $q->andWhereIn('id_club', $aClub);
+        }
+        $q->andWhere('is_brouillon = ?', true);
+
+        return $q->execute();
+    }
 }

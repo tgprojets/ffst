@@ -68,5 +68,36 @@ class myUser extends sfGuardSecurityUser
         }
         return null;
     }
+
+    public function hasSaisie()
+    {
+        if ($this->isClub())
+        {
+            $oLicences = Doctrine::getTable('tbl_licence')->findSaisie(true, false, $this->getClub()->getId());
+            return $oLicences->count();
+        } elseif ($this->isLigue()) {
+            $oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $this->getLigue()->getId());
+            return $oLicences->count();
+        }
+        return 0;
+    }
+
+    public function hasToPayed()
+    {
+        if ($this->isClub())
+        {
+            $oPaiementLic  = Doctrine::getTable('tbl_payment')->findPaymentLicByClub($this->getClub()->getId());
+            if ($oPaiementLic->count() > 0)
+            {
+                return true;
+            }
+            $oPaiementClub = Doctrine::getTable('tbl_payment')->findPaymentClub($this->getClub()->getId());
+            if ($oPaiementClub->count() > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 

@@ -589,6 +589,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-10-04'
     date_validation: '2011-10-02'
@@ -602,6 +603,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-02'
     date_validation: '2011-10-25'
@@ -615,6 +617,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-04'
     date_validation: '2011-11-01'
@@ -628,6 +631,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-10'
     date_validation: '2011-11-10'
@@ -641,6 +645,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-04'
     date_validation: '2011-09-02'
@@ -654,6 +659,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-20'
     date_validation: '2011-09-25'
@@ -667,6 +673,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-10-04'
     date_validation: '2011-10-01'
@@ -680,6 +687,7 @@ tbl_licence:
     international: false
     race_nordique: true
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-12-10'
     date_validation: '2011-12-20'
@@ -693,6 +701,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-15'
     date_validation: '2011-09-15'
@@ -706,6 +715,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-20'
     date_validation: '2011-09-25'
@@ -719,6 +729,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-10-14'
     date_validation: '2011-10-15'
@@ -732,6 +743,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2012-01-10'
     date_validation: '2012-01-12'
@@ -745,6 +757,7 @@ tbl_licence:
     international: false
     race_nordique: true
     is_familly: true
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
     date_validation: '2011-11-15'
@@ -758,6 +771,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: true
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
     date_validation: '2011-11-15'
@@ -771,6 +785,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: true
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
     date_validation: '2011-11-15'
@@ -784,6 +799,7 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     tbl_profil: tbl_profil_16
     tbl_club: tbl_club_4
