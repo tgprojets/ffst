@@ -174,11 +174,13 @@ tbl_payment:
     id_licence:        { type: integer(4) }
     id_club:           { type: integer(4) }
     id_ligue:          { type: integer(4) }
+    id_bordereau:      { type: integer(4) }
   relations:
     tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_licence, foreign: id, foreignAlias: tbl_payment }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_payment }
     tbl_ligue:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_payment }
     tbl_typepayment:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typepayment, foreign: id, foreignAlias: tbl_payment }
+    tbl_bordereau:     { local: id_bordereau, foreign: id, foreignAlias: tbl_payment }
 
 tbl_typepayment:
   options:
@@ -208,8 +210,20 @@ tbl_avoir:
     id_licence:        { type: integer(4) }
     id_club:           { type: integer(4) }
     id_ligue:          { type: integer(4) }
+    id_bordereau:      { type: integer(4) }
   relations:
     tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_licence, foreign: id, foreignAlias: tbl_avoir }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_avoir }
     tbl_ligue:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_avoir }
     tbl_typepayment:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typepayment, foreign: id, foreignAlias: tbl_avoir }
+    tbl_bordereau:     { local: id_bordereau, foreign: id, foreignAlias: tbl_avoir }
+
+tbl_bordereau:
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    lib:               { type: string(50) }
+    amount:            { type: float(4) }
+    is_payed:          { type: boolean, default: false }
+    id_user:           { type: integer(4) }
+  relations:
+    sfGuardUser:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_bordereau }

@@ -39,7 +39,7 @@ class mainActions extends sfActions
       $jsonresponse['profil']['last_name'] = $oProfil->getLastName();
       $jsonresponse['profil']['first_name'] = $oProfil->getFirstName();
       $Birthday  = $oProfil->getBirthday();
-      $jsonresponse['profil']['birthday_day'] = substr($Birthday, 8, 2);
+      $jsonresponse['profil']['birthday_day'] = (int) substr($Birthday, 8, 2);
       $jsonresponse['profil']['birthday_month'] = (int) substr($Birthday, 5, 2);
       $jsonresponse['profil']['birthday_year'] = substr($Birthday, 0, 4);
       $jsonresponse['profil']['id_codepostaux'] = $oAddress->getTblCodepostaux()->getId();
