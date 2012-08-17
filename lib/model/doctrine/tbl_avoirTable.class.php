@@ -26,12 +26,53 @@ class tbl_avoirTable extends Doctrine_Table
 
         return $q->execute();
     }
-    public function findAvoirClub($nIdClub)
+    public function findAvoirClub($nIdClub, $bSaisie=false)
     {
         $q = $this->createQuery('a');
         $q->andWhere('a.id_club = ?', $nIdClub)
           ->andWhere('a.is_used = ?', false);
-
+        if ($bSaisie) {
+          $q->andWhere('a.is_brouillon = true');
+        }
         return $q->execute();
+    }
+
+    public function getAmountAvoirClub($nIdClub)
+    {
+        $q = Doctrine_Query::create()
+          ->select('SUM(p.amount) AS AmountTotal')
+          ->from('tbl_avoir a')
+          ->andWhere('a.id_club = ?', $nIdClub)
+          ->andWhere('a.is_payed = ?', false);
+        $result = $q->fetchOne();
+        return $result['AmountTotal'];
+    }
+
+    public function validSaisie($nIdClub, $nIdUser)
+    {
+        $q = $this->createQuery('a');
+        $q->where('a.id_club = ?', $nIdClub)
+          ->andWhere('a.id_user = ?', $nIdUser)
+          ->andWhere('a.is_brouillon = true');
+
+        $oPaiements = $q->execute();
+        foreach ($oPaiements as $oPaiement)
+        {
+          $oPaiement->setIsBrouillon(false)->save();
+        }
+    }
+
+    public function cancelSaisie($nIdClub, $nIdUser)
+    {
+        $q = $this->createQuery('a');
+        $q->where('a.id_club = ?', $nIdClub)
+          ->andWhere('a.id_user = ?', $nIdUser)
+          ->andWhere('a.is_brouillon = true');
+
+        $oPaiements = $q->execute();
+        foreach ($oPaiements as $oPaiement)
+        {
+          $oPaiement->delete();
+        }
     }
 }

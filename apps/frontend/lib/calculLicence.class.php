@@ -13,6 +13,7 @@ class CalculLicence {
     private $YearStart;
     private $YearEnd;
     private $nClub;
+    private $nUser;
 
 
     public function __construct($nLicence)
@@ -25,6 +26,7 @@ class CalculLicence {
         $this->bFamilly        = $oLicence->getIsFamilly();
         $this->DateSaisie      = $oLicence->getCreatedAt();
         $this->nClub           = $oLicence->getIdClub();
+        $this->nUser           = sfContext::getInstance()->getUser()->getGuardUser()->getId();
         $this->setYearLicence();
         $this->setNumLicence($oLicence->getNum());
         $this->setAge($oProfil->getBirthday());
@@ -115,16 +117,16 @@ class CalculLicence {
     {
         if ($this->numLicence == 1) {
             //Cotisation annuel
-            $this->addPayment($this->getArticle('CA'), $this->getArticle('CA', false));
+            $this->addPayment($this->getArticle('CA'), $this->getArticle('CA', false), 'tbl_club', true);
 
             //Cotisation 1
-            $this->addPayment($this->getArticle('CT1'), $this->getArticle('CT1', false));
+            $this->addPayment($this->getArticle('CT1'), $this->getArticle('CT1', false), 'tbl_club', true);
         } elseif ($this->numLicence > 10 && $this->numLicence <=30 ) {
             //Cotisation 2
-            $this->addPayment($this->getArticle('CT2'), $this->getArticle('CT2', false));
+            $this->addPayment($this->getArticle('CT2'), $this->getArticle('CT2', false), 'tbl_club', true);
         } elseif ($this->numLicence > 30 ) {
             //Cotisation 3
-            $this->addPayment($this->getArticle('CT3'), $this->getArticle('CT3', false));
+            $this->addPayment($this->getArticle('CT3'), $this->getArticle('CT3', false), 'tbl_club', true);
         }
     }
 
@@ -181,35 +183,49 @@ class CalculLicence {
         }
 
         //Prix licence
-        $this->addPayment($this->getPrixLicence($this->nTypeLicence), $this->getPrixLicence($this->nTypeLicence, false));
+        $this->addPayment($this->getPrixLicence($this->nTypeLicence), $this->getPrixLicence($this->nTypeLicence, false), 'tbl_licence');
         //Prix majoration
         //Renouvellement
         if ($this->payMajorRenew()) {
-            $this->addPayment($this->getArticle('MDD'), $this->getArticle('MDD', false));
+            $this->addPayment($this->getArticle('MDD'), $this->getArticle('MDD', false), 'tbl_licence');
         }
         //Internationalisation
         if ($this->payMajorInternational()) {
-            $this->addPayment($this->getArticle('INT'), $this->getArticle('INT', false));
+            $this->addPayment($this->getArticle('INT'), $this->getArticle('INT', false), 'tbl_licence');
         }
     }
 
-    private function addPayment($nAmount, $sLib)
+    private function addPayment($nAmount, $sLib, $sRelation, $nClub=false)
     {
         $oPaiement = new tbl_payment();
         $oPaiement->setLib($sLib)
-                  ->setRelationTable('tbl_licence')
+                  ->setRelationTable($sRelation)
                   ->setAmount($nAmount)
-                  ->setIdLicence($this->nLicence)
-                  ->save();
+                  ->setIdUser($this->nUser);
+        if ($nClub)
+        {
+            $oPaiement->setIdClub($this->nClub);
+        } else {
+            $oPaiement->setIdLicence($this->nLicence)
+                      ->setIdClub($this->nClub);
+        }
+        $oPaiement->save();
     }
 
-    private function addAvoir($nAmount, $sLib)
+    private function addAvoir($nAmount, $sLib, $nClub=false)
     {
         $oPaiement = new tbl_avoir();
         $oPaiement->setLib($sLib)
                   ->setRelationTable('tbl_licence')
                   ->setAmount($nAmount)
-                  ->setIdLicence($this->nLicence)
-                  ->save();
+                  ->setIdUser($this->nUser);
+        if ($nClub)
+        {
+            $oPaiement->setIdClub($this->nClub);
+        } else {
+            $oPaiement->setIdLicence($this->nLicence)
+                      ->setIdClub($this->nClub);
+        }
+        $oPaiement->save();
     }
 }

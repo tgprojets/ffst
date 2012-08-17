@@ -9,7 +9,7 @@
   <li class="sf_admin_action_saisie">
     <?php echo link_to(__('Afficher la saisie', array(), 'messages'), 'licence/ListSaisie', array()) ?>
   </li>
-<?php elseif ($sf_user->hasToPayed()) : ?>
+<?php elseif ($sf_user->hasToPayed() && $sf_user->isClub()) : ?>
   <li class="sf_admin_action_paypal">
     <?php echo link_to(__('Payer par PAYPAL', array(), 'messages'), 'licence/ListPaypal', array()) ?>
   </li>

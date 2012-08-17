@@ -79,6 +79,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->save();
       if ($this->isNew()) {
         $oLicence->setIsBrouillon(true)
+                 ->setIdUser(sfContext::getInstance()->getUser()->getGuardUser()->getId())
                  ->setYearLicence($this->getDateLicence())
                  ->setIsNew($bIsNew)
                  ->save();
@@ -183,6 +184,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
               new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieClub'))),
        ))
     );
 
@@ -274,6 +276,23 @@ class tbl_licenceForm extends Basetbl_licenceForm
     }
     return $values;
   }
+
+  public function checkSaisieClub($validator, $values)
+  {
+    $nIdClub = $values['id_club'];
+    $nIdUser = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+    $nbr = Doctrine_Query::create()
+      ->from('tbl_licence l')
+      ->where("l.id_club = ?", $values['id_club'])
+      ->andWhere("l.id_user <> ?", $nIdUser)
+      ->andWhere("l.is_brouillon = true")
+      ->count();
+      if ($nbr>0) {
+        throw new sfValidatorError($validator, 'Ce club est bloqué par un autre utilisateur (encours de saisie).');
+      }
+    return $values;
+  }
+
   public function checkNameBirthday($validator, $values)
   {
     if (! empty($values['last_name']) && ! empty($values['first_name']) && ! empty($values['birthday'])) {

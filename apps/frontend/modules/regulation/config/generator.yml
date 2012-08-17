@@ -1,0 +1,46 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_payment
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_payment
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_payed:
+          label: Règlement effectué
+        id_typepayment:
+          label: Type de paiement
+        amount:
+          label: Montant en (€)
+        tbl_licence:
+          label: Licencié
+        tbl_club:
+          label: Nom du club
+        tbl_ligue:
+          label: Ligue
+        created_at:
+          label: Date de création
+        id_club:
+          label: Club
+        id_ligue:
+          label: Ligue
+        id_bordereau:
+          label: Bordereau
+        date_payment:
+          label: Date de paiement
+      list:
+        display: [date_payment, is_payed, lib, amount, tbl_licence, tbl_club, tbl_ligue, created_at]
+      filter:
+        display: [date_payment, is_payed, id_typepayment, id_club, id_ligue, id_bordereau]
+      form:    ~
+      edit:    ~
+      new:     ~

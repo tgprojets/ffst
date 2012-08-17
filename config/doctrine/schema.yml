@@ -151,7 +151,9 @@ tbl_licence:
     id_club:           { type: integer(4), notnull: true  }
     id_category:       { type: integer(4), notnull: true  }
     id_typelicence:    { type: integer(4), notnull: true  }
+    id_user:           { type: integer(4) }
   relations:
+    sfGuardUser:       { local: id_user, foreign: id, foreignAlias: tbl_licence }
     tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_licence }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_licence }
     tbl_category:      { onDelete: CASCADE, onUpdate: CASCADE, local: id_category, foreign: id, foreignAlias: tbl_licence }
@@ -165,6 +167,7 @@ tbl_payment:
     id:                { type: integer(4), primary: true,  autoincrement: true }
     num:               { type: string(17) }
     date_payment:      { type: timestamp }
+    is_brouillon:      { type: boolean, default: true }
     is_payed:          { type: boolean, default: false }
     lib:               { type: string(50) }
     description:       { type: string(250) }
@@ -175,7 +178,9 @@ tbl_payment:
     id_club:           { type: integer(4) }
     id_ligue:          { type: integer(4) }
     id_bordereau:      { type: integer(4) }
+    id_user:           { type: integer(4) }
   relations:
+    sfGuardUser:       { local: id_user, foreign: id, foreignAlias: tbl_payment }
     tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_licence, foreign: id, foreignAlias: tbl_payment }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_payment }
     tbl_ligue:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_payment }
@@ -203,6 +208,7 @@ tbl_avoir:
   columns:
     id:                { type: integer(4), primary: true,  autoincrement: true }
     lib:               { type: string(50) }
+    is_brouillon:      { type: boolean, default: true }
     amount:            { type: float(4) }
     relation_table:    { type: string(50) }
     is_used:           { type: boolean, default: false }
@@ -211,7 +217,9 @@ tbl_avoir:
     id_club:           { type: integer(4) }
     id_ligue:          { type: integer(4) }
     id_bordereau:      { type: integer(4) }
+    id_user:           { type: integer(4) }
   relations:
+    sfGuardUser:       { local: id_user, foreign: id, foreignAlias: tbl_avoir }
     tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_licence, foreign: id, foreignAlias: tbl_avoir }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_avoir }
     tbl_ligue:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_avoir }

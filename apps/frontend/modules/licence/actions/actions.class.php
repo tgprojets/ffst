@@ -20,15 +20,14 @@ class licenceActions extends autoLicenceActions
     {
         $oClub = $this->getUser()->getClub();
         Doctrine::getTable('tbl_licence')->validSaisie(true, false, $oClub->getId());
-        $this->oPaymentLic  = Doctrine::getTable('tbl_payment')->findPaymentLicByClub($oClub->getId());
-        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
-        $this->oAvoirLic  = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
-        $this->oAvoirClub = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
+        Doctrine::getTable('tbl_payment')->validSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
+        Doctrine::getTable('tbl_avoir')->validSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
+        $this->redirect('licence/listPaypal');
 
     } elseif ($this->getUser()->isLigue()) {
         $oLigue = $this->getUser()->getLigue();
         Doctrine::getTable('tbl_licence')->validSaisie(false, true, $oLigue->getId());
-        //$this->oPayment = Doctrine::getTable('tbl_payment')->findPaymentClub();
+
     } elseif ($this->getUser()->hasCredential('licence')) {
         //Doctrine::getTable('tbl_licence')->validSaisie(false, false, 0);
     } else {
@@ -44,6 +43,8 @@ class licenceActions extends autoLicenceActions
     {
         $oClub = $this->getUser()->getClub();
         Doctrine::getTable('tbl_licence')->cancelSaisie(true, false, $oClub->getId());
+        Doctrine::getTable('tbl_payment')->cancelSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
+        Doctrine::getTable('tbl_avoir')->cancelSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
     } elseif ($this->getUser()->isLigue()) {
         $oLigue = $this->getUser()->getLigue();
         Doctrine::getTable('tbl_licence')->cancelSaisie(false, true, $oLigue->getId());
@@ -61,13 +62,11 @@ class licenceActions extends autoLicenceActions
     if ($this->getUser()->isClub())
     {
         $oClub = $this->getUser()->getClub();
-        $this->oPaymentLic  = Doctrine::getTable('tbl_payment')->findPaymentLicByClub($oClub->getId());
-        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
-        $this->oAvoirLic  = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
+        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId(), true);
         $this->oAvoirClub = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
     } elseif ($this->getUser()->isLigue()) {
         $oLigue = $this->getUser()->getLigue();
-        $this->oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $oLigue->getId());
+        $this->oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $oLigue->getId(), $this->getUser()->getGuardUser()->getId());
     } elseif ($this->getUser()->hasCredential('licence')) {
         //Doctrine::getTable('tbl_licence')->cancelSaisie(false, false, 0);
     } else {
@@ -82,15 +81,12 @@ class licenceActions extends autoLicenceActions
     if ($this->getUser()->isClub())
     {
         $oClub = $this->getUser()->getClub();
-        $this->oPaymentLic    = Doctrine::getTable('tbl_payment')->findPaymentLicByClub($oClub->getId());
-        $this->oPaymentClub   = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
-        $this->oAvoirLic      = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
-        $this->oAvoirClub     = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
-        $this->nAmountLic     = Doctrine::getTable('tbl_payment')->getAmountLicByClub($oClub->getId());
-        $this->nAmountClub    = Doctrine::getTable('tbl_payment')->getAmountClub($oClub->getId());
-        $this->nAmountTotal   = $this->nAmountLic+$this->nAmountClub;
+        $this->oPaymentClub        = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
+        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
+        $this->nAmountClub         = Doctrine::getTable('tbl_payment')->getAmountClub($oClub->getId());
+        $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClub($oClub->getId());
+        $this->nAmountTotal   = $this->nAmountClub - $this->nAmountAvoirClub;
         $this->oBordereau = $this->createBordereau($this->nAmountTotal);
-        $this->linkBordereau($this->oPaymentLic, $this->oBordereau->getId());
         $this->linkBordereau($this->oPaymentClub, $this->oBordereau->getId());
         $this->linkBordereau($this->oAvoirLic, $this->oBordereau->getId());
         $this->linkBordereau($this->oAvoirClub, $this->oBordereau->getId());

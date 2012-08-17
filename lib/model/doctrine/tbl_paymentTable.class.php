@@ -26,12 +26,14 @@ class tbl_paymentTable extends Doctrine_Table
 
         return $q->execute();
     }
-    public function findPaymentClub($nIdClub)
+    public function findPaymentClub($nIdClub, $bSaisie=false)
     {
         $q = $this->createQuery('p');
         $q->andWhere('p.id_club = ?', $nIdClub)
           ->andWhere('p.is_payed = ?', false);
-
+        if ($bSaisie) {
+          $q->andWhere('p.is_brouillon = true');
+        }
         return $q->execute();
     }
 
@@ -58,4 +60,31 @@ class tbl_paymentTable extends Doctrine_Table
         return $result['AmountTotal'];
     }
 
+    public function validSaisie($nIdClub, $nIdUser)
+    {
+        $q = $this->createQuery('p');
+        $q->where('p.id_club = ?', $nIdClub)
+          ->andWhere('p.id_user = ?', $nIdUser)
+          ->andWhere('p.is_brouillon = true');
+
+        $oPaiements = $q->execute();
+        foreach ($oPaiements as $oPaiement)
+        {
+          $oPaiement->setIsBrouillon(false)->save();
+        }
+    }
+
+    public function cancelSaisie($nIdClub, $nIdUser)
+    {
+        $q = $this->createQuery('p');
+        $q->where('p.id_club = ?', $nIdClub)
+          ->andWhere('p.id_user = ?', $nIdUser)
+          ->andWhere('p.is_brouillon = true');
+
+        $oPaiements = $q->execute();
+        foreach ($oPaiements as $oPaiement)
+        {
+          $oPaiement->delete();
+        }
+    }
 }
