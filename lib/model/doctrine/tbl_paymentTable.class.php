@@ -17,13 +17,16 @@ class tbl_paymentTable extends Doctrine_Table
         return Doctrine_Core::getTable('tbl_payment');
     }
 
-    public function findPaymentLicByClub($nIdClub)
+    public function findPaymentByLigue($nIdLigue, $bSaisie=false)
     {
         $q = $this->createQuery('p');
-        $q->leftJoin('p.tbl_licence l')
-          ->andWhere('l.id_club = ?', $nIdClub)
+        $q->leftJoin('p.tbl_club c')
+          ->leftJoin('c.tbl_ligue l')
+          ->andWhere('l.id = ?', $nIdLigue)
           ->andWhere('p.is_payed = ?', false);
-
+        if ($bSaisie) {
+          $q->andWhere('p.is_brouillon = true');
+        }
         return $q->execute();
     }
     public function findPaymentClub($nIdClub, $bSaisie=false)
@@ -37,13 +40,14 @@ class tbl_paymentTable extends Doctrine_Table
         return $q->execute();
     }
 
-    public function getAmountLicByClub($nIdClub)
+    public function getAmountByLigue($nIdLigue)
     {
         $q = Doctrine_Query::create()
           ->select('SUM(p.amount) AS AmountTotal')
           ->from('tbl_payment p')
-          ->leftJoin('p.tbl_licence l')
-          ->andWhere('l.id_club = ?', $nIdClub)
+          ->leftJoin('p.tbl_club c')
+          ->leftJoin('c.tbl_ligue l')
+          ->andWhere('l.id = ?', $nIdLigue)
           ->andWhere('p.is_payed = ?', false);
         $result = $q->fetchOne();
         return $result['AmountTotal'];
@@ -86,5 +90,12 @@ class tbl_paymentTable extends Doctrine_Table
         {
           $oPaiement->delete();
         }
+    }
+
+    public function retrieveByValide(Doctrine_Query $q) {
+        $q = $this->createQuery('q');
+        $q->andWhere('is_brouillon = false');
+
+        return $q;
     }
 }

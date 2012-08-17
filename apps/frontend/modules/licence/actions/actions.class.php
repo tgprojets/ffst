@@ -63,10 +63,11 @@ class licenceActions extends autoLicenceActions
     {
         $oClub = $this->getUser()->getClub();
         $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId(), true);
-        $this->oAvoirClub = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
+        $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
     } elseif ($this->getUser()->isLigue()) {
         $oLigue = $this->getUser()->getLigue();
-        $this->oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $oLigue->getId(), $this->getUser()->getGuardUser()->getId());
+        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentByLigue($oLigue->getId(), true);
+        $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirByLigue($oLigue->getId());
     } elseif ($this->getUser()->hasCredential('licence')) {
         //Doctrine::getTable('tbl_licence')->cancelSaisie(false, false, 0);
     } else {

@@ -3,6 +3,7 @@ generator:
   param:
     model_class:           tbl_avoir
     theme:                 admin
+    css:                   admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -13,9 +14,56 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
-      filter:  ~
+      fields:
+        is_used:
+          label: Avoir utilisé
+        id_typepayment:
+          label: Type de paiement
+        amount:
+          label: Montant en (€)
+        tbl_typepayment:
+          label: Type de paiement
+        tbl_licence:
+          label: Licencié
+        tbl_club:
+          label: Nom du club
+        tbl_ligue:
+          label: Ligue
+        created_at:
+          label: Date de création
+        id_club:
+          label: Club
+        id_ligue:
+          label: Ligue
+        id_bordereau:
+          label: Bordereau
+        date_payment:
+          label: Date de paiement
+        link:
+          label: Club / Licencié / Ligue
+      list:
+        display: [lib, amount, _link, is_used, tbl_typepayment, created_at]
+        max_per_page: 20
+        table_method: retrieveByValide
+        actions:
+          _new:
+            label: Ajouter un avoir
+        batch_actions:
+          regulation_cheque:
+            label: Avoir utilisé / chèque
+          regulation_paypal:
+            label: Avoir utilisé / Paypal
+          regulation_cb:
+            label: Avoir utilisé / CB
+          regulation_espece:
+            label: Avoir utilisé / espèce
+        object_actions: {}
+      filter:
+        display: [is_used, id_typepayment, id_club, id_ligue, id_licence]
       form:    ~
       edit:    ~
-      new:     ~
+      new:
+        title: Ajouter un avoir
+        display:
+          "Note": [lib, amount]
+          "Propriétaire": [id_licence, id_club, id_ligue]

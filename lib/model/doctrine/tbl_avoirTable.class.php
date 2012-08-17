@@ -17,13 +17,16 @@ class tbl_avoirTable extends Doctrine_Table
         return Doctrine_Core::getTable('tbl_avoir');
     }
 
-    public function findAvoirLicByClub($nIdClub)
+    public function findAvoirByLigue($nIdLigue, $bSaisie=false)
     {
-        $q = $this->createQuery('a');
-        $q->leftJoin('a.tbl_licence l')
-          ->andWhere('l.id_club = ?', $nIdClub)
-          ->andWhere('a.is_used = ?', false);
-
+        $q = $this->createQuery('p');
+        $q->leftJoin('p.tbl_club c')
+          ->leftJoin('c.tbl_ligue l')
+          ->andWhere('l.id = ?', $nIdLigue)
+          ->andWhere('p.is_used = ?', false);
+        if ($bSaisie) {
+          $q->andWhere('p.is_brouillon = true');
+        }
         return $q->execute();
     }
     public function findAvoirClub($nIdClub, $bSaisie=false)
@@ -74,5 +77,12 @@ class tbl_avoirTable extends Doctrine_Table
         {
           $oPaiement->delete();
         }
+    }
+
+    public function retrieveByValide(Doctrine_Query $q) {
+        $q = $this->createQuery('q');
+        $q->andWhere('is_brouillon = false');
+
+        return $q;
     }
 }
