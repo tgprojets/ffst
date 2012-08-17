@@ -1,0 +1,69 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_payment
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_payment
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_payed:
+          label: Règlement effectué
+        id_typepayment:
+          label: Type de paiement
+        amount:
+          label: Montant en (€)
+        tbl_typepayment:
+          label: Type de paiement
+        tbl_licence:
+          label: Licencié
+        tbl_club:
+          label: Nom du club
+        tbl_ligue:
+          label: Ligue
+        created_at:
+          label: Date de création
+        id_club:
+          label: Club
+        id_ligue:
+          label: Ligue
+        id_bordereau:
+          label: Bordereau
+        date_payment:
+          label: Date de paiement
+        link:
+          label: Club / Licencié / Ligue
+      list:
+        display: [lib, amount, _link, date_payment, is_payed, tbl_typepayment, created_at]
+        max_per_page: 20
+        table_method: retrieveByValide
+        actions:
+          _new:
+            label: Ajouter une note
+        batch_actions:
+          regulation_cheque:
+            label: Règlement chèque
+          regulation_paypal:
+            label: Règlement Paypal
+          regulation_cb:
+            label: Règlement CB
+          regulation_espece:
+            label: Règlement espèce
+        object_actions: {}
+      filter:
+        display: [date_payment, is_payed, id_typepayment, id_club, id_ligue, id_licence]
+      form:    ~
+      edit:    ~
+      new:
+        title: Ajouter une note
+        display:
+          "Note": [lib, description, amount]
+          "Propriétaire": [id_licence, id_club, id_ligue]

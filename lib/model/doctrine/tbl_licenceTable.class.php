@@ -107,7 +107,7 @@ class tbl_licenceTable extends Doctrine_Table
         }
     }
 
-    public function findSaisie($isClub, $isLigue, $nKey)
+    public function findSaisie($isClub, $isLigue, $nKey, $nUser)
     {
         $q = $this->createQuery('q');
         if ($isClub) {
@@ -125,7 +125,8 @@ class tbl_licenceTable extends Doctrine_Table
             }
             $q->andWhereIn('id_club', $aClub);
         }
-        $q->andWhere('is_brouillon = ?', true);
+        $q->andWhere('is_brouillon = ?', true)
+          ->andWhere('id_user = ?', $nUser);
 
         return $q->execute();
     }

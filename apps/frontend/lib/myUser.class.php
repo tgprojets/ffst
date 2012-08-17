@@ -71,12 +71,13 @@ class myUser extends sfGuardSecurityUser
 
     public function hasSaisie()
     {
+        $nUser = $this->getGuardUser()->getId();
         if ($this->isClub())
         {
-            $oLicences = Doctrine::getTable('tbl_licence')->findSaisie(true, false, $this->getClub()->getId());
+            $oLicences = Doctrine::getTable('tbl_licence')->findSaisie(true, false, $this->getClub()->getId(), $nUser);
             return $oLicences->count();
         } elseif ($this->isLigue()) {
-            $oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $this->getLigue()->getId());
+            $oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $this->getLigue()->getId(), $nUser);
             return $oLicences->count();
         }
         return 0;

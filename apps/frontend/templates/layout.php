@@ -68,6 +68,13 @@
                     <li <?php echo $sf_params->get('module')=="tarifreduit"?'class="sb_menu_select"':''?>><?php echo link_to('Tarif réduit', '@tbl_tarifreduit') ?></li>
                   </ul>
                 <?php endif; ?>
+                <?php if ($sf_user->hasCredential('ValidLicence')): ?>
+                  <li> <h3>Règlements</h3> </li>
+                  <ul class="sb_ssmenu_admin">
+                    <li <?php echo $sf_params->get('module')=="payment"?'class="sb_menu_select"':''?>><?php echo link_to('Paiement', '@tbl_payment') ?></li>
+                    <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Avoir', '@tbl_avoir') ?></li>
+                  </ul>
+                <?php endif; ?>
                 <?php if ($sf_user->hasCredential('licence') || $sf_user->hasCredential('account_club') || $sf_user->hasCredential('account_ligue')): ?>
                 <li> <h3>Gestion des licences</h3> </li>
                 <ul class="sb_ssmenu_admin">
