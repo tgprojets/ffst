@@ -30,6 +30,10 @@ generator:
         class: false
       form:
         display: [lib, prix]
+        actions:
+          _list:
+          _save:
+          _save_and_list:
       edit:
         title: Edition du prix %%lib%%
       new:

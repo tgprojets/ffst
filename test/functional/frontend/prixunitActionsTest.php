@@ -81,16 +81,10 @@ $browser->deconnexion();
 * Formulaire valide
 *
 */
+$oArticle = Doctrine::getTable('tbl_prixunit')->findOneBy('code', 'CA');
 $browser->info('dcheoux')->connexion('dcheoux', 'dcheoux');
-$browser->get('/prixunit/new')->
-  info('Nouveau article prix')->
-  info('2 erreurs Lib & prix requis')->
-  click('Mettre à jour', array('tbl_prixunit' => array(
-  )))->
-  with('form')->begin()->
-    hasErrors(2)->
-  end()->
-  info('Formulaire correcte')->
+$browser->get('/prixunit/'.$oArticle->getId().'/edit')->
+  info('Edition article prix')->
   click('Mettre à jour', array('tbl_prixunit' => array(
     'lib'     => 'test',
     'prix'    => '100',
@@ -104,11 +98,5 @@ $browser->get('/prixunit/new')->
     with('request')->begin()->
       isParameter('module', 'prixunit')->
       isParameter('action', 'edit')->
-    end()->
-    click('Mettre à jour', array('tbl_prixunit' => array(
-      'lib'   => 'test 1',
-      'prix'  => '120'
-    )))->
-    with('response')->isRedirected()->
-    followRedirect();
+    end();
 $browser->deconnexion();

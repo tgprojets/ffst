@@ -59,11 +59,11 @@ generator:
             label: Règlement espèce
         object_actions: {}
       filter:
-        display: [date_payment, is_payed, id_typepayment, id_club, id_ligue, id_licence]
+        display: [date_payment, is_payed, id_typepayment, id_club, id_ligue, id_profil]
       form:    ~
       edit:    ~
       new:
         title: Ajouter une note
         display:
           "Note": [lib, description, amount]
-          "Propriétaire": [id_licence, id_club, id_ligue]
+          "Propriétaire": [id_profil, id_club, id_ligue]

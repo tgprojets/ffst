@@ -1,29 +1,72 @@
+tbl_tarifreduit:
+  tbl_tarifreduit_1:
+    lib: Moins de 18 an
+    code: MIN
+    prix: 10
+  tbl_tarifreduit_2:
+    lib: Famille à partir 2ème licence
+    code: FM
+    prix: 5
+tbl_prixunit:
+  tbl_prixunit_1:
+    lib: Cotisation annuel
+    code: CA
+    prix: 30
+  tbl_prixunit_2:
+    lib: Cotisation Tranche 1
+    code: CT1
+    prix: 15
+  tbl_prixunit_3:
+    lib: Cotisation Tranche 2
+    code: CT2
+    prix: 2
+  tbl_prixunit_4:
+    lib: Cotisation Tranche 3
+    code: CT3
+    prix: 4
+  tbl_prixunit_5:
+    lib: Majoration dépassement de délai
+    code: MDD
+    prix: 5
+  tbl_prixunit_6:
+    lib: Supplément option international
+    code: INT
+    prix: 20
+
 tbl_typelicence:
   tbl_typelicence_1:
-    lib: Attelage
-    code: AT
-    prix: 100
-  tbl_typelicence_2:
     lib: Attelage Junior
     code: ATJ
     prix: 80
+  tbl_typelicence_2:
+    lib: Attelage
+    code: AT
+    prix: 100
   tbl_typelicence_3:
+    lib: Monochien Junior
+    code: MOCJ
+    prix: 110
+  tbl_typelicence_4:
     lib: Monochien
     code: MOC
     prix: 120
-  tbl_typelicence_4:
-    lib: Monochien Junior
-    code: MOCJ
-    prix: 100
   tbl_typelicence_5:
+    lib: Sport-Loisir
+    code: SP
+    prix: 180
+  tbl_typelicence_6:
     lib: "Dirigeant & Professionnel"
     code: DP
     prix: 200
-  tbl_typelicence_6:
-    lib: Sport-Loisir
-    code: SP
-    prix: 100
-
+tbl_typepayment:
+  tbl_typepayment_1:
+    lib: Paypal
+  tbl_typepayment_2:
+    lib: Chèque
+  tbl_typepayment_3:
+    lib: CB
+  tbl_typepayment_4:
+    lib: Espèce
 tbl_category:
   tbl_category_1:
     lib: CC
@@ -546,8 +589,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-10-04'
+    year_licence: '2011/2012'
     date_validation: '2011-10-02'
     tbl_profil: tbl_profil_1
     tbl_club: tbl_club_1
@@ -559,8 +604,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-02'
+    year_licence: '2011/2012'
     date_validation: '2011-10-25'
     tbl_profil: tbl_profil_2
     tbl_club: tbl_club_1
@@ -572,8 +619,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-04'
+    year_licence: '2011/2012'
     date_validation: '2011-11-01'
     tbl_profil: tbl_profil_3
     tbl_club: tbl_club_1
@@ -585,8 +634,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-10'
+    year_licence: '2011/2012'
     date_validation: '2011-11-10'
     tbl_profil: tbl_profil_4
     tbl_club: tbl_club_1
@@ -598,8 +649,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-04'
+    year_licence: '2011/2012'
     date_validation: '2011-09-02'
     tbl_profil: tbl_profil_5
     tbl_club: tbl_club_2
@@ -611,8 +664,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-20'
+    year_licence: '2011/2012'
     date_validation: '2011-09-25'
     tbl_profil: tbl_profil_6
     tbl_club: tbl_club_2
@@ -624,8 +679,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-10-04'
+    year_licence: '2011/2012'
     date_validation: '2011-10-01'
     tbl_profil: tbl_profil_7
     tbl_club: tbl_club_2
@@ -637,8 +694,10 @@ tbl_licence:
     international: false
     race_nordique: true
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-12-10'
+    year_licence: '2011/2012'
     date_validation: '2011-12-20'
     tbl_profil: tbl_profil_8
     tbl_club: tbl_club_2
@@ -650,8 +709,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-15'
+    year_licence: '2011/2012'
     date_validation: '2011-09-15'
     tbl_profil: tbl_profil_9
     tbl_club: tbl_club_3
@@ -663,8 +724,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-09-20'
+    year_licence: '2011/2012'
     date_validation: '2011-09-25'
     tbl_profil: tbl_profil_10
     tbl_club: tbl_club_3
@@ -676,8 +739,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2011-10-14'
+    year_licence: '2011/2012'
     date_validation: '2011-10-15'
     tbl_profil: tbl_profil_11
     tbl_club: tbl_club_3
@@ -689,8 +754,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
     date_medical: '2012-01-10'
+    year_licence: '2011/2012'
     date_validation: '2012-01-12'
     tbl_profil: tbl_profil_12
     tbl_club: tbl_club_3
@@ -702,8 +769,10 @@ tbl_licence:
     international: false
     race_nordique: true
     is_familly: true
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
+    year_licence: '2011/2012'
     date_validation: '2011-11-15'
     tbl_profil: tbl_profil_13
     tbl_club: tbl_club_4
@@ -715,8 +784,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: true
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
+    year_licence: '2011/2012'
     date_validation: '2011-11-15'
     tbl_profil: tbl_profil_14
     tbl_club: tbl_club_4
@@ -728,8 +799,10 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: true
+    is_brouillon: false
     cnil: false
     date_medical: '2011-11-15'
+    year_licence: '2011/2012'
     date_validation: '2011-11-15'
     tbl_profil: tbl_profil_15
     tbl_club: tbl_club_4
@@ -741,7 +814,9 @@ tbl_licence:
     international: false
     race_nordique: false
     is_familly: false
+    is_brouillon: false
     cnil: false
+    year_licence: '2011/2012'
     tbl_profil: tbl_profil_16
     tbl_club: tbl_club_4
     tbl_category: tbl_category_1

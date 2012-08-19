@@ -22,7 +22,7 @@ class tbl_paymentForm extends Basetbl_paymentForm
                  ->setDescription($aValues['description'])
                  ->setAmount($aValues['amount'])
                  ->setIsBrouillon(false)
-                 ->setIdLicence($aValues['id_licence']==''?null:$aValues['id_licence'])
+                 ->setIdProfil($aValues['id_profil']==''?null:$aValues['id_profil'])
                  ->setIdClub($aValues['id_club'])
                  ->setIdLigue($aValues['id_ligue'])
                  ->setIdUser($nIdUser)
@@ -38,7 +38,7 @@ class tbl_paymentForm extends Basetbl_paymentForm
   }
   public function buildWidget()
   {
-        $this->widgetSchema['id_licence']            = new sfWidgetFormChoice(array(
+        $this->widgetSchema['id_profil']            = new sfWidgetFormChoice(array(
             'label'            => 'Cherche licencié (Nom prénom)',
             'choices'          => array(),
             'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
@@ -48,7 +48,30 @@ class tbl_paymentForm extends Basetbl_paymentForm
 
   public function buildValidator()
   {
-      $this->setValidator('id_licence', new sfValidatorString(array('required' => false)));
+      $this->setValidator('lib', new sfValidatorString(
+      array('required' => true),
+      array(
+       'required' => 'Libellé de la note est requise',
+      )));
+      $this->setValidator('amount', new sfValidatorString(
+      array('required' => true),
+      array(
+       'required' => 'Montant de la note est requise',
+      )));
+      $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
+      $this->validatorSchema->setPostValidator(new sfValidatorAnd(
+            array(
+              new sfValidatorCallback(array('callback'=> array($this, 'checkProprietaire'))),
+       ))
+    );
   }
 
+  public function checkProprietaire($validator, $values)
+  {
+    if (empty($values['id_profil']) && empty($values['id_club']) && empty($values['id_ligue']))
+    {
+      throw new sfValidatorError($validator, 'Saisir un propriétaire.');
+    }
+    return $values;
+  }
 }
