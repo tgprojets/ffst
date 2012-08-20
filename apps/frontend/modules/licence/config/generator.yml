@@ -82,7 +82,7 @@ generator:
         actions:
           _list:
           _save_and_add:
-          save_and_saisie:
+          _save_and_saisie:
       edit:
         display:
           "Profile": [email, last_name, first_name, birthday, id_profil]

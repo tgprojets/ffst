@@ -34,6 +34,10 @@
         <target>Mettre à jour et retour à la liste</target>
       </trans-unit>
       <trans-unit>
+        <source>Save and saisie</source>
+        <target>Mettre à jour et afficher la saisie</target>
+      </trans-unit>
+      <trans-unit>
         <source>Save and add picture</source>
         <target>Mettre à jour et ajouter une photo</target>
       </trans-unit>

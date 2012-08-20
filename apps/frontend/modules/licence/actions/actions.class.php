@@ -18,68 +18,61 @@ class licenceActions extends autoLicenceActions
     $this->nValider = true;
     if ($this->getUser()->isClub())
     {
-        $oClub = $this->getUser()->getClub();
-        Doctrine::getTable('tbl_licence')->validSaisie(true, false, $oClub->getId());
-        Doctrine::getTable('tbl_payment')->validSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
-        Doctrine::getTable('tbl_avoir')->validSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
-        $this->redirect('licence/listPaypal');
+      $this->validSaisie();
+      $this->redirect('licence/listPaypal');
 
-    } elseif ($this->getUser()->isLigue()) {
-        $oLigue = $this->getUser()->getLigue();
-        Doctrine::getTable('tbl_licence')->validSaisie(false, true, $oLigue->getId());
-
-    } elseif ($this->getUser()->hasCredential('licence')) {
-        Doctrine::getTable('tbl_licence')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
-        Doctrine::getTable('tbl_payment')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
-        Doctrine::getTable('tbl_avoir')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
-    } else {
-        $this->redirect('@tbl_licence');
+    } elseif ($this->getUser()->hasCredential('licence') || $this->getUser()->isLigue()) {
+      $this->validSaisie();
+      $this->getUser()->setFlash('notice', 'Vous avez validé la saisie.');
+      $this->redirect('@tbl_licence');
     }
+    $this->redirect('@tbl_licence');
+  }
 
-    $this->setTemplate('validSaisie');
+  private function validSaisie()
+  {
+    Doctrine::getTable('tbl_licence')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
+    Doctrine::getTable('tbl_payment')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
+    Doctrine::getTable('tbl_avoir')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
   }
 
   public function executeListCancelSaisie(sfWebRequest $request)
   {
-    if ($this->getUser()->isClub())
+    if ($this->getUser()->isClub() || $this->getUser()->isLigue() || $this->getUser()->hasCredential('licence'))
     {
-        $oClub = $this->getUser()->getClub();
-        Doctrine::getTable('tbl_licence')->cancelSaisie(true, false, $oClub->getId());
-        Doctrine::getTable('tbl_payment')->cancelSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
-        Doctrine::getTable('tbl_avoir')->cancelSaisie($oClub->getId(), $this->getUser()->getGuardUser()->getId());
-    } elseif ($this->getUser()->isLigue()) {
-        $oLigue = $this->getUser()->getLigue();
-        Doctrine::getTable('tbl_licence')->cancelSaisie(false, true, $oLigue->getId());
-    } elseif ($this->getUser()->hasCredential('licence')) {
-        Doctrine::getTable('tbl_licence')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
-        Doctrine::getTable('tbl_payment')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
-        Doctrine::getTable('tbl_avoir')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
-    } else {
-        $this->redirect('@tbl_licence');
+      $this->cancelSaisie();
+      $this->getUser()->setFlash('notice', 'Vous avez annulé la saisie.');
     }
-
-    $this->setTemplate('cancelSaisie');
+    $this->redirect('@tbl_licence');
   }
+
+  private function cancelSaisie()
+  {
+    Doctrine::getTable('tbl_licence')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
+    Doctrine::getTable('tbl_payment')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
+    Doctrine::getTable('tbl_avoir')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
+  }
+
   public function executeListSaisie(sfWebRequest $request)
   {
     $this->nValider = false;
     if ($this->getUser()->isClub())
     {
-        $oClub = $this->getUser()->getClub();
-        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId(), true);
-        $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
+      $oClub = $this->getUser()->getClub();
+      $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId(), true);
+      $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
     } elseif ($this->getUser()->isLigue()) {
-        $oLigue = $this->getUser()->getLigue();
-        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentByLigue($oLigue->getId(), true);
-        $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirByLigue($oLigue->getId());
+      $oLigue = $this->getUser()->getLigue();
+      $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentByUser($this->getUser()->getGuardUser()->getId());
+      $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirByUser($this->getUser()->getGuardUser()->getId());
     } elseif ($this->getUser()->hasCredential('licence')) {
-        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentByUser($this->getUser()->getGuardUser()->getId());
-        $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirByUser($this->getUser()->getGuardUser()->getId());
+      $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentByUser($this->getUser()->getGuardUser()->getId());
+      $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirByUser($this->getUser()->getGuardUser()->getId());
     } else {
-        $this->redirect('@tbl_licence');
+      $this->redirect('@tbl_licence');
     }
 
-    $this->setTemplate('validSaisie');
+    $this->setTemplate('saisie');
   }
 
   public function executeListPaypal(sfWebRequest $request)
@@ -91,8 +84,9 @@ class licenceActions extends autoLicenceActions
         $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
         $this->nAmountClub         = Doctrine::getTable('tbl_payment')->getAmountClub($oClub->getId());
         $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClub($oClub->getId());
-        $this->nAmountTotal   = $this->nAmountClub - $this->nAmountAvoirClub;
-        $this->oBordereau = $this->createBordereau($this->nAmountTotal);
+        $this->nAmountTotal        = $this->nAmountClub - $this->nAmountAvoirClub;
+        $this->oBordereau          = $this->createBordereau($this->nAmountTotal);
+
         $this->linkBordereau($this->oPaymentClub, $this->oBordereau->getId());
         $this->linkBordereau($this->oAvoirClub, $this->oBordereau->getId());
     } else {
@@ -121,6 +115,54 @@ class licenceActions extends autoLicenceActions
   {
     foreach ($oElements as $oElement) {
         $oElement->setIdBordereau($nIdBordereau)->save();
+    }
+  }
+
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid())
+    {
+      $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+
+      try {
+        $tbl_licence = $form->save();
+      } catch (Doctrine_Validator_Exception $e) {
+
+        $errorStack = $form->getObject()->getErrorStack();
+
+        $message = get_class($form->getObject()) . ' has ' . count($errorStack) . " field" . (count($errorStack) > 1 ?  's' : null) . " with validation errors: ";
+        foreach ($errorStack as $field => $errors) {
+            $message .= "$field (" . implode(", ", $errors) . "), ";
+        }
+        $message = trim($message, ', ');
+
+        $this->getUser()->setFlash('error', $message);
+        return sfView::SUCCESS;
+      }
+
+      $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $tbl_licence)));
+
+      if ($request->hasParameter('_save_and_add'))
+      {
+        $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
+
+        $this->redirect('@tbl_licence_new');
+      }
+      elseif ($request->hasParameter('_save_and_saisie')){
+        $this->getUser()->setFlash('notice', $notice.' Votre saisie.');
+
+        $this->redirect('licence/ListSaisie');
+
+      } else {
+        $this->getUser()->setFlash('notice', $notice);
+
+        $this->redirect(array('sf_route' => 'tbl_licence_edit', 'sf_subject' => $tbl_licence));
+      }
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
   }
 }
