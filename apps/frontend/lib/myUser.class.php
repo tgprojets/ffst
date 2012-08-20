@@ -80,6 +80,10 @@ class myUser extends sfGuardSecurityUser
             $oLicences = Doctrine::getTable('tbl_licence')->findSaisie(false, true, $this->getLigue()->getId(), $nUser);
             return $oLicences->count();
         }
+        if ($this->hasCredential('licence')) {
+            $oLicences = Doctrine::getTable('tbl_licence')->findSaisieByUser($nUser);
+            return $oLicences->count();
+        }
         return 0;
     }
 
@@ -87,11 +91,6 @@ class myUser extends sfGuardSecurityUser
     {
         if ($this->isClub())
         {
-            $oPaiementLic  = Doctrine::getTable('tbl_payment')->findPaymentLicByClub($this->getClub()->getId());
-            if ($oPaiementLic->count() > 0)
-            {
-                return true;
-            }
             $oPaiementClub = Doctrine::getTable('tbl_payment')->findPaymentClub($this->getClub()->getId());
             if ($oPaiementClub->count() > 0)
             {

@@ -78,7 +78,11 @@ generator:
             credentials: [admin]
       filter:
         display: [num, id_typelicence, id_category]
-      form:    ~
+      form:
+        actions:
+          _list:
+          _save_and_add:
+          save_and_saisie:
       edit:
         display:
           "Profile": [email, last_name, first_name, birthday, id_profil]
