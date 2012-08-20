@@ -79,6 +79,21 @@ class tbl_licenceTable extends Doctrine_Table
         }
     }
 
+    public function validSaisieByUser($nIdUser)
+    {
+        $q = $this->createQuery('q');
+
+        $q->andWhere('id_user = ?', $nIdUser)
+          ->andWhere('is_brouillon = ?', true);
+
+        $oLicences = $q->execute();
+
+        foreach ($oLicences as $oLicence)
+        {
+            $oLicence->setIsBrouillon(false)->save();
+        }
+    }
+
     public function cancelSaisie($isClub, $isLigue, $nKey)
     {
         $q = $this->createQuery('q');
@@ -107,6 +122,21 @@ class tbl_licenceTable extends Doctrine_Table
         }
     }
 
+    public function cancelSaisieByUser($nIdUser)
+    {
+        $q = $this->createQuery('q');
+
+        $q->andWhere('id_user = ?', $nIdUser)
+          ->andWhere('is_brouillon = ?', true);
+
+        $oLicences = $q->execute();
+
+        foreach ($oLicences as $oLicence)
+        {
+            $oLicence->delete();
+        }
+    }
+
     public function findSaisie($isClub, $isLigue, $nKey, $nUser)
     {
         $q = $this->createQuery('q');
@@ -125,6 +155,15 @@ class tbl_licenceTable extends Doctrine_Table
             }
             $q->andWhereIn('id_club', $aClub);
         }
+        $q->andWhere('is_brouillon = ?', true)
+          ->andWhere('id_user = ?', $nUser);
+
+        return $q->execute();
+    }
+
+    public function findSaisieByUser($nUser)
+    {
+        $q = $this->createQuery('q');
         $q->andWhere('is_brouillon = ?', true)
           ->andWhere('id_user = ?', $nUser);
 

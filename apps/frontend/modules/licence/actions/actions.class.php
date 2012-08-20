@@ -29,7 +29,9 @@ class licenceActions extends autoLicenceActions
         Doctrine::getTable('tbl_licence')->validSaisie(false, true, $oLigue->getId());
 
     } elseif ($this->getUser()->hasCredential('licence')) {
-        //Doctrine::getTable('tbl_licence')->validSaisie(false, false, 0);
+        Doctrine::getTable('tbl_licence')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
+        Doctrine::getTable('tbl_payment')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
+        Doctrine::getTable('tbl_avoir')->validSaisieByUser($this->getUser()->getGuardUser()->getId());
     } else {
         $this->redirect('@tbl_licence');
     }
@@ -49,7 +51,9 @@ class licenceActions extends autoLicenceActions
         $oLigue = $this->getUser()->getLigue();
         Doctrine::getTable('tbl_licence')->cancelSaisie(false, true, $oLigue->getId());
     } elseif ($this->getUser()->hasCredential('licence')) {
-        //Doctrine::getTable('tbl_licence')->cancelSaisie(false, false, 0);
+        Doctrine::getTable('tbl_licence')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
+        Doctrine::getTable('tbl_payment')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
+        Doctrine::getTable('tbl_avoir')->cancelSaisieByUser($this->getUser()->getGuardUser()->getId());
     } else {
         $this->redirect('@tbl_licence');
     }
@@ -69,7 +73,8 @@ class licenceActions extends autoLicenceActions
         $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentByLigue($oLigue->getId(), true);
         $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirByLigue($oLigue->getId());
     } elseif ($this->getUser()->hasCredential('licence')) {
-        //Doctrine::getTable('tbl_licence')->cancelSaisie(false, false, 0);
+        $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentByUser($this->getUser()->getGuardUser()->getId());
+        $this->oAvoirClub   = Doctrine::getTable('tbl_avoir')->findAvoirByUser($this->getUser()->getGuardUser()->getId());
     } else {
         $this->redirect('@tbl_licence');
     }
@@ -83,13 +88,12 @@ class licenceActions extends autoLicenceActions
     {
         $oClub = $this->getUser()->getClub();
         $this->oPaymentClub        = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
-        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
+        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
         $this->nAmountClub         = Doctrine::getTable('tbl_payment')->getAmountClub($oClub->getId());
         $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClub($oClub->getId());
         $this->nAmountTotal   = $this->nAmountClub - $this->nAmountAvoirClub;
         $this->oBordereau = $this->createBordereau($this->nAmountTotal);
         $this->linkBordereau($this->oPaymentClub, $this->oBordereau->getId());
-        $this->linkBordereau($this->oAvoirLic, $this->oBordereau->getId());
         $this->linkBordereau($this->oAvoirClub, $this->oBordereau->getId());
     } else {
         $this->redirect('@tbl_licence');

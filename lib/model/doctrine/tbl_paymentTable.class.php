@@ -17,6 +17,16 @@ class tbl_paymentTable extends Doctrine_Table
         return Doctrine_Core::getTable('tbl_payment');
     }
 
+    public function findPaymentByUser($nIdUser)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.id_user = ?', $nIdUser)
+          ->andWhere('p.is_payed = ?', false)
+          ->andWhere('p.is_brouillon = true');
+
+        return $q->execute();
+    }
+
     public function findPaymentByLigue($nIdLigue, $bSaisie=false)
     {
         $q = $this->createQuery('p');
@@ -36,6 +46,8 @@ class tbl_paymentTable extends Doctrine_Table
           ->andWhere('p.is_payed = ?', false);
         if ($bSaisie) {
           $q->andWhere('p.is_brouillon = true');
+        } else {
+          $q->andWhere('p.is_brouillon = false');
         }
         return $q->execute();
     }
@@ -59,6 +71,7 @@ class tbl_paymentTable extends Doctrine_Table
           ->select('SUM(p.amount) AS AmountTotal')
           ->from('tbl_payment p')
           ->andWhere('p.id_club = ?', $nIdClub)
+          ->andWhere('p.is_brouillon = ?', false)
           ->andWhere('p.is_payed = ?', false);
         $result = $q->fetchOne();
         return $result['AmountTotal'];
@@ -92,6 +105,31 @@ class tbl_paymentTable extends Doctrine_Table
         }
     }
 
+    public function validSaisieByUser($nIdUser)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.id_user = ?', $nIdUser)
+          ->andWhere('p.is_brouillon = true');
+
+        $oPaiements = $q->execute();
+        foreach ($oPaiements as $oPaiement)
+        {
+          $oPaiement->setIsBrouillon(false)->save();
+        }
+    }
+
+    public function cancelSaisieByUser($nIdUser)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.id_user = ?', $nIdUser)
+          ->andWhere('p.is_brouillon = true');
+
+        $oPaiements = $q->execute();
+        foreach ($oPaiements as $oPaiement)
+        {
+          $oPaiement->delete();
+        }
+    }
     public function retrieveByValide(Doctrine_Query $q) {
         $q = $this->createQuery('q');
         $q->andWhere('is_brouillon = false');

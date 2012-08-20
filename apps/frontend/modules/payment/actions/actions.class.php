@@ -31,7 +31,9 @@ class paymentActions extends sfActions
     $oPaiements = $oBordereau->getTblPayment();
     foreach ($oPaiements as $oPaiement)
     {
+      if ($oPaiement->getIdLicence() != null) {
         $this->valideLicence($oPaiement);
+      }
         $oPaiement->setDatePayment(date("Y-m-d H:i:s"))
                   ->setIsPayed(true)
                   ->setIdTypepayment($nIdType)
@@ -43,7 +45,7 @@ class paymentActions extends sfActions
   private function valideLicence($oPaiement)
   {
     $oLicence = $oPaiement->getTblLicence();
-    if ($oLicence) {
+    if ($oLicence->getDateValidation() == null) {
         $oLicence->setDateValidation(date("Y-m-d H:i:s"))->save();
     }
   }
