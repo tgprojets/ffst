@@ -10,7 +10,7 @@
     <?php endif; ?>
     <li>
         <?php if ($sf_user->hasCredential(array(  0 => 'ValidLicence',)) && $tbl_licence->getDateValidation() == null && $tbl_licence->getIsBrouillon() == false): ?>
-            <?php echo link_to(__('Valid licence', array(), 'messages'), 'licence/ListValidLicence?id='.$tbl_licence->getId(), array()) ?>
+            <?php echo link_to(__('Valider', array(), 'messages'), 'licence/ListValidLicence?id='.$tbl_licence->getId(), array('confirm' => 'Etes vous sur de valider la licence ?')) ?>
         <?php endif; ?>
     </li>
     <?php if ($sf_user->hasCredential(array(  0 => 'admin',))): ?>

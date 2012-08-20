@@ -74,7 +74,6 @@ class licenceActions extends autoLicenceActions
 
     $this->setTemplate('saisie');
   }
-
   public function executeListPaypal(sfWebRequest $request)
   {
     if ($this->getUser()->isClub())
@@ -164,5 +163,42 @@ class licenceActions extends autoLicenceActions
     {
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
+  }
+
+  public function executeListValidLicence(sfWebRequest $request)
+  {
+    $oLicence = $this->getRoute()->getObject();
+    if ($this->getUser()->hasCredential('ValidLicence')) {
+      $this->getUser()->setFlash('notice', 'Licence validé: '.$oLicence->getTblProfil());
+      $oLicence->setDateValidation(date("Y-m-d H:i:s"))->save();
+    }
+    $this->redirect('@tbl_licence');
+  }
+
+  public function executeListImprimer(sfWebRequest $request)
+  {
+    $oLicence = $this->getRoute()->getObject();
+    if ($oLicence->getDateValidation() != null) {
+      $this->getUser()->setFlash('notice', 'Impression de la licence: '.$oLicence->getTblProfil());
+    } else {
+      $this->getUser()->setFlash('error', 'Licence pas valide: '.$oLicence->getTblProfil());
+    }
+    $this->redirect('@tbl_licence');
+  }
+
+  public function executeDelete(sfWebRequest $request)
+  {
+    $this->redirect('@tbl_licence');
+  }
+
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->tbl_licence = $this->getRoute()->getObject();
+
+    if ($this->tbl_licence->getIsBrouillon()) {
+      $this->getUser()->setFlash('error', 'Impossible de modifié encours de saisie: '.$this->tbl_licence->getTblProfil());
+      $this->redirect('@tbl_licence');
+    }
+    $this->form = $this->configuration->getForm($this->tbl_licence);
   }
 }

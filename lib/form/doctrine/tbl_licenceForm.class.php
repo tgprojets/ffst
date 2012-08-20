@@ -140,6 +140,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
             'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
         ));
         $this->widgetSchema['is_checked']           = new sfWidgetFormInputHidden();
+      } else {
+        $this->widgetSchema['id_profil']           = new sfWidgetFormInputHidden();;
       }
   }
 
@@ -204,6 +206,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $this->setDefault('fax', $oAddress->getFax());
         $this->setDefault('gsm', $oAddress->getGsm());
         $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
+        $this->setDefault('id_profil', $oUser->getId());
     } else {
       $this->setDefault('is_checked', '0');
       if (sfContext::getInstance()->getUser()->isClub()) {
