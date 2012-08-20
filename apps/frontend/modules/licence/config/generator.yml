@@ -15,6 +15,8 @@ generator:
     config:
       actions: ~
       fields:
+        is_valid:
+          label: Licence Valide
         email:
           help: Requis
         first_name:
@@ -39,7 +41,6 @@ generator:
           label: Fax
         id_club:
           label: Club
-          help: Requis
         id_category:
           label: Catégorie
         id_familly:
@@ -87,9 +88,12 @@ generator:
           _delete:
             credentials: [admin]
       filter:
-        display: [num, id_typelicence, id_category]
+        display: [num, id_typelicence, id_category, id_club, is_valid]
       form:
         fields:
+          id_club:
+            label: Club
+            help: Requis
           id_typelicence:
             label: Type de licence
             help: Requis
