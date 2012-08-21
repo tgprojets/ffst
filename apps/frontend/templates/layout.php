@@ -31,66 +31,80 @@
               <div class="sb_bar_menu_connexion">
               </div>
             </div>
-      </div>
-      <?php if ($sf_user->isAuthenticated()): ?>
-      <div class="sb_bar">
-            <ul class="sb_menu_admin">
+            <div id="noname_nav">
+            <ul>
                 <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Accueil', '@homepage') ?></li>
+
                 <?php if ($sf_user->hasCredential('admin')): ?>
-                <li> <h3>Gestion utilisateur</h3> </li>
-                  <ul class="sb_ssmenu_admin">
+                <li> <a href="#">Gestion utilisateur</a>
+                  <ul>
                     <li <?php echo $sf_params->get('module')=="sfGuardUser"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion utilisateur', '@sf_guard_user') ?></li>
                     <li <?php echo $sf_params->get('module')=="sfGuardGroup"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion des groupes', '@sf_guard_group') ?></li>
                     <li <?php echo $sf_params->get('module')=="sfGuardPermission"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion des permissions', '@sf_guard_permission') ?></li>
                   </ul>
+                </li>
                 <?php endif; ?>
+
                 <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('ligue') || $sf_user->hasCredential('club')): ?>
-                  <li> <h3>Affiliation</h3> </li>
+                  <li> <a href="#">Affiliation</a>
+                    <ul>
                 <?php endif; ?>
                 <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('ligue')): ?>
-                <ul class="sb_ssmenu_admin">
                   <li <?php echo $sf_params->get('module')=="ligue"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion Ligues', '@tbl_ligue') ?></li>
-                </ul>
                 <?php endif; ?>
                 <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('club')): ?>
-                <ul class="sb_ssmenu_admin">
                   <li <?php echo $sf_params->get('module')=="club"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion Clubs', '@tbl_club') ?></li>
-                </ul>
                 <?php endif; ?>
-                <?php if ($sf_user->hasPermission('connexion_history')): ?>
-                  <li <?php echo $sf_params->get('module')=="tracability"?'class="sb_menu_select"':''?>><?php echo link_to('Connexion historique', '@tbl_tracability') ?></li>
+                <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('ligue') || $sf_user->hasCredential('club')): ?>
+                    </ul>
+                  </li>
                 <?php endif; ?>
+
+
                 <?php if ($sf_user->hasCredential('prixunit')): ?>
-                  <li> <h3>Prix</h3> </li>
-                  <ul class="sb_ssmenu_admin">
-                    <li <?php echo $sf_params->get('module')=="typelicence"?'class="sb_menu_select"':''?>><?php echo link_to('Type de licence', '@tbl_typelicence') ?></li>
-                    <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Article', '@tbl_prixunit') ?></li>
-                    <li <?php echo $sf_params->get('module')=="tarifreduit"?'class="sb_menu_select"':''?>><?php echo link_to('Tarif réduit', '@tbl_tarifreduit') ?></li>
-                  </ul>
+                  <li> <a href="#">Prix</a>
+                    <ul>
+                      <li <?php echo $sf_params->get('module')=="typelicence"?'class="sb_menu_select"':''?>><?php echo link_to('Type de licence', '@tbl_typelicence') ?></li>
+                      <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Article', '@tbl_prixunit') ?></li>
+                      <li <?php echo $sf_params->get('module')=="tarifreduit"?'class="sb_menu_select"':''?>><?php echo link_to('Tarif réduit', '@tbl_tarifreduit') ?></li>
+                    </ul>
+                  </li>
                 <?php endif; ?>
+
                 <?php if ($sf_user->hasCredential('ValidLicence')): ?>
-                  <li> <h3>Règlements</h3> </li>
-                  <ul class="sb_ssmenu_admin">
-                    <li <?php echo $sf_params->get('module')=="payment"?'class="sb_menu_select"':''?>><?php echo link_to('Paiement', '@tbl_payment') ?></li>
-                    <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Avoir', '@tbl_avoir') ?></li>
-                  </ul>
+                  <li> <a href="#">Règlements</a>
+                    <ul>
+                      <li <?php echo $sf_params->get('module')=="payment"?'class="sb_menu_select"':''?>><?php echo link_to('Paiement', '@tbl_payment') ?></li>
+                      <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Avoir', '@tbl_avoir') ?></li>
+                    </ul>
+                  </li>
                 <?php endif; ?>
                 <?php if ($sf_user->hasCredential('licence') || $sf_user->hasCredential('account_club') || $sf_user->hasCredential('account_ligue')): ?>
-                <li> <h3>Gestion des licences</h3> </li>
-                <ul class="sb_ssmenu_admin">
-                  <li <?php echo $sf_params->get('module')=="category"?'class="sb_menu_select"':''?>><?php echo link_to('Licence', '@tbl_licence') ?></li>
-                </ul>
+                <li> <a href="#">Gestion des licences</a>
+                  <ul>
+                    <li <?php echo $sf_params->get('module')=="category"?'class="sb_menu_select"':''?>><?php echo link_to('Licence', '@tbl_licence') ?></li>
+                  </ul>
+                </li>
                 <?php endif; ?>
                 <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('categorie')): ?>
-                <li> <h3>Divers</h3> </li>
-                <ul class="sb_ssmenu_admin">
-                  <li <?php echo $sf_params->get('module')=="category"?'class="sb_menu_select"':''?>><?php echo link_to('Catégorie', '@tbl_category') ?></li>
-                  <?php if ($sf_user->hasCredential('admin')): ?>
-                    <li <?php echo $sf_params->get('module')=="codepostaux"?'class="sb_menu_select"':''?>><?php echo link_to('Code postaux', '@tbl_codepostaux') ?></li>
-                  <?php endif; ?>
-                </ul>
+                <li> <a href="#">Divers</a>
+                  <ul>
+                    <li <?php echo $sf_params->get('module')=="category"?'class="sb_menu_select"':''?>><?php echo link_to('Catégorie', '@tbl_category') ?></li>
+                    <?php if ($sf_user->hasCredential('admin')): ?>
+                      <li <?php echo $sf_params->get('module')=="codepostaux"?'class="sb_menu_select"':''?>><?php echo link_to('Code postaux', '@tbl_codepostaux') ?></li>
+                    <?php endif; ?>
+                    <?php if ($sf_user->hasPermission('connexion_history')): ?>
+                      <li <?php echo $sf_params->get('module')=="tracability"?'class="sb_menu_select"':''?>><?php echo link_to('Connexion historique', '@tbl_tracability') ?></li>
+                    <?php endif; ?>
+                  </ul>
+                </li>
                 <?php endif; ?>
             </ul>
+
+            </div>
+      </div>
+      <?php if ($sf_user->isAuthenticated()): ?>
+      <div class="sb_bar">
           <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>
       </div>
       <div id="contenant">
