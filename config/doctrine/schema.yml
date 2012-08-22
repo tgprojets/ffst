@@ -158,7 +158,7 @@ tbl_licence:
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_licence }
     tbl_category:      { onDelete: CASCADE, onUpdate: CASCADE, local: id_category, foreign: id, foreignAlias: tbl_licence }
     tbl_typelicence:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typelicence, foreign: id, foreignAlias: tbl_licence }
-    tbl_licence:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_familly, foreign: id, foreignAlias: tbl_licence }
+    tbl_familly:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_familly, foreign: id, foreignAlias: tbl_licence }
 
 tbl_payment:
   actAs:

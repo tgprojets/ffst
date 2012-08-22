@@ -100,20 +100,24 @@ generator:
           id_category:
             label: Catégorie
             help: Requis
-        actions:
-          _list:
-          _save_and_add:
-          _save_and_saisie:
       edit:
         title: Edition de la licence de %%tbl_profil%%
+        actions:
+          _list:
+          _save_and_payed:
+            label: Mettre à jour et payé
         display:
-          "Profile": [email, last_name, first_name, birthday, id_profil]
+          "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [id_club, id_category, id_typelicence, international, race_nordique, id_familly, cnil, date_medical]
       new:
         title: Nouvelle licence
+        actions:
+          _list:
+          _save_and_add:
+          _save_and_saisie:
         display:
           "Chercher profil": [id_profil, _profil_exist]
-          "Profile": [email, last_name, first_name, birthday]
+          "Profile": [sexe, email, last_name, first_name, birthday]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [id_club, id_category, id_typelicence, international, race_nordique, id_familly, cnil, date_medical]

@@ -7,6 +7,7 @@
   background-color: #083a99;
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
+  border-radius: 16px;
 }
 .sb_bar_menu_connexion form {
   position: relative;

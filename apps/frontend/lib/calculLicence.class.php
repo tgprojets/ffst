@@ -14,13 +14,15 @@ class CalculLicence {
     private $YearEnd;
     private $nClub;
     private $nUser;
+    private $oProfil;
+    private $oLicence;
 
 
     public function __construct($nLicence)
     {
         $this->nLicence = $nLicence;
         $oLicence              = Doctrine::getTable('tbl_licence')->find($nLicence);
-        $oProfil               = $oLicence->getTblProfil();
+        $this->oProfil         = $oLicence->getTblProfil();
         $this->bInternational  = $oLicence->getInternational();
         $this->bNew            = $oLicence->getIsNew();
         $this->bFamilly        = $oLicence->getIsFamilly();
@@ -29,8 +31,9 @@ class CalculLicence {
         $this->nUser           = sfContext::getInstance()->getUser()->getGuardUser()->getId();
         $this->setYearLicence();
         $this->setNumLicence($oLicence->getNum());
-        $this->setAge($oProfil->getBirthday());
+        $this->setAge($this->oProfil->getBirthday());
         $this->setTypeLicence($oLicence->getIdTypelicence());
+        $this->oLicence = $oLicence;
     }
 
     public function setNumLicence($nLicence)
@@ -195,11 +198,77 @@ class CalculLicence {
         }
     }
 
+    public function calcLicenceEdit($aValues)
+    {
+        //Famille
+        if ($this->bFamilly == false && $aValues['id_familly']) {
+            $this->addAvoir($this->getReduct('FM'), $this->getReduct('FM', false));
+        }
+        if ($this->bInternational == false && $aValues['international'])
+        {
+            $this->bInternational = true;
+            if( $this->payMajorInternational()) {
+                $this->addPaymentEdit($this->getArticle('INT'), $this->getArticle('INT', false), 'tbl_licence');
+            }
+        }
+
+        if ($this->oLicence->getIdTypelicence() != $aValues['id_typelicence'])
+        {
+            $this->addPaymentEdit($this->getArticle('S1'), $this->getArticle('S1', false), 'tbl_licence');
+        }
+
+        if ($this->oProfil->getEmail() != $aValues['email'])
+        {
+            $this->addPaymentEdit($this->getArticle('S4'), $this->getArticle('S4', false), 'tbl_licence');
+        }
+
+        if ($this->oProfil->getTblAddress()->getIdCodepostaux() != $aValues['id_codepostaux'] ||
+            $this->oProfil->getTblAddress()->getAddress1() != $aValues['address1'] ||
+            $this->oProfil->getTblAddress()->getAddress2() != $aValues['address2'] ||
+            $this->oProfil->getTblAddress()->getTel() != $aValues['tel'] ||
+            $this->oProfil->getTblAddress()->getGsm() != $aValues['gsm'] ||
+            $this->oProfil->getTblAddress()->getFax() != $aValues['fax'] )
+        {
+            $this->addPaymentEdit($this->getArticle('S2'), $this->getArticle('S2', false), 'tbl_licence');
+        }
+
+        if ($this->oProfil->getLastName() != $aValues['last_name'])
+        {
+            $this->addPaymentEdit($this->getArticle('S3'), $this->getArticle('S3', false), 'tbl_licence');
+        }
+        if ($this->oProfil->getFirstName() != $aValues['first_name'])
+        {
+            $this->addPaymentEdit($this->getArticle('S3'), $this->getArticle('S3', false), 'tbl_licence');
+        }
+        if (substr($this->oProfil->getBirthday(), 0, 10) != $aValues['birthday'])
+        {
+            $this->addPaymentEdit($this->getArticle('S3'), $this->getArticle('S3', false), 'tbl_licence');
+        }
+    }
+
     private function addPayment($nAmount, $sLib, $sRelation, $nClub=false)
     {
         $oPaiement = new tbl_payment();
         $oPaiement->setLib($sLib)
                   ->setRelationTable($sRelation)
+                  ->setAmount($nAmount)
+                  ->setIdUser($this->nUser);
+        if ($nClub)
+        {
+            $oPaiement->setIdClub($this->nClub);
+        } else {
+            $oPaiement->setIdLicence($this->nLicence)
+                      ->setIdClub($this->nClub);
+        }
+        $oPaiement->save();
+    }
+
+    private function addPaymentEdit($nAmount, $sLib, $sRelation, $nClub=false)
+    {
+        $oPaiement = new tbl_payment();
+        $oPaiement->setLib($sLib)
+                  ->setRelationTable($sRelation)
+                  ->setIsBrouillon(false)
                   ->setAmount($nAmount)
                   ->setIdUser($this->nUser);
         if ($nClub)
@@ -218,6 +287,24 @@ class CalculLicence {
         $oPaiement->setLib($sLib)
                   ->setRelationTable('tbl_licence')
                   ->setAmount($nAmount)
+                  ->setIdUser($this->nUser);
+        if ($nClub)
+        {
+            $oPaiement->setIdClub($this->nClub);
+        } else {
+            $oPaiement->setIdLicence($this->nLicence)
+                      ->setIdClub($this->nClub);
+        }
+        $oPaiement->save();
+    }
+
+    private function addAvoirEdit($nAmount, $sLib, $nClub=false)
+    {
+        $oPaiement = new tbl_avoir();
+        $oPaiement->setLib($sLib)
+                  ->setRelationTable('tbl_licence')
+                  ->setAmount($nAmount)
+                  ->setIsBrouillon(false)
                   ->setIdUser($this->nUser);
         if ($nClub)
         {

@@ -57,4 +57,82 @@ class browserTestFunctional extends sfTestFunctional
       end()
     ;
   }
+
+  public function addLicence($nIdClub, $nIdCategory, $nIdTypeLicence, $int, $race, $idFamilly, $cnil, $dateCertif,
+                             $idCodepostaux, $address1, $idAddress, $sexe, $email, $LastName, $FirstName, $dateBirthday, $bError)
+  {
+    $this->get('/licence/new')->
+      info('Nouvelle licence')->
+      click('Mettre à jour et ajouter', array('tbl_licence' => array(
+        'id_club'            => $nIdClub,
+        'id_category'        => $nIdCategory,
+        'id_typelicence'     => $nIdTypeLicence,
+        'international'      => $int,
+        'race_nordique'      => $race,
+        'id_familly'         => $idFamilly,
+        'cnil'               => $cnil,
+        'date_medical'       => $dateCertif,
+        'id_codepostaux'     => $idCodepostaux,
+        'address1'           => $address1,
+        'address2'           => '',
+        'tel'                => '0140404040',
+        'gsm'                => '0140404041',
+        'fax'                => '0140404042',
+        'id_address'         => $idAddress,
+        'sexe'               => $sexe,
+        'email'              => $email,
+        'last_name'          => $LastName,
+        'first_name'         => $FirstName,
+        'birthday'           => $dateBirthday,
+      )));
+    if ($bError) {
+      $this->with('form')->begin()->
+        hasErrors(1)->
+      end();
+    } else {
+      $this->with('form')->begin()->
+        hasErrors(false)->
+      end();
+    }
+  }
+
+  public function addLicenceExiste($nIdProfil, $nIdClub, $nIdCategory, $nIdTypeLicence, $int, $race, $idFamilly, $cnil, $dateCertif,
+                             $idCodepostaux, $address1, $idAddress, $sexe, $email, $LastName, $FirstName, $dateBirthday, $bError)
+  {
+    $this->get('/licence/new')->
+      info('Nouvelle licence existe')->
+      click('Mettre à jour et ajouter', array('tbl_licence' => array(
+        'id_profil'          => $nIdProfil,
+        'is_checked'         => true,
+        'id_club'            => $nIdClub,
+        'id_category'        => $nIdCategory,
+        'id_typelicence'     => $nIdTypeLicence,
+        'international'      => $int,
+        'race_nordique'      => $race,
+        'id_familly'         => $idFamilly,
+        'cnil'               => $cnil,
+        'date_medical'       => $dateCertif,
+        'id_codepostaux'     => $idCodepostaux,
+        'address1'           => $address1,
+        'address2'           => '',
+        'tel'                => '0140404040',
+        'gsm'                => '0140404041',
+        'fax'                => '0140404042',
+        'id_address'         => $idAddress,
+        'sexe'               => $sexe,
+        'email'              => $email,
+        'last_name'          => $LastName,
+        'first_name'         => $FirstName,
+        'birthday'           => $dateBirthday,
+      )));
+    if ($bError) {
+      $this->with('form')->begin()->
+        hasErrors(1)->
+      end();
+    } else {
+      $this->with('form')->begin()->
+        hasErrors(false)->
+      end();
+    }
+  }
 }
