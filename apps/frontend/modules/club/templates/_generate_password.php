@@ -23,8 +23,8 @@
         });
     });
 </script>
-<div>
-<div class="sb_bouton_a">
-    <a href="#" id="generate_password">Generer un mot de passe</a>
-</div>
+<div class="sf_admin_form_row">
+    <div class="sb_bouton_a">
+        <a href="#" id="generate_password">Generer un mot de passe</a>
+    </div>
 </div>

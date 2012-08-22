@@ -190,6 +190,7 @@ Theme admin generator
 #sf_admin_bar .sf_admin_filter {
     -moz-border-radius:0 16px 0 16px;
     -webkit-border-radius:0 16px 0 16px;
+    border-radius: 0 16px 0 16px;
     -moz-box-shadow: 4px 4px 6px #aaa;
     -webkit-box-shadow: 4px 4px 6px #aaa;
     box-shadow: 4px 4px 6px #555;
@@ -266,6 +267,7 @@ Theme admin generator
    border-radius: 13px;
    -moz-box-shadow: 4px 4px 6px #aaa;
    -webkit-box-shadow: 4px 4px 6px #aaa;
+   box-shadow: 4px 4px 6px #aaa;
    text-shadow: rgba(0,0,0,.4) 0 1px 0;
    color: white;
    font-size: 16px;
@@ -299,6 +301,7 @@ input[type=submit] {
    text-shadow: 2px 2px 4px black;
    -moz-box-shadow: 2px 2px 3px #aaa;
    -webkit-box-shadow: 2px 2px 3px #aaa;
+   box-shadow: 2px 2px 3px #aaa;
 }
 
 
@@ -474,6 +477,7 @@ th td {
 #sf_admin_container .sf_admin_list {
     -moz-box-shadow: 4px 4px 6px #aaa;
     -webkit-box-shadow: 4px 4px 6px #aaa;
+    box-shadow: 4px 4px 6px #aaa;
     margin-bottom: 10px;
 }
 
@@ -494,6 +498,7 @@ th td {
     margin-bottom: 20px;
     -moz-box-shadow: 4px 4px 6px #aaa;
     -webkit-box-shadow: 4px 4px 6px #aaa;
+    box-shadow: 4px 4px 6px #aaa;
 }
 table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mceLast .mceToolbar tr td {
     padding: 0;
@@ -587,6 +592,7 @@ table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mc
    text-shadow: 2px 2px 4px black;
    -moz-box-shadow: 2px 2px 3px #aaa;
    -webkit-box-shadow: 2px 2px 3px #aaa;
+   box-shadow: 2px 2px 3px #aaa;
 }
 #sf_admin_container .sf_admin_actions #tbl_categorie_root_create label {
 color: black;
