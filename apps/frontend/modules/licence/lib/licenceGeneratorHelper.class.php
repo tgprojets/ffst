@@ -14,4 +14,8 @@ class licenceGeneratorHelper extends BaseLicenceGeneratorHelper
   {
     return '<li class="sf_admin_action_save_and_saisie"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" name="_save_and_saisie" /></li>';
   }
+  public function linkTo_saveAndPayed($object, $params)
+  {
+    return '<li class="sf_admin_action_save_and_payed"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" name="_save_and_payed" /></li>';
+  }
 }

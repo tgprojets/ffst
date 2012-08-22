@@ -147,11 +147,20 @@ class licenceActions extends autoLicenceActions
         $this->getUser()->setFlash('notice', $notice.' You can add another one below.');
 
         $this->redirect('@tbl_licence_new');
-      }
-      elseif ($request->hasParameter('_save_and_saisie')){
+      } elseif ($request->hasParameter('_save_and_saisie')) {
         $this->getUser()->setFlash('notice', $notice.' Votre saisie.');
 
         $this->redirect('licence/ListSaisie');
+
+      } elseif ($request->hasParameter('_save_and_payed')) {
+        $this->getUser()->setFlash('notice', $notice.' Modification enregistré.');
+
+        if ($this->getUser()->isClub()) {
+          $this->redirect('licence/ListPaypal');
+        } else {
+          $this->redirect('licence/ListSaisie');
+        }
+
 
       } else {
         $this->getUser()->setFlash('notice', $notice);

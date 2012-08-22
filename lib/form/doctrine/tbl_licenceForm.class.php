@@ -46,6 +46,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $sNum = $oLicence->getNum();
         $oProfil = $oLicence->getTblProfil();
         $oAddress = $oProfil->getTblAddress();
+        $oCalcul = new CalculLicence($oLicence->getId());
+        $oCalcul->calcLicenceEdit($aValues);
     }
     if ($this->isValid()) {
       if ($this->isNew() && $aValues['is_checked'] == 0) {
@@ -87,7 +89,20 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $oCalcul->calcCotisationLicence();
         $oCalcul->calcLicence();
       } else {
-
+        $oAddress->setAddress1($aValues['address1'])
+                 ->setAddress2($aValues['address2'])
+                 ->setTel($aValues['tel'])
+                 ->setGsm($aValues['gsm'])
+                 ->setFax($aValues['fax'])
+                 ->save();
+        if ($aValues['id_codepostaux'] != '') {
+          $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
+        }
+        $oProfil->setEmail($aValues['email'])
+                ->setFirstName($aValues['last_name'])
+                ->setLastName($aValues['first_name'])
+                ->setBirthday($aValues['birthday'])
+                ->save();
       }
 
     }
@@ -187,6 +202,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
               new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieClub'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieLicence'))),
        ))
     );
 
@@ -274,6 +290,21 @@ class tbl_licenceForm extends Basetbl_licenceForm
           ->count();
       if ($nbr>0) {
         throw new sfValidatorError($validator, 'Ce licencié a déjà une licence.');
+      }
+
+    }
+    return $values;
+  }
+
+  public function checkSaisieLicence($validator, $values)
+  {
+    if (!$this->isNew())
+    {
+      $oTypeLicence     = Doctrine::getTable('tbl_typelicence')->find($values['id_typelicence']);
+      $oLicence         = Doctrine::getTable('tbl_licence')->find($values['id']);
+
+      if ($oLicence->getTblTypelicence()->getRank() > $oTypeLicence->getRank()) {
+        throw new sfValidatorError($validator, 'La licence doit être supérieur à l\'ancienne.');
       }
 
     }

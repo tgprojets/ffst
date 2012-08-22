@@ -32,6 +32,22 @@ tbl_prixunit:
     lib: Supplément option international
     code: INT
     prix: 20
+  tbl_prixunit_7:
+    lib: Supplément pour changement de licence
+    code: S1
+    prix: 20
+  tbl_prixunit_8:
+    lib: Supplément pour changement d'adresse
+    code: S2
+    prix: 20
+  tbl_prixunit_9:
+    lib: Supplément pour changement de profil
+    code: S3
+    prix: 20
+  tbl_prixunit_10:
+    lib: Supplément pour changement d'email
+    code: S4
+    prix: 20
 
 tbl_typelicence:
   tbl_typelicence_1:
