@@ -27,9 +27,18 @@ class mainActions extends sfActions
       $nIdClub = $request->getParameter('nIdClub');
       $oProfil = Doctrine::getTable('tbl_profil')->find($nId);
       $oLicence = $oProfil->getTblLicence()->getLast();
-      if ($this->getUser()->isClub() || $this->getUser()->isLigue()) {
+      if ($this->getUser()->isClub()) {
 
         if ($nIdClub != $oLicence->getTblClub()->getId()) {
+          $jsonresponse['error'] = 'Vous ne pouvez pas transférer ce profil';
+          return $this->renderText(json_encode($jsonresponse));
+        }
+      }
+      if ($this->getUser()->isLigue())
+      {
+        $oLigue = $this->getUser()->getLigue();
+        if (Doctrine::getTable('tbl_profil')->checkTransfert($nId, $oLigue->getId()) == false)
+        {
           $jsonresponse['error'] = 'Vous ne pouvez pas transférer ce profil';
           return $this->renderText(json_encode($jsonresponse));
         }

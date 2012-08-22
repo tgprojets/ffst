@@ -122,7 +122,7 @@ class licenceActions extends autoLicenceActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $notice = $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.';
+      $notice = $form->getObject()->isNew() ? 'Licence créé avec succès.' : 'Licence modifié avec succès.';
 
       try {
         $tbl_licence = $form->save();
@@ -155,10 +155,10 @@ class licenceActions extends autoLicenceActions
       } elseif ($request->hasParameter('_save_and_payed')) {
         $this->getUser()->setFlash('notice', $notice.' Modification enregistré.');
 
-        if ($this->getUser()->isClub()) {
+        if ($this->getUser()->hasToPayed()) {
           $this->redirect('licence/ListPaypal');
         } else {
-          $this->redirect('licence/ListSaisie');
+          $this->redirect('@tbl_licence');
         }
 
 

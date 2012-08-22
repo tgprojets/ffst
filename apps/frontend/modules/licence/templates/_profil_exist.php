@@ -22,9 +22,6 @@
         $('#tbl_licence_tel').attr('disabled', true);
         $('#tbl_licence_gsm').attr('disabled', true);
         $('#tbl_licence_fax').attr('disabled', true);
-        <?php if ($sf_user->isLigue()): ?>
-            $('#tbl_licence_id_club').attr('disabled', true);
-        <?php endif; ?>
     }
     function enabledForm()
     {
@@ -40,9 +37,6 @@
         $('#tbl_licence_tel').attr('disabled', false);
         $('#tbl_licence_gsm').attr('disabled', false);
         $('#tbl_licence_fax').attr('disabled', false);
-        <?php if ($sf_user->isLigue()): ?>
-            $('#tbl_licence_id_club').attr('disabled', false);
-        <?php endif; ?>
     }
     function cancelProfil()
     {

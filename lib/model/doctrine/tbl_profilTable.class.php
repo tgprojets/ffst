@@ -27,4 +27,23 @@ class tbl_profilTable extends Doctrine_Table
 
         return $q->execute();
     }
+
+    public function checkTransfert($nIdProfil, $nIdLigue)
+    {
+        $q = Doctrine_Query::create()
+          ->select('MAX(l.date_validation) AS Date, l.id, c.id, li.id as ligue')
+          ->from('tbl_licence l')
+          ->leftJoin('l.tbl_profil p')
+          ->leftJoin('l.tbl_club c')
+          ->leftJoin('c.tbl_ligue li')
+          ->andWhere('p.id = ?', $nIdProfil)
+          ->groupBy('l.id, l.id_club, c.id, li.id');
+
+        $result = $q->fetchArray();
+        if ($result[0]['ligue'] == $nIdLigue) {
+          return true;
+        }
+
+        return false;
+    }
 }
