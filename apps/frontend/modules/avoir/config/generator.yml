@@ -60,11 +60,8 @@ generator:
         object_actions: {}
       filter:
         display: [is_used, id_typepayment, id_club, id_ligue, id_profil]
-      form:
-        actions:
-          _list:
-          _save_and_list:
-      edit:    ~
+      form: ~
+      edit: ~
       new:
         title: Ajouter un avoir
         display:
