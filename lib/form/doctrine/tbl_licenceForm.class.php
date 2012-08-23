@@ -153,7 +153,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'format' => '%day% %month% %year%',
       ));
       $this->widgetSchema['id_familly']            = new sfWidgetFormChoice(array(
-          'label'            => 'Tarif famille (Nom prénom)',
+          'label'            => 'Tarif famille <br /> (Nom prénom du licencié)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
           'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),

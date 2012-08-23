@@ -14,7 +14,9 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        username:
+          label: Identifiant
       list:
         title: Liste des connexion
         table_method: retrieveSortDate
@@ -24,7 +26,7 @@ generator:
         actions: {}
         object_actions: {}
       filter:
-        display: [date_connexion]
+        display: [date_connexion, username]
       form:    ~
       edit:    ~
       new:     ~

@@ -44,8 +44,7 @@ generator:
         id_category:
           label: Catégorie
         id_familly:
-          label: Tarif Famille
-          help: Licence du tuteur
+          help: Licence du tuteur (valide)
         id_typelicence:
           label: Type de licence
         is_familly:
@@ -109,7 +108,7 @@ generator:
         display:
           "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [id_club, id_category, id_typelicence, international, race_nordique, id_familly, cnil, date_medical]
+          "Licence": [id_club, id_typelicence, id_category, international, race_nordique, id_familly, cnil, date_medical]
       new:
         title: Nouvelle licence
         actions:
@@ -120,4 +119,4 @@ generator:
           "Chercher profil": [id_profil, _profil_exist]
           "Profile": [sexe, email, last_name, first_name, birthday]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [id_club, id_category, id_typelicence, international, race_nordique, id_familly, cnil, date_medical]
+          "Licence": [id_club, id_typelicence, id_category, international, race_nordique, id_familly, cnil, date_medical]

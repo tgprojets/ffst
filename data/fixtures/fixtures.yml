@@ -9,7 +9,7 @@ tbl_tarifreduit:
     prix: 5
 tbl_prixunit:
   tbl_prixunit_1:
-    lib: Cotisation annuel
+    lib: Cotisation annuelle
     code: CA
     prix: 30
   tbl_prixunit_2:
