@@ -29,6 +29,20 @@ class tbl_licenceTable extends Doctrine_Table
             return $nMember+1;
         }
     }
+    public function getDateLicence()
+      {
+        if (date('d') >= 1 && date('m') >= 7) {
+          $startDate = date('Y');
+          $endDate   = date('Y')+1;
+        } else {
+          $startDate = date('Y')-1;
+          $endDate   = date('Y');
+        }
+        $sDate = (string) $startDate.'/'.(string) $endDate;
+
+        return $sDate;
+    }
+
     public function retrieveByClub(Doctrine_Query $q) {
         $q = $this->createQuery('q');
         if (sfContext::getInstance()->getUser()->isClub()) {
@@ -47,6 +61,8 @@ class tbl_licenceTable extends Doctrine_Table
             }
             $q->andWhereIn('id_club', $aClub);
         }
+
+        $q->andWhereIn('year_licence', $this->getDateLicence());
 
         return $q;
     }

@@ -16,14 +16,24 @@ class tbl_profilTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('tbl_profil');
     }
-    public function findByKeyword($keyword)
+    public function findByKeyword($keyword, $nClub)
     {
         $sName = mb_strtoupper($keyword);
-        $q = $this->createQuery('p')
-              ->where('upper(p.first_name) LIKE ?', $sName.'%')
-              ->orWhere('upper(p.last_name) LIKE ?', $sName.'%')
-              ->limit(0, 20);
-              ;
+        if ($nClub) {
+
+          $q = $this->createQuery('p')
+                ->leftJoin('p.tbl_licence l')
+                ->where('upper(p.first_name) LIKE ?', $sName.'%')
+                ->orWhere('upper(p.last_name) LIKE ?', $sName.'%')
+                ->andWhere('l.id_club = ?', $nClub)
+                ->limit(0, 20);
+        } else {
+          $q = $this->createQuery('p')
+                ->where('upper(p.first_name) LIKE ?', $sName.'%')
+                ->orWhere('upper(p.last_name) LIKE ?', $sName.'%')
+                ->limit(0, 20);
+        }
+
 
         return $q->execute();
     }

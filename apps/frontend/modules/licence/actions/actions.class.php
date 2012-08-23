@@ -186,6 +186,9 @@ class licenceActions extends autoLicenceActions
 
   public function executeListImprimer(sfWebRequest $request)
   {
+    if ($this->getUser()->isLigue()) {
+      $this->redirect('@tbl_licence');
+    }
     $oLicence = $this->getRoute()->getObject();
     if ($oLicence->getDateValidation() != null) {
       $this->getUser()->setFlash('notice', 'Impression de la licence: '.$oLicence->getTblProfil());
@@ -202,6 +205,9 @@ class licenceActions extends autoLicenceActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if ($this->getUser()->isLigue()) {
+      $this->redirect('@tbl_licence');
+    }
     $this->tbl_licence = $this->getRoute()->getObject();
 
     if ($this->tbl_licence->getIsBrouillon()) {
@@ -209,5 +215,14 @@ class licenceActions extends autoLicenceActions
       $this->redirect('@tbl_licence');
     }
     $this->form = $this->configuration->getForm($this->tbl_licence);
+  }
+
+  public function executeNew(sfWebRequest $request)
+  {
+    if ($this->getUser()->isLigue()) {
+      $this->redirect('@tbl_licence');
+    }
+    $this->form = $this->configuration->getForm();
+    $this->tbl_licence = $this->form->getObject();
   }
 }

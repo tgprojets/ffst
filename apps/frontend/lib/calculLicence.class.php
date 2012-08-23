@@ -99,22 +99,6 @@ class CalculLicence {
         return 0;
     }
 
-    private function getReduct($code, $bPrice = true)
-    {
-        $oPrix = Doctrine::getTable('tbl_tarifreduit')->findOneBy('code', $code);
-
-        if ($oPrix)
-        {
-            if ($bPrice)
-            {
-                return $oPrix->getPrix();
-            } else {
-                return $oPrix->getLib();
-            }
-        }
-
-        return 0;
-    }
 
     public function calcCotisationLicence()
     {
@@ -176,14 +160,6 @@ class CalculLicence {
 
     public function calcLicence()
     {
-        //Famille
-        if ($this->bFamilly) {
-            $this->addAvoir($this->getReduct('FM'), $this->getReduct('FM', false));
-        }
-        //Mineur
-        if ($this->age <= 18) {
-            $this->addAvoir($this->getReduct('MIN'), $this->getReduct('MIN', false));
-        }
 
         //Prix licence
         $this->addPayment($this->getPrixLicence($this->nTypeLicence), $this->getPrixLicence($this->nTypeLicence, false), 'tbl_licence');
@@ -193,17 +169,18 @@ class CalculLicence {
             $this->addPayment($this->getArticle('MDD'), $this->getArticle('MDD', false), 'tbl_licence');
         }
         //Internationalisation
-        if ($this->payMajorInternational()) {
+        if ($this->international)
+        {
             $this->addPayment($this->getArticle('INT'), $this->getArticle('INT', false), 'tbl_licence');
+        }
+        if ($this->payMajorInternational()) {
+            $this->addPayment($this->getArticle('MJI'), $this->getArticle('MJI', false), 'tbl_licence');
         }
     }
 
     public function calcLicenceEdit($aValues)
     {
         //Famille
-        if ($this->bFamilly == false && $aValues['id_familly']) {
-            $this->addAvoir($this->getReduct('FM'), $this->getReduct('FM', false));
-        }
         if ($this->bInternational == false && $aValues['international'])
         {
             $this->bInternational = true;
@@ -281,38 +258,4 @@ class CalculLicence {
         $oPaiement->save();
     }
 
-    private function addAvoir($nAmount, $sLib, $nClub=false)
-    {
-        $oPaiement = new tbl_avoir();
-        $oPaiement->setLib($sLib)
-                  ->setRelationTable('tbl_licence')
-                  ->setAmount($nAmount)
-                  ->setIdUser($this->nUser);
-        if ($nClub)
-        {
-            $oPaiement->setIdClub($this->nClub);
-        } else {
-            $oPaiement->setIdLicence($this->nLicence)
-                      ->setIdClub($this->nClub);
-        }
-        $oPaiement->save();
-    }
-
-    private function addAvoirEdit($nAmount, $sLib, $nClub=false)
-    {
-        $oPaiement = new tbl_avoir();
-        $oPaiement->setLib($sLib)
-                  ->setRelationTable('tbl_licence')
-                  ->setAmount($nAmount)
-                  ->setIsBrouillon(false)
-                  ->setIdUser($this->nUser);
-        if ($nClub)
-        {
-            $oPaiement->setIdClub($this->nClub);
-        } else {
-            $oPaiement->setIdLicence($this->nLicence)
-                      ->setIdClub($this->nClub);
-        }
-        $oPaiement->save();
-    }
 }

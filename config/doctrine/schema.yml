@@ -93,6 +93,8 @@ tbl_typelicence:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }
     code:           { type: string(10), notnull: true }
+    is_familly:     { type: boolean, default: false }
+    is_minor:      { type: boolean, default: false }
     description:    { type: string(2000) }
     rank:           { type: integer }
     prix:           { type: float(5), notnull: true }
@@ -104,13 +106,6 @@ tbl_category:
     code:           { type: string(10), notnull: true }
 
 tbl_prixunit:
-  columns:
-    id:             { type: integer(4), primary: true,  autoincrement: true }
-    lib:            { type: string(250), notnull: true }
-    code:           { type: string(4), notnull: true }
-    prix:           { type: float(5), notnull: true }
-
-tbl_tarifreduit:
   columns:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }
@@ -152,6 +147,7 @@ tbl_licence:
     id_category:       { type: integer(4), notnull: true  }
     id_typelicence:    { type: integer(4), notnull: true  }
     id_user:           { type: integer(4) }
+    is_cancel:         { type: boolean, default: false }
   relations:
     sfGuardUser:       { local: id_user, foreign: id, foreignAlias: tbl_licence }
     tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_licence }

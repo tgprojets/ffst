@@ -1,12 +1,3 @@
-tbl_tarifreduit:
-  tbl_tarifreduit_1:
-    lib: Moins de 18 an
-    code: MIN
-    prix: 10
-  tbl_tarifreduit_2:
-    lib: Famille à partir 2ème licence
-    code: FM
-    prix: 5
 tbl_prixunit:
   tbl_prixunit_1:
     lib: Cotisation annuelle
@@ -29,9 +20,9 @@ tbl_prixunit:
     code: MDD
     prix: 5
   tbl_prixunit_6:
-    lib: Supplément option international
-    code: INT
-    prix: 20
+    lib: Majoration international
+    code: MJI
+    prix: 5
   tbl_prixunit_7:
     lib: Supplément pour changement de licence
     code: S1
@@ -48,32 +39,64 @@ tbl_prixunit:
     lib: Supplément pour changement d'email
     code: S4
     prix: 20
+  tbl_prixunit_6:
+    lib: International
+    code: INT
+    prix: 20
 
 tbl_typelicence:
   tbl_typelicence_1:
-    lib: Attelage Junior
-    code: ATJ
-    prix: 80
+    lib: Attelage Junior Réduit
+    code: AT1
+    prix: 12
+    is_minor: true
+    is_familly: true
   tbl_typelicence_2:
-    lib: Attelage
-    code: AT
-    prix: 100
+    lib: Attelage Junior
+    code: AT2
+    prix: 20
+    is_minor: true
   tbl_typelicence_3:
-    lib: Monochien Junior
-    code: MOCJ
-    prix: 110
+    lib: Attelage réduit
+    code: AT3
+    prix: 20
+    is_familly: true
   tbl_typelicence_4:
-    lib: Monochien
-    code: MOC
-    prix: 120
+    lib: Attelage
+    code: AT4
+    prix: 30
   tbl_typelicence_5:
+    lib: Monochien Junior Réduit
+    code: MO1
+    prix: 25
+    is_minor: true
+    is_familly: true
+  tbl_typelicence_6:
+    lib: Monochien Junior
+    code: MO2
+    prix: 35
+    is_minor: true
+  tbl_typelicence_7:
+    lib: Monochien Réduit
+    code: MO3
+    prix: 35
+    is_familly: true
+  tbl_typelicence_8:
+    lib: Monochien
+    code: MO4
+    prix: 45
+  tbl_typelicence_9:
+    lib: "Dirigeant"
+    code: DP1
+    prix: 35
+  tbl_typelicence_10:
+    lib: "Professionnel"
+    code: DP2
+    prix: 35
+  tbl_typelicence_11:
     lib: Sport-Loisir
     code: SP
-    prix: 180
-  tbl_typelicence_6:
-    lib: "Dirigeant & Professionnel"
-    code: DP
-    prix: 200
+    prix: 15
 tbl_typepayment:
   tbl_typepayment_1:
     lib: Paypal
@@ -84,6 +107,9 @@ tbl_typepayment:
   tbl_typepayment_4:
     lib: Espèce
 tbl_category:
+  tbl_category_0:
+    lib: Pas de catégorie
+    code: N/A
   tbl_category_1:
     lib: CC
     code: CC

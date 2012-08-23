@@ -148,10 +148,13 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'format' => '%day% %month% %year%',
           'years' => array_combine($years, $years)
       ));
+
+      $this->widgetSchema['is_medical']                = new sfWidgetFormInputCheckbox();
       $this->widgetSchema['date_medical']              = new sfWidgetFormI18nDate(array(
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
       ));
+      $this->widgetSchema['is_familly']            = new sfWidgetFormInputCheckbox();
       $this->widgetSchema['id_familly']            = new sfWidgetFormChoice(array(
           'label'            => 'Tarif famille <br /> (Nom prénom du licencié)',
           'choices'          => array(),
@@ -205,9 +208,11 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('fax',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
     $this->setValidator('birthday',       new sfValidatorDate(array('required' => true)));
+    $this->setValidator('is_medical',     new sfValidatorBoolean(array('required' => false)));
     $this->setValidator('date_medical',   new sfValidatorDate(array('required' => false)));
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+    $this->setValidator('is_familly', new sfValidatorBoolean(array('required' => false)));
     $this->setValidator('id_familly', new sfValidatorString(array('required' => false)));
     if ($this->isNew()) {
       $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
@@ -242,6 +247,14 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
         $this->setDefault('id_profil', $oUser->getId());
         $this->setDefault('sexe', $oUser->getSexe());
+        if ($this->getObject()->getDateMedical())
+        {
+          $this->setDefault('is_medical', true);
+        }
+        if ($this->getObject()->getIdFamilly())
+        {
+          $this->setDefault('is_familly', true);
+        }
     } else {
       $this->setDefault('sexe', 'M');
       $this->setDefault('is_checked', '0');
@@ -328,6 +341,37 @@ class tbl_licenceForm extends Basetbl_licenceForm
       }
 
     }
+
+    //Tarif réduit
+    if (empty($values['id_familly']))
+    {
+      //Choix de la licence
+      $nbr = Doctrine_Query::create()
+        ->from('tbl_typelicence tl')
+        ->where("tl.id = ?", $values['id_typelicence'])
+        ->andWhere("tl.is_familly = ?", true)
+        ->count();
+        if ($nbr>0) {
+          throw new sfValidatorError($validator, 'La licence choisi n\'a pas de lien avec un licencié.');
+        }
+    }
+
+    //Tarif junior
+    $bornAt = new DateTime($values['birthday']);
+    $age = $bornAt->diff(new \DateTime())->y;
+
+    //Choix de la licence
+    $nbr = Doctrine_Query::create()
+        ->from('tbl_typelicence tl')
+        ->where("tl.id = ?", $values['id_typelicence'])
+        ->andWhere("tl.is_minor = ?", true)
+        ->count();
+        if ($nbr>0) {
+          if ($age > 18) {
+            throw new sfValidatorError($validator, 'Ce licencié n\'a pas le droit à cette licence, il est majeur (Voir date de naissance) .');
+          }
+        }
+
     return $values;
   }
 
@@ -388,13 +432,36 @@ class tbl_licenceForm extends Basetbl_licenceForm
   {
     if (! empty($values['id_familly']))
     {
+      //Check id famille appartient au club
       $nbr = Doctrine_Query::create()
         ->from('tbl_licence l')
         ->where("l.id_club = ?", $values['id_club'])
         ->andWhere("l.id_profil = ?", $values['id_familly'])
+        ->andWhere("l.year_licence = ?", $this->getDateLicence())
         ->count();
         if ($nbr==0) {
-          throw new sfValidatorError($validator, 'Le licencié de la famille ne fait pas partie de ce club.');
+          throw new sfValidatorError($validator, 'Le licencié de la famille ne fait pas partie de ce club ou n\' a pas de licence encours.');
+        }
+      //Check id famille a une licence classique
+      $nbr = Doctrine_Query::create()
+        ->from('tbl_licence l')
+        ->leftjoin("l.tbl_typelicence tl")
+        ->where("l.id_club = ?", $values['id_club'])
+        ->andWhere("l.id_profil = ?", $values['id_familly'])
+        ->andWhere("l.year_licence = ?", $this->getDateLicence())
+        ->andWhere("tl.is_familly = ?", false)
+        ->count();
+        if ($nbr==0) {
+          throw new sfValidatorError($validator, 'Le licencié n\'a pas de licence classique.');
+        }
+      //Choix de la licence
+      $nbr = Doctrine_Query::create()
+        ->from('tbl_typelicence tl')
+        ->where("tl.id = ?", $values['id_typelicence'])
+        ->andWhere("tl.is_familly = ?", true)
+        ->count();
+        if ($nbr==0) {
+          throw new sfValidatorError($validator, 'La licence choisi n\'est pas un tarif réduit.');
         }
     }
     return $values;

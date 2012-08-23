@@ -99,6 +99,10 @@ generator:
           id_category:
             label: Catégorie
             help: Requis
+          is_medical:
+            label: Certificat valide
+          is_familly:
+            label: Tarif réduit famille
       edit:
         title: Edition de la licence de %%tbl_profil%%
         actions:
@@ -108,7 +112,7 @@ generator:
         display:
           "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [id_club, id_typelicence, id_category, international, race_nordique, id_familly, cnil, date_medical]
+          "Licence": [id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical]
       new:
         title: Nouvelle licence
         actions:
@@ -119,4 +123,4 @@ generator:
           "Chercher profil": [id_profil, _profil_exist]
           "Profile": [sexe, email, last_name, first_name, birthday]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [id_club, id_typelicence, id_category, international, race_nordique, id_familly, cnil, date_medical]
+          "Licence": [_checkfamilly, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical]
