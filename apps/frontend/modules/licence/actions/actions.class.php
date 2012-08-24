@@ -210,8 +210,7 @@ class licenceActions extends autoLicenceActions
     }
     $this->tbl_licence = $this->getRoute()->getObject();
 
-    if ($this->tbl_licence->getIsBrouillon()) {
-      $this->getUser()->setFlash('error', 'Impossible de modifié encours de saisie: '.$this->tbl_licence->getTblProfil());
+    if ($this->tbl_licence->getYearLicence() != Licence::getDateLicence()) {
       $this->redirect('@tbl_licence');
     }
     $this->form = $this->configuration->getForm($this->tbl_licence);
@@ -224,5 +223,15 @@ class licenceActions extends autoLicenceActions
     }
     $this->form = $this->configuration->getForm();
     $this->tbl_licence = $this->form->getObject();
+  }
+
+  public function executeListShow(sfWebRequest $request)
+  {
+    $this->oLicence  = $this->getRoute()->getObject();
+    $this->oProfil   = $this->oLicence->getTblProfil();
+    $this->oAddress  = $this->oProfil->getTblAddress();
+    if ($this->oLicence->getIdFamilly()) {
+      $this->oFamilly = Doctrine::getTable('tbl_profil')->find($this->oLicence->getIdFamilly());
+    }
   }
 }

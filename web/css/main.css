@@ -78,7 +78,7 @@ img {
   float: left;
   width: 900px;
   margin-right: auto;
-  height: 120px;
+  height: 110px;
   overflow: hidden
 }
 .sb_titre h1 {
@@ -348,7 +348,7 @@ img {
   background-position: left center;
 }
 
-#noname_nav {
+#ffst_nav {
   position: relative;
   float: left;
   height: auto;
@@ -359,14 +359,14 @@ img {
   width: auto !important;
   width: 500px;
 }
-#noname_nav li {
+#ffst_nav li {
   float: left ;
   list-style: none ;
   margin-right: 6px ;
   font-size: 12px;
   color: #fff ;
 }
-#noname_nav li a {
+#ffst_nav li a {
   border: 1px solid #000;
   font-family: Arial;
   font-size: 12px;
@@ -382,35 +382,35 @@ img {
   text-decoration: none ;
 }
 
-#noname_nav li:hover {
+#ffst_nav li:hover {
   font-weight: bold;
 }
 
-#noname_nav li:hover a {
+#ffst_nav li:hover a {
   text-decoration: underline;
 }
-#noname_nav li a:hover {
+#ffst_nav li a:hover {
   color: #800000;
   text-decoration: underline;
 }
-#noname_nav li.hex_menu_active a {
+#ffst_nav li.hex_menu_active a {
   text-decoration: underline;
 }
-#noname_nav ul {
+#ffst_nav ul {
   margin:0;
   padding:0;
   list-style-type:none;
   text-align:center;
 }
 
-#noname_nav ul li ul {
+#ffst_nav ul li ul {
   display:none;
   width: 50px;
   list-style: none ;
   z-index: 1000;
 }
 
-#noname_nav ul li:hover ul li a {
+#ffst_nav ul li:hover ul li a {
   border: 1px solid #000;
   font-family: Arial;
   font-size: 12px;
@@ -425,7 +425,7 @@ img {
   text-decoration: none ;
 }
 
-#noname_nav ul li:hover ul {
+#ffst_nav ul li:hover ul {
   display:block;
   z-index: 1000;
   background-color: #FFFDE5;
@@ -437,7 +437,7 @@ img {
   padding:10px;
 }
 
-#noname_nav li:hover ul li {
+#ffst_nav li:hover ul li {
   background-color: #FFFDE5;
   float: left ;
   list-style: none ;
@@ -447,15 +447,15 @@ img {
 
 }
 
-#noname_nav li:hover ul li a:hover {
+#ffst_nav li:hover ul li a:hover {
   text-decoration: underline;
   color: #800000;
 }
 
-#noname_nav li:hover ul li:hover {
+#ffst_nav li:hover ul li:hover {
   text-decoration: underline;
 }
 
-#noname_nav li ul {
+#ffst_nav li ul {
   position:absolute;
 }

@@ -136,4 +136,30 @@ class tbl_paymentTable extends Doctrine_Table
 
         return $q;
     }
+
+    public function findToDdelete($sType, $nIdUser, $nIdLicence)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.relation_table = ?', $sType)
+          ->andWhere('p.id_user = ?', $nIdUser)
+          ->andWhere('p.is_payed = ?', false)
+          ->andWhere('p.id_licence = ?', $nIdLicence);
+
+        $oPaiements = $q->execute();
+        foreach ($oPaiements as $oPaiement)
+        {
+          $oPaiement->delete();
+        }
+
+    }
+
+    public function findPayment($sType, $nIdUser, $nIdLicence)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.relation_table = ?', $sType)
+          ->andWhere('p.id_user = ?', $nIdUser)
+          ->andWhere('p.id_licence = ?', $nIdLicence);
+
+        return $q->execute();
+    }
 }

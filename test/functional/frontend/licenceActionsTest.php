@@ -102,7 +102,8 @@ $oClub = Doctrine::getTable('tbl_club')->findOneBy('name', 'DE1');
 //Categorie
 $oCategory = Doctrine::getTable('tbl_category')->findOneBy('code', 'CC');
 //Type de licence
-$oTypeLicence = Doctrine::getTable('tbl_typelicence')->findOneBy('code', 'ATJ');
+$oTypeLicence       = Doctrine::getTable('tbl_typelicence')->findOneBy('code', 'AT4');
+$oTypeLicenceReduit = Doctrine::getTable('tbl_typelicence')->findOneBy('code', 'AT3');
 //$birthday = date("Y-m-d", strtotime("-1 day"));
 
 $browser->info('federal1')->connexion('federal1', 'federal1');
@@ -259,11 +260,11 @@ $browser->info('Ajoute même licence');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), false, false,
                   null, false, null, null, 'POI', null, 'M', 'facile@free.fr', 'Pierre', 'Blank', '1975-04-20', false);
 $browser->info('Ajoute licence famille false');
-$browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), true, true,
+$browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicenceReduit->getId(), true, true,
                   $oFamillyFalse->getId(), false, null, null, 'POI', null, 'M', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', true);
 $browser->info('Ajoute licence famille true');
-$browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), true, true,
-                  $oFamillyTrue->getId(), false, null, null, 'POI', null, 'M', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', false);
+$browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicenceReduit->getId(), true, true,
+                  $oFamillyTrue->getId(), false, null, null, 'POI', null, 'M', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', false, true);
 $browser->addLicenceExiste($oFamillyTrue->getId(), $oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), true, true,
                   null, false, null, null, $oFamillyTrue->getTblAddress()->getAddress1(), $oFamillyTrue->getTblAddress()->getId(), 'M', $oFamillyTrue->getEmail(), $oFamillyTrue->getFirstName(),
                   $oFamillyTrue->getLastName(), $oFamillyTrue->getBirthday(), false);

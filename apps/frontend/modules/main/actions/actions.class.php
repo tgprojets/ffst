@@ -54,7 +54,7 @@ class mainActions extends sfActions
       $jsonresponse['profil']['id_codepostaux'] = $oAddress->getTblCodepostaux()->getId();
       $jsonresponse['profil']['ville'] = $oAddress->getTblCodepostaux()->getVille().'('.$oAddress->getTblCodepostaux()->getCodePostaux().')';
       $jsonresponse['profil']['address1'] = $oAddress->getAddress1();
-      $jsonresponse['profil']['address2'] = $oAddress->getAddress1();
+      $jsonresponse['profil']['address2'] = $oAddress->getAddress2();
       $jsonresponse['profil']['tel'] = $oAddress->getTel();
       $jsonresponse['profil']['gsm'] = $oAddress->getGsm();
       $jsonresponse['profil']['fax'] = $oAddress->getFax();

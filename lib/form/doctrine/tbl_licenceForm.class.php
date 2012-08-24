@@ -10,12 +10,19 @@
  */
 class tbl_licenceForm extends Basetbl_licenceForm
 {
+  private $bClub;
+  private $bLigue;
+  private $nIdUser;
+
   public function configure()
   {
     unset($this['num'], $this['created_at'], $this['updated_at'], $this['is_familly']);
     $this->buildWidget();
     $this->buildValidator();
     $this->defaultsWidget();
+    $this->nIdUser = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+    $this->bClub   = sfContext::getInstance()->getUser()->isClub();
+    $this->bLigue  = sfContext::getInstance()->getUser()->isLigue();
   }
   public function save($con = null)
   {
@@ -38,19 +45,25 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
         //Calcul num licence
         $oClub = Doctrine::getTable('tbl_club')->find($aValues['id_club']);
-        $nMember = Doctrine::getTable('tbl_licence')->countLicenceClub($aValues['id_club'], $this->getDateLicence());
+        $nMember = Doctrine::getTable('tbl_licence')->countLicenceClub($aValues['id_club'], Licence::getDateLicence());
         $nMember = str_pad($nMember,3,"0",STR_PAD_LEFT);
-        $sNum = $oClub->getNum().'.'.$nMember.'.'.$this->getDateLicence();
+        $sNum = $oClub->getNum().'.'.$nMember.'.'.Licence::getDateLicence();
     } else {
         $oLicence = Doctrine::getTable('tbl_licence')->find($aValues['id']);
         $sNum = $oLicence->getNum();
         $oProfil = $oLicence->getTblProfil();
         $oAddress = $oProfil->getTblAddress();
-        $oCalcul = new CalculLicence($oLicence->getId());
-        $oCalcul->calcLicenceEdit($aValues);
+        if ($oLicence->getDateValidation() == null)
+        {
+          $oCalcul = new CalculLicence($oLicence->getId());
+          $oCalcul->calcLicenceEdit($aValues, $oLicence->getIsBrouillon());
+        } else {
+          $oCalcul = new CalculLicence($oLicence->getId());
+          $oCalcul->calcLicenceEditDateValid($aValues);
+        }
     }
     if ($this->isValid()) {
-      if ($this->isNew() && $aValues['is_checked'] == 0) {
+      if ($this->isNew()) {
         $oAddress->setAddress1($aValues['address1'])
                  ->setAddress2($aValues['address2'])
                  ->setTel($aValues['tel'])
@@ -82,8 +95,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->save();
       if ($this->isNew()) {
         $oLicence->setIsBrouillon(true)
-                 ->setIdUser(sfContext::getInstance()->getUser()->getGuardUser()->getId())
-                 ->setYearLicence($this->getDateLicence())
+                 ->setIdUser($this->nIdUser)
+                 ->setYearLicence(Licence::getDateLicence())
                  ->setIsNew($bIsNew)
                  ->save();
         $oCalcul = new CalculLicence($oLicence->getId());
@@ -99,12 +112,19 @@ class tbl_licenceForm extends Basetbl_licenceForm
         if ($aValues['id_codepostaux'] != '') {
           $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
         }
-        $oProfil->setEmail($aValues['email'])
-                ->setSexe($aValues['sexe'])
-                ->setFirstName($aValues['last_name'])
-                ->setLastName($aValues['first_name'])
-                ->setBirthday($aValues['birthday'])
-                ->save();
+        if ($oLicence->getDateValidation() != null && $this->bClub) {
+          $oProfil->setEmail($aValues['email'])
+                  ->setSexe($aValues['sexe'])
+                  ->save();
+        } else {
+
+          $oProfil->setEmail($aValues['email'])
+                  ->setSexe($aValues['sexe'])
+                  ->setFirstName($aValues['last_name'])
+                  ->setLastName($aValues['first_name'])
+                  ->setBirthday($aValues['birthday'])
+                  ->save();
+        }
       }
 
     }
@@ -112,25 +132,24 @@ class tbl_licenceForm extends Basetbl_licenceForm
   }
   public function buildWidget()
   {
-      if (sfContext::getInstance()->getUser()->isClub()) {
-        $this->widgetSchema['id_club']                = new sfWidgetFormInputHidden();
-      }
-      if (sfContext::getInstance()->getUser()->isLigue()) {
-        $this->widgetSchema['id_club']                = new sfWidgetFormDoctrineChoice(
-        array(
-          'model'        => $this->getRelatedModelName('tbl_club'),
-          'add_empty'    => false,
-          'table_method' => 'getClubLigue'
-        ));
-      }
-      $sNow18 = date('Y', strtotime('-10 years'));
+      $sNow18 = date('Y', strtotime('-6 years'));
       $years = range($sNow18, 1910);
       $aSexe = array('M' => 'Masculin', 'F' => 'Féminin');
 
+      if ($this->bClub) {
+        $this->widgetSchema['id_club']                = new sfWidgetFormInputHidden();
+      }
+      if ($this->bLigue) {
+        $this->widgetSchema['id_club']                = new sfWidgetFormDoctrineChoice(
+          array(
+            'model'        => $this->getRelatedModelName('tbl_club'),
+            'add_empty'    => false,
+            'table_method' => 'getClubLigue'
+          ));
+      }
+
       $this->widgetSchema['sexe']                      = new sfWidgetFormChoice(array('choices'  => $aSexe, 'multiple' => false, 'expanded' => true));
       $this->widgetSchema['email']                     = new sfWidgetFormInputText();
-      $this->widgetSchema['last_name']                 = new sfWidgetFormInputText();
-      $this->widgetSchema['first_name']                = new sfWidgetFormInputText();
       $this->widgetSchema['address1']                  = new sfWidgetFormInputText();
       $this->widgetSchema['address2']                  = new sfWidgetFormInputText();
       $this->widgetSchema['tel']                       = new sfWidgetFormInputText();
@@ -143,12 +162,20 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
           'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
       ));
-      $this->widgetSchema['birthday']                  = new sfWidgetFormI18nDate(array(
-          'culture' => 'fr',
-          'format' => '%day% %month% %year%',
-          'years' => array_combine($years, $years)
-      ));
-
+      if (!$this->isNew() && $this->getObject()->getDateValidation() != null && $this->bClub)
+      {
+        $this->widgetSchema['last_name']                 = new sfWidgetFormInputHidden();
+        $this->widgetSchema['first_name']                = new sfWidgetFormInputHidden();
+        $this->widgetSchema['birthday']                  = new sfWidgetFormInputHidden();
+      } else {
+        $this->widgetSchema['last_name']                 = new sfWidgetFormInputText();
+        $this->widgetSchema['first_name']                = new sfWidgetFormInputText();
+        $this->widgetSchema['birthday']                  = new sfWidgetFormI18nDate(array(
+            'culture' => 'fr',
+            'format' => '%day% %month% %year%',
+            'years' => array_combine($years, $years)
+        ));
+      }
       $this->widgetSchema['is_medical']                = new sfWidgetFormInputCheckbox();
       $this->widgetSchema['date_medical']              = new sfWidgetFormI18nDate(array(
           'culture' => 'fr',
@@ -170,7 +197,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         ));
         $this->widgetSchema['is_checked']           = new sfWidgetFormInputHidden();
       } else {
-        $this->widgetSchema['id_profil']           = new sfWidgetFormInputHidden();;
+        $this->widgetSchema['id_profil']           = new sfWidgetFormInputHidden();
       }
   }
 
@@ -187,16 +214,25 @@ class tbl_licenceForm extends Basetbl_licenceForm
          'required' => 'Email est requis',
          'invalid'  => 'Cet email est incorrect. Saisir un email valide.'
         )));
-    $this->setValidator('last_name', new sfValidatorString(
-        array('required' => 'true'),
-        array(
-          'required' => 'Nom est requis'
-        )));
-    $this->setValidator('first_name', new sfValidatorString(
-        array('max_length' => 50),
-        array(
-          'required' => 'Prénom est requis'
-        )));
+    if (!$this->isNew() && $this->getObject()->getDateValidation() != null && $this->bClub)
+    {
+      $this->setValidator('last_name', new sfValidatorString(array('required' => false)));
+      $this->setValidator('first_name', new sfValidatorString(array('required' => false)));
+      $this->setValidator('birthday', new sfValidatorString(array('required' => false)));
+    } else {
+
+      $this->setValidator('last_name', new sfValidatorString(
+          array('required' => 'true'),
+          array(
+            'required' => 'Nom est requis'
+          )));
+      $this->setValidator('first_name', new sfValidatorString(
+          array('max_length' => 50),
+          array(
+            'required' => 'Prénom est requis'
+          )));
+      $this->setValidator('birthday',       new sfValidatorDate(array('required' => true)));
+    }
     $this->setValidator('address1', new sfValidatorString(
         array('max_length' => 250),
         array(
@@ -207,7 +243,6 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('gsm',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('fax',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
-    $this->setValidator('birthday',       new sfValidatorDate(array('required' => true)));
     $this->setValidator('is_medical',     new sfValidatorBoolean(array('required' => false)));
     $this->setValidator('date_medical',   new sfValidatorDate(array('required' => false)));
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
@@ -258,24 +293,11 @@ class tbl_licenceForm extends Basetbl_licenceForm
     } else {
       $this->setDefault('sexe', 'M');
       $this->setDefault('is_checked', '0');
-      if (sfContext::getInstance()->getUser()->isClub()) {
+      if ($this->bClub) {
         $oClub = sfContext::getInstance()->getUser()->getClub();
         $this->setDefault('id_club', $oClub->getId());
       }
     }
-  }
-  public function getDateLicence()
-  {
-    if (date('d') >= 1 && date('m') >= 7) {
-      $startDate = date('Y');
-      $endDate   = date('Y')+1;
-    } else {
-      $startDate = date('Y')-1;
-      $endDate   = date('Y');
-    }
-    $sDate = (string) $startDate.'/'.(string) $endDate;
-
-    return $sDate;
   }
 
   public function checkEmail($validator, $values)
@@ -319,7 +341,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
       $nbr = Doctrine_Query::create()
           ->from('tbl_licence l')
           ->where("l.id_profil = ?", $values['id_profil'])
-          ->andWhere("l.year_licence = ?", $this->getDateLicence())
+          ->andWhere("l.year_licence = ?", Licence::getDateLicence())
           ->count();
       if ($nbr>0) {
         throw new sfValidatorError($validator, 'Ce licencié a déjà une licence.');
@@ -331,7 +353,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
   public function checkSaisieLicence($validator, $values)
   {
-    if (!$this->isNew())
+    if (!$this->isNew() && $this->getObject()->getDateValidation() != null)
     {
       $oTypeLicence     = Doctrine::getTable('tbl_typelicence')->find($values['id_typelicence']);
       $oLicence         = Doctrine::getTable('tbl_licence')->find($values['id']);
@@ -378,11 +400,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
   public function checkSaisieClub($validator, $values)
   {
     $nIdClub = $values['id_club'];
-    $nIdUser = sfContext::getInstance()->getUser()->getGuardUser()->getId();
     $nbr = Doctrine_Query::create()
       ->from('tbl_licence l')
       ->where("l.id_club = ?", $values['id_club'])
-      ->andWhere("l.id_user <> ?", $nIdUser)
+      ->andWhere("l.id_user <> ?", $this->nIdUser)
       ->andWhere("l.is_brouillon = true")
       ->count();
       if ($nbr>0) {
@@ -393,6 +414,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
   public function checkNameBirthday($validator, $values)
   {
+    if (!$this->isNew() && $this->getObject()->getDateValidation() != null && $this->bClub)
+    {
+      return $values;
+    }
     if (! empty($values['last_name']) && ! empty($values['first_name']) && ! empty($values['birthday'])) {
       if ($this->isNew() && $values['is_checked'] == 0) {
         $nbr = Doctrine_Query::create()
@@ -437,7 +462,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         ->from('tbl_licence l')
         ->where("l.id_club = ?", $values['id_club'])
         ->andWhere("l.id_profil = ?", $values['id_familly'])
-        ->andWhere("l.year_licence = ?", $this->getDateLicence())
+        ->andWhere("l.year_licence = ?", Licence::getDateLicence())
         ->count();
         if ($nbr==0) {
           throw new sfValidatorError($validator, 'Le licencié de la famille ne fait pas partie de ce club ou n\' a pas de licence encours.');
@@ -448,7 +473,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         ->leftjoin("l.tbl_typelicence tl")
         ->where("l.id_club = ?", $values['id_club'])
         ->andWhere("l.id_profil = ?", $values['id_familly'])
-        ->andWhere("l.year_licence = ?", $this->getDateLicence())
+        ->andWhere("l.year_licence = ?", Licence::getDateLicence())
         ->andWhere("tl.is_familly = ?", false)
         ->count();
         if ($nbr==0) {
