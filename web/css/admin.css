@@ -191,6 +191,7 @@ Theme admin generator
     -moz-border-radius:0 16px 0 16px;
     -webkit-border-radius:0 16px 0 16px;
     border-radius: 0 16px 0 16px;
+    behavior: url(/PIE.htc);
     -moz-box-shadow: 4px 4px 6px #aaa;
     -webkit-box-shadow: 4px 4px 6px #aaa;
     box-shadow: 4px 4px 6px #555;
@@ -265,6 +266,7 @@ Theme admin generator
    -webkit-border-radius: 13px;
    -moz-border-radius: 13px;
    border-radius: 13px;
+   behavior: url(/PIE.htc);
    -moz-box-shadow: 4px 4px 6px #aaa;
    -webkit-box-shadow: 4px 4px 6px #aaa;
    box-shadow: 4px 4px 6px #aaa;
@@ -325,6 +327,7 @@ input[type=submit] {
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
   border-radius: 16px;
+  behavior: url(/PIE.htc);
   border: 2px #3d3533 solid;
 }
 
@@ -337,6 +340,7 @@ input[type=submit] {
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
   border-radius: 16px;
+  behavior: url(/PIE.htc);
   border: 2px #A71418 solid;
   margin: 4px 20px;
   list-style: none;
@@ -578,6 +582,7 @@ table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mc
    -webkit-border-radius: 13px;
    -moz-border-radius: 13px;
    border-radius: 13px;
+   behavior: url(/PIE.htc);
    -moz-box-shadow: 4px 4px 6px #aaa;
    -webkit-box-shadow: 4px 4px 6px #aaa;
    box-shadow: #e9e338 0 1px 0;

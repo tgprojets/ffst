@@ -124,6 +124,7 @@ img {
   -webkit-border-radius:12px;
   -moz-border-radius:12px;
   border-radius:12px;
+  behavior: url(/PIE.htc);
 
 }
 .sb_menu_admin {
@@ -137,6 +138,7 @@ img {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  behavior: url(/PIE.htc);
   min-width: 220px;
 }
 .sb_menu_admin li {
@@ -230,6 +232,7 @@ img {
   -webkit-border-radius:16px;
   -moz-border-radius:16px;
   border-radius: 16px;
+  behavior: url(/PIE.htc);
 }
 
 /** Bouton a **/
@@ -245,6 +248,7 @@ img {
   -webkit-border-radius: 13px;
   -moz-border-radius: 13px;
   border-radius: 13px;
+  behavior: url(/PIE.htc);
   -moz-box-shadow: 4px 4px 6px #aaa;
   -webkit-box-shadow: 4px 4px 6px #aaa;
   box-shadow: 4px 4px 6px #aaa;
@@ -281,6 +285,7 @@ img {
   -webkit-border-radius:4px;
   -moz-border-radius:4px;
   border-radius:4px;
+  behavior: url(/PIE.htc);
   text-decoration: none;
 }
 .sb_bouton_submit input[type=submit]:hover {
@@ -341,6 +346,7 @@ img {
   -webkit-border-radius: 13px;
   -moz-border-radius: 13px;
   border-radius: 13px;
+  behavior: url(/PIE.htc);
   border: 2px #fff solid;
   padding-left: 40px;
   padding-top: 18px;
@@ -433,6 +439,7 @@ img {
   -moz-border-radius: 0 0 10px 10px;
   -webkit-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
+  behavior: url(/PIE.htc);
   min-width: 150px;
   padding:10px;
 }

@@ -45,6 +45,7 @@
     -webkit-border-radius:16px 16px 0 0;
     -moz-border-radius:16px 16px 0 0;
     border-radius: 16px 16px 0 0;
+    behavior: url(/PIE.htc);
     -moz-box-shadow: 4px 4px 6px #aaa;
     -webkit-box-shadow: 4px 4px 6px #aaa;
     margin-bottom: 10px;
@@ -70,6 +71,7 @@
     -webkit-border-radius:16px 16px 0 0;
     -moz-border-radius:16px 16px 0 0;
     border-radius: 16px 16px 0 0;
+    behavior: url(/PIE.htc);
 }
 
 #myform fieldset {
@@ -186,6 +188,8 @@
    -webkit-border-radius: 13px;
    -moz-border-radius: 13px;
    border-radius: 13px;
+   behavior: url(/PIE.htc);
+   behavior: url(/PIE.htc);
    -moz-box-shadow: 4px 4px 6px #aaa;
    -webkit-box-shadow: 4px 4px 6px #aaa;
    text-shadow: rgba(0,0,0,.4) 0 1px 0;

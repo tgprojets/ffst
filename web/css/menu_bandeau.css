@@ -8,6 +8,7 @@
   -webkit-border-radius: 16px;
   -moz-border-radius: 16px;
   border-radius: 16px;
+  behavior: url(/PIE.htc);
 }
 .sb_bar_menu_connexion form {
   position: relative;
@@ -26,6 +27,7 @@
   -webkit-border-radius:16px;
   -moz-border-radius:16px;
   border-radius: 16px;
+  behavior: url(/PIE.htc);
 }
 .sb_deconnexion  {
   position: relative;
