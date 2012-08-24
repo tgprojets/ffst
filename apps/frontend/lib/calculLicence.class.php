@@ -244,7 +244,7 @@ class CalculLicence {
             $nAmount = $oNewLicence->getPrix() - $this->oLicence->getTblTypelicence()->getPrix();
             if ($nAmount > 0) {
                 //Ajoute nouveau paiement
-                $this->addPaymentEdit($nAmount, 'Supplément pour modification licence', 'tbl_licence');
+                $this->addPayment($nAmount, 'Supplément pour modification licence', 'tbl_licence', false, false);
             }
         }
 
@@ -257,24 +257,6 @@ class CalculLicence {
                   ->setRelationTable($sRelation)
                   ->setAmount($nAmount)
                   ->setIsBrouillon($bBrouillon)
-                  ->setIdUser($this->nUser);
-        if ($nClub)
-        {
-            $oPaiement->setIdClub($this->nClub);
-        } else {
-            $oPaiement->setIdLicence($this->nLicence)
-                      ->setIdClub($this->nClub);
-        }
-        $oPaiement->save();
-    }
-
-    private function addPaymentEdit($nAmount, $sLib, $sRelation, $nClub=false)
-    {
-        $oPaiement = new tbl_payment();
-        $oPaiement->setLib($sLib)
-                  ->setRelationTable($sRelation)
-                  ->setIsBrouillon(false)
-                  ->setAmount($nAmount)
                   ->setIdUser($this->nUser);
         if ($nClub)
         {

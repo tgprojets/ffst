@@ -210,6 +210,9 @@ class licenceActions extends autoLicenceActions
     }
     $this->tbl_licence = $this->getRoute()->getObject();
 
+    if ($this->tbl_licence->getYearLicence() != Licence::getDateLicence()) {
+      $this->redirect('@tbl_licence');
+    }
     $this->form = $this->configuration->getForm($this->tbl_licence);
   }
 

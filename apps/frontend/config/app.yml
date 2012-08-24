@@ -4,7 +4,7 @@
 # default values
 prod:
   paypal:
-    business: tgilbe_1273247786_biz@tgprojets.fr
+    business:  ffst@free.fr
     url: https://www.sandbox.paypal.com/cgi-bin/webscr
     cancel: http://sandbox-ffst.tgprojets.fr/payment/paypal.php
     notify: http://sandbox-ffst.tgprojets.fr/payment/notifypaypal.php

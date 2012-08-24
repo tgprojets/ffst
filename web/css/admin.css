@@ -87,12 +87,7 @@ Theme admin generator
 {
   margin: 4px 0;
   padding: 4px 4px 4px 30px;
-  background: #f9ffce url(../images/error.png) no-repeat 4px 4px;
-  -webkit-border-radius: 16px;
-  -moz-border-radius: 16px;
-  border-radius: 16px;
-  border: 2px #3d3533 solid;
-  margin: 4px 20px;
+  background: url(../images/error.png) no-repeat 4px 4px;
   list-style: none;
 }
 
@@ -335,10 +330,16 @@ input[type=submit] {
 
 #sf_admin_container .error
 {
+  color: #A71418;
   margin: 4px 0;
-  padding: 4px 4px 4px 30px;
-  background: url(../images/error.png) no-repeat 10px 4px;
-  color: #a71418;
+  padding: 6px 6px 6px 30px;
+  background: #f9ffce url(../images/error.png) no-repeat 6px 6px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+  border: 2px #A71418 solid;
+  margin: 4px 20px;
+  list-style: none;
 }
 #sf_admin_content .sf_admin_row {
     background-color: #fff;
@@ -407,8 +408,7 @@ th td {
   padding: 10px;
   border: none;
   height: auto !important;
-  height: 30px;
-  min-height: 30px;
+  overflow: hidden;
   border-bottom: none;
   color: #000;
 }
@@ -618,4 +618,10 @@ padding-top: 6px;
   font-size: 14px;
   font-family: Helvetica, Arial, Sans-Serif;
   width: 200px;
+}
+
+.button_right {
+  float: right;
+  padding-right: 40px;
+  padding-bottom: 10px;
 }

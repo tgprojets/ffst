@@ -1,43 +1,5 @@
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('form').submit(function() {
-            enabledForm();
-        });
-        if ($('#tbl_licence_is_checked').val() == 1) {
-            disabledForm();
-        }
-    });
-    function disabledForm()
-    {
-        $('#tbl_licence_email').attr('disabled', true);
-        $('#tbl_licence_last_name').attr('disabled', true);
-        $('#tbl_licence_first_name').attr('disabled', true);
-        $('#tbl_licence_birthday_day').attr('disabled', true);
-        $('#tbl_licence_birthday_month').attr('disabled', true);
-        $('#tbl_licence_birthday_year').attr('disabled', true);
 
-        $('#autocomplete_tbl_licence_id_codepostaux').attr('disabled', true);
-        $('#tbl_licence_address1').attr('disabled', true);
-        $('#tbl_licence_address2').attr('disabled', true);
-        $('#tbl_licence_tel').attr('disabled', true);
-        $('#tbl_licence_gsm').attr('disabled', true);
-        $('#tbl_licence_fax').attr('disabled', true);
-    }
-    function enabledForm()
-    {
-        $('#tbl_licence_email').attr('disabled', false);
-        $('#tbl_licence_last_name').attr('disabled', false);
-        $('#tbl_licence_first_name').attr('disabled', false);
-        $('#tbl_licence_birthday_day').attr('disabled', false);
-        $('#tbl_licence_birthday_month').attr('disabled', false);
-        $('#tbl_licence_birthday_year').attr('disabled', false);
-        $('#autocomplete_tbl_licence_id_codepostaux').attr('disabled', false);
-        $('#tbl_licence_address1').attr('disabled', false);
-        $('#tbl_licence_address2').attr('disabled', false);
-        $('#tbl_licence_tel').attr('disabled', false);
-        $('#tbl_licence_gsm').attr('disabled', false);
-        $('#tbl_licence_fax').attr('disabled', false);
-    }
     function cancelProfil()
     {
         //Vide les champs profil
@@ -108,7 +70,6 @@
                     if (profil.is_familly == 1) { $('#tbl_licence_is_familly').attr('checked', true); }
                     if (profil.cnil == 1) { $('#tbl_licence_cnil').attr('checked', true); }
                     $('#tbl_licence_is_checked').val('1');
-                    disabledForm();
 
                   }
                 },
@@ -121,7 +82,7 @@
     }
 </script>
 <div>
-    <div class="sb_bouton_a">
+    <div class="sb_bouton_a button_right">
         <a href="#" onClick="cancelProfil()">annuler</a>
         <a href="#" onClick="validProfil()">Valider</a>
     </div>
