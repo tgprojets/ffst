@@ -625,3 +625,14 @@ padding-top: 6px;
   padding-right: 40px;
   padding-bottom: 10px;
 }
+
+.text_show {
+  display: block;
+  padding: 0 1em 3px 0;
+  margin-top: 10px;
+  float: left;
+  width: 13em;
+  color: black;
+  font-size: 14px;
+  font-weight: normal !important;
+}

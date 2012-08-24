@@ -224,4 +224,14 @@ class licenceActions extends autoLicenceActions
     $this->form = $this->configuration->getForm();
     $this->tbl_licence = $this->form->getObject();
   }
+
+  public function executeListShow(sfWebRequest $request)
+  {
+    $this->oLicence  = $this->getRoute()->getObject();
+    $this->oProfil   = $this->oLicence->getTblProfil();
+    $this->oAddress  = $this->oProfil->getTblAddress();
+    if ($this->oLicence->getIdFamilly()) {
+      $this->oFamilly = Doctrine::getTable('tbl_profil')->find($this->oLicence->getIdFamilly());
+    }
+  }
 }
