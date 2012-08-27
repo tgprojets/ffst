@@ -29,19 +29,6 @@ class tbl_licenceTable extends Doctrine_Table
             return $nMember+1;
         }
     }
-    public function getDateLicence()
-      {
-        if (date('d') >= 1 && date('m') >= 7) {
-          $startDate = date('Y');
-          $endDate   = date('Y')+1;
-        } else {
-          $startDate = date('Y')-1;
-          $endDate   = date('Y');
-        }
-        $sDate = (string) $startDate.'/'.(string) $endDate;
-
-        return $sDate;
-    }
 
     public function retrieveByClub(Doctrine_Query $q) {
         $q = $this->createQuery('q');
@@ -62,7 +49,31 @@ class tbl_licenceTable extends Doctrine_Table
             $q->andWhereIn('id_club', $aClub);
         }
 
-        $q->andWhereIn('year_licence', $this->getDateLicence());
+        $q->andWhereIn('year_licence', Licence::getDateLicence());
+
+        return $q;
+    }
+
+    public function retrieveByClubOld(Doctrine_Query $q) {
+        $q = $this->createQuery('q');
+        if (sfContext::getInstance()->getUser()->isClub()) {
+            $oClub = sfContext::getInstance()->getUser()->getClub();
+            $q->where('id_club = ?', $oClub->getId());
+        } elseif (sfContext::getInstance()->getUser()->isLigue()) {
+            $oLigue = sfContext::getInstance()->getUser()->getLigue();
+            $aClub = array();
+            foreach ($oLigue->getTblClub() as $oClub)
+            {
+                $aClub[] = $oClub->getId();
+            }
+            if (empty($aClub))
+            {
+                $aClub[] = 0;
+            }
+            $q->andWhereIn('id_club', $aClub);
+        }
+
+        $q->andWhereNotIn('year_licence', Licence::getDateLicence());
 
         return $q;
     }
@@ -184,5 +195,19 @@ class tbl_licenceTable extends Doctrine_Table
           ->andWhere('id_user = ?', $nUser);
 
         return $q->execute();
+    }
+
+    public function findListYearLicence()
+    {
+        $oLicences = Doctrine_Manager::getInstance()->getCurrentConnection();
+        $res = $oLicences->execute("SELECT t.year_licence AS t__year_licence FROM tbl_licence t WHERE year_licence != '".Licence::getDateLicence()."' GROUP BY t.year_licence");
+        $oLicences = $res->fetchAll();
+
+        $aLicences = array();
+        $aLicences[] = '';
+        for($i = 0; $i < count($oLicences); $i++) {
+            $aLicences[$oLicences[$i]['t__year_licence']] = $oLicences[$i]['t__year_licence'];
+        }
+        return $aLicences;
     }
 }

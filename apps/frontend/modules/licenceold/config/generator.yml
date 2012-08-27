@@ -1,0 +1,79 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_licence
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          licence_old
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_valid:
+          label: Licence Valide
+        email:
+          help: Requis
+        first_name:
+          label: Prénom
+          help: Requis
+        last_name:
+          label: Nom
+          help: Requis
+        birthday:
+          label: Date anniversaire
+          help: Requis
+        address1:
+          label: Adresse
+          help: Requis
+        address2:
+          label: Adresse complémentaire
+        tel:
+          label: Téléphone
+        gsm:
+          label: Portable
+        fax:
+          label: Fax
+        id_club:
+          label: Club
+        id_category:
+          label: Catégorie
+        id_familly:
+          help: Licence du tuteur (valide)
+        id_typelicence:
+          label: Type de licence
+        is_familly:
+          label: Famille
+        date_medical:
+          label: Date certificat médical
+        tbl_club:
+          label: Club
+        tbl_category:
+          label: Catégorie
+        tbl_typelicence:
+          label: Type de licence
+        check_date:
+          label: Validation
+        tbl_profil:
+          label: Licencié
+        num:
+          label: Numéro de licence
+        is_brouillon:
+          label: Brouillon (encours de saisie)
+      list:
+        title: Liste des licenciés
+        display: [num, is_brouillon, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
+        table_method: retrieveByClubOld
+        max_per_page: 20
+        batch_actions: {}
+        actions: {}
+        object_actions:
+          show:
+            label: Voir licence
+      filter:
+        display: [list_yearlicence, num, id_typelicence, id_category, id_club, is_valid]

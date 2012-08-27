@@ -641,3 +641,40 @@ padding-top: 6px;
   font-size: 14px;
   font-weight: normal !important;
 }
+
+#sf_admin_container .line_licence_cancel {
+  background: #943c3c;
+}
+#sf_admin_container .line_licence_dette {
+  background: #d4b1ff;
+}
+#sf_admin_container .line_licence_brouillon {
+  background: #91b8ff;
+}
+#sf_admin_container .line_licence_notvalide {
+  background: #edeac2;
+}
+
+#sf_admin_header {
+  min-height: 30px;
+  width: 100%;
+  float: none;
+  margin-bottom: 10px;
+}
+
+#sf_admin_header .legende_licence_list {
+  position: relative;
+  list-style: none;
+  float: left;
+  width: 100%;
+  overflow: hidden;
+}
+
+#sf_admin_header .legende_licence_list li {
+  position: relative;
+  float: left;
+  width: 180px;
+  height: 20px;
+  padding: 2px 4px;
+  margin-right: 2px;
+}

@@ -29,6 +29,15 @@ tbl_tarifreduit:
     column:               id
     with_wildcard_routes: true
 
+licence_old:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_licence
+    module:               licenceold
+    prefix_path:          /licenceold
+    column:               id
+    with_wildcard_routes: true
+
 tbl_licence:
   class: sfDoctrineRouteCollection
   options:

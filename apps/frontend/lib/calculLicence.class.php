@@ -133,7 +133,8 @@ class CalculLicence {
     {
         if ($this->bInternational) {
             if (date('Y', strtotime($this->DateSaisie)) == $this->YearStart) {
-                if ((int) date('m', strtotime($this->DateSaisie)) >= 11 && (int) date('d', strtotime($this->DateSaisie)) >= 15) {
+                if ((int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'day') &&
+                    (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'month')) {
                     return true;
                 }
             } else {
@@ -148,7 +149,8 @@ class CalculLicence {
     {
         if ($this->bNew == false) {
             if (date('Y', strtotime($this->DateSaisie)) == $this->YearStart) {
-                if ( (int) date('m', strtotime($this->DateSaisie)) >= 10 && (int) date('d', strtotime($this->DateSaisie)) >= 31) {
+                if ( (int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'day') &&
+                     (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'month')) {
                     return true;
                 }
             } else {

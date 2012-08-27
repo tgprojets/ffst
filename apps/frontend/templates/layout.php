@@ -80,7 +80,8 @@
                   <?php if ($sf_user->hasCredential('licence') || $sf_user->hasCredential('account_club') || $sf_user->hasCredential('account_ligue')): ?>
                   <li> <a href="#">Gestion des licences</a>
                     <ul>
-                      <li <?php echo $sf_params->get('module')=="category"?'class="sb_menu_select"':''?>><?php echo link_to('Licence', '@tbl_licence') ?></li>
+                      <li <?php echo $sf_params->get('module')=="licence"?'class="sb_menu_select"':''?>><?php echo link_to('Licence', '@tbl_licence') ?></li>
+                      <li <?php echo $sf_params->get('module')=="licenceold"?'class="sb_menu_select"':''?>><?php echo link_to('Ancienne licence', 'licenceold/index') ?></li>
                     </ul>
                   </li>
                   <?php endif; ?>
@@ -93,6 +94,9 @@
                       <?php endif; ?>
                       <?php if ($sf_user->hasPermission('connexion_history')): ?>
                         <li <?php echo $sf_params->get('module')=="tracability"?'class="sb_menu_select"':''?>><?php echo link_to('Connexion historique', '@tbl_tracability') ?></li>
+                      <?php endif; ?>
+                      <?php if ($sf_user->hasCredential('admin')): ?>
+                      <li <?php echo $sf_params->get('module')=="params"?'class="sb_menu_select"':''?>><?php echo link_to('Date majoration', 'params/majorDate') ?></li>
                       <?php endif; ?>
                     </ul>
                   </li>

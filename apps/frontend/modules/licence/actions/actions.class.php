@@ -234,4 +234,14 @@ class licenceActions extends autoLicenceActions
       $this->oFamilly = Doctrine::getTable('tbl_profil')->find($this->oLicence->getIdFamilly());
     }
   }
+
+  public function executeListCancelLicence(sfWebRequest $request)
+  {
+    $this->oLicence  = $this->getRoute()->getObject();
+    if ($this->getUser()->hasCredential('ValidLicence')) {
+      $this->getUser()->setFlash('notice', 'Licence annulé: '.$this->oLicence->getTblProfil());
+      $this->oLicence->setIsCancel(true)->save();
+    }
+    $this->redirect('@tbl_licence');
+  }
 }

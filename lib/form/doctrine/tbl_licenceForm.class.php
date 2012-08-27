@@ -342,6 +342,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           ->from('tbl_licence l')
           ->where("l.id_profil = ?", $values['id_profil'])
           ->andWhere("l.year_licence = ?", Licence::getDateLicence())
+          ->andWhere("l.is_cancel = ?", false)
           ->count();
       if ($nbr>0) {
         throw new sfValidatorError($validator, 'Ce licencié a déjà une licence.');
