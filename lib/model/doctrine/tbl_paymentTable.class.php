@@ -162,4 +162,17 @@ class tbl_paymentTable extends Doctrine_Table
 
         return $q->execute();
     }
+
+    public function findPaymentLic($nIdProfil)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.is_payed = ?', false)
+          ->andWhere('p.is_brouillon = ?', false)
+          ->andWhere('p.id_club is null')
+          ->andWhere('p.id_ligue is null')
+          ->andWhere('p.id_licence is null')
+          ->andWhere('p.id_profil = ?', $nIdProfil);
+
+        return $q->execute();
+    }
 }

@@ -27,4 +27,30 @@ class tbl_licence extends Basetbl_licence
         }
         return parent::delete($conn);
     }
+
+    public function getClassStatus()
+    {
+        //Licence annulé
+        if ($this->getIsCancel() == true)
+        {
+            return 'line_licence_cancel';
+        }
+        //Licencié à une note non réglé
+        $oFacture = Doctrine::getTable('tbl_payment')->findPaymentLic($this->getTblProfil()->getId());
+        if ($oFacture->count() > 0) {
+            return 'line_licence_dette';
+        }
+        //Licence brouillon
+        if ($this->getIsBrouillon() == true)
+        {
+            return 'line_licence_brouillon';
+        }
+
+        //Licence pas validé
+        if ($this->getDateValidation() == null)
+        {
+            return 'line_licence_notvalide';
+        }
+
+    }
 }
