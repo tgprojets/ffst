@@ -67,6 +67,30 @@ class tbl_licenceTable extends Doctrine_Table
         return $q;
     }
 
+    public function retrieveByClubOld(Doctrine_Query $q) {
+        $q = $this->createQuery('q');
+        if (sfContext::getInstance()->getUser()->isClub()) {
+            $oClub = sfContext::getInstance()->getUser()->getClub();
+            $q->where('id_club = ?', $oClub->getId());
+        } elseif (sfContext::getInstance()->getUser()->isLigue()) {
+            $oLigue = sfContext::getInstance()->getUser()->getLigue();
+            $aClub = array();
+            foreach ($oLigue->getTblClub() as $oClub)
+            {
+                $aClub[] = $oClub->getId();
+            }
+            if (empty($aClub))
+            {
+                $aClub[] = 0;
+            }
+            $q->andWhereIn('id_club', $aClub);
+        }
+
+        $q->andWhereNotIn('year_licence', $this->getDateLicence());
+
+        return $q;
+    }
+
     public function validSaisie($isClub, $isLigue, $nKey)
     {
         $q = $this->createQuery('q');

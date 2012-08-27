@@ -15,9 +15,10 @@ class Licence {
     return $sDate;
   }
 
-  public function getDateMajor($sType, $sDate)
+  public static function getDateMajor($sType, $sDate)
   {
-    $sValue = InitParam::getValueByKey('Date validation', 'date_'.$sType.'_'.$sDate);
+    $oInitParam = new InitParam();
+    $sValue = $oInitParam->getValueByKey('Date validation', 'date_'.$sType.'_'.$sDate);
     if ($sValue)
     {
       return $sValue;

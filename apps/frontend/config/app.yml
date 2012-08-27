@@ -26,9 +26,7 @@ all:
   images:
     logo: logo
   majordate:
-    renew:
-      day: 31
-      month: 10
-    int:
-      day: 15
-      month: 11
+    renew_day: '31'
+    renew_month: '10'
+    int_day: '15'
+    int_month: '11'
