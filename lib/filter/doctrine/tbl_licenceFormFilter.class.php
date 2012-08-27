@@ -25,7 +25,12 @@ class tbl_licenceFormFilter extends Basetbl_licenceFormFilter
           'table_method' => 'getClubLigue'
         ));
       }
-            $this->validatorSchema['is_valid']    = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
+      $aYearLicence = Doctrine::getTable('tbl_licence')->findListYearLicence();
+      $this->widgetSchema['list_yearlicence']                = new sfWidgetFormChoice(array('choices'  => $aYearLicence));
+      $this->validatorSchema['list_yearlicence']        = new sfValidatorChoice(
+        array('choices' => array_keys($aYearLicence), 'required' => false)
+      );
+      $this->validatorSchema['is_valid']    = new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0)));
   }
   public function addIsValidColumnQuery(Doctrine_Query $query, $field, $values)
   {
@@ -44,5 +49,19 @@ class tbl_licenceFormFilter extends Basetbl_licenceFormFilter
     } else {
         $query->andWhere('date_validation IS NULL');
     }
+  }
+  public function addListYearlicenceColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values) || $values[0] == 0)
+    {
+      return;
+    }
+    $sRootAlias = $query->getRootAlias();
+    $query->andWhere('year_licence = ?',  $values[0]);
   }
 }
