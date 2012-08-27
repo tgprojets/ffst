@@ -25,3 +25,10 @@ all:
     return: validation_dev.php
   images:
     logo: logo
+  majordate:
+    renew:
+      day: 31
+      month: 10
+    int:
+      day: 15
+      month: 11

@@ -14,4 +14,16 @@ class Licence {
 
     return $sDate;
   }
+
+  public function getDateMajor($sType, $sDate)
+  {
+    $sValue = InitParam::getValueByKey('Date validation', 'date_'.$sType.'_'.$sDate);
+    if ($sValue)
+    {
+      return $sValue;
+    } else {
+      return sfConfig::get('app_majordate_'.$sType.'_'.$sDate);
+    }
+    return null;
+  }
 }
