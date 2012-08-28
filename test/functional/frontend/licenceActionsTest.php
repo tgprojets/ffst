@@ -110,13 +110,13 @@ $browser->info('federal1')->connexion('federal1', 'federal1');
 $browser->get('/licence/new')->
   info('Nouvelle licence')->
   info('5 erreurs requis')->
-  click('Mettre à jour et ajouter', array('tbl_licence' => array(
+  click('Mettre à jour', array('tbl_licence' => array(
   )))->
   with('form')->begin()->
     hasErrors(5)->
   end()->
   info('Formulaire incorrect email incorrect')->
-  click('Mettre à jour et ajouter', array('tbl_licence' => array(
+  click('Mettre à jour', array('tbl_licence' => array(
     'id_club'            => $oClub->getId(),
     'id_category'        => $oCategory->getId(),
     'id_typelicence'     => $oTypeLicence->getId(),
@@ -142,7 +142,7 @@ $browser->get('/licence/new')->
     hasErrors(1)->
   end()->
   info('Formulaire incorrect email exite')->
-  click('Mettre à jour et ajouter', array('tbl_licence' => array(
+  click('Mettre à jour', array('tbl_licence' => array(
     'id_club'            => $oClub->getId(),
     'id_category'        => $oCategory->getId(),
     'id_typelicence'     => $oTypeLicence->getId(),
@@ -168,7 +168,7 @@ $browser->get('/licence/new')->
     hasErrors(1)->
   end()->
   info('Formulaire incorrect email exite')->
-  click('Mettre à jour et ajouter', array('tbl_licence' => array(
+  click('Mettre à jour', array('tbl_licence' => array(
     'id_club'            => $oClub->getId(),
     'id_category'        => $oCategory->getId(),
     'id_typelicence'     => $oTypeLicence->getId(),
@@ -194,7 +194,7 @@ $browser->get('/licence/new')->
     hasErrors(1)->
   end()->
   info('Formulaire incorrect email exite')->
-  click('Mettre à jour et ajouter', array('tbl_licence' => array(
+  click('Mettre à jour', array('tbl_licence' => array(
     'id_club'            => $oClub->getId(),
     'id_category'        => $oCategory->getId(),
     'id_typelicence'     => $oTypeLicence->getId(),
@@ -235,11 +235,13 @@ $browser->deconnexion();
 * Ajoute même licence (true)
 * Ajoute licence familly (false)
 * Ajoute licence familly (true)
-* Ajoute licence existe
+* Ajoute licence existe (false)
 *
 **/
 $oFamillyFalse = Doctrine::getTable('tbl_profil')->findOneBy('email','jean.lafleur@free.fr');
-$oFamillyTrue = Doctrine::getTable('tbl_profil')->findOneBy('email','damien.lasperche@free.fr');
+$oProfilExist = Doctrine::getTable('tbl_profil')->findOneBy('email','damien.lasperche@free.fr');
+$oTypeLicenceMO4 = Doctrine::getTable('tbl_typelicence')->findOneBy('code', 'MO4');
+$oTypeLicenceDP1 = Doctrine::getTable('tbl_typelicence')->findOneBy('code', 'DP1');
 $browser->info('club 1')->connexion('club1', 'club1');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), false, false,
                   null, false, null, null, 'POI', null, 'M', 'facile@free.fr', 'Pierre', 'Blank', '1975-04-20', true);
@@ -259,28 +261,108 @@ $browser->get('/licence/ListCancelSaisie');
 $browser->info('Ajoute même licence');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), false, false,
                   null, false, null, null, 'POI', null, 'M', 'facile@free.fr', 'Pierre', 'Blank', '1975-04-20', false);
+
+$oFamillyTrue = Doctrine::getTable('tbl_profil')->findOneBy('email','facile@free.fr');
+
 $browser->info('Ajoute licence famille false');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicenceReduit->getId(), true, true,
                   $oFamillyFalse->getId(), false, null, null, 'POI', null, 'M', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', true);
 $browser->info('Ajoute licence famille true');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicenceReduit->getId(), true, true,
-                  $oFamillyTrue->getId(), false, null, null, 'POI', null, 'M', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', false, true);
+                  $oFamillyTrue->getId(), false, null, null, 'POI', null, 'M', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', false);
+
 $browser->addLicenceExiste($oFamillyTrue->getId(), $oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), true, true,
                   null, false, null, null, $oFamillyTrue->getTblAddress()->getAddress1(), $oFamillyTrue->getTblAddress()->getId(), 'M', $oFamillyTrue->getEmail(), $oFamillyTrue->getFirstName(),
-                  $oFamillyTrue->getLastName(), $oFamillyTrue->getBirthday(), false);
+                  $oFamillyTrue->getLastName(), $oFamillyTrue->getBirthday(), true);
+
+$browser->addLicenceExiste($oProfilExist->getId(), $oClub->getId(), $oCategory->getId(), $oTypeLicenceMO4->getId(), true, true,
+                  null, false, null, null, $oProfilExist->getTblAddress()->getAddress1(), $oProfilExist->getTblAddress()->getId(), 'M', $oProfilExist->getEmail(), $oProfilExist->getFirstName(),
+                  $oProfilExist->getLastName(), $oProfilExist->getBirthday(), false);
+
 $oLicences = Doctrine::getTable('tbl_licence')->findAll();
 $oLicence = $oLicences->getLast();
-$browser->get('/licence/'.$oLicence->getId().'/edit')->
-    with('response')->isRedirected()->
-    followRedirect()
-    ->with('request')->begin()
-      ->isParameter('module', 'licence')
-      ->isParameter('action', 'index')
-    ->end();
+
+/**
+* Possibilité de modifier la licence avant de valider
+* Edition du profil / Licence / adresse
+* Valider la saisie
+*
+**/
+
+//Licence inférieur
+//Licence supérieur
+
 $browser->get('/licence/ListValidSaisie');
+$oProfil  = $oLicence->getTblProfil();
+$oAddress = $oProfil->getTblAddress();
 $browser->get('/licence/'.$oLicence->getId().'/edit')->
-    with('request')->begin()
-      ->isParameter('module', 'licence')
-      ->isParameter('action', 'edit')
-    ->end();
+  click('Mettre à jour', array('tbl_licence' => array(
+    'id_club'            => $oClub->getId(),
+    'id_category'        => $oCategory->getId(),
+    'id_typelicence'     => $oTypeLicence->getId(),
+    'international'      => true,
+    'race_nordique'      => false,
+    'id_familly'         => null,
+    'cnil'               => false,
+    'date_medical'       => null,
+    'id_codepostaux'     => null,
+    'address1'           => $oAddress->getAddress1(),
+    'address2'           => '',
+    'tel'                => $oAddress->getTel(),
+    'gsm'                => $oAddress->getGsm(),
+    'fax'                => $oAddress->getFax(),
+    'id_address'         => $oAddress->getId(),
+    'sexe'               => 'M',
+    'email'              => $oProfil->getEmail(),
+    'last_name'          => $oProfil->getLastName(),
+    'first_name'         => $oProfil->getFirstName(),
+    'birthday'           => $oProfil->getBirthday(),
+  )))->
+  with('form')->begin()->
+    hasErrors(false)->
+  end();
+
+  $browser->get('/licence/ListValidSaisie');
+  $browser->get('/licence/index')->
+            with('response')->begin()->
+              matches('#Payer par PAYPAL#')->
+            end();
+  $browser->get('/licence/listPaypal');
+  $oBordereau = Doctrine::getTable('tbl_bordereau')->findAll()->getLast();
+/*
+  $browser->post('/payment/paypalDev', array(
+            'item_number'   => $oBordereau->getId()
+            ));->
+            with('response')->isRedirected()->
+            followRedirect()->with('response')->begin()->
+              matches('!#Payer par PAYPAL#')->
+            end();*/
+  /*$browser->get('/licence/index')->
+            with('response')->begin()->
+              matches('!#Payer par PAYPAL#')->
+            end();*/
+
+
+/**
+* Possibilité de modifier la licence après validation saisie
+* Edition du profil / Licence / adresse
+* Valider la saisie
+* Payer
+*
+**/
+
+/**
+* Possibilité de modifier la licence après paiement validation licence
+* Mais seulement Licence > à actuel / Adresse
+* Formulaire impossible licence <
+* Formulaire valide
+*
+**/
+
+/**
+* Annuler une licence
+* Impossible de la modifier
+* Impossible de l'imprimer
+*
+**/
 $browser->deconnexion();

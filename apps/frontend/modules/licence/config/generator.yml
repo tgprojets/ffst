@@ -107,6 +107,7 @@ generator:
         title: Edition de la licence de %%tbl_profil%%
         actions:
           _list:
+          _save:
           _save_and_payed:
             label: Mettre à jour et payé
         display:
@@ -117,6 +118,7 @@ generator:
         title: Nouvelle licence
         actions:
           _list:
+          _save:
           _save_and_add:
           _save_and_saisie:
         display:

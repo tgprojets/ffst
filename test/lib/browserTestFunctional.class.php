@@ -63,7 +63,7 @@ class browserTestFunctional extends sfTestFunctional
   {
     $this->get('/licence/new')->
       info('Nouvelle licence')->
-      click('Mettre à jour et ajouter', array('tbl_licence' => array(
+      click('Mettre à jour', array('tbl_licence' => array(
         'id_club'            => $nIdClub,
         'id_category'        => $nIdCategory,
         'id_typelicence'     => $nIdTypeLicence,
@@ -108,7 +108,7 @@ class browserTestFunctional extends sfTestFunctional
   {
     $this->get('/licence/new')->
       info('Nouvelle licence existe')->
-      click('Mettre à jour et ajouter', array('tbl_licence' => array(
+      click('Mettre à jour', array('tbl_licence' => array(
         'id_profil'          => $nIdProfil,
         'is_checked'         => true,
         'id_club'            => $nIdClub,
