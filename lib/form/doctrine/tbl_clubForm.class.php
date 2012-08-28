@@ -158,7 +158,7 @@ class tbl_clubForm extends Basetbl_clubForm
         array(
           'required' => 'Adresse est requis'
         )));
-    $this->setValidator('id_affectation', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_affectation'), 'required' => false));
+    $this->setValidator('id_affectation', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_affectation'), 'required' => false)));
     $this->setValidator('address2',       new sfValidatorString(array('max_length' => 250, 'required' => false)));
     $this->setValidator('tel',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('gsm',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
