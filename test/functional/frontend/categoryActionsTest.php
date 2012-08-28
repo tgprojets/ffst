@@ -4,9 +4,9 @@
 *
 * Authorization
 *
-* 1. federal 1 Not
-* 2. federal 2 Not
-* 3. teco Not
+* 1. federal 1 yes
+* 2. federal 2 yes
+* 3. teco yes
 * 4. stats Not
 * 5. visuel Not
 * 6. dcheoux Yes

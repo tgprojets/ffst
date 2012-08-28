@@ -32,7 +32,7 @@ class ParamForm extends sfForm
           )
       ),
       'date_major_renew_month' => new sfValidatorInteger(
-        array('required' => true, 'min' => 1, 'max' => 31),
+        array('required' => true, 'min' => 1, 'max' => 12),
           array(
             'required' => 'Mois requis',
           )
@@ -44,7 +44,7 @@ class ParamForm extends sfForm
           )
       ),
       'date_major_int_month' => new sfValidatorInteger(
-        array('required' => true, 'min' => 1, 'max' => 31),
+        array('required' => true, 'min' => 1, 'max' => 12),
           array(
             'required' => 'Utilisateur requis',
           )
