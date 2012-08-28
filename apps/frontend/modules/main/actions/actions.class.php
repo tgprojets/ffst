@@ -18,10 +18,8 @@ class mainActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     //Test date validation
-    $this->sDate = Licence::getDateMajor('renew', 'day');
-    $oInitParam = new InitParam();
-    $oInitParam->addValue('Date validation', 'date_renew_day', '5');
-    $oInitParam->addValue('Date validation', 'date_test_day', '4');
+    $oPdf = new PrintLicence();
+    $oPdf->createLic();
   }
 
   public function executeCheckProfil(sfWebRequest $request)

@@ -9,6 +9,7 @@
 /web/cache/*
 web/sfFormExtraPlugin
 web/sfDoctrinePlugin
+web/sfTCPDFPlugin
 Capfile
 /config/deploy.rb
 .tags
