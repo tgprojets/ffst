@@ -95,6 +95,12 @@ class tbl_clubForm extends Basetbl_clubForm
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
       $this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      $this->widgetSchema['id_affectation']            = new sfWidgetFormDoctrineChoice(
+        array(
+          'model' => $this->getRelatedModelName('tbl_affectation'),
+          'add_empty' => 'Aucune',
+
+      ));
       $this->widgetSchema['id_codepostaux']            = new sfWidgetFormChoice(array(
           'label'            => 'Ville (Code postal)',
           'choices'          => array(),
@@ -152,10 +158,11 @@ class tbl_clubForm extends Basetbl_clubForm
         array(
           'required' => 'Adresse est requis'
         )));
-    $this->setValidator('address2', new sfValidatorString(array('max_length' => 250, 'required' => false)));
-    $this->setValidator('tel', new sfValidatorString(array('max_length' => 50, 'required' => false)));
-    $this->setValidator('gsm', new sfValidatorString(array('max_length' => 50, 'required' => false)));
-    $this->setValidator('fax', new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('id_affectation', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_affectation'), 'required' => false));
+    $this->setValidator('address2',       new sfValidatorString(array('max_length' => 250, 'required' => false)));
+    $this->setValidator('tel',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('gsm',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('fax',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
     //Validator manque vérification username / email
     $this->validatorSchema['id_user']    = new sfValidatorString(array('required' => false));

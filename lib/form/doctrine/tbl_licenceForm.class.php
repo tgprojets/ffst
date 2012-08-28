@@ -16,13 +16,13 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
   public function configure()
   {
+    $this->nIdUser = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+    $this->bClub   = sfContext::getInstance()->getUser()->isClub();
+    $this->bLigue  = sfContext::getInstance()->getUser()->isLigue();
     unset($this['num'], $this['created_at'], $this['updated_at'], $this['is_familly']);
     $this->buildWidget();
     $this->buildValidator();
     $this->defaultsWidget();
-    $this->nIdUser = sfContext::getInstance()->getUser()->getGuardUser()->getId();
-    $this->bClub   = sfContext::getInstance()->getUser()->isClub();
-    $this->bLigue  = sfContext::getInstance()->getUser()->isLigue();
   }
   public function save($con = null)
   {
