@@ -45,7 +45,14 @@ generator:
             help: requis (en €)
           description:
             help: faculatif
-        display: [code, lib, prix, description]
+          is_familly:
+            label: Tarif réduit
+          is_minor:
+            label: Tarif junior
+          id_group:
+            label: Groupe de licence
+            help: Requis
+        display: [id_group, code, lib, prix, description, is_familly, is_minor]
       edit:
         title: Edition du type de licence %%lib%%
       new:

@@ -44,6 +44,22 @@ tbl_prixunit:
     code: INT
     prix: 20
 
+tbl_grouplicence:
+  tbl_grouplicence_1:
+    lib: Licence Compétition dite "Monochien"
+    code: MON
+  tbl_grouplicence_2:
+    lib: Licence Toutes Compétitions dite "Attelage"
+    code: ATT
+  tbl_grouplicence_3:
+    lib: Licence Dirigeant
+    code: DIG
+  tbl_grouplicence_4:
+    lib: Licence Professionnel "Mucher Pro"
+    code: PRO
+  tbl_grouplicence_5:
+    lib: Licence Sport-Loisirs
+    code: MON
 tbl_typelicence:
   tbl_typelicence_1:
     lib: Attelage Junior Réduit
@@ -51,52 +67,63 @@ tbl_typelicence:
     prix: 12
     is_minor: true
     is_familly: true
+    tbl_grouplicence: tbl_grouplicence_2
   tbl_typelicence_2:
     lib: Attelage Junior
     code: AT2
     prix: 20
     is_minor: true
+    tbl_grouplicence: tbl_grouplicence_2
   tbl_typelicence_3:
     lib: Attelage réduit
     code: AT3
     prix: 20
     is_familly: true
+    tbl_grouplicence: tbl_grouplicence_2
   tbl_typelicence_4:
     lib: Attelage
     code: AT4
     prix: 30
+    tbl_grouplicence: tbl_grouplicence_2
   tbl_typelicence_5:
     lib: Monochien Junior Réduit
     code: MO1
     prix: 25
     is_minor: true
     is_familly: true
+    tbl_grouplicence: tbl_grouplicence_1
   tbl_typelicence_6:
     lib: Monochien Junior
     code: MO2
     prix: 35
     is_minor: true
+    tbl_grouplicence: tbl_grouplicence_1
   tbl_typelicence_7:
     lib: Monochien Réduit
     code: MO3
     prix: 35
     is_familly: true
+    tbl_grouplicence: tbl_grouplicence_1
   tbl_typelicence_8:
     lib: Monochien
     code: MO4
     prix: 45
+    tbl_grouplicence: tbl_grouplicence_1
   tbl_typelicence_9:
     lib: "Dirigeant"
     code: DP1
     prix: 35
+    tbl_grouplicence: tbl_grouplicence_3
   tbl_typelicence_10:
     lib: "Professionnel"
     code: DP2
     prix: 35
+    tbl_grouplicence: tbl_grouplicence_4
   tbl_typelicence_11:
     lib: Sport-Loisir
     code: SP
     prix: 15
+    tbl_grouplicence: tbl_grouplicence_5
 tbl_typepayment:
   tbl_typepayment_1:
     lib: Paypal
@@ -639,7 +666,7 @@ tbl_licence:
     tbl_profil: tbl_profil_1
     tbl_club: tbl_club_1
     tbl_category: tbl_category_2
-    tbl_typelicence: tbl_typelicence_3
+    tbl_typelicence: tbl_typelicence_4
   tbl_licence_2:
     num: '300 002 2011/2012'
     is_new: true
@@ -654,7 +681,7 @@ tbl_licence:
     tbl_profil: tbl_profil_2
     tbl_club: tbl_club_1
     tbl_category: tbl_category_1
-    tbl_typelicence: tbl_typelicence_3
+    tbl_typelicence: tbl_typelicence_4
   tbl_licence_3:
     num: '300 003 2011/2012'
     is_new: true
@@ -669,7 +696,7 @@ tbl_licence:
     tbl_profil: tbl_profil_3
     tbl_club: tbl_club_1
     tbl_category: tbl_category_1
-    tbl_typelicence: tbl_typelicence_3
+    tbl_typelicence: tbl_typelicence_4
   tbl_licence_4:
     num: '300 004 2011/2012'
     is_new: true
@@ -684,7 +711,7 @@ tbl_licence:
     tbl_profil: tbl_profil_4
     tbl_club: tbl_club_1
     tbl_category: tbl_category_2
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_5:
     num: '311 001 2011/2012'
     is_new: true
@@ -699,7 +726,7 @@ tbl_licence:
     tbl_profil: tbl_profil_5
     tbl_club: tbl_club_2
     tbl_category: tbl_category_2
-    tbl_typelicence: tbl_typelicence_3
+    tbl_typelicence: tbl_typelicence_4
   tbl_licence_6:
     num: '311 002 2011/2012'
     is_new: true
@@ -714,7 +741,7 @@ tbl_licence:
     tbl_profil: tbl_profil_6
     tbl_club: tbl_club_2
     tbl_category: tbl_category_1
-    tbl_typelicence: tbl_typelicence_3
+    tbl_typelicence: tbl_typelicence_4
   tbl_licence_7:
     num: '311 003 2011/2012'
     is_new: true
@@ -729,7 +756,7 @@ tbl_licence:
     tbl_profil: tbl_profil_7
     tbl_club: tbl_club_2
     tbl_category: tbl_category_4
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_8:
     num: '311 004 2011/2012'
     is_new: true
@@ -744,7 +771,7 @@ tbl_licence:
     tbl_profil: tbl_profil_8
     tbl_club: tbl_club_2
     tbl_category: tbl_category_2
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_9:
     num: '312 001 2011/2012'
     is_new: true
@@ -759,7 +786,7 @@ tbl_licence:
     tbl_profil: tbl_profil_9
     tbl_club: tbl_club_3
     tbl_category: tbl_category_3
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_10:
     num: '312 002 2011/2012'
     is_new: true
@@ -774,7 +801,7 @@ tbl_licence:
     tbl_profil: tbl_profil_10
     tbl_club: tbl_club_3
     tbl_category: tbl_category_1
-    tbl_typelicence: tbl_typelicence_3
+    tbl_typelicence: tbl_typelicence_4
   tbl_licence_11:
     num: '312 003 2011/2012'
     is_new: true
@@ -789,7 +816,7 @@ tbl_licence:
     tbl_profil: tbl_profil_11
     tbl_club: tbl_club_3
     tbl_category: tbl_category_4
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_12:
     num: '312 004 2011/2012'
     is_new: true
@@ -804,7 +831,7 @@ tbl_licence:
     tbl_profil: tbl_profil_12
     tbl_club: tbl_club_3
     tbl_category: tbl_category_1
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_13:
     num: '313 001 2011/2012'
     is_new: true
@@ -819,7 +846,7 @@ tbl_licence:
     tbl_profil: tbl_profil_13
     tbl_club: tbl_club_4
     tbl_category: tbl_category_3
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_14:
     num: '313 002 2011/2012'
     is_new: true
@@ -834,7 +861,7 @@ tbl_licence:
     tbl_profil: tbl_profil_14
     tbl_club: tbl_club_4
     tbl_category: tbl_category_1
-    tbl_typelicence: tbl_typelicence_3
+    tbl_typelicence: tbl_typelicence_4
   tbl_licence_15:
     num: '313 003 2011/2012'
     is_new: true
@@ -849,7 +876,7 @@ tbl_licence:
     tbl_profil: tbl_profil_15
     tbl_club: tbl_club_4
     tbl_category: tbl_category_4
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
   tbl_licence_16:
     num: '313 004 2011/2012'
     is_new: true
@@ -862,4 +889,4 @@ tbl_licence:
     tbl_profil: tbl_profil_16
     tbl_club: tbl_club_4
     tbl_category: tbl_category_1
-    tbl_typelicence: tbl_typelicence_1
+    tbl_typelicence: tbl_typelicence_8
