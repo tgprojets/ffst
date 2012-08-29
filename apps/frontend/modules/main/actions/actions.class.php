@@ -17,9 +17,7 @@ class mainActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    //Test date validation
-    $oPdf = new PrintLicence();
-    $oPdf->createLic();
+
   }
 
   public function executeCheckProfil(sfWebRequest $request)

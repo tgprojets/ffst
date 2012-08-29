@@ -191,6 +191,9 @@ class licenceActions extends autoLicenceActions
     }
     $oLicence = $this->getRoute()->getObject();
     if ($oLicence->getDateValidation() != null) {
+      $oPdf = new PrintLicence($oLicence);
+      $oPdf->createLic();
+
       $this->getUser()->setFlash('notice', 'Impression de la licence: '.$oLicence->getTblProfil());
     } else {
       $this->getUser()->setFlash('error', 'Licence pas valide: '.$oLicence->getTblProfil());
