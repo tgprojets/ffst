@@ -1,3 +1,4 @@
+<?php use_stylesheet('formulaire_connexion.css') ?>
 <?php use_stylesheet('formulaire_params.css') ?>
 <div class="sb_connexion_login">
 
@@ -9,8 +10,8 @@
 
 <form action="<?php echo url_for('params/majorDate') ?>" method="post" id="myform" height="250px">
     <fieldset>
+      <h2>Paramètre date</h2>
     <ul class='formRegister'>
-
       <?php if ($form->hasGlobalErrors()): ?>
           <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
             <li class='error'><?php echo $error ?></li>
