@@ -99,5 +99,79 @@ class myUser extends sfGuardSecurityUser
         }
         return false;
     }
+
+    public function getLogo()
+    {
+        if (!$this->isAuthenticated())
+        {
+            return null;
+        }
+        if ($this->isClub())
+        {
+            $oClub = $this->getClub();
+            if ($oClub->getLogo() != '')
+            {
+                $sFileThumbnail = myGenerique::generateThumbnailSetNewFilename(
+                                    sfConfig::get('app_images_logo'),
+                                    sfConfig::get('app_images_thumbnail'),
+                                    $oClub->getLogo(),
+                                    '300_150',
+                                    300,
+                                    150);
+                return $sFileThumbnail;
+            }
+
+        }
+        if ($this->isLigue())
+        {
+            $oLigue = $this->getLigue();
+            if ($oLigue->getLogo() != '')
+            {
+                $sFileThumbnail = myGenerique::generateThumbnailSetNewFilename(
+                                    sfConfig::get('app_images_logo'),
+                                    sfConfig::get('app_images_thumbnail'),
+                                    $oLigue->getLogo(),
+                                    '300_150',
+                                    300,
+                                    150);
+                return $sFileThumbnail;
+            }
+        }
+        return null;
+    }
+
+    public function getIndoFooter()
+    {
+        if ($this->isClub())
+        {
+            $oClub = $this->getClub();
+            return $oClub;
+        }
+        if ($this->isLigue())
+        {
+            $oLigue = $this->getLigue();
+            return $oLigue;
+        }
+    }
+
+    public function getTitre()
+    {
+        if (!$this->isAuthenticated())
+        {
+            return 'FFST';
+        }
+        if ($this->isClub())
+        {
+            $oClub = $this->getClub();
+            return 'CLUB : '.$oClub->getName();
+
+        }
+        if ($this->isLigue())
+        {
+            $oLigue = $this->getLigue();
+            return 'LIGUE : '.$oLigue->getName();
+        }
+        return 'FFST';
+    }
 }
 

@@ -18,6 +18,7 @@ img {
   border: 0px;
 }
 #conteneur {
+  background: url('/images/background.jpg');
   min-height:100%;
   height:auto!important;
   height:100%;
@@ -45,7 +46,7 @@ img {
   clear:both;/* facultatif */
   margin:auto;
   text-align:center;
-  margin-top:-50px;
+  margin-top:-120px;
   background-color:#F87A00;
   height:50px;
 }
@@ -59,6 +60,7 @@ img {
   -moz-box-shadow: 4px 4px 6px #aaa;
   -webkit-box-shadow: 4px 4px 6px #e5e5e5;
   border-bottom: 14px solid #fff;
+  behavior: url(/PIE.htc);
 }
 .sb_bar {
   position: relative;
@@ -71,8 +73,14 @@ img {
   position: relative;
   float: left;
   width: 300px;
-  height: 100px;
+  overflow: hidden;
+  padding:4px;
 }
+.sb_logo img {
+  max-width: 250px;
+  max-height: 150px;
+}
+
 .sb_titre {
   position: relative;
   float: left;
@@ -81,14 +89,20 @@ img {
   height: 110px;
   overflow: hidden
 }
-.sb_titre h1 {
-  position: relative;
-  float:left;
+.sb_titre h2 {
   color: #083a99;
   margin: 4px;
   display: block;
-  width: 380px;
   font-size: 2em;
+  -webkit-box-reflect: below -18px
+  -webkit-gradient(linear, left top, left bottom,
+                   from(transparent), to(rgba(255, 255, 255, 0.18)));
+}
+.sb_titre h1 {
+  color: #083a99;
+  margin: 4px;
+  display: block;
+  font-size: 2.4em;
   -webkit-box-reflect: below -18px
   -webkit-gradient(linear, left top, left bottom,
                    from(transparent), to(rgba(255, 255, 255, 0.18)));
@@ -127,51 +141,6 @@ img {
   behavior: url(/PIE.htc);
 
 }
-.sb_menu_admin {
-  float: left;
-  margin: 50px 0 0 10px;
-  overflow: hidden;
-  background-color: #efefef;
-  border: 1px solid #d4d5d1;
-  -moz-box-shadow: 4px 4px 6px #aaa;
-  -webkit-box-shadow: 4px 4px 6px #aaa;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  behavior: url(/PIE.htc);
-  min-width: 220px;
-}
-.sb_menu_admin li {
-  list-style: none;
-  width: 100%;
-  color: #000;
-  display: inline;
-  float: left;
-  min-height: 20px;
-  margin-bottom: 2px;
-  padding: 8px 0 2px 4px;
-  overflow: hidden;
-}
-.sb_menu_admin li a {
-  font-size: 14px;
-}
-.sb_menu_admin li h3 {
-  font-size: 16px;
-  text-decoration: underline;
-}
-.sb_ssmenu_admin li {
-  min-height: 20px;
-}
-.sb_ssmenu_admin li a {
-  color: #083A99;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.sb_ssmenu_admin li a:hover {
-  color: #000;
-  text-decoration: underline;
-}
 
 .sb_content {
   position: relative;
@@ -196,16 +165,17 @@ img {
   clear:both;/* facultatif */
   margin:auto;
   text-align:center;
-  margin-top:-50px;
+  margin-top:-120px;
   position: relative;
   min-width: 1200px;
   width: auto;
-  height:200px;
+  height:120px;
   font-size: 10px;
   background-color: #b8b9bc;/*#a71313;*/
   -moz-box-shadow: 4px 4px 6px #aaa;
   -webkit-box-shadow: 0px -7px 7px -7px #333;
-  color: #fff;
+  behavior: url(/PIE.htc);
+  color: #000;
 }
 .sb_baspage a {
   color: #ccc;
@@ -213,15 +183,6 @@ img {
 
 .sb_baspage a:hover {
   color: #000;
-}
-
-.sb_bloc_column_2 {
-  position: relative;
-  float: left;
-  height: 100px;
-  -webkit-column-count: 2;
-  -webkit-column-rule: 1px solid #bbb;
-  -webkit-column-gap: 2em;
 }
 
 .sb_connexion_login {
@@ -262,6 +223,7 @@ img {
   width: auto !important;
   width: 120px;
 }
+
 .sb_bouton_a a:hover {
   border-top-color: #80cd80;
   background: #636fe0;
@@ -271,6 +233,7 @@ img {
   -moz-box-shadow: 2px 2px 3px #aaa;
   -webkit-box-shadow: 2px 2px 3px #aaa;
   box-shadow: 2px 2px 3px #aaa;
+  behavior: url(/PIE.htc);
 }
 
 /** Bouton submit **/
@@ -465,4 +428,14 @@ img {
 
 #ffst_nav li ul {
   position:absolute;
+}
+
+.info_mail_footer {
+  font-size: 12px;
+  padding: 10px 0;
+}
+
+.info_mail_footer a {
+  color: #0003ff;
+  text-decoration: underline;
 }

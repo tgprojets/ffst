@@ -3,5 +3,5 @@
     <li class="line_licence_dette">Licencié ayant une dette</li>
     <li class="line_licence_brouillon">Licence encours de saisie</li>
     <li class="line_licence_notvalide">Licence pas validé</li>
-    <li>Licence valide</li>
+    <li class="line_licence_valide">Licence valide</li>
 </ul>

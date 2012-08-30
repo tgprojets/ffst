@@ -21,10 +21,10 @@
 #myform input[type=text], #myform input[type=password] {
     width: 20px;
     font-size: 14px;
-
     -webkit-box-shadow: rgba(0, 0, 0, 0, 0976562) 0px 0px 8px;
     background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #DDD), to(#FFFFFF));
     background: -moz-linear-gradient(top, #FFFFFF, #DDD 1px, #FFFFFF 25px);
+    behavior: url(/PIE.htc);
     border: 1px solid #E5E5E5;
     display: block;
     float: left;
@@ -198,7 +198,6 @@
    -moz-border-radius: 13px;
    border-radius: 13px;
    behavior: url(/PIE.htc);
-   behavior: url(/PIE.htc);
    -moz-box-shadow: 4px 4px 6px #aaa;
    -webkit-box-shadow: 4px 4px 6px #aaa;
    text-shadow: rgba(0,0,0,.4) 0 1px 0;
@@ -220,4 +219,5 @@
    text-shadow: 2px 2px 4px black;
    -moz-box-shadow: 2px 2px 3px #aaa;
    -webkit-box-shadow: 2px 2px 3px #aaa;
+    behavior: url(/PIE.htc);
 }

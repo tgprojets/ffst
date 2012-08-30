@@ -138,7 +138,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
   {
       $sNow18 = date('Y', strtotime('-6 years'));
       $years = range($sNow18, 1910);
-      $aSexe = array('M' => 'Masculin', 'F' => 'Féminin');
+      $aSexe = array('H' => 'Homme', 'F' => 'Femme');
 
       if ($this->bClub) {
         $this->widgetSchema['id_club']                = new sfWidgetFormInputHidden();
@@ -207,7 +207,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
   public function buildValidator()
   {
-    $aSexe = array('M' => 'Masculin', 'F' => 'Féminin');
+    $aSexe = array('H' => 'Homme', 'F' => 'Femme');
 
     $this->validatorSchema['sexe']        = new sfValidatorChoice(
       array('choices' => array_keys($aSexe), 'required' => false)
@@ -295,7 +295,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           $this->setDefault('is_familly', true);
         }
     } else {
-      $this->setDefault('sexe', 'M');
+      $this->setDefault('sexe', 'H');
       $this->setDefault('is_checked', '0');
       if ($this->bClub) {
         $oClub = sfContext::getInstance()->getUser()->getClub();
