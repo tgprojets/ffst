@@ -94,10 +94,23 @@ tbl_typelicence:
     lib:            { type: string(250), notnull: true }
     code:           { type: string(10), notnull: true }
     is_familly:     { type: boolean, default: false }
-    is_minor:      { type: boolean, default: false }
+    is_minor:       { type: boolean, default: false }
     description:    { type: string(2000) }
     rank:           { type: integer }
     prix:           { type: float(5), notnull: true }
+    id_group:       { type: integer(4) }
+  relations:
+    tbl_grouplicence:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_group, foreign: id, foreignAlias: tbl_typelicence }
+
+tbl_grouplicence:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    lib:            { type: string(250), notnull: true }
+    code:           { type: string(3), notnull: true }
 
 tbl_category:
   columns:

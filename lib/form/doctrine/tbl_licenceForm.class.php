@@ -60,6 +60,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
         } else {
           $oCalcul = new CalculLicence($oLicence->getId());
           $oCalcul->calcLicenceEditDateValid($aValues);
+
+          if ($oLicence->getIdTypelicence() != $aValues['id_typelicence']) {
+            $oLicence->setDateValidation(null)->save();
+          }
         }
     }
     if ($this->isValid()) {
@@ -74,8 +78,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
           $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
         }
         $oProfil->setEmail($aValues['email'])
-                ->setFirstName($aValues['last_name'])
-                ->setLastName($aValues['first_name'])
+                ->setFirstName($aValues['first_name'])
+                ->setLastName($aValues['last_name'])
                 ->setSexe($aValues['sexe'])
                 ->setBirthday($aValues['birthday'])
                 ->setIdAddress($oAddress->getId())
@@ -120,8 +124,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
           $oProfil->setEmail($aValues['email'])
                   ->setSexe($aValues['sexe'])
-                  ->setFirstName($aValues['last_name'])
-                  ->setLastName($aValues['first_name'])
+                  ->setFirstName($aValues['first_name'])
+                  ->setLastName($aValues['last_name'])
                   ->setBirthday($aValues['birthday'])
                   ->save();
         }
