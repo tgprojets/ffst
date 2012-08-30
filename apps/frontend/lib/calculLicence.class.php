@@ -132,13 +132,24 @@ class CalculLicence {
     public function payMajorInternational()
     {
         if ($this->bInternational) {
-            if (date('Y', strtotime($this->DateSaisie)) == $this->YearStart) {
-                if ((int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'day') &&
-                    (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'month')) {
+            if (Licence::getDateMajor('int', 'month') > 6) {
+                if (date('Y', strtotime($this->DateSaisie)) == $this->YearStart) {
+                    if ((int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'day') &&
+                        (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'month')) {
+                        return true;
+                    }
+                } else {
                     return true;
                 }
             } else {
-                return true;
+                if (date('Y', strtotime($this->DateSaisie)) == $this->YearEnd) {
+                    if ((int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'day') &&
+                        (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'month')) {
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -148,13 +159,25 @@ class CalculLicence {
     private function payMajorRenew()
     {
         if ($this->bNew == false) {
-            if (date('Y', strtotime($this->DateSaisie)) == $this->YearStart) {
-                if ( (int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'day') &&
-                     (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'month')) {
+            if (Licence::getDateMajor('renew', 'month') > 6)
+            {
+                if (date('Y', strtotime($this->DateSaisie)) == $this->YearStart) {
+                    if ( (int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'day') &&
+                         (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'month')) {
+                        return true;
+                    }
+                } else {
                     return true;
                 }
             } else {
-                return true;
+                if (date('Y', strtotime($this->DateSaisie)) == $this->YearEnd) {
+                    if ( (int) date('m', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'day') &&
+                         (int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('renew', 'month')) {
+                        return true;
+                    }
+                } else {
+                    return false;
+                }
             }
         }
         return false;

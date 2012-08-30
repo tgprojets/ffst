@@ -27,4 +27,23 @@ class Licence {
     }
     return null;
   }
+
+  public static function getStartYearLicence()
+  {
+    if ((int) date('m') >= 7 && (int) date('d') >= 1) {
+      return date('Y');
+    } else {
+      return date('Y', strtotime('-1 year'));
+    }
+
+  }
+
+  public static function getEndYearLicence()
+  {
+    if ((int) date('m') >= 7 && (int) date('d') >= 1) {
+      return date('Y', strtotime('+1 year'));
+    } else {
+      return date('Y');
+    }
+  }
 }

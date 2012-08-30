@@ -5,17 +5,17 @@
 prod:
   paypal:
     business:  ffst@free.fr
-    url: https://www.sandbox.paypal.com/cgi-bin/webscr
-    cancel: http://sandbox-ffst.tgprojets.fr/payment/paypal.php
-    notify: http://sandbox-ffst.tgprojets.fr/payment/notifypaypal.php
-    return: http://sandbox-ffst.tgprojets.fr/payment/validation.php
+    url: https://www.paypal.com/cgi-bin/webscr
+    cancel: http://www.laffst.com/payment/paypal_url.php
+    notify: http://www.laffst.com/payment/notifypaypal.php
+    return: http://www.laffst.com/payment/validation.php
 sandbox:
   paypal:
     business: tgilbe_1273247786_biz@tgprojets.fr
     url: https://www.sandbox.paypal.com/cgi-bin/webscr
-    cancel: http://sandbox-ffst.tgprojets.fr/payment/paypal.php
-    notify: http://sandbox-ffst.tgprojets.fr/payment/notifypaypal.php
-    return: http://sandbox-ffst.tgprojets.fr/payment/validation.php
+    cancel: http://sandbox.laffst.com/payment/paypal_url.php
+    notify: http://sandbox.laffst.com/payment/notifypaypal.php
+    return: http://sandbox.laffst.com/payment/validation.php
 all:
   paypal:
     business: tgprojets.fr

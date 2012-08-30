@@ -385,8 +385,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
     //Tarif junior
     $bornAt = new DateTime($values['birthday']);
-    $age = $bornAt->diff(new \DateTime())->y;
-
+    $age = $bornAt->diff(new \DateTime(Licence::getStartYearLicence().'-08-31' ))->y;
     //Choix de la licence
     $nbr = Doctrine_Query::create()
         ->from('tbl_typelicence tl')
@@ -394,7 +393,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         ->andWhere("tl.is_minor = ?", true)
         ->count();
         if ($nbr>0) {
-          if ($age > 18) {
+          if ($age >= 18) {
             throw new sfValidatorError($validator, 'Ce licencié n\'a pas le droit à cette licence, il est majeur (Voir date de naissance) .');
           }
         }
