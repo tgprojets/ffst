@@ -57,10 +57,10 @@ img {
   height: 150px;
   background-color: #fffde5;
   -moz-box-shadow: 4px 4px 6px #aaa;
-  -webkit-box-shadow: 4px 4px 6px #e5e5e5;
-  box-shadow: 4px 4px 6px #e5e5e5;
-  border-bottom: 14px solid #fff;
+  -webkit-box-shadow: 4px 4px 6px #aaa;
+  box-shadow: 4px 4px 6px #aaa;
   behavior: url(/PIE.htc);
+  border-bottom: 14px solid #fff;
 }
 .sb_bar {
   position: relative;
@@ -187,9 +187,9 @@ img {
 .sb_bouton_a a {
   position: relative;
   border: none;
-  height: 40px;
+  height: 25px;
   margin: 0;
-  padding: 6px 15px;
+  padding: 4px 10px 4px 10px;
   text-align: center;
   margin-left: 10px;
   background: -webkit-gradient(linear, left top, left bottom, from(#083a99), to(#7f8bff));

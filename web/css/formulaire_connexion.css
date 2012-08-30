@@ -186,9 +186,9 @@
 #myform input[type=submit] {
   position: relative;
   border: none;
-  height: 30px;
+  height: 25px;
   margin: 0;
-  padding: 4px 10px;
+  padding: 4px 10px 4px 10px;
   text-align: center;
   margin-left: 10px;
   background: -webkit-gradient(linear, left top, left bottom, from(#083a99), to(#7f8bff));
