@@ -113,9 +113,6 @@
           <?php endif; ?>
       </div>
       <?php if ($sf_user->isAuthenticated()): ?>
-      <div class="sb_bar">
-          <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>
-      </div>
       <div id="contenant">
                <?php echo $sf_content ?>
         <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>

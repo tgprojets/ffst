@@ -29,9 +29,8 @@ img {
   height:150px;
 }
 #contenant {
-  position: relative;
-  float: left;
-  min-width:800px;
+  width:1000px;
+  margin: 0 auto;
   padding:22px 0px;
 }
 
@@ -52,7 +51,7 @@ img {
 
 .sb_bandeau {
   position: relative;
-  min-width: 1200px;
+  min-width: 1000px;
   width: auto !important;
   height: 150px;
   background-color: #fffde5;
@@ -84,7 +83,7 @@ img {
 .sb_titre {
   position: relative;
   float: left;
-  width: 900px;
+  width: 700px;
   margin-right: auto;
   height: 110px;
   overflow: hidden
@@ -248,9 +247,8 @@ img {
   list-style: none;
   margin: 0px;
   padding: 0px;
-  min-width: 800px;
+  min-width: 700px;
   width: auto !important;
-  width: 500px;
 }
 #ffst_nav li {
   float: left ;
