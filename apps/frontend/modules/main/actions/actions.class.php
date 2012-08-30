@@ -45,6 +45,7 @@ class mainActions extends sfActions
       }
       $oAddress = $oProfil->getTblAddress();
       $jsonresponse['profil']['email'] = $oProfil->getEmail();
+      $jsonresponse['profil']['sexe'] = $oProfil->getSexe();
       $jsonresponse['profil']['last_name'] = $oProfil->getLastName();
       $jsonresponse['profil']['first_name'] = $oProfil->getFirstName();
       $Birthday  = $oProfil->getBirthday();

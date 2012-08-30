@@ -25,6 +25,7 @@ all:
     return: validation_dev.php
   images:
     logo: logo
+    thumbnail: thumbnail
   majordate:
     renew_day: '31'
     renew_month: '10'

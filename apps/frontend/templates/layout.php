@@ -12,10 +12,14 @@
     <div id="conteneur">
       <div class="sb_bandeau">
           <div class="sb_logo">
-            <img src="/images/logo.png" alt="" />
+            <?php $sLogo = $sf_user->getLogo() ?>
+            <?php if ($sLogo != null): ?>
+              <img src="<?php echo $sLogo ?>" alt="" />
+            <?php else: ?>
+              <img src="/images/logo.png" alt="" />
+            <?php endif; ?>
           </div>
           <div class="sb_titre">
-            <h1>FFST</h1>
               <?php if ($sf_user->isAuthenticated()): ?>
               <div class="sb_bar_menu_connexion">
                   <div class="sb_deconnexion">
@@ -27,6 +31,10 @@
                   <?php endif; ?>
               </div>
               <?php endif; ?>
+            <h2>
+              <?php echo $sf_user->getTitre() ?>
+            </h2>
+            <h1>GESTION DES LICENCES</h1>
           </div>
           <?php if ($sf_user->isAuthenticated()): ?>
             <div id="ffst_nav">
@@ -120,8 +128,21 @@
       <?php endif; ?>
     </div>
     <div class="sb_baspage">
-      <?php //echo link_to('Copyright', 'main/copyright') ?> - Thomas GILBERT -
-      <?php //echo link_to('Apropos de', 'main/aproposde') ?>
+      <div class="info_mail_footer">
+        contact :  <a href="mailto:ffst@free.fr">ffst@free.fr</a>
+        Sites internet : <a href="http://www.ffstraineau.com/">www.ffstraineau.com</a>
+      </div>
+      <?php if ($sf_user->isClub() || $sf_user->isLigue()): ?>
+        <div class="info_footer_address">
+          <?php $oInfo    = $sf_user->getIndoFooter() ?>
+          <?php $oAddress = $oInfo->getTblAddress() ?>
+          <div><label>Organisation : </label><?php echo $oInfo->getOrganisation() ?></div>
+          <div><label>N° et rue : </label><?php echo $oAddress->getAddress1() ?></div>
+          <div><label>Lieu dit : </label><?php echo $oAddress->getAddress2() ?></div>
+          <div><label>CP : </label><?php echo $oAddress->getTblCodepostaux()->getCodePostaux() ?></div>
+          <div><label>Ville : </label><?php echo $oAddress->getTblCodepostaux()->getVille() ?></div>
+        </div>
+      <?php endif; ?>
     </div>
   </body>
 

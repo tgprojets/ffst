@@ -110,10 +110,10 @@ Theme admin generator
 {
     width: 210px;
     font-size: 14px;
-
     -webkit-box-shadow: rgba(0, 0, 0, 0, 0976562) 0px 0px 8px;
     background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #DDD), to(#FFFFFF));
     background: -moz-linear-gradient(top, #FFFFFF, #DDD 1px, #FFFFFF 25px);
+    behavior: url(/PIE.htc);
     border: 1px solid #E5E5E5;
     display: block;
     float: left;
@@ -304,6 +304,7 @@ input[type=submit] {
    -moz-box-shadow: 2px 2px 3px #aaa;
    -webkit-box-shadow: 2px 2px 3px #aaa;
    box-shadow: 2px 2px 3px #aaa;
+   behavior: url(/PIE.htc);
 }
 
 
@@ -488,6 +489,8 @@ th td {
     -webkit-box-shadow: 4px 4px 6px #aaa;
     box-shadow: 4px 4px 6px #aaa;
     margin-bottom: 10px;
+    background-color: #fff;
+    behavior: url(/PIE.htc);
 }
 
 #sf_admin_bar tf {
@@ -508,6 +511,7 @@ th td {
     -moz-box-shadow: 4px 4px 6px #aaa;
     -webkit-box-shadow: 4px 4px 6px #aaa;
     box-shadow: 4px 4px 6px #aaa;
+    behavior: url(/PIE.htc);
 }
 table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mceLast .mceToolbar tr td {
     padding: 0;
@@ -603,6 +607,7 @@ table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mc
    -moz-box-shadow: 2px 2px 3px #aaa;
    -webkit-box-shadow: 2px 2px 3px #aaa;
    box-shadow: 2px 2px 3px #aaa;
+   behavior: url(/PIE.htc);
 }
 #sf_admin_container .sf_admin_actions #tbl_categorie_root_create label {
 color: black;
@@ -653,6 +658,9 @@ padding-top: 6px;
 }
 #sf_admin_container .line_licence_notvalide {
   background: #edeac2;
+}
+#sf_admin_container .line_licence_valide {
+  background: #fff;
 }
 
 #sf_admin_header {

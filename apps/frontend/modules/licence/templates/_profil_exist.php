@@ -50,6 +50,7 @@
                   } else {
                     profil = sData.profil;
                     $('#tbl_licence_email').val(profil.email);
+                    $('#tbl_licence_sexe').val(profil.sexe);
                     $('#tbl_licence_last_name').val(profil.last_name);
                     $('#tbl_licence_first_name').val(profil.first_name);
                     $('#tbl_licence_birthday_day').val(profil.birthday_day);
