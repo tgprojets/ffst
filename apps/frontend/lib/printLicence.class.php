@@ -15,7 +15,7 @@ class PrintLicence {
     public function __construct($oLicence)
     {
         $this->config        = sfTCPDFPluginConfigHandler::loadConfig('config_lic');
-        $this->pdf           = new sfTCPDF();
+        $this->pdf           = new ffstTCPDF();
         $this->oLicence      = $oLicence;
         $this->oProfil       = $oLicence->getTblProfil();
         $this->oAddress      = $this->oProfil->getTblAddress();
@@ -42,7 +42,7 @@ class PrintLicence {
 
         $this->getLicence();
         $this->getMedical();
-        // print chapter body
+
         $this->pdf->Output(sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'test.pdf', 'FI');
         throw new sfStopException();
     }
@@ -113,7 +113,7 @@ class PrintLicence {
         $this->pdf->Cell(12, 0, "Sexe :", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($this->pdf->getX()+12, $yPos);
         $this->pdf->SetFont('helvetica', 'B', 10);
-        $this->pdf->Cell(10, 0, 'H/F', 0, 1, 'L', 0, '', 0);
+        $this->pdf->Cell(10, 0, $this->oProfil->getSexe(), 0, 1, 'L', 0, '', 0);
 
         //N° rue
         $yPos = $this->pdf->getY();
@@ -173,10 +173,10 @@ class PrintLicence {
         $this->pdf->Cell(30, 0, "Renouvellement :", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($this->pdf->getX()+30, $yPos);
         $xPos = $xPos+30;
-        $this->caseCheck($this->oLicence->getIsNew(), 'oui', $xPos, $yPos, 12);
+        $this->caseCheck(!$this->oLicence->getIsNew(), 'oui', $xPos, $yPos, 12);
         $xPos = $xPos+16;
         $this->pdf->setXY($xPos, $yPos);
-        $this->caseCheck(!$this->oLicence->getIsNew(), 'non', $xPos, $yPos, 12);
+        $this->caseCheck($this->oLicence->getIsNew(), 'non', $xPos, $yPos, 12);
 
         //Cnil
         $yPos = $this->pdf->getY()+4;
@@ -199,7 +199,7 @@ class PrintLicence {
         $this->pdf->setY($yPos);
         $this->pdf->Cell(70, 10, '', 1, 2, 'L', 0, '', 0);
         $this->pdf->setY($yPos);
-        $this->pdf->Cell(70, 0, $this->oGroupLicence->getLib(), 0, 2, 'L', 0, '', 0);
+        $this->pdf->MultiCell(70, 0, $this->oGroupLicence->getLib(), 0, 'L');
         $this->pdf->setXY(80, $yPos);
         $this->pdf->Cell(60, 10, '', 1, 2, 'L', 0, '', 0);
         $this->pdf->setXY(80, $yPos);
@@ -213,10 +213,10 @@ class PrintLicence {
             $this->pdf->setXY($xPos, $yPos);
             $this->caseCheck($this->oLicence->getInternational(), 'INTERNATIONAL', $xPos, $yPos, 30);
         } elseif ($this->oGroupLicence->getCode() == 'DIG' || $this->oGroupLicence->getCode() == 'PRO') {
-            $this->pdf->Cell(60, 0, 'Assurance "Responsabilité civile" seulement', 0, 2, 'L', 0, '', 0);
+            $this->pdf->MultiCell(60, 0, 'Assurance "Responsabilité civile" seulement', 0, 'L');
 
         } elseif ($this->oGroupLicence->getCode() == 'SPL') {
-            $this->pdf->Cell(60, 0, 'Non valide en compétition', 0, 2, 'L', 0, '', 0);
+            $this->pdf->Cell(60, 0, 'Non valide en compétition', 0, 'L');
         }
         $this->getFooter();
     }
@@ -240,7 +240,7 @@ class PrintLicence {
         $this->pdf->selectColumn(1);
 
         //Titre
-        $this->pdf->setY(14);
+        $this->pdf->setXY(150, 14);
         $this->pdf->SetFont('courier', '', 11);
         $this->pdf->Cell(75, 0, 'SUGGESTION TRACE "CERTIFICAT MEDICAL"', 0, 2, 'L', 0, '', 0);
 
@@ -255,7 +255,7 @@ class PrintLicence {
         $this->pdf->setXY(180, 10);
 
         //image et texte
-        $this->getHeaderImage(240);
+        $this->getHeaderImage(245);
 
         //Bloc important
         $this->pdf->setXY(150, 36);
@@ -264,11 +264,7 @@ class PrintLicence {
         $this->pdf->setXY(150, 37);
         $this->pdf->Cell(140, 0, "IMPORTANT", 0, 2, 'C', 0, '', 0);
         $this->pdf->setXY(150, 41);
-        $this->pdf->Cell(140, 0, "Cette attestation de licence n'est valable qu'avec le présent certificat", 0, 1, 'C', 0, '', 0);
-        $this->pdf->setXY(150, 45);
-        $this->pdf->Cell(140, 0, "Complétée, tamponée et signée par un medecin ou bien qu'accompagnée", 0, 1, 'C', 0, '', 0);
-        $this->pdf->setXY(150, 49);
-        $this->pdf->Cell(140, 0, "d'un certificat médical rédigé dans les même termes datant de moins 6 mois.", 0, 1, 'C', 0, '', 0);
+        $this->pdf->MultiCell(140, 0, "Cette attestation de licence n'est valable qu'avec le présent certificat Complétée, tamponée et signée par un medecin ou bien qu'accompagnée d'un certificat médical rédigé dans les même termes datant de moins 6 mois.", 0, 'C');
 
         //Champs
         $yDep = 3;
@@ -313,9 +309,7 @@ class PrintLicence {
         $this->pdf->SetFont('helvetica', '', 11);
 
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(140, 0, "Ne présente aucune contre-indication cliniquement décelable à la pratique", 0, 1, 'L', 0, '', 0);
-        $this->pdf->setXY($xPos, $this->pdf->getY());
-        $this->pdf->Cell(140, 0, "des Sports de traîneau, de ski-pulka/joëring et de cross canins", 0, 1, 'L', 0, '', 0);
+        $this->pdf->MultiCell(140, 0, "Ne présente aucune contre-indication cliniquement décelable à la pratique des Sports de traîneau, de ski-pulka/joëring et de cross canins", 0, 'L');
 
         //Type de prestation
         $yPos = $this->pdf->getY()+$yDep;
@@ -352,15 +346,13 @@ class PrintLicence {
     {
         $this->pdf->Image($this->image, $xPostion, 8, 36, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         $this->pdf->SetFont('helvetica', 'B', 6);
-        $this->pdf->setXY($xPostion-6, 30);
-        $this->pdf->Cell(80, 0, "Fédération Française des Sports de Traîneau,", 0, 2, 'L', 0, '', 0);
-        $this->pdf->setXY($xPostion-4, 32);
-        $this->pdf->Cell(80, 0, "de ski-Pulka/Joëring, et de Cross Canins", 0, 2, 'L', 0, '', 0);
+        $this->pdf->setXY($xPostion-8, 30);
+        $this->pdf->MultiCell(50, 0, "Fédération Française des Sports de Traîneau, de ski-Pulka/Joëring, et de Cross Canins", 0, 'C');
     }
 
     private function getFooter()
     {
-        $this->pdf->setY(165);
+        $this->pdf->setY(175);
         $this->pdf->SetFont('helvetica', 'B', 8);
         $this->pdf->Cell(140, 0, "Fédération Délégataire agréée par le ministère des Sports", 0, 2, 'C', 0, '', 0);
         $this->pdf->SetFont('helvetica', '', 8);
@@ -371,6 +363,7 @@ class PrintLicence {
         $this->pdf->Cell(70, 0, "Mel : ", 0, 2, 'R', 0, '', 0);
         $this->pdf->setXY($xPos+70, $yPos);
         $this->pdf->SetFont('helvetica', 'I', 8);
-        $this->pdf->Cell(70, 0, "ffst@free.fr", 0, 2, 'L', 0, '', 0);
+        $HTML = '<a href="#">ffst@free.fr</a>';
+        $this->pdf->writeHTML($HTML, true, false, false, false, '');
     }
 }

@@ -60,6 +60,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
         } else {
           $oCalcul = new CalculLicence($oLicence->getId());
           $oCalcul->calcLicenceEditDateValid($aValues);
+
+          if ($oLicence->getIdTypelicence() != $aValues['id_typelicence']) {
+            $oLicence->setDateValidation(null)->save();
+          }
         }
     }
     if ($this->isValid()) {

@@ -59,7 +59,7 @@ tbl_grouplicence:
     code: PRO
   tbl_grouplicence_5:
     lib: Licence Sport-Loisirs
-    code: MON
+    code: SPL
 tbl_typelicence:
   tbl_typelicence_1:
     lib: Attelage Junior Réduit
