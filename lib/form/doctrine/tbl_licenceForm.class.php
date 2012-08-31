@@ -160,6 +160,11 @@ class tbl_licenceForm extends Basetbl_licenceForm
       $this->widgetSchema['gsm']                       = new sfWidgetFormInputText();
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
+      $this->widgetSchema['id_category']               = new sfWidgetFormDoctrineChoice(
+        array(
+          'model' => $this->getRelatedModelName('tbl_category'),
+          'add_empty' => 'Aucune',
+      ));
       $this->widgetSchema['id_codepostaux']            = new sfWidgetFormChoice(array(
           'label'            => 'Ville (Code postal)',
           'choices'          => array(),
@@ -251,6 +256,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('date_medical',   new sfValidatorDate(array('required' => false)));
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+    $this->setValidator('id_category', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_category'), 'required' => false)));
     $this->setValidator('is_familly', new sfValidatorBoolean(array('required' => false)));
     $this->setValidator('id_familly', new sfValidatorString(array('required' => false)));
     if ($this->isNew()) {

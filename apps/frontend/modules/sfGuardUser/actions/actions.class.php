@@ -26,6 +26,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
              $aValues = $this->form->getValues();
              $this->oUser->setPassword($aValues['password']);
              $this->oUser->save();
+             $this->getUser()->setFlash('notice', 'Mot de passe: '.$aValues['password'].' enregistré.');
              $this->redirect($sBack);
           }
       }
@@ -96,6 +97,90 @@ class sfGuardUserActions extends autoSfGuardUserActions
     $oUser = $this->getRoute()->getObject();
     $oUser->setIsActive(!$oUser->getIsActive());
     $oUser->save();
+    $this->redirect('@sf_guard_user');
+  }
+
+  public function executeDelete(sfWebRequest $request)
+  {
+    $oUser = $this->getRoute()->getObject();
+
+    if ($oUser->getTblLicence()->count() > 0) {
+      $oLicences = $oUser->getTblLicence();
+      foreach($oLicences as $oLicence)
+      {
+        if ($oLicence->getDateValidation() == null ) {
+          $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur car il a créé des licences non payé.');
+          $this->redirect('@sf_guard_user');
+        } else {
+          $oLicence->setIdUser(null)->save();
+        }
+      }
+    }
+
+    if ($oUser->getTblPayment()->count() > 0) {
+        $oPayments = $oUser->getTblPayment();
+        foreach ($oPayments as $oPayment)
+        {
+          if ($oPayment->getIsPayed() == false) {
+            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisie des paiements non payé.');
+            $this->redirect('@sf_guard_user');
+          } else {
+            $oPayment->setIdUser(null)->save();
+          }
+        }
+    }
+
+    if ($oUser->getTblAvoir()->count() > 0) {
+        $oPayments = $oUser->getTblAvoir();
+        foreach ($oPayments as $oPayment)
+        {
+          if ($oPayment->getIsUsed() == false) {
+            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisie des avoirs non utilisé.');
+            $this->redirect('@sf_guard_user');
+          } else {
+            $oPayment->setIdUser(null)->save();
+          }
+        }
+    }
+
+    if ($oUser->getTblBordereau()->count() > 0) {
+        $oBordereaux = $oUser->getTblBordereau();
+        foreach ($oBordereaux as $oBordereau)
+        {
+          if ($oBordereau->getIsPayed() == false) {
+            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisie des bordereau non payé.');
+            $this->redirect('@sf_guard_user');
+          } else {
+            $oBordereau->setIdUser(null)->save();
+          }
+        }
+    }
+
+    if ($oUser->getTblClub()->count() > 0) {
+      $oClubs = $oUser->getTblClub();
+      foreach($oClubs as $oClub)
+      {
+        $oClub->setIdUser(null)->save();
+      }
+    }
+
+    if ($oUser->getTblLigue()->count() > 0) {
+      $oLigues = $oUser->getTblLigue();
+      foreach($oLigues as $oLigue)
+      {
+        $oLigue->setIdUser(null)->save();
+      }
+    }
+
+    $request->checkCSRFProtection();
+
+    $this->dispatcher->notify(new sfEvent($this, 'admin.delete_object', array('object' => $this->getRoute()->getObject())));
+
+    if ($this->getRoute()->getObject()->delete())
+    {
+      $this->getUser()->setFlash('notice', 'Utilisateur supprimé.');
+    }
+
     $this->redirect('@sf_guard_user');
   }
 }

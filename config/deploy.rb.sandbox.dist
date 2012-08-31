@@ -1,0 +1,139 @@
+set :application, "frontend"
+set :domain,      "tgprojets.fr"
+set :domaingit,   "tgprojets.fr"
+set :deploy_to,   "/srv/sitesweb/sandbox/ffst/"
+
+set :repository,  "git@#{domaingit}:ffst.git"
+set :scm,         :git
+set :git_enable_submodules, 1
+set :branch,      "release-1.0"
+set  :deploy_via,             :remote_cache
+
+role :web,        domain                         # Your HTTP server, Apache/etc
+role :app,        domain                        # This may be the same as your `Web` server
+role  :db,        domain, :primary => true
+
+set :use_sudo,      false
+set :user, 'tgilbert'
+set :password, 'sophie'
+set :keep_releases,  3
+
+set :symfony_env, "sandbox"
+set :symfony_env_prod, "sandbox"
+
+set :rake,           "rake"
+set :rails_env,      "production"
+set :migrate_env,    "sandbox"
+set :migrate_target, :latest
+
+set :tg_db_type,        "mysql"
+set :tg_db_user,        "ffst_sb"
+set :tg_db_pwd,         "pho4raCh"
+set :tg_db_name,        "ffst_sb"
+
+namespace :deploydb do
+
+  desc <<-DESC
+    Deployer en production la dernière version + maj bdd
+  DESC
+  task :default do
+    deploy.default
+    migration.createlink
+    migration.migrate
+    migration.getnumversion
+  end
+  desc <<-DESC
+    Deployer la version antérieure + maj bdd en arriere
+  DESC
+  task :rollback do
+    deploy.rollback.default
+    migration.migratecurrent
+  end
+
+end
+
+namespace :migration do
+
+  desc <<-DESC
+    Initialise le répertoire migration/doctrine pour en faire un lien
+  DESC
+  task :setup do
+    run "mkdir -p #{shared_path}/migration/doctrine"
+  end
+
+  desc <<-DESC
+    Création du lien symbolique vers le répertoire migration/doctrine
+  DESC
+  task :createlink do
+    run "ln -s #{shared_path}/migration #{current_path}/lib/"
+  end
+
+  desc <<-DESC
+    Effectue la différence entre le modèle en production et la dernière version
+  DESC
+  task :diff, :on_error => :continue do
+    run "rm -Rf #{deploy_to}temp"
+    run "mkdir #{deploy_to}temp"
+    run "cp -Rf #{current_path}/* #{deploy_to}temp/"
+    upload("config/doctrine/schema.yml", "#{deploy_to}temp/config/doctrine/", :via=> :scp, :recursive => true)
+    run "#{php_bin} #{deploy_to}temp/symfony doctrine:generate-migrations-diff --env=prod"
+    run "rm -Rf #{deploy_to}temp"
+  end
+
+  desc <<-DESC
+    Met à jour le modèle de la BDD en fonction de la dernière révision
+  DESC
+  task :migrate do
+    run "#{php_bin} #{current_path}/symfony doctrine:migrate --env=prod"
+  end
+
+  desc <<-DESC
+   Migre vers une version -1
+  DESC
+  task :down do
+    run "#{php_bin} #{current_path}/symfony doctrine:migrate --down --env=prod"
+  end
+
+  desc <<-DESC
+   Migre vers une version +1
+  DESC
+  task :up do
+    run "#{php_bin} #{current_path}/symfony doctrine:migrate --up --env=prod"
+  end
+
+  desc <<-DESC
+   Migre vers la version correspondant à la révision encours
+  DESC
+  task :migratecurrent do
+    snumversion = 0;
+    run "cat '#{current_path}/numversion'" do |ch, st, data|
+      snumversion = Integer(data);
+    end
+    run "#{php_bin} #{current_path}/symfony doctrine:migrate #{snumversion} --env=prod"
+  end
+
+  desc <<-DESC
+   Récupère le numéro de version de la base pour la révision encours
+  DESC
+  task :getmigrationcurrent do
+    snumversion = 0;
+    run "cat '#{current_path}/numversion'" do |ch, st, data|
+      snumversion = data;
+    end
+  end
+
+  desc <<-DESC
+   Récupère le numéro de version migration inscrit en base de données
+  DESC
+  task :getnumversion do
+    begin
+      run "export PGUSER=#{tg_db_user}; export PGPASSWORD=#{tg_db_pwd}; psql -h localhost -t -c 'select version from migration_version;' #{tg_db_name} > #{current_path}/numversion;"
+    rescue Exception => error
+      migration.versionvide
+    end
+  end
+
+  task :versionvide do
+    run "echo '0' > #{current_path}/numversion"
+  end
+end

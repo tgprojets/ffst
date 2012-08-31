@@ -43,7 +43,7 @@ class PrintLicence {
         $this->getLicence();
         $this->getMedical();
 
-        $this->pdf->Output(sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'test.pdf', 'FI');
+        $this->pdf->Output(sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'licence.pdf', 'FI');
         throw new sfStopException();
     }
 
@@ -205,7 +205,9 @@ class PrintLicence {
         $this->pdf->setXY(80, $yPos);
         if ($this->oGroupLicence->getCode() == 'MON' || $this->oGroupLicence->getCode() == 'ATT')
         {
-            $this->caseCheck(true, $this->oCategory->getLib(), $xPos, $yPos, 40);
+            if ($this->oCategory->getId()) {
+                $this->caseCheck(true, $this->oCategory->getLib(), $xPos, $yPos, 40);
+            }
             $yPos = $yPos+4;
             $this->pdf->setXY(80, $yPos);
             $this->caseCheck($this->oTypeLicence->getIsMinor(), '< 18 ans', $xPos, $yPos, 20);

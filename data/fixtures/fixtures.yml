@@ -134,11 +134,8 @@ tbl_typepayment:
   tbl_typepayment_4:
     lib: Espèce
 tbl_category:
-  tbl_category_0:
-    lib: Pas de catégorie
-    code: N/A
   tbl_category_1:
-    lib: CC
+    lib: Canicross
     code: CC
   tbl_category_2:
     lib: BJ

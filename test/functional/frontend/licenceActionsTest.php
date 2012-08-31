@@ -244,7 +244,7 @@ $oTypeLicenceMO4 = Doctrine::getTable('tbl_typelicence')->findOneBy('code', 'MO4
 $oTypeLicenceDP1 = Doctrine::getTable('tbl_typelicence')->findOneBy('code', 'DP1');
 $browser->info('club 1')->connexion('club1', 'club1');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), false, false,
-                  null, false, null, null, 'POI', null, 'H', 'facile@free.fr', 'Pierre', 'Blank', '1975-04-20', true);
+                  null, false, null, null, 'POI', null, 'H', 'facile@free.fr', 'facile', 'Blank', '1975-04-20', true);
 $browser->deconnexion();
 $browser->info('federal1')->connexion('federal1', 'federal1');
 $browser->get('/licence/ListValidSaisie');
@@ -252,24 +252,24 @@ $browser->deconnexion();
 $browser->info('club 1')->connexion('club1', 'club1');
 $browser->info('Ajoute licence');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), false, false,
-                  null, false, null, null, 'POI', null, 'H', 'facile@free.fr', 'Pierre', 'Blank', '1975-04-20', false);
+                  null, false, null, null, 'POI', null, 'H', 'facile1@free.fr', 'facile1', 'Blank', '1975-04-20', false);
 $browser->info('Ajoute même licence');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), false, false,
-                  null, false, null, null, 'POI', null, 'H', 'facile@free.fr', 'Pierre', 'Blank', '1975-04-20', true);
+                  null, false, null, null, 'POI', null, 'H', 'facile1@free.fr', 'facile1', 'Blank', '1975-04-20', true, 2);
 $browser->info('Annule la saisie');
 $browser->get('/licence/ListCancelSaisie');
 $browser->info('Ajoute même licence');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), false, false,
-                  null, false, null, null, 'POI', null, 'H', 'facile@free.fr', 'Pierre', 'Blank', '1975-04-20', false);
+                  null, false, null, null, 'POI', null, 'H', 'facile1@free.fr', 'facile1', 'Blank', '1975-04-20', false);
 
-$oFamillyTrue = Doctrine::getTable('tbl_profil')->findOneBy('email','facile@free.fr');
+$oFamillyTrue = Doctrine::getTable('tbl_profil')->findOneBy('email','facile1@free.fr');
 
 $browser->info('Ajoute licence famille false');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicenceReduit->getId(), true, true,
-                  $oFamillyFalse->getId(), false, null, null, 'POI', null, 'H', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', true);
+                  $oFamillyFalse->getId(), false, null, null, 'POI', null, 'H', 'facile2@free.fr', 'facile2', 'Blank', '1975-04-20', true);
 $browser->info('Ajoute licence famille true');
 $browser->addLicence($oClub->getId(), $oCategory->getId(), $oTypeLicenceReduit->getId(), true, true,
-                  $oFamillyTrue->getId(), false, null, null, 'POI', null, 'H', 'facile1@free.fr', 'Pierre', 'Blank', '1975-04-20', false);
+                  $oFamillyTrue->getId(), false, null, null, 'POI', null, 'H', 'facile2@free.fr', 'facile2', 'Blank', '1975-04-20', false);
 
 $browser->addLicenceExiste($oFamillyTrue->getId(), $oClub->getId(), $oCategory->getId(), $oTypeLicence->getId(), true, true,
                   null, false, null, null, $oFamillyTrue->getTblAddress()->getAddress1(), $oFamillyTrue->getTblAddress()->getId(), 'H', $oFamillyTrue->getEmail(), $oFamillyTrue->getFirstName(),
@@ -321,7 +321,7 @@ $browser->get('/licence/'.$oLicence->getId().'/edit')->
   with('form')->begin()->
     hasErrors(false)->
   end();
-
+/*
   $browser->get('/licence/ListValidSaisie');
   $browser->get('/licence/index')->
             with('response')->begin()->
@@ -329,10 +329,11 @@ $browser->get('/licence/'.$oLicence->getId().'/edit')->
             end();
   $browser->get('/licence/listPaypal');
   $oBordereau = Doctrine::getTable('tbl_bordereau')->findAll()->getLast();
-/*
-  $browser->post('/payment/paypalDev', array(
-            'item_number'   => $oBordereau->getId()
-            ));->
+
+  $browser->post('/payment/notifypaypalDev', array(
+            'item_number_1'   => $oBordereau->getId(),
+            'profil'          => $oProfil->getId()
+            ))->
             with('response')->isRedirected()->
             followRedirect()->with('response')->begin()->
               matches('!#Payer par PAYPAL#')->

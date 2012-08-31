@@ -14,6 +14,11 @@ class tbl_category extends Basetbl_category
 {
     public function __toString()
     {
-        return $this->getLib();
+        if ($this->getId()) {
+            return $this->getLib();
+        } else {
+            return '';
+        }
+
     }
 }

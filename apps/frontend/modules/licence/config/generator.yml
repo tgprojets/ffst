@@ -21,10 +21,8 @@ generator:
           help: Requis
         first_name:
           label: Prénom
-          help: Requis
         last_name:
           label: Nom
-          help: Requis
         birthday:
           label: Date anniversaire
           help: Requis
@@ -87,7 +85,7 @@ generator:
           _delete:
             credentials: [admin]
       filter:
-        display: [num, id_typelicence, id_category, id_club, is_valid]
+        display: [num, id_typelicence, last_name, first_name, id_category, id_club, is_valid]
       form:
         fields:
           id_club:
@@ -103,6 +101,12 @@ generator:
             label: Certificat valide
           is_familly:
             label: Tarif réduit famille
+          first_name:
+            label: Prénom
+            help: Requis
+          last_name:
+            label: Nom
+            help: Requis
       edit:
         title: Edition de la licence de %%tbl_profil%%
         actions:

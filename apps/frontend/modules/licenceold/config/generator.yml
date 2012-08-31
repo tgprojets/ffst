@@ -21,10 +21,8 @@ generator:
           help: Requis
         first_name:
           label: Prénom
-          help: Requis
         last_name:
           label: Nom
-          help: Requis
         birthday:
           label: Date anniversaire
           help: Requis
@@ -76,4 +74,4 @@ generator:
           show:
             label: Voir licence
       filter:
-        display: [list_yearlicence, num, id_typelicence, id_category, id_club, is_valid]
+        display: [list_yearlicence, num, last_name, first_name, id_typelicence, id_category, id_club, is_valid]

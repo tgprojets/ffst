@@ -62,8 +62,7 @@ class paymentActions extends sfActions
       if ($oPaiement->getIdLicence() != null) {
         $this->valideLicence($oPaiement);
       }
-
-        $oPaiement->setDatePayment(date("Y-m-d H:i:s"))
+      $oPaiement->setDatePayment(date("Y-m-d H:i:s"))
                   ->setIsPayed(true)
                   ->setIdTypepayment($nIdType)
                   ->save();

@@ -5,6 +5,7 @@ if [ -z "$1" ]; then
     bdd="ffst_dev"
 elif [ "$1" == "prod" ]; then
     ./symfony doctrine:build --all --no-confirmation --env="$1"
+    ./symfony doctrine:data-load data/fixtures/prod.yml
     bdd="ffst"
 elif [ "$1" == "sb" ]; then
     ./symfony doctrine:build --all --no-confirmation --env="sandbox"

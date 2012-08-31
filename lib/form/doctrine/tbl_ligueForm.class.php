@@ -34,7 +34,12 @@ class tbl_ligueForm extends Basetbl_ligueForm
 
     } else {
         $oLigue = Doctrine::getTable('tbl_ligue')->find($aValues['id']);
-        $oSfGuardUser = $oLigue->getSfGuardUser();
+        if ($oLigue->getIdUser() == null) {
+          $oSfGuardUser = new sfGuardUser();
+          $bNewUser = true;
+        } else {
+          $oSfGuardUser = $oLigue->getSfGuardUser();
+        }
         $oAddress = $oLigue->getTblAddress();
     }
     if ($this->isValid()) {
@@ -46,6 +51,8 @@ class tbl_ligueForm extends Basetbl_ligueForm
         if ($this->isNew()) {
             $oSfGuardUser->setPassword($aValues['password']);
             $oSfGuardUser->save();
+        }
+        if ($this->isNew() || $bNewUser) {
             $oGroup = Doctrine::getTable('sfGuardGroup')->findOneBy('name', 'LIGUE');
             $oUserGroup = new sfGuardUserGroup();
             $oUserGroup->setUserId($oSfGuardUser->getId())
@@ -92,6 +99,12 @@ class tbl_ligueForm extends Basetbl_ligueForm
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
       $this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      $this->widgetSchema['id_affectation']            = new sfWidgetFormDoctrineChoice(
+        array(
+          'model' => $this->getRelatedModelName('tbl_affectation'),
+          'add_empty' => 'Aucune',
+
+      ));
       $this->widgetSchema['id_codepostaux']            = new sfWidgetFormChoice(array(
           'label'            => 'Ville (Code postal)',
           'choices'          => array(),
@@ -149,6 +162,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
         array(
           'required' => 'Adresse est requis'
         )));
+    $this->setValidator('id_affectation', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_affectation'), 'required' => false)));
     $this->setValidator('address2',       new sfValidatorString(array('max_length' => 250, 'required' => false)));
     $this->setValidator('tel',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('gsm',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
@@ -179,10 +193,12 @@ class tbl_ligueForm extends Basetbl_ligueForm
   {
     if (!$this->isNew()) {
         $oUser = Doctrine::getTable('sfGuardUser')->find($this->getObject()->getIdUser());
-        $this->setDefault('email', $oUser->getEmailAddress());
-        $this->setDefault('username', $oUser->getUsername());
-        $this->setDefault('nom', $oUser->getLastName());
-        $this->setDefault('prenom', $oUser->getFirstName());
+        if ($oUser) {
+          $this->setDefault('email', $oUser->getEmailAddress());
+          $this->setDefault('username', $oUser->getUsername());
+          $this->setDefault('nom', $oUser->getLastName());
+          $this->setDefault('prenom', $oUser->getFirstName());
+        }
         $oAddress = Doctrine::getTable('tbl_address')->find($this->getObject()->getIdAddress());
         $this->setDefault('address1', $oAddress->getAddress1());
         $this->setDefault('address2', $oAddress->getAddress2());

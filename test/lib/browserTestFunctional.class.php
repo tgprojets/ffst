@@ -59,7 +59,7 @@ class browserTestFunctional extends sfTestFunctional
   }
 
   public function addLicence($nIdClub, $nIdCategory, $nIdTypeLicence, $int, $race, $idFamilly, $cnil, $dateCertif,
-                             $idCodepostaux, $address1, $idAddress, $sexe, $email, $LastName, $FirstName, $dateBirthday, $bError, $bDebug=false)
+                             $idCodepostaux, $address1, $idAddress, $sexe, $email, $LastName, $FirstName, $dateBirthday, $bError, $nbError=1, $bDebug=false)
   {
     $this->get('/licence/new')->
       info('Nouvelle licence')->
@@ -89,12 +89,12 @@ class browserTestFunctional extends sfTestFunctional
     if ($bDebug)
     {
       $this->with('form')->begin()->
-        hasErrors(1)->debug()->
+        hasErrors($nbError)->debug()->
       end();
     }
     if ($bError) {
       $this->with('form')->begin()->
-        hasErrors(1)->
+        hasErrors($nbError)->
       end();
     } else {
       $this->with('form')->begin()->

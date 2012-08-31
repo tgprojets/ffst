@@ -34,7 +34,12 @@ class tbl_clubForm extends Basetbl_clubForm
 
     } else {
         $oClub = Doctrine::getTable('tbl_club')->find($aValues['id']);
-        $oSfGuardUser = $oClub->getSfGuardUser();
+        if ($oClub->getIdUser() == null) {
+          $oSfGuardUser = new sfGuardUser();
+          $bNewUser = true;
+        } else {
+          $oSfGuardUser = $oClub->getSfGuardUser();
+        }
         $oAddress = $oClub->getTblAddress();
     }
     if ($this->isValid()) {
@@ -46,6 +51,8 @@ class tbl_clubForm extends Basetbl_clubForm
         if ($this->isNew()) {
             $oSfGuardUser->setPassword($aValues['password']);
             $oSfGuardUser->save();
+        }
+        if ($this->isNew() || $bNewUser) {
             $oGroup = Doctrine::getTable('sfGuardGroup')->findOneBy('name', 'CLUB');
             $oUserGroup = new sfGuardUserGroup();
             $oUserGroup->setUserId($oSfGuardUser->getId())
@@ -189,10 +196,12 @@ class tbl_clubForm extends Basetbl_clubForm
   {
     if (!$this->isNew()) {
         $oUser = Doctrine::getTable('sfGuardUser')->find($this->getObject()->getIdUser());
-        $this->setDefault('email', $oUser->getEmailAddress());
-        $this->setDefault('username', $oUser->getUsername());
-        $this->setDefault('nom', $oUser->getLastName());
-        $this->setDefault('prenom', $oUser->getFirstName());
+        if ($oUser) {
+          $this->setDefault('email', $oUser->getEmailAddress());
+          $this->setDefault('username', $oUser->getUsername());
+          $this->setDefault('nom', $oUser->getLastName());
+          $this->setDefault('prenom', $oUser->getFirstName());
+        }
         $oAddress = Doctrine::getTable('tbl_address')->find($this->getObject()->getIdAddress());
         $this->setDefault('address1', $oAddress->getAddress1());
         $this->setDefault('address2', $oAddress->getAddress2());
