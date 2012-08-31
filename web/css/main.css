@@ -106,6 +106,16 @@ img {
   -webkit-gradient(linear, left top, left bottom,
                    from(transparent), to(rgba(255, 255, 255, 0.18)));
 }
+
+.sb_titre h3 {
+  background: url('../images/attention.png') no-repeat;
+  padding-left: 44px;
+  padding-top: 8px;
+  color: #800000;
+  margin: 4px;
+  display: block;
+  font-size: 1.8em;
+}
 .sb_connexion {
   position: relative;
   float: right;

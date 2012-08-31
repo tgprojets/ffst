@@ -20,6 +20,11 @@ class mainActions extends sfActions
 
   }
 
+  public function executeCompatibility(sfWebRequest $request)
+  {
+    $this->setLayout('layout_compatibility');
+  }
+
   public function executeCheckProfil(sfWebRequest $request)
   {
     if ($request->isXmlHttpRequest()) {

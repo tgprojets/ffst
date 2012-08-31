@@ -10,6 +10,7 @@
   </head>
   <body>
     <div id="conteneur">
+      <?php include_component('main', 'CheckNavigateur') ?>
       <div class="sb_bandeau">
           <div class="sb_logo">
             <?php $sLogo = $sf_user->getLogo() ?>
@@ -35,6 +36,11 @@
               <?php echo $sf_user->getTitre() ?>
             </h2>
             <h1>GESTION DES LICENCES</h1>
+            <?php if (sfConfig::get('sf_environment') == 'sandbox'): ?>
+              <h3>
+                ATTENTION CECI EST L'ENVIRONNENT SANDBOX
+              </h3>
+            <?php endif; ?>
           </div>
           <?php if ($sf_user->isAuthenticated()): ?>
             <div id="ffst_nav">

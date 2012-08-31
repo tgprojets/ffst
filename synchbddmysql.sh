@@ -1,18 +1,20 @@
 #!/bin/bash
 if [ -z "$1" ]; then
-    #./symfony doctrine:build --all --no-confirmation
+    ./symfony doctrine:build --all --no-confirmation
+    ./symfony doctrine:data-load data/fixtures/fixtures.yml
     bdd="ffst_dev"
 elif [ "$1" == "prod" ]; then
     ./symfony doctrine:build --all --no-confirmation --env="$1"
     bdd="ffst"
 elif [ "$1" == "sb" ]; then
     ./symfony doctrine:build --all --no-confirmation --env="sandbox"
+    ./symfony doctrine:data-load data/fixtures/fixtures.yml
     bdd="ffst_sb"
 else
     ./symfony doctrine:build --all --no-confirmation --env="$1"
+    ./symfony doctrine:data-load data/fixtures/fixtures.yml
     bdd="ffst_$1"
 fi
-#./symfony doctrine:data-load data/fixtures/fixtures.yml
 
 codepostaux="data/patch/codepostaux.sql"
 
