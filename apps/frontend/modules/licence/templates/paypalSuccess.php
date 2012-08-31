@@ -1,4 +1,5 @@
 <?php use_stylesheet('admin.css') ?>
+<?php use_stylesheet('paypal.css') ?>
 <div id="sf_admin_container" style="color:#fff;">
     <h1>A régler avec PAYPAL</h1>
   <div class="sf_admin_list">
@@ -22,8 +23,8 @@
   <div class="sf_admin_form_row">
       <label for="">Montant total : <?php echo $nAmountTotal ?> €</label>
   </div>
-  <ul  class="sf_admin_actions">
-    <li class="sb_bouton_a">
+  <ul id="paypal_action">
+    <li class="marg_paypal_button sb_bouton_a">
       <?php echo link_to('Retour à la liste', '@tbl_licence', array()) ?>
     </li>
     <li>

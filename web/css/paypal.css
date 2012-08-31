@@ -39,3 +39,16 @@
   behavior: url(/PIE.htc);
   border: 2px #A71418 solid;
 }
+
+#paypal_action li {
+  float: left;
+  width: auto;
+  min-height: 30px;
+}
+
+#paypal_action .marg_paypal_button {
+  margin-top: 3px;
+}
+#paypal_action form {
+  margin: 0;
+}
