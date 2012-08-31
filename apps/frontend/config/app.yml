@@ -6,23 +6,23 @@ prod:
   paypal:
     business:  ffst@free.fr
     url: https://www.paypal.com/cgi-bin/webscr
-    cancel: http://www.laffst.com/payment/paypal_url.php
-    notify: http://www.laffst.com/payment/notifypaypal.php
-    return: http://www.laffst.com/payment/validation.php
+    cancel: http://www.laffst.com/paypal_cancel.php
+    notify: http://www.laffst.com/notifypaypal.php
+    return: http://www.laffst.com/validation.php
 sandbox:
   paypal:
     business: tgilbe_1273247786_biz@tgprojets.fr
     url: https://www.sandbox.paypal.com/cgi-bin/webscr
-    cancel: http://sandbox.laffst.com/payment/paypal_url.php
-    notify: http://sandbox.laffst.com/payment/notifypaypal.php
-    return: http://sandbox.laffst.com/payment/validation.php
+    cancel: http://sandbox.laffst.com/paypal_cancel.php
+    notify: http://sandbox.laffst.com/notifypaypal_sb.php
+    return: http://sandbox.laffst.com/validation.php
 all:
   paypal:
     business: tgprojets.fr
-    url: paypal_url
-    cancel: paypal_dev.php
+    url: notifypaypal_dev
+    cancel: paypal_cancel.php
     notify: notifypaypal_dev.php
-    return: validation_dev.php
+    return: validation.php
   images:
     logo: logo
     thumbnail: thumbnail

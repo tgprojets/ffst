@@ -1,2 +1,2 @@
-paypalDev:
+all:
   is_secure: false

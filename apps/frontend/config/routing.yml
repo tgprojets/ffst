@@ -16,9 +16,25 @@ tbl_avoir:
     column:               id
     with_wildcard_routes: true
 
-paypal_url:
-  url:   /paypal_url.php
-  param: { module: payment, action: paypalDev }
+notifypaypal_sb:
+  url: /notifypaypal_sb.php
+  param: { module: payment, action: notifypaypalSb }
+
+notifypaypal:
+  url: /notifypaypal.php
+  param: { module: payment, action: notifypaypal }
+
+notifypaypal_dev:
+  url: /notifypaypal_dev.php
+  param: { module: payment, action: notifypaypalDev }
+
+paypal_cancel:
+  url: /paypal_cancel.php
+  param: { module: payment, action: paypalCancel }
+
+paypal_validation:
+  url: /validation.php
+  param: { module: payment, action: paypalValidation }
 
 tbl_tarifreduit:
   class: sfDoctrineRouteCollection

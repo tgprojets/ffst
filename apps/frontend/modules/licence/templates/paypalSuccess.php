@@ -33,9 +33,10 @@
         <input name="upload" type="hidden" value="1">
         <input name="cmd" type="hidden" value="_cart" />
         <input name="business" type="hidden" value="<?php echo sfConfig::get('app_paypal_business') ?>" />
-        <input name="item_name" type="hidden" value="Paiement à la FFST" />
-        <input name="item_number" type="hidden" value="<?php echo $oBordereau->getId() ?>" />
-        <input name="quantity" type="hidden" value="1" />
+        <input name="item_name_1" type="hidden" value="Paiement à la FFST" />
+        <input name="item_number_1" type="hidden" value="<?php echo $oBordereau->getId() ?>" />
+        <input name="quantity_1" type="hidden" value="1" />
+        <input name="amount_1" type='hidden' value="<?php echo $nAmountTotal ?>"  />
         <input name="amount" type='hidden' value="<?php echo $nAmountTotal ?>"  />
         <input name="rm" type="hidden"  value="1">
         <input name="no_note" type="hidden" value="1" />

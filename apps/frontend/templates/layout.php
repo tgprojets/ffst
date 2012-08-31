@@ -118,17 +118,10 @@
             </div>
           <?php endif; ?>
       </div>
-      <?php if ($sf_user->isAuthenticated()): ?>
       <div id="contenant">
                <?php echo $sf_content ?>
         <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>
       </div>
-      <?php else: ?>
-      <div id="contenant_center">
-               <?php echo $sf_content ?>
-        <div id="margepied"><!-- ne pas enlever cette marge et laisser en dernier --></div>
-      </div>
-      <?php endif; ?>
     </div>
     <div class="sb_baspage">
       <div class="info_mail_footer">

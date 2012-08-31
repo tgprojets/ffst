@@ -10,20 +10,48 @@
  */
 class paymentActions extends sfActions
 {
- /**
-  * Executes paypalDev action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executePaypalDev(sfWebRequest $request)
+
+  public function executeNotifypaypalDev(sfWebRequest $request)
   {
     if ($request->isMethod('post')) {
-        $nBordereau = $request->getParameter('item_number');
+        $nBordereau = $request->getParameter('item_number_1');
         $oBordereau = Doctrine::getTable('tbl_bordereau')->find($nBordereau);
         $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'paypal');
         $this->payed($oBordereau, $oTypePayment->getId());
         return $this->redirect('@tbl_licence');
     }
+  }
+
+  public function executeNotifypaypal(sfWebRequest $request)
+  {
+    //Récupère les informations
+    if ($request->isMethod('post')) {
+      $nBordereau = $request->getParameter('item_number1');
+      $oBordereau = Doctrine::getTable('tbl_bordereau')->find($nBordereau);
+      $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'paypal');
+      $this->payed($oBordereau, $oTypePayment->getId());
+    }
+  }
+
+  public function executeNotifypaypalSb(sfWebRequest $request)
+  {
+    //Récupère les informations
+    if ($request->isMethod('post')) {
+      $nBordereau = $request->getParameter('item_number1');
+      $oBordereau = Doctrine::getTable('tbl_bordereau')->find($nBordereau);
+      $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'paypal');
+      $this->payed($oBordereau, $oTypePayment->getId());
+    }
+  }
+
+  public function executePaypalCancel(sfWebRequest $request)
+  {
+
+  }
+
+  public function executePaypalValidation(sfWebRequest $request)
+  {
+
   }
 
   private function payed($oBordereau, $nIdType)
