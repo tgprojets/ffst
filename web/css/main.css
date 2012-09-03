@@ -189,7 +189,6 @@ img {
   -webkit-border-radius:16px;
   -moz-border-radius:16px;
   border-radius: 16px;
-  behavior: url(/PIE.htc);
 }
 
 /** Bouton a **/
@@ -210,6 +209,7 @@ img {
   -moz-box-shadow: 4px 4px 6px #aaa;
   -webkit-box-shadow: 4px 4px 6px #aaa;
   box-shadow: 4px 4px 6px #aaa;
+  behavior: url(/PIE.htc);
   text-shadow: rgba(0,0,0,.4) 0 1px 0;
   color: white;
   font-size: 16px;
@@ -219,7 +219,6 @@ img {
   min-width: 120px;
   width: auto !important;
   width: 120px;
-  behavior: url(/PIE.htc);
 }
 
 .sb_bouton_a a:hover {

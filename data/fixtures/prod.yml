@@ -170,7 +170,7 @@ tbl_affectation:
     lib: Terre
   tbl_affectation_3:
     code: M
-    lib: Mer
+    lib: Mixte
 tbl_gen:
   tbl_gen_1:
     lib: Mr
