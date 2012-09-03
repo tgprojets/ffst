@@ -50,7 +50,7 @@ generator:
           label: Organisateur de course
       list:
         title: Liste des clubs
-        display: [_image_logo, name, sfGuardUser, tbl_address, tbl_ligue]
+        display: [_image_logo, num, sigle, name, sfGuardUser, tbl_ligue]
         max_per_page: 20
         batch_actions: {}
         object_actions:

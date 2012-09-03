@@ -31,7 +31,7 @@ class codepostauxActions extends autoCodepostauxActions
     $list = array();
     foreach($citys as $city)
     {
-      $list[$city->getId()] = sprintf('%s (%d)', $city->getVille(), $city->getCodePostaux());
+      $list[$city->getId()] = sprintf('%s (%s)', $city->getVille(), $city->getCodePostaux());
     }
     return $this->renderText(json_encode($list));
   }
