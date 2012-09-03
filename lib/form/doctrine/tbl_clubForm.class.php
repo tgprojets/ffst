@@ -24,7 +24,11 @@ class tbl_clubForm extends Basetbl_clubForm
     $aValues = $this->processValues($this->getValues());
     if ($this->isNew()) {
         //Enregistre l'utilisateur
-        $oSfGuardUser = new sfGuardUser();
+        if ($aValues['id_user'] == '') {
+          $oSfGuardUser = new sfGuardUser();
+        } else {
+          $oSfGuardUser = Doctrine::getTable('sfGuardUser')->find($aValues['id_user']);
+        }
 
         //Enregistre l'addresse
         $oAddress = new tbl_address();
@@ -38,7 +42,7 @@ class tbl_clubForm extends Basetbl_clubForm
           $oSfGuardUser = new sfGuardUser();
           $bNewUser = true;
         } else {
-          $oSfGuardUser = $oClub->getSfGuardUser();
+          $oSfGuardUser = doctrine::getTable('sfGuardUser')->find($aValues['id_user']);
         }
         $oAddress = $oClub->getTblAddress();
     }
@@ -48,11 +52,11 @@ class tbl_clubForm extends Basetbl_clubForm
                      ->setFirstName($aValues['prenom'])
                      ->setLastName($aValues['nom'])
                      ->save();
-        if ($this->isNew()) {
+        if ($this->isNew() && !empty($aValues['password'])) {
             $oSfGuardUser->setPassword($aValues['password']);
             $oSfGuardUser->save();
         }
-        if ($this->isNew() || $bNewUser) {
+        if (($this->isNew() || $bNewUser) && empty($aValues['id_user'])) {
             $oGroup = Doctrine::getTable('sfGuardGroup')->findOneBy('name', 'CLUB');
             $oUserGroup = new sfGuardUserGroup();
             $oUserGroup->setUserId($oSfGuardUser->getId())
@@ -101,7 +105,13 @@ class tbl_clubForm extends Basetbl_clubForm
       $this->widgetSchema['gsm']                       = new sfWidgetFormInputText();
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
-      $this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      //$this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      $this->widgetSchema['id_user']            = new sfWidgetFormChoice(array(
+          'label'            => 'Cherche utilisateur (Nom prénom / identifiant)',
+          'choices'          => array(),
+          'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
+          'renderer_options' => array('model' => 'sfGuardUser', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getUser')),
+      ));
       $this->widgetSchema['id_affectation']            = new sfWidgetFormDoctrineChoice(
         array(
           'model' => $this->getRelatedModelName('tbl_affectation'),
@@ -131,7 +141,7 @@ class tbl_clubForm extends Basetbl_clubForm
   {
     if ($this->isNew()) {
       $this->setValidator('password', new sfValidatorString(
-        array('required' => true, 'min_length' => 5, 'max_length' => 20),
+        array('required' => false, 'min_length' => 5, 'max_length' => 20),
         array(
                     'min_length' => 'Le mot de passe est trop court. 5 caractères minimum.',
                     'max_length' => 'Le mot de passe est trop long. 20 caractères maximum',
@@ -185,6 +195,7 @@ class tbl_clubForm extends Basetbl_clubForm
     $this->validatorSchema->setPostValidator(new sfValidatorAnd(
             array(
               new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkClubUser'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkUsername'))),
               new sfValidatorDoctrineUnique(array('model' => 'tbl_club', 'column' => array('name'))),
               new sfValidatorDoctrineUnique(array('model' => 'tbl_club', 'column' => array('num'))),
@@ -221,11 +232,13 @@ class tbl_clubForm extends Basetbl_clubForm
                 ->where("u.email_address = ?", $values['email'])
                 ->andWhere('u.id <> ?', $values['id_user'])
                 ->count();
-            } else {
+            } elseif (empty($values['id_user']))  {
                 $nbr = Doctrine_Query::create()
                 ->from('sfGuardUser u')
                 ->where("u.email_address = ?", $values['email'])
                 ->count();
+            } else {
+              return $values;
             }
 
             if ($nbr==0) {
@@ -246,11 +259,13 @@ class tbl_clubForm extends Basetbl_clubForm
                 ->where("u.username = ?", $values['username'])
                 ->andWhere('u.id <> ?', $values['id_user'])
                 ->count();
-            } else {
+            } elseif (empty($values['id_user']))  {
                 $nbr = Doctrine_Query::create()
                 ->from('sfGuardUser u')
                 ->where("u.username = ?", $values['username'])
                 ->count();
+            } else {
+              return $values;
             }
 
             if ($nbr==0) {
@@ -262,5 +277,31 @@ class tbl_clubForm extends Basetbl_clubForm
             }
        }
     }
+    public function checkClubUser($validator, $values) {
+        if (!empty($values['id_user']) && !$this->isNew()) {
 
+              $nbr = Doctrine_Query::create()
+              ->from('tbl_club c')
+              ->where("c.id = ?", $values['id'])
+              ->andWhere('c.id_user <> ?', $values['id_user'])
+              ->count();
+
+            if ($nbr==0) {
+            // Login dispo
+               return $values;
+            } else {
+            // Login pas dispo
+               $oClub = Doctrine::getTable('tbl_club')->find($values['id']);
+               $oLicences = $oClub->getTblLicence();
+               foreach ($oLicences as $oLicence) {
+                 if ($oLicence->getIsBrouillon() && $oLicence->getIdUser() == $oClub->getIdUser()) {
+                  throw new sfValidatorError($validator, 'Ce club est bloqué (encours de saisie) impossible de changer d\utisateur.');
+                 }
+               }
+               return $values;
+
+            }
+       }
+       return $values;
+    }
 }

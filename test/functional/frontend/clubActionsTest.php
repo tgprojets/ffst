@@ -88,7 +88,7 @@ $browser->get('/club/new')->
   click('Mettre à jour', array('tbl_club' => array(
   )))->
   with('form')->begin()->
-    hasErrors(9)->
+    hasErrors(8)->
   end()->
   info('Formulaire correcte')->
   click('Mettre à jour', array('tbl_club' => array(

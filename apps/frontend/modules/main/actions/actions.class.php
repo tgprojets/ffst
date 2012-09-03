@@ -116,4 +116,96 @@ class mainActions extends sfActions
     }
     return $this->renderText(json_encode($list));
   }
+
+  /**
+   * Récupère la liste des villes en ajax
+   *
+   * @param sfWebRequest $request
+   * @return Json return Json array of matching City objects converted to string
+   */
+  public function executeGetProfil(sfWebRequest $request)
+  {
+    $keyword = $request->getParameter('q');
+
+    $limit = $request->getParameter('limit');
+    if (strlen($keyword) <= 2) {
+      return $this->renderText(json_encode(array()));
+    }
+    $oProfils = Doctrine::getTable('sfGuardUser')->findByKeyword($keyword);
+    $list = array();
+    foreach($oProfils as $oProfil)
+    {
+      $list[$oProfil->getId()] = sprintf('%s %s (%s)', $oProfil->getLastName(), $oProfil->getFirstName(), $oProfil->getUsername());
+    }
+    return $this->renderText(json_encode($list));
+  }
+
+  public function executeCheckUser(sfWebRequest $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $nId     = $request->getParameter('nIdProfil');
+      $oUser = Doctrine::getTable('sfGuardUser')->find($nId);
+      $jsonresponse['profil']['email'] = $oUser->getEmailAddress();
+      $jsonresponse['profil']['last_name'] = $oUser->getLastName();
+      $jsonresponse['profil']['first_name'] = $oUser->getFirstName();
+      $jsonresponse['profil']['username'] = $oUser->getUsername();
+      return $this->renderText(json_encode($jsonresponse));
+    }
+  }
+
+  public function executeCheckUserCancelClub(sfWebRequest $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $nId     = $request->getParameter('nIdClub');
+      $bExist = false;
+      if ($nId != "") {
+        $oClub = Doctrine::getTable('tbl_club')->find($nId);
+        $oUser = $oClub->getSfGuardUser();
+        if ($oUser) {
+          $bExist = true;
+          $jsonresponse['profil']['email'] = $oUser->getEmailAddress();
+          $jsonresponse['profil']['last_name'] = $oUser->getLastName();
+          $jsonresponse['profil']['first_name'] = $oUser->getFirstName();
+          $jsonresponse['profil']['username'] = $oUser->getUsername();
+          $jsonresponse['profil']['id'] = $oUser->getId();
+        }
+      }
+      if ($bExist == false) {
+          $jsonresponse['profil']['email'] = '';
+          $jsonresponse['profil']['last_name'] = '';
+          $jsonresponse['profil']['first_name'] = '';
+          $jsonresponse['profil']['username'] = '';
+          $jsonresponse['profil']['id'] = '';
+      }
+      return $this->renderText(json_encode($jsonresponse));
+    }
+  }
+
+  public function executeCheckUserCancelLigue(sfWebRequest $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $nId     = $request->getParameter('nIdLigue');
+      $bExist = false;
+      if ($nId != "") {
+        $oLigue = Doctrine::getTable('tbl_ligue')->find($nId);
+        $oUser = $oLigue->getSfGuardUser();
+        if ($oUser) {
+          $bExist = true;
+          $jsonresponse['profil']['email'] = $oUser->getEmailAddress();
+          $jsonresponse['profil']['last_name'] = $oUser->getLastName();
+          $jsonresponse['profil']['first_name'] = $oUser->getFirstName();
+          $jsonresponse['profil']['username'] = $oUser->getUsername();
+          $jsonresponse['profil']['id'] = $oUser->getId();
+        }
+      }
+      if ($bExist == false) {
+          $jsonresponse['profil']['email'] = '';
+          $jsonresponse['profil']['last_name'] = '';
+          $jsonresponse['profil']['first_name'] = '';
+          $jsonresponse['profil']['username'] = '';
+          $jsonresponse['profil']['id'] = '';
+      }
+      return $this->renderText(json_encode($jsonresponse));
+    }
+  }
 }

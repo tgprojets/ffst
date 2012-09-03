@@ -27,7 +27,6 @@
         $('#tbl_licence_id_profil').val('');
         $('#tbl_licence_is_checked').val('0');
         $('#autocomplete_tbl_licence_id_profil').val('');
-        enabledForm();
 
         return false;
     }

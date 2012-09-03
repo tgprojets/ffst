@@ -24,7 +24,11 @@ class tbl_ligueForm extends Basetbl_ligueForm
     $aValues = $this->processValues($this->getValues());
     if ($this->isNew()) {
         //Enregistre l'utilisateur
-        $oSfGuardUser = new sfGuardUser();
+        if ($aValues['id_user'] == '') {
+          $oSfGuardUser = new sfGuardUser();
+        } else {
+          $oSfGuardUser = Doctrine::getTable('sfGuardUser')->find($aValues['id_user']);
+        }
 
         //Enregistre l'addresse
         $oAddress = new tbl_address();
@@ -38,7 +42,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
           $oSfGuardUser = new sfGuardUser();
           $bNewUser = true;
         } else {
-          $oSfGuardUser = $oLigue->getSfGuardUser();
+          $oSfGuardUser = doctrine::getTable('sfGuardUser')->find($aValues['id_user']);
         }
         $oAddress = $oLigue->getTblAddress();
     }
@@ -48,11 +52,11 @@ class tbl_ligueForm extends Basetbl_ligueForm
                      ->setFirstName($aValues['prenom'])
                      ->setLastName($aValues['nom'])
                      ->save();
-        if ($this->isNew()) {
+        if ($this->isNew() && !empty($aValues['password'])) {
             $oSfGuardUser->setPassword($aValues['password']);
             $oSfGuardUser->save();
         }
-        if ($this->isNew() || $bNewUser) {
+        if (($this->isNew() || $bNewUser) && empty($aValues['id_user'])) {
             $oGroup = Doctrine::getTable('sfGuardGroup')->findOneBy('name', 'LIGUE');
             $oUserGroup = new sfGuardUserGroup();
             $oUserGroup->setUserId($oSfGuardUser->getId())
@@ -98,7 +102,13 @@ class tbl_ligueForm extends Basetbl_ligueForm
       $this->widgetSchema['gsm']                       = new sfWidgetFormInputText();
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
-      $this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      //$this->widgetSchema['id_user']                   = new sfWidgetFormInputHidden();
+      $this->widgetSchema['id_user']            = new sfWidgetFormChoice(array(
+          'label'            => 'Cherche utilisateur (Nom prénom / identifiant)',
+          'choices'          => array(),
+          'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
+          'renderer_options' => array('model' => 'sfGuardUser', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getUser')),
+      ));
       $this->widgetSchema['id_affectation']            = new sfWidgetFormDoctrineChoice(
         array(
           'model' => $this->getRelatedModelName('tbl_affectation'),
@@ -128,7 +138,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
   {
     if ($this->isNew()) {
       $this->setValidator('password', new sfValidatorString(
-        array('required' => true, 'min_length' => 5, 'max_length' => 20),
+        array('required' => false, 'min_length' => 5, 'max_length' => 20),
         array(
                     'min_length' => 'Le mot de passe est trop court. 5 caractères minimum.',
                     'max_length' => 'Le mot de passe est trop long. 20 caractères maximum',
@@ -218,11 +228,13 @@ class tbl_ligueForm extends Basetbl_ligueForm
                 ->where("u.email_address = ?", $values['email'])
                 ->andWhere('u.id <> ?', $values['id_user'])
                 ->count();
-            } else {
+            } elseif (empty($values['id_user']))  {
                 $nbr = Doctrine_Query::create()
                 ->from('sfGuardUser u')
                 ->where("u.email_address = ?", $values['email'])
                 ->count();
+            } else {
+              return $values;
             }
 
             if ($nbr==0) {
@@ -243,11 +255,13 @@ class tbl_ligueForm extends Basetbl_ligueForm
                 ->where("u.username = ?", $values['username'])
                 ->andWhere('u.id <> ?', $values['id_user'])
                 ->count();
-            } else {
+            } elseif (empty($values['id_user']))  {
                 $nbr = Doctrine_Query::create()
                 ->from('sfGuardUser u')
                 ->where("u.username = ?", $values['username'])
                 ->count();
+            } else {
+              return $values;
             }
 
             if ($nbr==0) {

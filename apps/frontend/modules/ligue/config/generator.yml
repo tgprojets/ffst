@@ -62,13 +62,13 @@ generator:
         title: Edition de la ligue %%name%%
         display:
           "NONE": [name, num, affiliation, id_affectation, sigle, logo]
-          "Information utilisateur": [id_gen, email, username, nom, prenom]
+          "Information utilisateur": [id_user, _profil_exist, id_gen, email, username, nom, prenom]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax]
           "Divers": [organisation]
       new:
         title: Nouvelle ligue
         display:
           "NONE": [name, num, affiliation, id_affectation, sigle, logo]
-          "Information utilisateur": [id_gen, email, username, _generate_password, password, nom, prenom]
+          "Information utilisateur": [id_user, _profil_exist, id_gen, email, username, _generate_password, password, nom, prenom]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax]
           "Divers": [organisation]

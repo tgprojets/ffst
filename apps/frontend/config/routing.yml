@@ -67,6 +67,18 @@ check_profil:
   url:   /ajax/check_profil
   param:  { module: main, action: checkProfil }
 
+check_user:
+  url:   /ajax/check_user
+  param:  { module: main, action: checkUser }
+
+check_user_cancel_club:
+  url:   /ajax/check_user_cencel_club
+  param:  { module: main, action: checkUserCancelClub }
+
+check_user_cancel_ligue:
+  url:   /ajax/check_user_cencel_ligue
+  param:  { module: main, action: checkUserCancelLigue }
+
 generate_password:
   url:   /ajax/generate_password
   param:  { module: main, action: generatePassword }
@@ -74,6 +86,10 @@ generate_password:
 ajax_getLicence:
   url:   /ajax/getLicence
   param:  { module: main, action: getLicence }
+
+ajax_getUser:
+  url:   /ajax/getProfil
+  param:  { module: main, action: getProfil }
 
 ajax_getCitys:
   url:   /ajax/getCitys
