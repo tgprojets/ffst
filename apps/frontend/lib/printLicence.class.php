@@ -43,7 +43,7 @@ class PrintLicence {
         $this->getLicence();
         $this->getMedical();
 
-        $this->pdf->Output(sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'licence.pdf', 'FI');
+        $this->pdf->Output(sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'licence.pdf', 'FD');
         throw new sfStopException();
     }
 

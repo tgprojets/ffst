@@ -67,10 +67,11 @@ generator:
         title: Liste des licenciés
         display: [num, is_brouillon, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
         table_method: retrieveByClub
-        max_per_page: 20
         batch_actions: {}
         actions:
           _new:
+          export_data:
+            label: Export vers Excel
           valid_saisie:
           cancel_saisie:
           commande:
@@ -126,7 +127,7 @@ generator:
           _save_and_add:
           _save_and_saisie:
         display:
-          "Chercher profil": [id_profil, _profil_exist]
-          "Profile": [sexe, email, last_name, first_name, birthday]
+          "Rechercher licencié existant": [id_profil, _profil_exist]
+          "Saisir licencié": [sexe, email, last_name, first_name, birthday]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [_checkfamilly, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical]

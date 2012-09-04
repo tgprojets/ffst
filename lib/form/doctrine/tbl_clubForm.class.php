@@ -292,11 +292,14 @@ class tbl_clubForm extends Basetbl_clubForm
             } else {
             // Login pas dispo
                $oClub = Doctrine::getTable('tbl_club')->find($values['id']);
-               $oLicences = $oClub->getTblLicence();
-               foreach ($oLicences as $oLicence) {
-                 if ($oLicence->getIsBrouillon() && $oLicence->getIdUser() == $oClub->getIdUser()) {
-                  throw new sfValidatorError($validator, 'Ce club est bloqué (encours de saisie) impossible de changer d\utisateur.');
+               if ($values['id_user'] != $oClub->getIdUser() && $oClub->getIdUser() != null) {
+                 $oLicences = $oClub->getTblLicence();
+                 foreach ($oLicences as $oLicence) {
+                   if ($oLicence->getIsBrouillon() && $oLicence->getIdUser() == $oClub->getIdUser()) {
+                    throw new sfValidatorError($validator, 'Ce club est bloqué (encours de saisie) impossible de changer d\utisateur.');
+                   }
                  }
+                 // $oClubNew
                }
                return $values;
 

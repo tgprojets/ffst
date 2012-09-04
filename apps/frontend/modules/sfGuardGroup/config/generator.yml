@@ -17,9 +17,9 @@ generator:
           label: Titre
         description:
           label: Description
-        users:
+        users_list:
           label: Liste des utilisateurs
-        permissions:
+        permissions_list:
           label: Liste des permissions
         created_at:
           label: Créé le

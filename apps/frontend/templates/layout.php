@@ -90,7 +90,7 @@
                       </ul>
                     </li>
                   <?php endif; ?>
-                  <?php if ($sf_user->hasCredential('licence') || $sf_user->hasCredential('account_club') || $sf_user->hasCredential('account_ligue')): ?>
+                  <?php if ($sf_user->hasCredential('visuel') || $sf_user->hasCredential('stats') || $sf_user->hasCredential('licence') || $sf_user->hasCredential('account_club') || $sf_user->hasCredential('account_ligue')): ?>
                   <li> <a href="#">Gestion des licences</a>
                     <ul>
                       <li <?php echo $sf_params->get('module')=="licence"?'class="sb_menu_select"':''?>><?php echo link_to('Licence', '@tbl_licence') ?></li>
@@ -132,11 +132,10 @@
         <div class="info_footer_address">
           <?php $oInfo    = $sf_user->getIndoFooter() ?>
           <?php $oAddress = $oInfo->getTblAddress() ?>
-          <div><label>Organisation : </label><?php echo $oInfo->getOrganisation() ?></div>
-          <div><label>N° et rue : </label><?php echo $oAddress->getAddress1() ?></div>
-          <div><label>Lieu dit : </label><?php echo $oAddress->getAddress2() ?></div>
-          <div><label>CP : </label><?php echo $oAddress->getTblCodepostaux()->getCodePostaux() ?></div>
-          <div><label>Ville : </label><?php echo $oAddress->getTblCodepostaux()->getVille() ?></div>
+          <div><?php echo $oInfo->getName() ?></div>
+          <div><?php echo $oAddress->getAddress1() ?></div>
+          <div><?php echo $oAddress->getAddress2() ?></div>
+          <div><?php echo $oAddress->getTblCodepostaux()->getCodePostaux().' '.$oAddress->getTblCodepostaux()->getVille() ?></div>
         </div>
       <?php endif; ?>
     </div>

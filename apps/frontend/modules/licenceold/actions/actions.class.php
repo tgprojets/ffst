@@ -37,4 +37,18 @@ class licenceoldActions extends autoLicenceoldActions
       $this->oFamilly = Doctrine::getTable('tbl_profil')->find($this->oLicence->getIdFamilly());
     }
   }
+
+  public function executeListExportData(sfWebRequest $request)
+  {
+    //$oLicences = Doctrine::getTable('tbl_licence')->findAll();
+    $oLicences = $this->buildQuery()->execute();
+    $sLicence = "";
+    foreach ($oLicences as $oLicence) {
+      $sLicence .= $oLicence->getNum()."\n";
+    }
+    header('Content-Type: application/csv') ; //on détermine les en-tête
+    header('Content-Disposition: attachment; filename="licence.csv"');
+    echo $sLicence;
+    return sfView::HEADER_ONLY;
+  }
 }

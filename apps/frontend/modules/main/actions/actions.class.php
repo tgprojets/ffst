@@ -99,13 +99,14 @@ class mainActions extends sfActions
     if (strlen($keyword) <= 2) {
       return $this->renderText(json_encode(array()));
     }
-    $oClub = $this->getUser()->getClub();
+    /*$oClub = $this->getUser()->getClub();
     if ($oClub)
     {
       $nClub = $oClub->getId();
     } else {
       $nClub = null;
-    }
+    }*/
+    $nClub = null;
     $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword, $nClub);
     $list = array();
     foreach($oProfils as $oProfil)

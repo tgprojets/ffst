@@ -4,6 +4,30 @@
   <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2011-09-08T12:16:58Z" product-name="messages">
     <header/>
     <body>
+      <trans-unit>
+        <source>is empty</source>
+        <target>est vide</target>
+      </trans-unit>
+      <trans-unit>
+        <source>yes or no</source>
+        <target>oui ou non</target>
+      </trans-unit>
+      <trans-unit>
+        <source>yes</source>
+        <target>oui</target>
+      </trans-unit>
+      <trans-unit>
+        <source>no</source>
+        <target>non</target>
+      </trans-unit>
+      <trans-unit>
+        <source><![CDATA[from %from_date% to %to_date%]]></source>
+        <target><![CDATA[du %from_date% au %to_date%]]></target>
+      </trans-unit>
+      <trans-unit>
+        <source><![CDATA[from %from_date%<br />to %to_date%]]></source>
+        <target><![CDATA[du %from_date%<br />au %to_date%]]></target>
+      </trans-unit>
       <trans-unit id="1">
         <source>Login</source>
         <target>Identifiant</target>

@@ -192,7 +192,7 @@ img {
 }
 
 /** Bouton a **/
-.sb_bouton_a a {
+.sb_bouton_a a, .sb_bouton_list {
   position: relative;
   border: none;
   height: 25px;
@@ -221,7 +221,7 @@ img {
   width: 120px;
 }
 
-.sb_bouton_a a:hover {
+.sb_bouton_a a:hover, .sb_bouton_list:hover {
   position: relative;
   border-top-color: #80cd80;
   background: #636fe0;

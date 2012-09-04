@@ -23,8 +23,7 @@ class tbl_codepostauxTable extends Doctrine_Table
         $q = $this->createQuery('c')
               ->where('c.ville LIKE ?', $sVille.'%')
               ->orWhere('c.code_postaux LIKE ?', $sVille.'%')
-              ->limit(0, 20);
-              ;
+              ->limit(20);
 
         return $q->execute();
     }

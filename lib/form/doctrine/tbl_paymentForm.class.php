@@ -14,7 +14,9 @@ class tbl_paymentForm extends Basetbl_paymentForm
   {
     $aValues = $this->processValues($this->getValues());
     if ($this->isNew()) {
-        $oPayment = new tbl_payment();
+      $oPayment = new tbl_payment();
+    } else {
+      $oPayment = Doctrine::getTable('tbl_payment')->find($aValues['id']);
     }
     if ($this->isValid()) {
         $nIdUser = sfContext::getInstance()->getUser()->getGuardUser()->getId();
@@ -33,6 +35,9 @@ class tbl_paymentForm extends Basetbl_paymentForm
   public function configure()
   {
     unset($this['num'], $this['date_payment'], $this['is_brouillon'], $this['is_payed'], $this['relation_table'], $this['id_bordereau'], $this['id_user'], $this['id_typepayment'], $this['created_at'], $this['updated_at']);
+    if (!$this->isNew()) {
+      unset($this['id_licence']);
+    }
     $this->buildWidget();
     $this->buildValidator();
   }

@@ -1,2 +1,2 @@
 all:
-  credentials: [[licence, account_club, account_ligue]]
+  credentials: [[licence, account_club, account_ligue, stats, visuel]]

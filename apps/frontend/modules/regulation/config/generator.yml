@@ -57,7 +57,8 @@ generator:
             label: Règlement CB
           regulation_espece:
             label: Règlement espèce
-        object_actions: {}
+        object_actions:
+          _edit: ~
       filter:
         display: [date_payment, is_payed, id_typepayment, id_club, id_ligue, id_profil]
       form:    ~

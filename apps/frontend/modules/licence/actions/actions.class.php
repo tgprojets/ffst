@@ -247,4 +247,18 @@ class licenceActions extends autoLicenceActions
     }
     $this->redirect('@tbl_licence');
   }
+
+  public function executeListExportData(sfWebRequest $request)
+  {
+    //$oLicences = Doctrine::getTable('tbl_licence')->findAll();
+    $oLicences = $this->buildQuery()->execute();
+    $sLicence = "";
+    foreach ($oLicences as $oLicence) {
+      $sLicence .= $oLicence->getNum()."\n";
+    }
+    header('Content-Type: application/csv') ; //on détermine les en-tête
+    header('Content-Disposition: attachment; filename="licence.csv"');
+    echo $sLicence;
+    return sfView::HEADER_ONLY;
+  }
 }

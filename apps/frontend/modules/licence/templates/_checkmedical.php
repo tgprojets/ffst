@@ -13,7 +13,7 @@
                 $('#tbl_licence_date_medical_month').val('');
                 $('#tbl_licence_date_medical_year').val('');
             } else {
-                alert('J\'atteste sur l\'honneurde la possession et de la validité du certificat de ce licencié sous peine des poursuites.');
+                alert('J\'atteste sur l\'honneur du contrôle et de la validité du certificat médical. En cas de fausse déclaration, je suis informé que j\'engagerai ma responsabilité civile et/ou pénale et m\'exposerai aux poursuites prévues par la Loi.');
                 $('.sf_admin_form_field_date_medical').show();
             }
         });

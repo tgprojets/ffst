@@ -16,7 +16,7 @@ class tbl_club extends Basetbl_club
   {
     $sFiles = $this->getLogo();
     //Delete thumbnail
-    myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_logo'));
+    //myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_logo'));
     return $file->generateFilename();
   }
 

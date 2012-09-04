@@ -97,7 +97,7 @@ tbl_typelicence:
     is_minor:       { type: boolean, default: false }
     description:    { type: string(2000) }
     rank:           { type: integer }
-    prix:           { type: float(5), notnull: true }
+    prix:           { type: float(8), notnull: true }
     id_group:       { type: integer(4) }
   relations:
     tbl_grouplicence:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_group, foreign: id, foreignAlias: tbl_typelicence }
@@ -123,7 +123,7 @@ tbl_prixunit:
     id:             { type: integer(4), primary: true,  autoincrement: true }
     lib:            { type: string(250), notnull: true }
     code:           { type: string(4), notnull: true }
-    prix:           { type: float(5), notnull: true }
+    prix:           { type: float(8), notnull: true }
 
 tbl_profil:
   actAs:
@@ -157,7 +157,7 @@ tbl_licence:
     year_licence:      { type: string(9) }
     id_profil:         { type: integer(4), notnull: true  }
     id_club:           { type: integer(4), notnull: true  }
-    id_category:       { type: integer(4), notnull: true  }
+    id_category:       { type: integer(4) }
     id_typelicence:    { type: integer(4), notnull: true  }
     id_user:           { type: integer }
     is_cancel:         { type: boolean, default: false }
@@ -165,7 +165,7 @@ tbl_licence:
     sfGuardUser:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_licence }
     tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_licence }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_licence }
-    tbl_category:      { onDelete: CASCADE, onUpdate: CASCADE, local: id_category, foreign: id, foreignAlias: tbl_licence }
+    tbl_category:      { local: id_category, foreign: id, foreignAlias: tbl_licence }
     tbl_typelicence:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typelicence, foreign: id, foreignAlias: tbl_licence }
     tbl_familly:       { class: tbl_profil, onDelete: CASCADE, onUpdate: CASCADE, local: id_familly, foreign: id, foreignAlias: tbl_licence }
 
@@ -182,7 +182,7 @@ tbl_payment:
     description:       { type: string(250) }
     relation_table:    { type: string(50) }
     id_typepayment:    { type: integer(4) }
-    amount:            { type: float(4) }
+    amount:            { type: float(8) }
     id_licence:        { type: integer(4) }
     id_profil:         { type: integer(4) }
     id_club:           { type: integer(4) }
@@ -220,7 +220,7 @@ tbl_avoir:
     id:                { type: integer(4), primary: true,  autoincrement: true }
     lib:               { type: string(50) }
     is_brouillon:      { type: boolean, default: true }
-    amount:            { type: float(4) }
+    amount:            { type: float(8) }
     relation_table:    { type: string(50) }
     is_used:           { type: boolean, default: false }
     id_typepayment:    { type: integer(4) }
@@ -243,7 +243,7 @@ tbl_bordereau:
   columns:
     id:                { type: integer(4), primary: true,  autoincrement: true }
     lib:               { type: string(50) }
-    amount:            { type: float(4) }
+    amount:            { type: float(8) }
     is_payed:          { type: boolean, default: false }
     id_user:           { type: integer }
   relations:

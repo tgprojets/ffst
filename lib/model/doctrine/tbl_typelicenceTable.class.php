@@ -21,6 +21,11 @@ class tbl_typelicenceTable extends Doctrine_Table
       $q->orderBy('rank ASC');
       return $q;
     }
+    public function retrieveByRank() {
+      $q = $this->createQuery('q');
+      $q->orderBy('rank ASC');
+      return $q->execute();
+    }
     public function getTypeLicenceRank() {
       $q = $this->createQuery('a');
       $rootAlias = $q->getRootAlias();

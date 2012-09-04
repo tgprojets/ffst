@@ -627,3 +627,33 @@ table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mc
   padding: 2px 4px;
   margin-right: 2px;
 }
+
+.down_rank {
+  padding-left: 20px;
+  background: url('../images/down.png') no-repeat;
+}
+
+.up_rank {
+  padding-left: 20px;
+  background: url('../images/up.png') no-repeat;
+}
+
+.print_icon {
+  padding-left: 20px;
+  background: url('../images/print.png') no-repeat;
+}
+
+.cancel_icon {
+  padding-left: 20px;
+  background: url('../images/cancel.png') no-repeat;
+}
+
+.valide_icon {
+  padding-left: 20px;
+  background: url('../images/valide.png') no-repeat;
+}
+
+.zoom_icon {
+  padding-left: 20px;
+  background: url('../images/zoom.png') no-repeat;
+}

@@ -17,6 +17,8 @@ generator:
       fields:
         code:
           label: code licence
+        rank:
+          label: Ordre
       list:
         title: Liste des prix de licences
         table_method: retrieveSortTypeLicenceList
@@ -24,9 +26,13 @@ generator:
         batch_actions: {}
         object_actions:
           movedown:
-            label: 'down'
+            label: 'Descencre'
+            params:
+              class: down_rank
           moveup:
-            label: 'up'
+            label: 'Monter'
+            params:
+              class: up_rank
           _edit: ~
           _delete:
             credentials: [admin]

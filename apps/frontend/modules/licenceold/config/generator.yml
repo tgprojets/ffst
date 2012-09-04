@@ -69,9 +69,16 @@ generator:
         table_method: retrieveByClubOld
         max_per_page: 20
         batch_actions: {}
-        actions: {}
+        actions:
+          export_data:
+            label: Export vers Excel
+            credentials: [stats]
+            params:
+              class: sb_bouton_list
         object_actions:
           show:
             label: Voir licence
+            params:
+              class: zoom_icon
       filter:
         display: [list_yearlicence, num, last_name, first_name, id_typelicence, id_category, id_club, is_valid]

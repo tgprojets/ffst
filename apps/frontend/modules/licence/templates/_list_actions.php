@@ -1,5 +1,10 @@
 <?php if (!$sf_user->isLigue()): ?>
   <?php echo $helper->linkToNew(array(  'params' =>   array(  ),  'class_suffix' => 'new',  'label' => 'New',)) ?>
+  <?php if ($sf_user->hasCredential(array(  0 =>   array(    0 => 'stats')))): ?>
+    <li class="sf_admin_action_export_data sb_bouton_a">
+      <?php echo link_to(__('Exporter vers Excel', array(), 'messages'), 'licence/ListExportData', array()) ?>
+    </li>
+  <?php endif; ?>
   <?php if ($sf_user->hasSaisie() > 0 && $sf_user->hasCredential(array(  0 =>   array(    0 => 'account_club',    1 => 'account_ligue', 2 => 'licence'  ),))): ?>
     <li class="sf_admin_action_cancel_saisie sb_bouton_a">
       <?php echo link_to(__('Annuler la saisie', array(), 'messages'), 'licence/ListCancelSaisie', array()) ?>
