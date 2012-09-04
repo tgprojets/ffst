@@ -42,10 +42,7 @@ class licenceoldActions extends autoLicenceoldActions
   {
     //$oLicences = Doctrine::getTable('tbl_licence')->findAll();
     $oLicences = $this->buildQuery()->execute();
-    $sLicence = "";
-    foreach ($oLicences as $oLicence) {
-      $sLicence .= $oLicence->getNum()."\n";
-    }
+    $sLicence = Licence::exportData($oLicences);
     header('Content-Type: application/csv') ; //on détermine les en-tête
     header('Content-Disposition: attachment; filename="licence.csv"');
     echo $sLicence;

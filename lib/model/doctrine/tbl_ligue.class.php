@@ -16,7 +16,9 @@ class tbl_ligue extends Basetbl_ligue
   {
     $sFiles = $this->getLogo();
     //Delete thumbnail
-    myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_logo'));
+    if (!empty($sFiles)) {
+      myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_logo'));
+    }
     return $file->generateFilename();
   }
 

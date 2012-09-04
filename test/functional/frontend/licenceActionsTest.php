@@ -45,14 +45,14 @@ $browser->info('stats')->connexion('stats', 'stats');
 $browser->
   get('/licence/index')->
   with('response')->begin()->
-    isStatusCode(403)->
+    isStatusCode(200)->
   end();
 $browser->deconnexion();
 $browser->info('visuel')->connexion('visuel', 'visuel');
 $browser->
   get('/licence/index')->
   with('response')->begin()->
-    isStatusCode(403)->
+    isStatusCode(200)->
   end();
 $browser->deconnexion();
 $browser->info('dcheoux')->connexion('dcheoux', 'dcheoux');

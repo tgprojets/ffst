@@ -308,7 +308,7 @@ sfGuardGroup:
   Group_technique:
     name:           N2D
     description:    Administrateur Group_technique
-    Permissions:    [Permission_categorie, Permission_stats, Permission_visuel]
+    Permissions:    [Permission_categorie]
   Group_federal_statistique:
     name:           N3
     description:    Administrateur fédéral statistique

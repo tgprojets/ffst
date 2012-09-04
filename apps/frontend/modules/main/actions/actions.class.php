@@ -32,22 +32,7 @@ class mainActions extends sfActions
       $nIdClub = $request->getParameter('nIdClub');
       $oProfil = Doctrine::getTable('tbl_profil')->find($nId);
       $oLicence = $oProfil->getTblLicence()->getLast();
-      if ($this->getUser()->isClub()) {
 
-        if ($nIdClub != $oLicence->getTblClub()->getId()) {
-          $jsonresponse['error'] = 'Vous ne pouvez pas transférer ce profil';
-          return $this->renderText(json_encode($jsonresponse));
-        }
-      }
-      if ($this->getUser()->isLigue())
-      {
-        $oLigue = $this->getUser()->getLigue();
-        if (Doctrine::getTable('tbl_profil')->checkTransfert($nId, $oLigue->getId()) == false)
-        {
-          $jsonresponse['error'] = 'Vous ne pouvez pas transférer ce profil';
-          return $this->renderText(json_encode($jsonresponse));
-        }
-      }
       $oAddress = $oProfil->getTblAddress();
       $jsonresponse['profil']['email'] = $oProfil->getEmail();
       $jsonresponse['profil']['sexe'] = $oProfil->getSexe();
@@ -99,15 +84,7 @@ class mainActions extends sfActions
     if (strlen($keyword) <= 2) {
       return $this->renderText(json_encode(array()));
     }
-    /*$oClub = $this->getUser()->getClub();
-    if ($oClub)
-    {
-      $nClub = $oClub->getId();
-    } else {
-      $nClub = null;
-    }*/
-    $nClub = null;
-    $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword, $nClub);
+    $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
     $list = array();
     foreach($oProfils as $oProfil)
     {
@@ -208,5 +185,10 @@ class mainActions extends sfActions
       }
       return $this->renderText(json_encode($jsonresponse));
     }
+  }
+
+  public function execute404(sfWebRequest $request)
+  {
+
   }
 }

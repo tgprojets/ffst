@@ -186,17 +186,19 @@ class licenceActions extends autoLicenceActions
 
   public function executeListImprimer(sfWebRequest $request)
   {
-    if ($this->getUser()->isLigue()) {
-      $this->redirect('@tbl_licence');
-    }
-    $oLicence = $this->getRoute()->getObject();
-    if ($oLicence->getDateValidation() != null) {
-      $oPdf = new PrintLicence($oLicence);
-      $oPdf->createLic();
+    if ($this->getUser()->hasCredential('account_club') ||
+        $this->getUser()->hasCredential('licence')) {
 
-      $this->getUser()->setFlash('notice', 'Impression de la licence: '.$oLicence->getTblProfil());
-    } else {
-      $this->getUser()->setFlash('error', 'Licence pas valide: '.$oLicence->getTblProfil());
+
+      $oLicence = $this->getRoute()->getObject();
+      if ($oLicence->getDateValidation() != null) {
+        $oPdf = new PrintLicence($oLicence);
+        $oPdf->createLic();
+
+        $this->getUser()->setFlash('notice', 'Impression de la licence: '.$oLicence->getTblProfil());
+      } else {
+        $this->getUser()->setFlash('error', 'Licence pas valide: '.$oLicence->getTblProfil());
+      }
     }
     $this->redirect('@tbl_licence');
   }
@@ -252,10 +254,7 @@ class licenceActions extends autoLicenceActions
   {
     //$oLicences = Doctrine::getTable('tbl_licence')->findAll();
     $oLicences = $this->buildQuery()->execute();
-    $sLicence = "";
-    foreach ($oLicences as $oLicence) {
-      $sLicence .= $oLicence->getNum()."\n";
-    }
+    $sLicence = Licence::exportData($oLicences);
     header('Content-Type: application/csv') ; //on détermine les en-tête
     header('Content-Disposition: attachment; filename="licence.csv"');
     echo $sLicence;

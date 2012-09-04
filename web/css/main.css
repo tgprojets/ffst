@@ -371,3 +371,27 @@ img {
   color: #0003ff;
   text-decoration: underline;
 }
+
+/* gestion d'erreur 404   */
+.sb_404 {
+    padding-top: 40px;
+    width: 600px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.sb_oops {
+    padding-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+    background-color: #ebebeb;
+    width: 600px;
+    height: 80px;
+}
+
+.sb_404URL dt {
+    line-height:30px;
+    font-size: 16px;
+    text-decoration:underline;
+}
