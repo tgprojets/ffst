@@ -175,7 +175,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'label'            => 'Ville (Code postal)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
+          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys'), 'config' => "{max: 20}"),
+
       ));
       if (!$this->isNew() && $this->getObject()->getDateValidation() != null && $this->bClub)
       {
@@ -201,14 +202,14 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'label'            => 'Tarif famille <br /> (Nom prénom du licencié)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-          'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
+          'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence'), 'config' => "{max: 20}"),
       ));
       if ($this->isNew()) {
         $this->widgetSchema['id_profil']            = new sfWidgetFormChoice(array(
             'label'            => 'Cherche licencié (Nom prénom)',
             'choices'          => array(),
             'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-            'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
+            'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence'), 'config' => "{max: 20}"),
         ));
         $this->widgetSchema['is_checked']           = new sfWidgetFormInputHidden();
       } else {
@@ -272,10 +273,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
     }
     $this->validatorSchema->setPostValidator(new sfValidatorAnd(
             array(
-              new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieClub'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkCategory'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieLicence'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkFamilly'))),
        ))
@@ -317,7 +318,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     }
   }
 
-  public function checkEmail($validator, $values)
+/*  public function checkEmail($validator, $values)
   {
     if (! empty($values['email'])) {
       if ($this->isNew() && $values['is_checked'] == 0) {
@@ -350,6 +351,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
       }
     }
   }
+*/
   public function checkYearLicence($validator, $values)
   {
     if ($this->isNew() && !empty($values['id_profil']))
@@ -509,4 +511,35 @@ class tbl_licenceForm extends Basetbl_licenceForm
     return $values;
   }
 
+  public function checkCategory($validator, $values)
+  {
+    if (! empty($values['id_typelicence']))
+    {
+      $oTypeLicence = Doctrine::getTable('tbl_typelicence')->find($values['id_typelicence']);
+      $sCode = $oTypeLicence->getTblGrouplicence()->getCode();
+      switch ($sCode) {
+        case "COM":
+          if (empty($values['id_category'])) {
+            throw new sfValidatorError($validator, 'Veuillez choisir une catégorie pour ce type de licence.');
+          }
+        break;
+        case "DIG":
+          if (!empty($values['id_category'])) {
+            throw new sfValidatorError($validator, 'Veuillez choisir aucune catégorie pour ce type de licence.');
+          }
+        break;
+        case "PRO":
+          if (!empty($values['id_category'])) {
+            throw new sfValidatorError($validator, 'Veuillez choisir aucune catégorie pour ce type de licence.');
+          }
+        break;
+        case "SPL":
+          if (!empty($values['id_category'])) {
+            throw new sfValidatorError($validator, 'Veuillez choisir aucune catégorie pour ce type de licence.');
+          }
+        break;
+      }
+    }
+    return $values;
+  }
 }

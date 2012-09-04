@@ -16,44 +16,13 @@ class tbl_profilTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('tbl_profil');
     }
-    public function findByKeyword($keyword, $nClub)
+    public function findByKeyword($keyword)
     {
         $sName = mb_strtoupper($keyword);
-        if ($nClub) {
-
-          $q = $this->createQuery('p')
-                ->leftJoin('p.tbl_licence l')
-                ->where('upper(p.first_name) LIKE ?', $sName.'%')
-                ->orWhere('upper(p.last_name) LIKE ?', $sName.'%')
-                ->andWhere('l.id_club = ?', $nClub)
-                ->limit(0, 20);
-        } else {
-          $q = $this->createQuery('p')
-                ->where('upper(p.first_name) LIKE ?', $sName.'%')
-                ->orWhere('upper(p.last_name) LIKE ?', $sName.'%')
-                ->limit(0, 20);
-        }
-
-
+        $q = $this->createQuery('p')
+              ->where('upper(p.first_name) LIKE ?', $sName.'%')
+              ->orWhere('upper(p.last_name) LIKE ?', $sName.'%')
+              ->limit(0, 20);
         return $q->execute();
-    }
-
-    public function checkTransfert($nIdProfil, $nIdLigue)
-    {
-        $q = Doctrine_Query::create()
-          ->select('MAX(l.date_validation) AS Date, l.id, c.id, li.id as ligue')
-          ->from('tbl_licence l')
-          ->leftJoin('l.tbl_profil p')
-          ->leftJoin('l.tbl_club c')
-          ->leftJoin('c.tbl_ligue li')
-          ->andWhere('p.id = ?', $nIdProfil)
-          ->groupBy('l.id, l.id_club, c.id, li.id');
-
-        $result = $q->fetchArray();
-        if ($result[0]['ligue'] == $nIdLigue) {
-          return true;
-        }
-
-        return false;
     }
 }

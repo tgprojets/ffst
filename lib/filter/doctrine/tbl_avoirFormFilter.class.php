@@ -16,7 +16,7 @@ class tbl_avoirFormFilter extends Basetbl_avoirFormFilter
             'label'            => 'Cherche licencié (Nom prénom)',
             'choices'          => array(),
             'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-            'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence')),
+            'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence'), 'config' => "{max: 20}"),
         ));
         $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
   }

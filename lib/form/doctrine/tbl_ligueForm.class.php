@@ -107,7 +107,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
           'label'            => 'Cherche utilisateur (Nom prénom / identifiant)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-          'renderer_options' => array('model' => 'sfGuardUser', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getUser')),
+          'renderer_options' => array('model' => 'sfGuardUser', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getUser'), 'config' => "{max: 20}"),
       ));
       $this->widgetSchema['id_affectation']            = new sfWidgetFormDoctrineChoice(
         array(
@@ -119,7 +119,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
           'label'            => 'Ville (Code postal)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
+          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys'), 'config' => "{max: 20}"),
       ));
       $sFileThumbnailPicture = "";
       if ($this->getObject()->getLogo()) {
@@ -192,6 +192,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
     $this->validatorSchema->setPostValidator(new sfValidatorAnd(
             array(
               new sfValidatorCallback(array('callback'=> array($this, 'checkEmail'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkLigueUser'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkUsername'))),
               new sfValidatorDoctrineUnique(array('model' => 'tbl_ligue', 'column' => array('name'))),
               new sfValidatorDoctrineUnique(array('model' => 'tbl_ligue', 'column' => array('num'))),
@@ -272,5 +273,69 @@ class tbl_ligueForm extends Basetbl_ligueForm
                throw new sfValidatorError($validator, 'Cet identifiant existe.');
             }
        }
+    }
+    public function checkLigueUser($validator, $values) {
+        if (!empty($values['id_user']) && !$this->isNew()) {
+
+            $nbr = Doctrine_Query::create()
+            ->from('tbl_club c')
+            ->where("c.id = ?", $values['id'])
+            ->andWhere('c.id_user <> ?', $values['id_user'])
+            ->count();
+
+          if ($nbr==0) {
+          // Login dispo
+             return $values;
+          } else {
+          // Login pas dispo
+             $oLigue = Doctrine::getTable('tbl_ligue')->find($values['id']);
+             $oUser = Doctrine::getTable('sfGuardUser')->find($values['id_user']);
+             if ($values['id_user'] != $oClub->getIdUser() && $oLigue->getIdUser() != null) {
+               //Attaché à un club
+               $oClub = $oUser->getTblClub();
+               if ($oClub->count() > 0) {
+                throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à un club.');
+               }
+               $oLigue = $oUser->getTblLigue();
+               if ($oLigue->count() > 0) {
+                throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à une ligue.');
+               }
+             }
+             $aPermissions = $oUser->getGroupNames();
+             if (in_array('N1', $aPermissions) ||
+                 in_array('N2A', $aPermissions) ||
+                 in_array('N2B', $aPermissions) ||
+                 in_array('N2C', $aPermissions) ||
+                 in_array('N2D', $aPermissions) ||
+                 in_array('N3', $aPermissions) ||
+                 in_array('N4', $aPermissions)) {
+              throw new sfValidatorError($validator, 'Cet utisateur est un administrateur.');
+             }
+             return $values;
+
+          }
+       } elseif (!empty($values['id_user']) && $this->isNew()) {
+         $oUser = Doctrine::getTable('sfGuardUser')->find($values['id_user']);
+         //Attaché à un club
+         $oClub = $oUser->getTblClub();
+         if ($oClub->count() > 0) {
+          throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à un club.');
+         }
+         $oLigue = $oUser->getTblLigue();
+         if ($oLigue->count() > 0) {
+          throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à une ligue.');
+         }
+         $aPermissions = $oUser->getGroupNames();
+         if (in_array('N1', $aPermissions) ||
+             in_array('N2A', $aPermissions) ||
+             in_array('N2B', $aPermissions) ||
+             in_array('N2C', $aPermissions) ||
+             in_array('N2D', $aPermissions) ||
+             in_array('N3', $aPermissions) ||
+             in_array('N4', $aPermissions)) {
+          throw new sfValidatorError($validator, 'Cet utisateur est un administrateur.');
+         }
+       }
+       return $values;
     }
 }

@@ -1,2 +1,4 @@
+404:
+  is_secure: false
 compatibility:
   is_secure: false

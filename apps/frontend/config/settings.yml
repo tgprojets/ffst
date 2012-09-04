@@ -50,3 +50,6 @@ all:
 
     secure_module:          sfGuardAuth
     secure_action:          secure
+
+    error_404_module:       main
+    error_404_action:       404

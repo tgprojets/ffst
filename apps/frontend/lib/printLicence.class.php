@@ -50,15 +50,13 @@ class PrintLicence {
     private function getLicence()
     {
         $this->pdf->selectColumn();
-        $this->pdf->setY(14);
-        $this->pdf->SetFont('courier', '', 11);
-        $this->pdf->Cell(80, 0, 'SUGGESTION TRACE "ATTESTATION DE LICENCE"', 0, 2, 'L', 0, '', 0);
-        $this->pdf->setXY(12, 20);
+        $yPos = 14;
+        $yDep = 2;
+        $this->pdf->setXY(12, $yPos);
         $this->pdf->Cell(80, 14, '', 1, 2, 'C', 0, '', 0);
-        $this->pdf->setXY(14, 22);
+        $this->pdf->setXY(14, $yPos + $yDep);
         $this->pdf->SetFont('courier', 'B', 13);
         $this->pdf->Cell(70, 0, "ATTESTATION DE LICENCE FFST", 0, 2, 'L', 0, '', 0);
-        $this->pdf->setXY(14, 26);
         $this->pdf->Cell(70, 0, "SAISON ".$this->oLicence->getYearLicence(), 0, 2, 'L', 0, '', 0);
 
         $this->getHeaderImage(107);
@@ -203,7 +201,7 @@ class PrintLicence {
         $this->pdf->setXY(80, $yPos);
         $this->pdf->Cell(60, 10, '', 1, 2, 'L', 0, '', 0);
         $this->pdf->setXY(80, $yPos);
-        if ($this->oGroupLicence->getCode() == 'MON' || $this->oGroupLicence->getCode() == 'ATT')
+        if ($this->oGroupLicence->getCode() == 'COM')
         {
             if ($this->oCategory->getId()) {
                 $this->caseCheck(true, $this->oCategory->getLib(), $xPos, $yPos, 40);
@@ -241,18 +239,15 @@ class PrintLicence {
     {
         $this->pdf->selectColumn(1);
 
-        //Titre
-        $this->pdf->setXY(150, 14);
-        $this->pdf->SetFont('courier', '', 11);
-        $this->pdf->Cell(75, 0, 'SUGGESTION TRACE "CERTIFICAT MEDICAL"', 0, 2, 'L', 0, '', 0);
-
         //Bloc titre
-        $this->pdf->setXY(152, 20);
+        $yPos = 14;
+        $yDep = 2;
+
+        $this->pdf->setXY(152, $yPos);
         $this->pdf->Cell(54, 14, '', 1, 2, 'C', 0, '', 0);
-        $this->pdf->setXY(154, 22);
+        $this->pdf->setXY(154, $yPos + $yDep);
         $this->pdf->SetFont('courier', 'B', 13);
         $this->pdf->Cell(80, 0, "CERTIFICAT MEDICAL", 0, 2, 'L', 0, '', 0);
-        $this->pdf->setXY(154, 26);
         $this->pdf->Cell(80, 0, "SAISON ".$this->oLicence->getYearLicence(), 0, 2, 'L', 0, '', 0);
         $this->pdf->setXY(180, 10);
 
@@ -323,7 +318,7 @@ class PrintLicence {
         $yPos = $this->pdf->getY()+$yDep;
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         $bGroup = false;
-        if ($this->oGroupLicence->getCode()=='MON' || $this->oGroupLicence->getCode()=='ATT') {
+        if ($this->oGroupLicence->getCode()=='COM') {
             $bGroup = true;
         }
         $this->caseCheck($bGroup, 'y compris en compétition', $xPos, $yPos, 70);

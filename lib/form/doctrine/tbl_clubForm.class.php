@@ -110,7 +110,7 @@ class tbl_clubForm extends Basetbl_clubForm
           'label'            => 'Cherche utilisateur (Nom prénom / identifiant)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-          'renderer_options' => array('model' => 'sfGuardUser', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getUser')),
+          'renderer_options' => array('model' => 'sfGuardUser', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getUser'), 'config' => "{max: 20}"),
       ));
       $this->widgetSchema['id_affectation']            = new sfWidgetFormDoctrineChoice(
         array(
@@ -122,7 +122,7 @@ class tbl_clubForm extends Basetbl_clubForm
           'label'            => 'Ville (Code postal)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys')),
+          'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys'), 'config' => "{max: 20}"),
       ));
       $sFileThumbnailPicture = "";
       if ($this->getObject()->getLogo()) {
@@ -280,30 +280,70 @@ class tbl_clubForm extends Basetbl_clubForm
     public function checkClubUser($validator, $values) {
         if (!empty($values['id_user']) && !$this->isNew()) {
 
-              $nbr = Doctrine_Query::create()
-              ->from('tbl_club c')
-              ->where("c.id = ?", $values['id'])
-              ->andWhere('c.id_user <> ?', $values['id_user'])
-              ->count();
+            $nbr = Doctrine_Query::create()
+            ->from('tbl_club c')
+            ->where("c.id = ?", $values['id'])
+            ->andWhere('c.id_user <> ?', $values['id_user'])
+            ->count();
 
-            if ($nbr==0) {
-            // Login dispo
-               return $values;
-            } else {
-            // Login pas dispo
-               $oClub = Doctrine::getTable('tbl_club')->find($values['id']);
-               if ($values['id_user'] != $oClub->getIdUser() && $oClub->getIdUser() != null) {
-                 $oLicences = $oClub->getTblLicence();
-                 foreach ($oLicences as $oLicence) {
-                   if ($oLicence->getIsBrouillon() && $oLicence->getIdUser() == $oClub->getIdUser()) {
-                    throw new sfValidatorError($validator, 'Ce club est bloqué (encours de saisie) impossible de changer d\utisateur.');
-                   }
+          if ($nbr==0) {
+          // Login dispo
+             return $values;
+          } else {
+          // Login pas dispo
+             $oClub = Doctrine::getTable('tbl_club')->find($values['id']);
+             $oUser = Doctrine::getTable('sfGuardUser')->find($values['id_user']);
+             if ($values['id_user'] != $oClub->getIdUser() && $oClub->getIdUser() != null) {
+               $oLicences = $oClub->getTblLicence();
+               foreach ($oLicences as $oLicence) {
+                 if ($oLicence->getIsBrouillon() && $oLicence->getIdUser() == $oClub->getIdUser()) {
+                  throw new sfValidatorError($validator, 'Ce club est bloqué (encours de saisie) impossible de changer d\utisateur.');
                  }
-                 // $oClubNew
                }
-               return $values;
+               //Attaché à un club
+               $oClub = $oUser->getTblClub();
+               if ($oClub->count() > 0) {
+                throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à un club.');
+               }
+               $oLigue = $oUser->getTblLigue();
+               if ($oLigue->count() > 0) {
+                throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à une ligue.');
+               }
+             }
+             $aPermissions = $oUser->getGroupNames();
+             if (in_array('N1', $aPermissions) ||
+                 in_array('N2A', $aPermissions) ||
+                 in_array('N2B', $aPermissions) ||
+                 in_array('N2C', $aPermissions) ||
+                 in_array('N2D', $aPermissions) ||
+                 in_array('N3', $aPermissions) ||
+                 in_array('N4', $aPermissions)) {
+              throw new sfValidatorError($validator, 'Cet utisateur est un administrateur.');
+             }
+             return $values;
 
-            }
+          }
+       } elseif (!empty($values['id_user']) && $this->isNew()) {
+         $oUser = Doctrine::getTable('sfGuardUser')->find($values['id_user']);
+         //Attaché à un club
+         $oClub = $oUser->getTblClub();
+         if ($oClub->count() > 0) {
+          throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à un club.');
+         }
+         $oLigue = $oUser->getTblLigue();
+         if ($oLigue->count() > 0) {
+          throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à une ligue.');
+         }
+         $aPermissions = $oUser->getGroupNames();
+         if (in_array('N1', $aPermissions) ||
+             in_array('N2A', $aPermissions) ||
+             in_array('N2B', $aPermissions) ||
+             in_array('N2C', $aPermissions) ||
+             in_array('N2D', $aPermissions) ||
+             in_array('N3', $aPermissions) ||
+             in_array('N4', $aPermissions)) {
+          throw new sfValidatorError($validator, 'Cet utisateur est un administrateur.');
+         }
        }
        return $values;
     }

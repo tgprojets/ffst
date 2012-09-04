@@ -29,5 +29,40 @@ class sfGuardUserForm extends PluginsfGuardUserForm
             'required' => 'Email est requis',
             'invalid' => 'Email invalide'
         ));
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorAnd(array(
+        new sfValidatorDoctrineUnique(array('model' => 'sfGuardUser', 'column' => array('email_address'))),
+        new sfValidatorDoctrineUnique(array('model' => 'sfGuardUser', 'column' => array('username'))),
+        new sfValidatorCallback(array('callback'=> array($this, 'checkGroups')))
+      ))
+    );
   }
+
+  public function checkGroups($validator, $values)
+  {
+    if (!empty($values['groups_list'])) {
+      $aGroups = $values['groups_list'];
+      $bAdmin = false;
+      $oGroups = Doctrine::getTable('sfGuardGroup')->findBySql('id in ?', array($aGroups));
+      $aAdmin = array('N1', 'N2A', 'N2B', 'N2C', 'N2D', 'N3', 'N4');
+      foreach($oGroups as $oGroup)
+      {
+        //Group admin
+        if (in_array($oGroup->getName(), $aAdmin)) {
+          $bAdmin = true;
+        }
+      }
+      if ($bAdmin) {
+        foreach($oGroups as $oGroup)
+        {
+          //Group admin
+          if ($oGroup->getName() == 'CLUB' || $oGroup->getName() == 'LIGUE') {
+            throw new sfValidatorError($validator, 'Un utilisateur ne peut pas être administrateur et être affecté à un club ou une ligue.');
+          }
+        }
+      }
+    }
+    return $values;
+  }
+
 }
