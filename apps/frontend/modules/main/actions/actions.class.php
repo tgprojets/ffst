@@ -191,4 +191,17 @@ class mainActions extends sfActions
   {
 
   }
+
+  public function executeExportData(sfWebRequest $request)
+  {
+    $oExport = new ExportLicence(sfConfig::get('sf_root_dir').'/data/patch/GestionLicences2010-2011.csv');
+    $oExport->createLicence();
+    $aValues = $oExport->getCodeExist();
+    echo '<pre>';
+    print_r($aValues);
+    echo '</pre>';
+    die();
+    $this->redirect('@homepage');
+  }
+
 }

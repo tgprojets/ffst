@@ -27,4 +27,16 @@ class tbl_codepostauxTable extends Doctrine_Table
 
         return $q->execute();
     }
+
+    public function findByVilleCode($sVille, $sCode)
+    {
+        $sVille = mb_strtoupper($sVille);
+        $sVille = str_replace('-', ' ', $sVille);
+        $sVille = str_replace('\'', ' ', $sVille);
+        $q = $this->createQuery('c')
+              ->where('c.ville like ?', $sVille.'%')
+              ->andWhere('c.code_postaux = ?', $sCode);
+
+        return $q->fetchOne();
+    }
 }
