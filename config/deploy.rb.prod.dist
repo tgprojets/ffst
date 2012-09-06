@@ -126,10 +126,19 @@ namespace :migration do
    Récupère le numéro de version migration inscrit en base de données
   DESC
   task :getnumversion do
-    begin
-      run "export PGUSER=#{tg_db_user}; export PGPASSWORD=#{tg_db_pwd}; psql -h localhost -t -c 'select version from migration_version;' #{tg_db_name} > #{current_path}/numversion;"
-    rescue Exception => error
-      migration.versionvide
+    case #{tg_db_type}
+    when 'mysql'
+      begin
+        run "mysql -h localhost -u #{tg_db_user} --password=#{tg_db_pwd} -N -b -s  #{tg_db_name} -e 'select version from migration_version;' > #{current_path}/numversion;"
+      rescue Exception => error
+        migration.versionvide
+      end
+    when 'pgsql'
+      begin
+        run "export PGUSER=#{tg_db_user}; export PGPASSWORD=#{tg_db_pwd}; psql -h localhost -t -c 'select version from migration_version;' #{tg_db_name} > #{current_path}/numversion;"
+      rescue Exception => error
+        migration.versionvide
+      end
     end
   end
 
