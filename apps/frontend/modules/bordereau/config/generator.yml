@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_bordereau
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_bordereau
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        table_method: retrieveByClub
+        display: [id, amount, is_payed, amount, tbl_club, tbl_typepayment]
+        object_actions:
+          show:
+            label: voir
+            params:
+              class: zoom_icon
+      filter:
+        display: [id]
+      form:    ~
+      edit:    ~
+      new:     ~

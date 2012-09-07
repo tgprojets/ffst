@@ -61,6 +61,18 @@ class tbl_avoirTable extends Doctrine_Table
         return $result['AmountTotal'];
     }
 
+    public function getAmountAvoirClubBordereau($nIdClub, $nIdBordereau)
+    {
+        $q = Doctrine_Query::create()
+          ->select('SUM(a.amount) AS AmountTotal')
+          ->from('tbl_avoir a')
+          ->andWhere('a.id_club = ?', $nIdClub)
+          ->andWhere('a.id_bordereau = ?', $nIdBordereau)
+          ->andWhere('a.is_used = ?', false);
+        $result = $q->fetchOne();
+        return $result['AmountTotal'];
+    }
+
     public function validSaisie($nIdClub, $nIdUser)
     {
         $q = $this->createQuery('a');
@@ -120,5 +132,14 @@ class tbl_avoirTable extends Doctrine_Table
         $q->andWhere('is_brouillon = false');
 
         return $q;
+    }
+    public function findAvoirClubBordereau($nIdClub)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.id_club = ?', $nIdClub)
+          ->andWhere('p.is_used = ?', false)
+          ->andWhere('p.id_bordereau = ?', null)
+          ->andWhere('p.is_brouillon = false');
+        return $q->execute();
     }
 }
