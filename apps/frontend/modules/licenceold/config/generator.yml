@@ -63,22 +63,82 @@ generator:
           label: Numéro de licence
         is_brouillon:
           label: Brouillon (encours de saisie)
+        is_cancel:
+          label: Licence annulée
       list:
         title: Liste des licenciés
-        display: [num, is_brouillon, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
+        display: [num, is_cancel, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
         table_method: retrieveByClubOld
         max_per_page: 20
         batch_actions: {}
         actions:
+          _new:
+            credentials: [ValidLicence]
           export_data:
             label: Export vers Excel
             credentials: [stats]
             params:
               class: sb_bouton_list
         object_actions:
+          imprimer:
+            credentials: [ValidLicence]
+            params:
+              class: print_icon
+          cancel_licence:
+            credentials: [ValidLicence]
+            params:
+              class: cancel_icon
+          _edit:
+            credentials: [ValidLicence]
           show:
             label: Voir licence
             params:
               class: zoom_icon
       filter:
         display: [list_yearlicence, num, last_name, first_name, id_typelicence, id_category, id_club, is_valid]
+      form:
+        class: tbl_licenceoldForm
+        fields:
+          id_club:
+            label: Club
+            help: Requis
+          id_typelicence:
+            label: Type de licence
+            help: Requis
+          id_category:
+            label: Catégorie
+            help: Requis
+          is_medical:
+            label: Certificat valide
+          is_familly:
+            label: Tarif réduit famille
+          first_name:
+            label: Prénom
+            help: Requis
+          last_name:
+            label: Nom
+            help: Requis
+          year_licence:
+            label: Année de la licence
+            help: 20XX/20XX (Requis)
+      edit:
+        title: Edition de la licence de %%tbl_profil%%
+        actions:
+          _list:
+          _save:
+        display:
+          "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
+          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Licence": [_yearlicence, _checkmedical, id_club, id_typelicence, id_category, international, race_nordique, cnil, is_medical, date_medical, date_validation]
+      new:
+        title: Nouvelle licence
+        actions:
+          _list:
+          _save:
+          _save_and_add:
+        display:
+          "Rechercher licencié existant": [id_profil, _profil_exist]
+          "Saisir licencié": [sexe, email, last_name, first_name, birthday]
+          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Licence": [year_licence, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, cnil, is_medical, date_medical, date_validation]
+

@@ -285,12 +285,10 @@ class PrintLicence {
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(55, 0, "Certifie que l'état de santé de :", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($xPos+55, $yPos+$yDep);
-        $this->pdf->SetFont('helvetica', 'B', 11);
-        $this->pdf->Cell(60, 0, $this->oProfil->getName(), 0, 1, 'L', 0, '', 0);
         $this->pdf->SetFont('helvetica', '', 11);
 
-        $yPos = $this->pdf->getY();
-        $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
+        $yPos = $this->pdf->getY()+$yDep;
+        $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep+$yDep);
         $this->pdf->Cell(28, 0, "Nom, prénom :", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($xPos+28, $yPos+$yDep);
         $this->pdf->SetFont('helvetica', 'B', 11);
@@ -344,7 +342,7 @@ class PrintLicence {
         $this->pdf->Image($this->image, $xPostion, 8, 36, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         $this->pdf->SetFont('helvetica', 'B', 6);
         $this->pdf->setXY($xPostion-8, 30);
-        $this->pdf->MultiCell(50, 0, "Fédération Française des Sports de Traîneau, de ski-Pulka/Joëring, et de Cross Canins", 0, 'C');
+        $this->pdf->MultiCell(50, 0, "Fédération Française des Sports de Traîneau, de ski/vtt joering et de canicross", 0, 'C');
     }
 
     private function getFooter()

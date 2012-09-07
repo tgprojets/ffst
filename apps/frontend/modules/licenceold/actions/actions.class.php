@@ -20,14 +20,50 @@ class licenceoldActions extends autoLicenceoldActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->redirect('@licence_old');
+    if ($this->getUser()->hasCredential('ValidLicence')) {
+      $this->tbl_licence = $this->getRoute()->getObject();
+
+      $this->form = $this->configuration->getForm($this->tbl_licence);
+    } else {
+      $this->redirect('@licence_old');
+    }
   }
 
   public function executeNew(sfWebRequest $request)
   {
+    if ($this->getUser()->hasCredential('ValidLicence')) {
+      $this->form = $this->configuration->getForm();
+      $this->tbl_licence = $this->form->getObject();
+    } else {
+      $this->redirect('@licence_old');
+    }
+  }
+  public function executeListCancelLicence(sfWebRequest $request)
+  {
+    if ($this->getUser()->hasCredential('ValidLicence')) {
+      $this->oLicence  = $this->getRoute()->getObject();
+      $this->getUser()->setFlash('notice', 'Licence annulé: '.$this->oLicence->getTblProfil());
+      $this->oLicence->setIsCancel(true)->save();
+    }
     $this->redirect('@licence_old');
   }
 
+  public function executeListImprimer(sfWebRequest $request)
+  {
+    if ($this->getUser()->hasCredential('ValidLicence')) {
+
+      $oLicence = $this->getRoute()->getObject();
+      if ($oLicence->getDateValidation() != null) {
+        $oPdf = new PrintLicence($oLicence);
+        $oPdf->createLic();
+
+        $this->getUser()->setFlash('notice', 'Impression de la licence: '.$oLicence->getTblProfil());
+      } else {
+        $this->getUser()->setFlash('error', 'Licence pas valide: '.$oLicence->getTblProfil());
+      }
+    }
+    $this->redirect('@licence_old');
+  }
   public function executeListShow(sfWebRequest $request)
   {
     $this->oLicence  = $this->getRoute()->getObject();
