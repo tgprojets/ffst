@@ -7,7 +7,7 @@
         $('#tbl_licence_last_name').val('');
         $('#tbl_licence_first_name').val('');
         $('#tbl_licence_birthday_day').val('');
-
+        $('#tbl_licence_sexe_H').attr('checked', true);
         $('#tbl_licence_birthday_month').val('');
         $('#tbl_licence_birthday_year').val('');
 
@@ -49,7 +49,12 @@
                   } else {
                     profil = sData.profil;
                     $('#tbl_licence_email').val(profil.email);
-                    $('#tbl_licence_sexe').val(profil.sexe);
+                        console.debug(profil.sexe);
+                    if (profil.sexe == 'H') {
+                        $('#tbl_licence_sexe_H').attr('checked', true);
+                    } else {
+                        $('#tbl_licence_sexe_F').attr('checked', true);
+                    }
                     $('#tbl_licence_last_name').val(profil.last_name);
                     $('#tbl_licence_first_name').val(profil.first_name);
                     $('#tbl_licence_birthday_day').val(profil.birthday_day);

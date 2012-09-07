@@ -290,7 +290,7 @@ class tbl_ligueForm extends Basetbl_ligueForm
           // Login pas dispo
              $oLigue = Doctrine::getTable('tbl_ligue')->find($values['id']);
              $oUser = Doctrine::getTable('sfGuardUser')->find($values['id_user']);
-             if ($values['id_user'] != $oClub->getIdUser() && $oLigue->getIdUser() != null) {
+             if ($values['id_user'] != $oLigue->getIdUser() && $oLigue->getIdUser() != null) {
                //Attaché à un club
                $oClub = $oUser->getTblClub();
                if ($oClub->count() > 0) {
