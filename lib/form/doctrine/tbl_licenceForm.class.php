@@ -413,6 +413,16 @@ class tbl_licenceForm extends Basetbl_licenceForm
           }
         }
 
+    $nbr = Doctrine_Query::create()
+        ->from('tbl_typelicence tl')
+        ->where("tl.id = ?", $values['id_typelicence'])
+        ->andWhere("tl.is_minor = ?", false)
+        ->count();
+        if ($nbr>0) {
+          if ($age < 18) {
+            throw new sfValidatorError($validator, 'Ce licencié n\'a pas le droit à cette licence, il est mineur (choisir une licence junior) .');
+          }
+        }
     return $values;
   }
 
