@@ -36,4 +36,12 @@ class tbl_bordereauTable extends Doctrine_Table
 
         return $q->fetchOne();
     }
+
+    public function getMaxNumCmd()
+    {
+      $q = $this->createQuery('b')->select('MAX(substring(b.num,8)) as nummax');
+      //$q = $this->createQuery('c')->select('substring(c.bon_commande, 7, 6) as mms');
+      //$q->where('substring(b.num, 1, 6) = \''.date('Ym').'\'');
+      return $q->execute();
+    }
 }

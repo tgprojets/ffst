@@ -1,24 +1,5 @@
 <?php use_stylesheet('admin.css') ?>
 <div id="sf_admin_container" style="color:#fff;">
-    <h1><?php echo $oBordereau->getLib() ?></h1>
-    <div class="sf_admin_content">
-        <fieldset id="sf_fieldset_none">
-            <h2>Profil</h2>
-            <div class="sf_admin_form_row">
-                <label for="">Numéro de bordereau</label>
-                <div class="text_show"><?php echo $oBordereau->getNum() ?></div>
-            </div>
-            <div class="sf_admin_form_row">
-                <label for="">Montant</label>
-                <div class="text_show"><?php echo $oBordereau->getAmount() ?> €</div>
-            </div>
-            <div class="sf_admin_form_row">
-                <label for="">Club</label>
-                <div class="text_show"><?php echo $oBordereau->getTblClub() ?></div>
-            </div>
-        </fieldset>
-
-    </div>
     <div class="sf_admin_list">
         <table cellspacing="0">
             <thead>

@@ -13,6 +13,17 @@ require_once dirname(__FILE__).'/../lib/bordereauGeneratorHelper.class.php';
  */
 class bordereauActions extends autoBordereauActions
 {
+    public function executeListPayment(sfWebRequest $request)
+    {
+        if ($this->getUser()->isClub())
+        {
+            $this->oPayments = Doctrine::getTable('tbl_payment')->findPaymentClub($this->getUser()->getClub()->getId());
+            $this->oAvoirs   = Doctrine::getTable('tbl_avoir')->findAvoirClub($this->getUser()->getClub()->getId());
+        } else {
+            $this->redirect('@tbl_bordereau');
+        }
+    }
+
     public function executeListShow(sfWebRequest $request)
     {
         $this->oBordereau = $this->getRoute()->getObject();
@@ -20,6 +31,45 @@ class bordereauActions extends autoBordereauActions
         $this->oPayments = Doctrine::getTable('tbl_payment')->findBy('id_bordereau', $this->oBordereau->getId());
         $this->oAvoirs   = Doctrine::getTable('tbl_avoir')->findBy('id_bordereau', $this->oBordereau->getId());
     }
+
+    public function executeListPayed(sfWebRequest $request)
+    {
+        $this->oBordereau = $this->getRoute()->getObject();
+        if ($this->oBordereau->getIsPayed()) {
+            $this->getUser()->setFlash('error', 'Bordereau déjà réglé');
+        } else {
+            $this->getUser()->setFlash('notice', 'Bordereau réglé');
+            $oPayments = Doctrine::getTable('tbl_payment')->findBy('id_bordereau', $this->oBordereau->getId());
+            $oAvoirs   = Doctrine::getTable('tbl_avoir')->findBy('id_bordereau', $this->oBordereau->getId());
+            foreach($oPayments as $oPayment)
+            {
+                $oPayment->setIsPayed(true)
+                         ->setDatePayment(date('Y-m-d'))
+                         ->setIdTypepayment($this->oBordereau->getIdTypepayment())
+                         ->save();
+
+                $this->valideLicence($oPayment);
+
+            }
+            foreach($oAvoirs as $oAvoir)
+            {
+                $oAvoir->setIsUsed(true)
+                       ->setIdTypepayment($this->oBordereau->getIdTypepayment())
+                       ->save();
+            }
+            $this->oBordereau->setIsPayed(true)->save();
+        }
+        $this->redirect('@tbl_bordereau');
+    }
+
+    private function valideLicence($oPaiement)
+    {
+        $oLicence = $oPaiement->getTblLicence();
+        if ($oLicence->getDateValidation() == null) {
+            $oLicence->setDateValidation(date("Y-m-d H:i:s"))->save();
+        }
+    }
+
     public function executeBatchDelete(sfWebRequest $request)
     {
         $ids = $request->getParameter('ids');

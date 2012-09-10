@@ -150,6 +150,7 @@ class licenceActions extends autoLicenceActions
     $oBordereau->setLib('Paiement Licence par Paypal')
                      ->setIdUser($nIdUser)
                      ->setIdClub($nIdClub)
+                     ->setNum(Licence::getNumBordereau())
                      ->setIdTypepayment($nIdType)
                      ->save();
     return $oBordereau;

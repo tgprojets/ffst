@@ -243,6 +243,7 @@ tbl_bordereau:
   columns:
     id:                { type: integer(4), primary: true,  autoincrement: true }
     lib:               { type: string(50) }
+    num:               { type: string(10) }
     amount:            { type: float(8) }
     is_payed:          { type: boolean, default: false }
     id_user:           { type: integer }

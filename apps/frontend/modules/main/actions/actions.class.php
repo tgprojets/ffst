@@ -204,4 +204,49 @@ class mainActions extends sfActions
     $this->redirect('@homepage');
   }
 
+  public function executeAideForm(sfWebRequest $request)
+  {
+    $this->form = new AideForm();
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter($this->form->getName()),
+                            $request->getFiles($this->form->getName()));
+
+      if ($this->form->isValid())
+      {
+        $aFormulaire = $this->form->getValues();
+
+        $file = $this->form->getValue('aide_pdf');
+
+        $filename = 'aide.pdf';
+
+        $file->save(sfConfig::get('sf_upload_dir').'/'.$filename);
+
+        $this->getUser()->setFlash('notice', 'Fichier ajouté.');
+
+        $this->redirect('main/aideForm');
+      }
+    }
+  }
+
+  public function executeDocForm(sfWebRequest $request)
+  {
+    $this->form = new DocForm();
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter($this->form->getName()),
+                            $request->getFiles($this->form->getName()));
+
+      if ($this->form->isValid())
+      {
+        $aFormulaire = $this->form->getValues();
+
+        file_put_contents(sfConfig::get('sf_upload_dir').'/contenu.txt', $aFormulaire['doc']);
+
+        $this->getUser()->setFlash('notice', 'Document modifié.');
+
+        $this->redirect('main/docForm');
+      }
+    }
+  }
 }
