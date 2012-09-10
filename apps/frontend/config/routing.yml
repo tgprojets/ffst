@@ -1,3 +1,12 @@
+tbl_bordereau:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_bordereau
+    module:               bordereau
+    prefix_path:          /bordereau
+    column:               id
+    with_wildcard_routes: true
+
 tbl_payment:
   class: sfDoctrineRouteCollection
   options:

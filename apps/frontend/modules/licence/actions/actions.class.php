@@ -19,12 +19,10 @@ class licenceActions extends autoLicenceActions
     if ($this->getUser()->isClub())
     {
       $this->validSaisie();
-      $this->redirect('licence/listPaypal');
 
     } elseif ($this->getUser()->hasCredential('licence') || $this->getUser()->isLigue()) {
       $this->validSaisie();
       $this->getUser()->setFlash('notice', 'Vous avez validé la saisie.');
-      $this->redirect('@tbl_licence');
     }
     $this->redirect('@tbl_licence');
   }
@@ -79,15 +77,28 @@ class licenceActions extends autoLicenceActions
     if ($this->getUser()->isClub())
     {
         $oClub = $this->getUser()->getClub();
-        $this->oPaymentClub        = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
-        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
-        $this->nAmountClub         = Doctrine::getTable('tbl_payment')->getAmountClub($oClub->getId());
-        $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClub($oClub->getId());
-        $this->nAmountTotal        = $this->nAmountClub - $this->nAmountAvoirClub;
-        $this->oBordereau          = $this->createBordereau($this->nAmountTotal);
+        $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'paypal');
+        //Récupère le bordereau libre
+        $this->oBordereau = Doctrine::getTable('tbl_bordereau')->getLastExist($oClub->getId(), $oTypePayment->getId());
+        $oPaymentClubNoBordereau        = Doctrine::getTable('tbl_payment')->findPaymentClubBordereau($oClub->getId());
+        $oAvoirClubNoBordereau          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId());
 
-        $this->linkBordereau($this->oPaymentClub, $this->oBordereau->getId());
-        $this->linkBordereau($this->oAvoirClub, $this->oBordereau->getId());
+        if (!$this->oBordereau && $oPaymentClubNoBordereau->count() > 0) {
+          $this->oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment->getId());
+        } elseif (!$this->oBordereau) {
+          $this->redirect('tbl_bordereau');
+        }
+
+        $this->linkBordereau($oPaymentClubNoBordereau, $this->oBordereau->getId());
+        $this->linkBordereau($oAvoirClubNoBordereau, $this->oBordereau->getId());
+
+        $this->oPaymentClub        = Doctrine::getTable('tbl_payment')->findPaymentClubBordereau($oClub->getId(), $this->oBordereau->getId());
+        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId(),$this->oBordereau->getId());
+        $this->nAmountClub         = Doctrine::getTable('tbl_payment')->getAmountClubBordereau($oClub->getId(), $this->oBordereau->getId());
+        $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClubBordereau($oClub->getId(), $this->oBordereau->getId());
+        $this->nAmountTotal        = $this->nAmountClub - $this->nAmountAvoirClub;
+        $this->oBordereau->setAmount($this->nAmountTotal)->save();
+
     } else {
         $this->redirect('@tbl_licence');
     }
@@ -95,17 +106,51 @@ class licenceActions extends autoLicenceActions
     $this->setTemplate('paypal');
   }
 
-  private function createBordereau($nAmount)
+  public function executeListCheque(sfWebRequest $request)
   {
-    $nIdUser = $this->getUser()->getGuardUser()->getId();
-    $oBordereaux = Doctrine::getTable('tbl_bordereau')->findBySql('id_user='.$nIdUser.' and is_payed = false');
-    foreach ($oBordereaux as $oBordereau) {
-        $oBordereau->delete();
+    if ($this->getUser()->isClub())
+    {
+        $oClub = $this->getUser()->getClub();
+        $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'cheque');
+        //Récupère le bordereau libre
+        $this->oBordereau = Doctrine::getTable('tbl_bordereau')->getLastExist($oClub->getId(), $oTypePayment->getId());
+
+        $oPaymentClubNoBordereau        = Doctrine::getTable('tbl_payment')->findPaymentClubBordereau($oClub->getId());
+        $oAvoirClubNoBordereau          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId());
+
+        if (!$this->oBordereau && $oPaymentClubNoBordereau->count() > 0) {
+          $this->oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment->getId());
+        } elseif (!$this->oBordereau) {
+          $this->redirect('tbl_bordereau');
+        }
+
+        $this->linkBordereau($oPaymentClubNoBordereau, $this->oBordereau->getId());
+        $this->linkBordereau($oAvoirClubNoBordereau, $this->oBordereau->getId());
+
+        $this->oPaymentClub        = Doctrine::getTable('tbl_payment')->findPaymentClubBordereau($oClub->getId(), $this->oBordereau->getId());
+        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId(),$this->oBordereau->getId());
+        $this->nAmountClub         = Doctrine::getTable('tbl_payment')->getAmountClubBordereau($oClub->getId(), $this->oBordereau->getId());
+        $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClubBordereau($oClub->getId(), $this->oBordereau->getId());
+        $this->nAmountTotal        = $this->nAmountClub - $this->nAmountAvoirClub;
+        $this->oBordereau->setAmount($this->nAmountTotal)->save();
+
+    } else {
+        $this->redirect('@tbl_licence');
     }
+
+    $this->setTemplate('cheque');
+  }
+
+
+  private function createBordereau($nIdClub, $nIdType)
+  {
+    $nIdUser      = $this->getUser()->getGuardUser()->getId();
+
     $oBordereau     = new tbl_bordereau();
-    $oBordereau->setLib('Paiement Licence')
-                     ->setAmount($nAmount)
+    $oBordereau->setLib('Paiement Licence par Paypal')
                      ->setIdUser($nIdUser)
+                     ->setIdClub($nIdClub)
+                     ->setIdTypepayment($nIdType)
                      ->save();
     return $oBordereau;
   }

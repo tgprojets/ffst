@@ -98,6 +98,13 @@
                     </ul>
                   </li>
                   <?php endif; ?>
+                  <?php if ($sf_user->hasCredential('validLicence') || $sf_user->hasCredential('account_club')): ?>
+                  <li> <a href="#">Bordereaux</a>
+                    <ul>
+                      <li <?php echo $sf_params->get('module')=="bordereau"?'class="sb_menu_select"':''?>><?php echo link_to('Liste des bordereau', '@tbl_bordereau') ?></li>
+                    </ul>
+                  </li>
+                  <?php endif; ?>
                   <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('categorie')): ?>
                   <li> <a href="#">Divers</a>
                     <ul>

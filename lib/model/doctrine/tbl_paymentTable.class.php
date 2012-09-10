@@ -77,6 +77,19 @@ class tbl_paymentTable extends Doctrine_Table
         return $result['AmountTotal'];
     }
 
+    public function getAmountClubBordereau($nIdClub, $nIdBordereau)
+    {
+        $q = Doctrine_Query::create()
+          ->select('SUM(p.amount) AS AmountTotal')
+          ->from('tbl_payment p')
+          ->andWhere('p.id_club = ?', $nIdClub)
+          ->andWhere('p.is_brouillon = ?', false)
+          ->andWhere('p.id_bordereau = ?', $nIdBordereau)
+          ->andWhere('p.is_payed = ?', false);
+        $result = $q->fetchOne();
+        return $result['AmountTotal'];
+    }
+
     public function validSaisie($nIdClub, $nIdUser)
     {
         $q = $this->createQuery('p');
@@ -173,6 +186,20 @@ class tbl_paymentTable extends Doctrine_Table
           ->andWhere('p.id_licence is null')
           ->andWhere('p.id_profil = ?', $nIdProfil);
 
+        return $q->execute();
+    }
+
+    public function findPaymentClubBordereau($nIdClub, $nBordereau=null)
+    {
+        $q = $this->createQuery('p');
+        $q->andWhere('p.id_club = ?', $nIdClub)
+          ->andWhere('p.is_payed = ?', false)
+          ->andWhere('p.is_brouillon = false');
+        if ($nBordereau == null) {
+          $q->andWhere('p.id_bordereau is null');
+        } else {
+          $q->andWhere('p.id_bordereau = ?', $nBordereau);
+        }
         return $q->execute();
     }
 }
