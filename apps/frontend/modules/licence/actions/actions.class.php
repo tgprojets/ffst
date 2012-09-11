@@ -79,7 +79,7 @@ class licenceActions extends autoLicenceActions
         $oClub = $this->getUser()->getClub();
         $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'paypal');
         //Récupère le bordereau libre
-        $this->oBordereau = Doctrine::getTable('tbl_bordereau')->getLastExist($oClub->getId(), $oTypePayment->getId());
+        $this->oBordereau = Doctrine::getTable('tbl_bordereau')->getLastExist($oClub->getId(), $oTypePayment->getId(), false);
         $oPaymentClubNoBordereau        = Doctrine::getTable('tbl_payment')->findPaymentClubBordereau($oClub->getId());
         $oAvoirClubNoBordereau          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId());
 
@@ -113,7 +113,7 @@ class licenceActions extends autoLicenceActions
         $oClub = $this->getUser()->getClub();
         $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'cheque');
         //Récupère le bordereau libre
-        $this->oBordereau = Doctrine::getTable('tbl_bordereau')->getLastExist($oClub->getId(), $oTypePayment->getId());
+        $this->oBordereau = Doctrine::getTable('tbl_bordereau')->getLastExist($oClub->getId(), $oTypePayment->getId(), false);
 
         $oPaymentClubNoBordereau        = Doctrine::getTable('tbl_payment')->findPaymentClubBordereau($oClub->getId());
         $oAvoirClubNoBordereau          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId());

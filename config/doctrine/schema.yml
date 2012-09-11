@@ -249,6 +249,7 @@ tbl_bordereau:
     id_user:           { type: integer }
     id_club:           { type: integer(4) }
     id_typepayment:    { type: integer(4) }
+    is_manual:         { type: boolean, default: false }
   relations:
     sfGuardUser:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_bordereau }
     tbl_typepayment:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typepayment, foreign: id, foreignAlias: tbl_bordereau }

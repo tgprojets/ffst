@@ -289,6 +289,7 @@ input[type=submit] {
   border-radius: 16px;
   behavior: url(/PIE.htc);
   border: 2px #3d3533 solid;
+  color: #000;
 }
 
 #sf_admin_container .error
