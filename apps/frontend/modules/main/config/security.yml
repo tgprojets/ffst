@@ -1,3 +1,5 @@
+aideForm:
+  credentials: [admin]
 404:
   is_secure: false
 compatibility:

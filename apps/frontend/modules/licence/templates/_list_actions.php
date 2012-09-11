@@ -19,6 +19,7 @@
     <li class="sf_admin_action_paypal sb_bouton_a">
       <?php echo link_to(__('Payer par PAYPAL', array(), 'messages'), 'licence/ListPaypal', array()) ?>
       <?php echo link_to(__('Payer par chèque', array(), 'messages'), 'licence/ListCheque', array()) ?>
+      <?php echo link_to(__('Payer manuellement', array(), 'messages'), 'bordereau/ListPayment', array()) ?>
     </li>
   <?php endif; ?>
 <?php endif; ?>

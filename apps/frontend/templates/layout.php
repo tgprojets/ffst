@@ -87,6 +87,7 @@
                       <ul>
                         <li <?php echo $sf_params->get('module')=="payment"?'class="sb_menu_select"':''?>><?php echo link_to('Paiement', '@tbl_payment') ?></li>
                         <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Avoir', '@tbl_avoir') ?></li>
+                        <li <?php echo $sf_params->get('module')=="bordereau"?'class="sb_menu_select"':''?>><?php echo link_to('Liste des bordereaux', '@tbl_bordereau') ?></li>
                       </ul>
                     </li>
                   <?php endif; ?>
@@ -98,10 +99,10 @@
                     </ul>
                   </li>
                   <?php endif; ?>
-                  <?php if ($sf_user->hasCredential('validLicence') || $sf_user->hasCredential('account_club')): ?>
+                  <?php if ($sf_user->isClub() && $sf_user->hasCredential('account_club')): ?>
                   <li> <a href="#">Bordereaux</a>
                     <ul>
-                      <li <?php echo $sf_params->get('module')=="bordereau"?'class="sb_menu_select"':''?>><?php echo link_to('Liste des bordereau', '@tbl_bordereau') ?></li>
+                      <li <?php echo $sf_params->get('module')=="bordereau"?'class="sb_menu_select"':''?>><?php echo link_to('Liste des bordereaux', '@tbl_bordereau') ?></li>
                     </ul>
                   </li>
                   <?php endif; ?>
@@ -117,6 +118,8 @@
                       <?php endif; ?>
                       <?php if ($sf_user->hasCredential('admin')): ?>
                       <li <?php echo $sf_params->get('module')=="params"?'class="sb_menu_select"':''?>><?php echo link_to('Date majoration', 'params/majorDate') ?></li>
+                      <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Modifier fichier Aide', 'main/aideForm') ?></li>
+                      <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Modifier documents', 'main/docForm') ?></li>
                       <?php endif; ?>
                     </ul>
                   </li>
@@ -134,6 +137,10 @@
       <div class="info_mail_footer">
         contact :  <a href="mailto:ffst@free.fr">ffst@free.fr</a>
         Sites internet : <a href="http://www.ffstraineau.com/">www.ffstraineau.com</a>
+        <?php if ($sf_user->isAuthenticated()): ?>
+          <br />
+          <a href="/uploads/aide.pdf">Consulter Aide</a>
+        <?php endif; ?>
       </div>
       <?php if ($sf_user->isClub() || $sf_user->isLigue()): ?>
         <div class="info_footer_address">

@@ -5,6 +5,10 @@
         <fieldset id="sf_fieldset_none">
             <h2>Profil</h2>
             <div class="sf_admin_form_row">
+                <label for="">Numéro de bordereau</label>
+                <div class="text_show"><?php echo $oBordereau->getNum() ?></div>
+            </div>
+            <div class="sf_admin_form_row">
                 <label for="">Montant</label>
                 <div class="text_show"><?php echo $oBordereau->getAmount() ?> €</div>
             </div>

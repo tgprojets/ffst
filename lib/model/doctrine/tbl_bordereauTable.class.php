@@ -27,13 +27,31 @@ class tbl_bordereauTable extends Doctrine_Table
         return $q;
     }
 
-    public function getLastExist($nIdClub, $nIdType)
+    public function getLastExist($nIdClub, $nIdType, $bManual)
     {
         $q = $this->createQuery('q');
         $q->where('id_club = ?', $nIdClub)
           ->andWhere('id_typepayment = ?', $nIdType)
+          ->andWhere('is_manual = ?', $bManual)
           ->andWhere('is_payed = ?', false);
 
         return $q->fetchOne();
+    }
+
+    public function getAllBordereau($nIdClub)
+    {
+        $q = $this->createQuery('q');
+        $q->where('id_club = ?', $nIdClub)
+          ->andWhere('is_payed = ?', false);
+
+        return $q->execute();
+    }
+
+    public function getMaxNumCmd()
+    {
+      $q = $this->createQuery('b')->select('MAX(substring(b.num,8)) as nummax');
+      //$q = $this->createQuery('c')->select('substring(c.bon_commande, 7, 6) as mms');
+      //$q->where('substring(b.num, 1, 6) = \''.date('Ym').'\'');
+      return $q->execute();
     }
 }

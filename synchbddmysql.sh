@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ -z "$1" ]; then
     ./symfony doctrine:build --all --no-confirmation
-    ./symfony doctrine:data-load data/fixtures/fixtures.yml
+    #./symfony doctrine:data-load data/fixtures/fixtures.yml
     bdd="ffst_dev"
 elif [ "$1" == "prod" ]; then
     ./symfony doctrine:build --all --no-confirmation --env="$1"
@@ -18,6 +18,7 @@ else
 fi
 
 codepostaux="data/patch/codepostaux.sql"
+#bddProd="data/sql/.sql"
 
 if [ "$1" == "prod" ]; then
     sUSER=ffst

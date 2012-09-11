@@ -14,17 +14,35 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        num:
+          label: N°
+        amount:
+          label: Montant
+        is_payed:
+          label: Payé
+        tbl_club:
+          label: Nom du club
+        tbl_typepayment:
+          label: Paiement
+        is_manual:
+          label: Manuel
       list:
         table_method: retrieveByClub
-        display: [id, amount, is_payed, amount, tbl_club, tbl_typepayment]
+        display: [num, amount, is_payed, is_manual, tbl_club, tbl_typepayment]
         object_actions:
+          payed:
+            label: Bordereau réglé
+            credentials: [ValidLicence]
+            params:
+              confirm: Etes vous sur que le bordereau est réglé ?
           show:
             label: voir
             params:
               class: zoom_icon
+        actions: {}
       filter:
-        display: [id]
+        display: [num]
       form:    ~
       edit:    ~
       new:     ~

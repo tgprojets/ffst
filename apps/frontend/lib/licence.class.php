@@ -102,4 +102,22 @@ class Licence {
     }
     return $sValue;
   }
+
+  public static function getNumBordereau()
+  {
+    //Création de num commande
+    $oMax = Doctrine::getTable('tbl_bordereau')->getMaxNumCmd();
+    $nNum = 1;
+    if ($oMax) {
+       $nNum = $oMax[0]['nummax']+$nNum;
+    }
+    $sNumCommande = date('Ym').'-'.$nNum;
+    $oBordereau = Doctrine::getTable('tbl_bordereau')->findOneBy('num', $sNumCommande);
+    while ($oBordereau) {
+      $nNum++;
+      $sNumCommande = date('Ym').'-'.$nNum;
+      $oBordereau = Doctrine::getTable('tbl_bordereau')->findOneBy('num', $sNumCommande);
+    }
+    return $sNumCommande;
+  }
 }
