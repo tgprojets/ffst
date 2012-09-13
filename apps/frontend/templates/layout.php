@@ -25,8 +25,9 @@
               <div class="sb_bar_menu_connexion">
                   <div class="sb_deconnexion">
                     <?php echo 'Bonjour '.$sf_user->getGuardUser()->getFirstName().' '.$sf_user->getGuardUser()->getLastName() ?>
+                    <br />
+                    <?php echo link_to('Se déconnecter', '@sf_guard_signout', array('class' => 'sb_deconnexion_btn')) ?>
                   </div>
-                  <?php echo link_to('&nbsp;', '@sf_guard_signout', array('class' => 'sb_deconnexion_btn')) ?>
                   <?php if (isset($gsMessage)): ?>
                     <div class="sb_notice"><?php echo $gsMessage ?></div>
                   <?php endif; ?>

@@ -32,19 +32,23 @@
 .sb_deconnexion  {
   position: relative;
   float: left;
-  height:16px;
   width: auto;
   color: #fff;
-  padding-left:10px;
+  padding:0 10px;
 }
 .sb_deconnexion_btn  {
   position: relative;
   float: left;
   background: url('../images/power.png') no-repeat;
-  height:16px;
-  width: 16px;
+  padding-left: 20px;
   margin-left: 4px;
+  color: #fff;
   text-decoration: none;
+}
+
+a.sb_deconnexion_btn:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 
 #sb_nav_login ul {
