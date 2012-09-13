@@ -95,12 +95,23 @@
             </div>
             <?php endif; ?>
         </fieldset>
-
     </div>
     <div class="sf_admin_form">
+        <div class="nav_fiche">
+            <div class="nav_fiche_preview sb_bouton_a">
+                <?php if ($preview != ''): ?>
+                    <?php echo link_to('<< précedant <<', 'licence/ListShow?id='.$preview) ?>
+                <?php endif; ?>
+            </div>
+            <div class="nav_fiche_next sb_bouton_a">
+                <?php if ($next != ''): ?>
+                    <?php echo link_to('>> suivant >>', 'licence/ListShow?id='.$next) ?>
+                <?php endif; ?>
+            </div>
+        </div>
         <ul class="sf_admin_actions">
           <li class="sf_admin_action_list sb_bouton_a">
-          <?php echo link_to('Retour à la liste', '@tbl_licence', array('class' => 'icone_back noname_button')) ?>
+          <?php echo link_to('Retour à la liste', '@tbl_licence') ?>
           </li>
         </ul>
     </div>

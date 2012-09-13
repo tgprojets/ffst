@@ -249,4 +249,9 @@ class mainActions extends sfActions
       }
     }
   }
+
+  public function executeDoc(sfWebRequest $request)
+  {
+    $this->sDocument = file_get_contents(sfConfig::get('sf_upload_dir').'/contenu.txt');
+  }
 }
