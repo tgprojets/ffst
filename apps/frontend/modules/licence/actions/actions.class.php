@@ -98,7 +98,7 @@ class licenceActions extends autoLicenceActions
         $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClubBordereau($oClub->getId(), $this->oBordereau->getId());
         $this->nAmountTotal        = $this->nAmountClub - $this->nAmountAvoirClub;
         $this->oBordereau->setAmount($this->nAmountTotal)->save();
-
+        $this->sClub = $oClub->getName();
     } else {
         $this->redirect('@tbl_licence');
     }
@@ -278,7 +278,27 @@ class licenceActions extends autoLicenceActions
 
   public function executeListShow(sfWebRequest $request)
   {
+    $oLicences = $this->buildQuery()->execute();
     $this->oLicence  = $this->getRoute()->getObject();
+
+    $this->preview=0;
+    $this->next=0;
+    $bPreview=false;
+    $bNext=false;
+    foreach($oLicences as $oLicence)
+    {
+      if ($bNext) {
+        $this->next = $oLicence->getId();
+        break;
+      }
+      if ($oLicence->getId() == $this->oLicence->getId()) {
+        $bPreview=true;
+        $bNext=true;
+      }
+      if ($bPreview==false) {
+        $this->preview = $oLicence->getId();
+      }
+    }
     $this->oProfil   = $this->oLicence->getTblProfil();
     $this->oAddress  = $this->oProfil->getTblAddress();
     if ($this->oLicence->getIdFamilly()) {

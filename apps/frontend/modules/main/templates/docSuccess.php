@@ -1,0 +1,1 @@
+<?php echo nl2br(html_entity_decode($sDocument)) ?>

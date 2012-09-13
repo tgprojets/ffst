@@ -41,6 +41,7 @@ namespace :deploydb do
     migration.createlink
     migration.migrate
     migration.getnumversion
+    ffst.createlink
   end
   desc <<-DESC
     Deployer la version antérieure + maj bdd en arriere
@@ -48,6 +49,24 @@ namespace :deploydb do
   task :rollback do
     deploy.rollback.default
     migration.migratecurrent
+  end
+
+end
+
+namespace :ffst do
+  desc <<-DESC
+    Initialisation répertoire
+  DESC
+  task :setup do
+    run "mkdir -p #{shared_path}/web/pdf"
+    run "chmod -R 777 #{shared_path}/web/pdf"
+  end
+
+  desc <<-DESC
+    Lien vers Pdf
+  DESC
+  task :createlink do
+    run "ln -s #{shared_path}/web/pdf #{current_path}/web/"
   end
 
 end
