@@ -1,6 +1,6 @@
 <?php use_stylesheet('admin.css') ?>
 <div id="sf_admin_container" style="color:#fff;">
-    <form action="/frontend_dev.php/bordereau/ListPayment" method="post">
+    <form action="/bordereau/ListPayment" method="post">
     <div class="sf_admin_list">
         <?php if ($sf_user->hasFlash('notice')): ?>
           <div class="notice">

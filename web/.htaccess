@@ -1,5 +1,9 @@
 Options +FollowSymLinks +ExecCGI
 
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "http://ffst-mobile.localhost"
+  Header set Access-Control-Allow-Credentials "true"
+</IfModule>
 <IfModule mod_rewrite.c>
   RewriteEngine On
 

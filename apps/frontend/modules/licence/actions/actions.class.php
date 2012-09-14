@@ -84,7 +84,7 @@ class licenceActions extends autoLicenceActions
         $oAvoirClubNoBordereau          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId());
 
         if (!$this->oBordereau && $oPaymentClubNoBordereau->count() > 0) {
-          $this->oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment->getId());
+          $this->oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment);
         } elseif (!$this->oBordereau) {
           $this->redirect('tbl_bordereau');
         }
@@ -119,7 +119,7 @@ class licenceActions extends autoLicenceActions
         $oAvoirClubNoBordereau          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId());
 
         if (!$this->oBordereau && $oPaymentClubNoBordereau->count() > 0) {
-          $this->oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment->getId());
+          $this->oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment);
         } elseif (!$this->oBordereau) {
           $this->redirect('tbl_bordereau');
         }
@@ -142,16 +142,16 @@ class licenceActions extends autoLicenceActions
   }
 
 
-  private function createBordereau($nIdClub, $nIdType)
+  private function createBordereau($nIdClub, $oType)
   {
     $nIdUser      = $this->getUser()->getGuardUser()->getId();
 
     $oBordereau     = new tbl_bordereau();
-    $oBordereau->setLib('Paiement Licence par Paypal')
+    $oBordereau->setLib('Paiement Licence par '.$oType->getLib())
                      ->setIdUser($nIdUser)
                      ->setIdClub($nIdClub)
                      ->setNum(Licence::getNumBordereau())
-                     ->setIdTypepayment($nIdType)
+                     ->setIdTypepayment($oType->getId())
                      ->save();
     return $oBordereau;
   }

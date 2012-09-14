@@ -25,7 +25,7 @@ class bordereauActions extends autoBordereauActions
                 $oTypePayment = Doctrine::getTable('tbl_typepayment')->findOneBy('slug', 'cheque');
                 $oBordereau = Doctrine::getTable('tbl_bordereau')->getLastExist($oClub->getId(), $oTypePayment->getId(), true);
                 if (!$oBordereau) {
-                    $oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment->getId());
+                    $oBordereau          = $this->createBordereau($oClub->getId(), $oTypePayment);
                 }
                 $nAmount = 0;
                 $ids = $request->getParameter('ids_payment');
@@ -82,17 +82,17 @@ class bordereauActions extends autoBordereauActions
             }
         }
     }
-    private function createBordereau($nIdClub, $nIdType)
+    private function createBordereau($nIdClub, $oType)
     {
         $nIdUser      = $this->getUser()->getGuardUser()->getId();
 
         $oBordereau     = new tbl_bordereau();
-        $oBordereau->setLib('Paiement Licence par Chéque')
+        $oBordereau->setLib('Paiement Licence par '.$oType->getLib())
                          ->setIdUser($nIdUser)
                          ->setIdClub($nIdClub)
                          ->setIsManual(true)
                          ->setNum(Licence::getNumBordereau())
-                         ->setIdTypepayment($nIdType)
+                         ->setIdTypepayment($oType->getId())
                          ->save();
         return $oBordereau;
     }

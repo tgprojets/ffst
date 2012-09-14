@@ -128,6 +128,9 @@
                   <li>
                     <?php echo link_to('Documents', 'main/doc') ?>
                   </li>
+                  <li>
+                    <a href="/uploads/aide.pdf">Aide</a>
+                  </li>
               </ul>
             </div>
           <?php endif; ?>
@@ -141,8 +144,6 @@
       <div class="info_mail_footer">
         contact :  <a href="mailto:ffst@free.fr">ffst@free.fr</a>
         Sites internet : <a href="http://www.ffstraineau.com/">www.ffstraineau.com</a>
-          <br />
-          <a href="/uploads/aide.pdf">Consulter Aide</a>
       </div>
       <?php if ($sf_user->isClub() || $sf_user->isLigue()): ?>
         <div class="info_footer_address">

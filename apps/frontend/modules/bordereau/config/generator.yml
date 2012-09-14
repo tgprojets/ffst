@@ -32,7 +32,7 @@ generator:
         display: [num, amount, is_payed, is_manual, tbl_club, tbl_typepayment]
         object_actions:
           payed:
-            label: Bordereau réglé
+            label: Réception Paiement
             credentials: [ValidLicence]
             params:
               confirm: Etes vous sur que le bordereau est réglé ?
