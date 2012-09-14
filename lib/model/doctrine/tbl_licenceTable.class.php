@@ -210,4 +210,12 @@ class tbl_licenceTable extends Doctrine_Table
         }
         return $aLicences;
     }
+
+    public function findByProfil($sYear, $nProfil) {
+        $q = $this->createQuery('q');
+        $q->andWhere('year_licence = ?', $sYear)
+          ->andWhere('id_profil = ?', $nProfil);
+
+        return $q->fetchOne();
+    }
 }

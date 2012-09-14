@@ -16,13 +16,15 @@ class tbl_profilTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('tbl_profil');
     }
-    public function findByKeyword($keyword)
+    public function findByKeyword($keyword, $bLimit=true)
     {
         $sName = mb_strtoupper($keyword);
         $q = $this->createQuery('p')
               ->where('upper(p.first_name) LIKE ?', $sName.'%')
-              ->orWhere('upper(p.last_name) LIKE ?', $sName.'%')
-              ->limit(0, 20);
+              ->orWhere('upper(p.last_name) LIKE ?', $sName.'%');
+        if ($bLimit) {
+            $q->limit(0, 20);
+        }
         return $q->execute();
     }
 }
