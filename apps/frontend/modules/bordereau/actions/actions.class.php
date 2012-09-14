@@ -15,6 +15,7 @@ class bordereauActions extends autoBordereauActions
 {
     public function executeListPayment(sfWebRequest $request)
     {
+        $this->redirect('@tbl_bordereau');
         if ($this->getUser()->isClub())
         {
             $this->oPayments = Doctrine::getTable('tbl_payment')->findPaymentClub($this->getUser()->getClub()->getId());
