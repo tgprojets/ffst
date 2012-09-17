@@ -218,4 +218,18 @@ class tbl_licenceTable extends Doctrine_Table
 
         return $q->fetchOne();
     }
+
+    public function findByKeypress($keypress)
+    {
+        $sYear = Licence::getDateLicence();
+        $sName = mb_strtoupper($keypress);
+        $q = $this->createQuery('l');
+        $q->leftJoin('l.tbl_profil p')
+          ->andWhere('year_licence = ?', $sYear)
+          ->andWhere('upper(p.first_name) LIKE "'.$sName.'%" or upper(p.last_name) LIKE "'.$sName.'%" or l.num LIKE "'.$sName.'%"');
+
+          // ->orWhere('l.num LIKE ?', $sName.'%');
+
+        return $q->execute();
+    }
 }

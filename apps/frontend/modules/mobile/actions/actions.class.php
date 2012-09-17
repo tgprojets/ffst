@@ -70,8 +70,31 @@ class mobileActions extends sfActions
     if ($this->getUser()->isAuthenticated()) {
       $keyPress = $request->getParameter('keyPress');
 
-      $oLicence = Doctrine::getTable('tbl_licence')->findOneBy('num', $keyPress.'.'.Licence::getDateLicence());
-      if ($oLicence) {
+      //$oLicence = Doctrine::getTable('tbl_licence')->findOneBy('num', $keyPress.'.'.Licence::getDateLicence());
+      $oLicences = Doctrine::getTable('tbl_licence')->findByKeypress($keyPress);
+      $nCompteur = 0;
+      foreach ($oLicences as $oLicence)
+      {
+        $oProfil = $oLicence->getTblProfil();
+        $reponse['licence']['response']['profil'][$nCompteur]['name'] = $oProfil->getName();
+        //Récupére la licence de cette année
+
+        if ($oLicence->getDateValidation() != null)
+        {
+          $reponse['licence']['response']['profil'][$nCompteur]['valide'] = true;
+        } else {
+          $reponse['licence']['response']['profil'][$nCompteur]['valide'] = false;
+        }
+        $reponse['licence']['response']['profil'][$nCompteur]['num'] = substr($oLicence->getNum(), 0, 7);
+        $oGroupeLicence = $oLicence->getTblTypelicence()->getTblGrouplicence();
+        if ($oGroupeLicence->getCode() == 'COM') {
+          $reponse['licence']['response']['profil'][$nCompteur]['com'] = true;
+        } else {
+          $reponse['licence']['response']['profil'][$nCompteur]['com'] = false;
+        }
+        $nCompteur++;
+      }
+/*      if ($oLicence) {
         $oProfil = $oLicence->getTblProfil();
         $reponse['licence']['response']['profil'][0]['name'] = $oProfil->getName();
         if ($oLicence->getDateValidation() != null)
@@ -105,7 +128,7 @@ class mobileActions extends sfActions
 
           $nCompteur++;
         }
-      }
+      }*/
     } else {
       $reponse['licence']['response'] = 0;
     }
