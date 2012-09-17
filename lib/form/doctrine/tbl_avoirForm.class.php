@@ -15,6 +15,8 @@ class tbl_avoirForm extends Basetbl_avoirForm
     $aValues = $this->processValues($this->getValues());
     if ($this->isNew()) {
         $oPayment = new tbl_avoir();
+    } else {
+      $oPayment = Doctrine::getTable('tbl_avoir')->find($aValues['id']);
     }
     if ($this->isValid()) {
         $nIdUser = sfContext::getInstance()->getUser()->getGuardUser()->getId();

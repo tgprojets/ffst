@@ -67,6 +67,13 @@ class paymentActions extends sfActions
                   ->setIdTypepayment($nIdType)
                   ->save();
     }
+    $oAvoirs = $oBordereau->getTblAvoir();
+    foreach ($oAvoirs as $oAvoir)
+    {
+      $oAvoir->setIsUsed(true)
+             ->setIdTypepayment($nIdType)
+             ->save();
+    }
     $oBordereau->setIsPayed(true)->save();
   }
 
