@@ -93,7 +93,7 @@ class licenceActions extends autoLicenceActions
         $this->linkBordereau($oAvoirClubNoBordereau, $this->oBordereau->getId());
 
         $this->oPaymentClub        = Doctrine::getTable('tbl_payment')->findPaymentClubBordereau($oClub->getId(), $this->oBordereau->getId());
-        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId(),$this->oBordereau->getId());
+        $this->oAvoirClub          = Doctrine::getTable('tbl_avoir')->findAvoirClubBordereau($oClub->getId(), $this->oBordereau->getId());
         $this->nAmountClub         = Doctrine::getTable('tbl_payment')->getAmountClubBordereau($oClub->getId(), $this->oBordereau->getId());
         $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClubBordereau($oClub->getId(), $this->oBordereau->getId());
         $this->nAmountTotal        = $this->nAmountClub - $this->nAmountAvoirClub;

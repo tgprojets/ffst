@@ -133,13 +133,17 @@ class tbl_avoirTable extends Doctrine_Table
 
         return $q;
     }
-    public function findAvoirClubBordereau($nIdClub)
+    public function findAvoirClubBordereau($nIdClub, $nBordereau=null)
     {
         $q = $this->createQuery('p');
         $q->andWhere('p.id_club = ?', $nIdClub)
           ->andWhere('p.is_used = ?', false)
-          ->andWhere('p.id_bordereau = ?', null)
           ->andWhere('p.is_brouillon = false');
+        if ($nBordereau == null) {
+          $q->andWhere('p.id_bordereau is null');
+        } else {
+          $q->andWhere('p.id_bordereau = ?', $nBordereau);
+        }
         return $q->execute();
     }
 }

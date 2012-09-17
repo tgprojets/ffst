@@ -194,7 +194,7 @@ class CalculLicence {
             $this->addPayment($this->getArticle('MDD'), $this->getArticle('MDD', false), 'tbl_licence_mdd', false, $bBrouillon);
         }
         //Internationalisation
-        if ($this->international)
+        if ($this->bInternational)
         {
             $this->addPayment($this->getArticle('INT'), $this->getArticle('INT', false), 'tbl_licence_int', false, $bBrouillon);
         }

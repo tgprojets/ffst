@@ -57,7 +57,9 @@ generator:
             label: Avoir utilisé / CB
           regulation_espece:
             label: Avoir utilisé / espèce
-        object_actions: {}
+        object_actions:
+          _delete: ~
+          _edit: ~
       filter:
         display: [is_used, id_typepayment, id_club, id_ligue, id_profil]
       form: ~
