@@ -168,7 +168,7 @@ class licenceActions extends autoLicenceActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $notice = $form->getObject()->isNew() ? 'Licence créé avec succès.' : 'Licence modifié avec succès.';
+      $notice = $form->getObject()->isNew() ? 'Licence créée avec succès.' : 'Licence modifiée avec succès.';
 
       try {
         $tbl_licence = $form->save();
@@ -310,7 +310,7 @@ class licenceActions extends autoLicenceActions
   {
     $this->oLicence  = $this->getRoute()->getObject();
     if ($this->getUser()->hasCredential('ValidLicence')) {
-      $this->getUser()->setFlash('notice', 'Licence annulé: '.$this->oLicence->getTblProfil());
+      $this->getUser()->setFlash('notice', 'Licence annulée: '.$this->oLicence->getTblProfil());
       $this->oLicence->setIsCancel(true)->save();
     }
     $this->redirect('@tbl_licence');

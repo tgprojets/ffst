@@ -173,7 +173,7 @@ class tbl_clubForm extends Basetbl_clubForm
     $this->setValidator('address1', new sfValidatorString(
         array('max_length' => 250),
         array(
-          'required' => 'Adresse est requis'
+          'required' => 'Adresse est requise'
         )));
     $this->setValidator('id_affectation', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_affectation'), 'required' => false)));
     $this->setValidator('address2',       new sfValidatorString(array('max_length' => 250, 'required' => false)));
@@ -297,17 +297,17 @@ class tbl_clubForm extends Basetbl_clubForm
                $oLicences = $oClub->getTblLicence();
                foreach ($oLicences as $oLicence) {
                  if ($oLicence->getIsBrouillon() && $oLicence->getIdUser() == $oClub->getIdUser()) {
-                  throw new sfValidatorError($validator, 'Ce club est bloqué (encours de saisie) impossible de changer d\utisateur.');
+                  throw new sfValidatorError($validator, 'Ce club est bloqué (encours de saisie) impossible de changer d\'utilisateur.');
                  }
                }
                //Attaché à un club
                $oClub = $oUser->getTblClub();
                if ($oClub->count() > 0) {
-                throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à un club.');
+                throw new sfValidatorError($validator, 'Cet utilisateur est déjà attaché à un club.');
                }
                $oLigue = $oUser->getTblLigue();
                if ($oLigue->count() > 0) {
-                throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à une ligue.');
+                throw new sfValidatorError($validator, 'Cet utilisateur est déjà attaché à une ligue.');
                }
              }
              $aPermissions = $oUser->getGroupNames();
@@ -318,7 +318,7 @@ class tbl_clubForm extends Basetbl_clubForm
                  in_array('N2D', $aPermissions) ||
                  in_array('N3', $aPermissions) ||
                  in_array('N4', $aPermissions)) {
-              throw new sfValidatorError($validator, 'Cet utisateur est un administrateur.');
+              throw new sfValidatorError($validator, 'Cet utilisateur est un administrateur.');
              }
              return $values;
 
@@ -328,11 +328,11 @@ class tbl_clubForm extends Basetbl_clubForm
          //Attaché à un club
          $oClub = $oUser->getTblClub();
          if ($oClub->count() > 0) {
-          throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à un club.');
+          throw new sfValidatorError($validator, 'Cet utilisateur est déjà attaché à un club.');
          }
          $oLigue = $oUser->getTblLigue();
          if ($oLigue->count() > 0) {
-          throw new sfValidatorError($validator, 'Cet utisateur est déjà attaché à une ligue.');
+          throw new sfValidatorError($validator, 'Cet utilisateur est déjà attaché à une ligue.');
          }
          $aPermissions = $oUser->getGroupNames();
          if (in_array('N1', $aPermissions) ||
@@ -342,7 +342,7 @@ class tbl_clubForm extends Basetbl_clubForm
              in_array('N2D', $aPermissions) ||
              in_array('N3', $aPermissions) ||
              in_array('N4', $aPermissions)) {
-          throw new sfValidatorError($validator, 'Cet utisateur est un administrateur.');
+          throw new sfValidatorError($validator, 'Cet utilisateur est un administrateur.');
          }
        }
        return $values;

@@ -42,7 +42,7 @@ class licenceoldActions extends autoLicenceoldActions
   {
     if ($this->getUser()->hasCredential('ValidLicence')) {
       $this->oLicence  = $this->getRoute()->getObject();
-      $this->getUser()->setFlash('notice', 'Licence annulé: '.$this->oLicence->getTblProfil());
+      $this->getUser()->setFlash('notice', 'Licence annulée: '.$this->oLicence->getTblProfil());
       $this->oLicence->setIsCancel(true)->save();
     }
     $this->redirect('@licence_old');

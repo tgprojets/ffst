@@ -16,7 +16,7 @@ generator:
       actions: ~
       fields:
         code:
-          label: code licence
+          label: Code licence
         rank:
           label: Ordre
       list:
@@ -41,13 +41,13 @@ generator:
       form:
         fields:
           code:
-            label: code licence
+            label: Code licence
             help: requis
           lib:
             label: Libellé de la licence
             help: requis
           prix:
-            label: prix de la licence
+            label: Prix de la licence
             help: requis (en €)
           description:
             help: faculatif

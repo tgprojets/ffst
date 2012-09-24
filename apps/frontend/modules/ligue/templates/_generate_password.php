@@ -25,6 +25,6 @@
 </script>
 <div class="sf_admin_form_row">
     <div class="sb_bouton_a">
-        <a href="#" id="generate_password">Generer un mot de passe</a>
+        <a href="#" id="generate_password">Génerer un mot de passe</a>
     </div>
 </div>

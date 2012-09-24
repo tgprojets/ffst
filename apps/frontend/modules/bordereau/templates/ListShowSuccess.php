@@ -23,7 +23,7 @@
         <table cellspacing="0">
             <thead>
             <tr>
-              <th class="sf_admin_text">Lib</th>
+              <th class="sf_admin_text">Intitulé</th>
               <th class="sf_admin_text">Montant</th>
               <th class="sf_admin_text">Avoir</th>
             </tr>

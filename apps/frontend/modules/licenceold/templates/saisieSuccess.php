@@ -6,8 +6,8 @@
       <thead>
         <tr>
           <th class="sf_admin_text">Propriété</th>
-          <th class="sf_admin_text">Lib</th>
-          <th class="sf_admin_text">Amout</th>
+          <th class="sf_admin_text">Intitulé</th>
+          <th class="sf_admin_text">Montant</th>
           <th class="sf_admin_text">Avoir</th>
         </tr>
       </thead>

@@ -17,8 +17,14 @@ generator:
       fields:
         username:
           label: Identifiant
+        ip:
+          label: IP
+        date_connexion:
+          label: Date de connexion
+        is_connected:
+          label: est connecté
       list:
-        title: Liste des connexion
+        title: Liste des connexions
         table_method: retrieveSortDate
         display: [username, ip, date_connexion, is_connected]
         max_per_page: 20

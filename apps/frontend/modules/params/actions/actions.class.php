@@ -23,7 +23,7 @@ class paramsActions extends sfActions
           if ($this->form->isValid())
           {
             $this->form->save();
-            $this->getUser()->setFlash('notice', 'Paramètre enregistré');
+            $this->getUser()->setFlash('notice', 'Paramètres enregistrés');
           }
     }
   }

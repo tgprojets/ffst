@@ -68,7 +68,7 @@
 
         <div class="sb_btn_center sb_bouton_a">
             <?php echo link_to('Annuler', '@sf_guard_user') ?>
-            <a href="#" id="generate_password">Generer un mot de passe</a>
+            <a href="#" id="generate_password">Génerer un mot de passe</a>
             <input type="submit" class='icone_valider noname_button' value="Enregistrer" />
         </div>
     </fieldset>
