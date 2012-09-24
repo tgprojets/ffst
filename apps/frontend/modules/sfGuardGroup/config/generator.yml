@@ -26,7 +26,7 @@ generator:
         updated_at:
           label: Modifié le
       list:
-        title: List des groupes
+        title: Liste des groupes
         display: [=name, description]
         batch_actions: {}
         object_actions:

@@ -24,9 +24,7 @@ class clubActions extends autoClubActions
   public function executeListRegulation(sfWebRequest $request)
   {
     $oClub = $this->getRoute()->getObject();
-    $this->oPaymentLic  = Doctrine::getTable('tbl_payment')->findPaymentLicByClub($oClub->getId());
     $this->oPaymentClub = Doctrine::getTable('tbl_payment')->findPaymentClub($oClub->getId());
-    $this->oAvoirLic  = Doctrine::getTable('tbl_avoir')->findAvoirLicByClub($oClub->getId());
     $this->oAvoirClub = Doctrine::getTable('tbl_avoir')->findAvoirClub($oClub->getId());
   }
 }

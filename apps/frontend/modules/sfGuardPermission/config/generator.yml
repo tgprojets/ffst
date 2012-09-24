@@ -26,7 +26,7 @@ generator:
         updated_at:
           label: Modifié le
       list:
-        title: List des permissions
+        title: Liste des permissions
         display: [=name, description]
         batch_actions: {}
         object_actions:

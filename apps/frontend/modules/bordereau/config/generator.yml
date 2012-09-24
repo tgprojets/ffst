@@ -29,13 +29,14 @@ generator:
           label: Manuel
       list:
         table_method: retrieveByClub
-        display: [num, amount, is_payed, is_manual, tbl_club, tbl_typepayment]
+        display: [num, amount, is_payed, tbl_club, tbl_typepayment]
+        title: Liste des bordereaux
         object_actions:
           payed:
             label: Réception Paiement
             credentials: [ValidLicence]
             params:
-              confirm: Etes vous sur que le bordereau est réglé ?
+              confirm: Etes vous sûr que le bordereau est réglé ?
           show:
             label: voir
             params:

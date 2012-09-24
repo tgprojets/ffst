@@ -58,7 +58,7 @@
                 <thead>
                 <tr>
                   <th class="sf_admin_text"><input id="sf_admin_list_batch_checkbox_avoir" type="checkbox" onclick="checkAllAvoir();"></th>
-                  <th class="sf_admin_text">Lib</th>
+                  <th class="sf_admin_text">Intitulé</th>
                   <th class="sf_admin_text">Avoir</th>
                   <th class="sf_admin_text">Bordereau</th>
                 </tr>

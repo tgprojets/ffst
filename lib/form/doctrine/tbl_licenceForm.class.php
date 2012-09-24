@@ -252,7 +252,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('address1', new sfValidatorString(
         array('max_length' => 250),
         array(
-          'required' => 'Adresse est requis'
+          'required' => 'Adresse est requise'
         )));
     $this->setValidator('address2',       new sfValidatorString(array('max_length' => 250, 'required' => false)));
     $this->setValidator('tel',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
@@ -379,7 +379,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
       $oLicence         = Doctrine::getTable('tbl_licence')->find($values['id']);
 
       if ($oLicence->getTblTypelicence()->getRank() > $oTypeLicence->getRank()) {
-        throw new sfValidatorError($validator, 'La licence doit être supérieur à l\'ancienne.');
+        throw new sfValidatorError($validator, 'La licence doit être supérieure à l\'ancienne.');
       }
 
     }
@@ -394,7 +394,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         ->andWhere("tl.is_familly = ?", true)
         ->count();
         if ($nbr>0) {
-          throw new sfValidatorError($validator, 'La licence choisi n\'a pas de lien avec un licencié.');
+          throw new sfValidatorError($validator, 'La licence saisie n\'a pas de lien avec un licencié.');
         }
     }
 
@@ -515,7 +515,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         ->andWhere("tl.is_familly = ?", true)
         ->count();
         if ($nbr==0) {
-          throw new sfValidatorError($validator, 'La licence choisi n\'est pas un tarif réduit.');
+          throw new sfValidatorError($validator, 'La licence saisie n\'est pas un tarif réduit.');
         }
     }
     return $values;

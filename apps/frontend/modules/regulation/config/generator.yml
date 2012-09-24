@@ -15,6 +15,8 @@ generator:
     config:
       actions: ~
       fields:
+        lib:
+          label: Intitulé
         is_payed:
           label: Règlement effectué
         id_typepayment:
@@ -44,6 +46,7 @@ generator:
       list:
         display: [lib, amount, _link, date_payment, is_payed, tbl_typepayment, created_at]
         max_per_page: 20
+        title: Liste des paiements
         table_method: retrieveByValide
         actions:
           _new:

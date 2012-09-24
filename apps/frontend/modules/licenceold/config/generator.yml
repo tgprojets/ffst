@@ -15,6 +15,8 @@ generator:
     config:
       actions: ~
       fields:
+        list_yearlicence:
+          label: Année de licence
         is_valid:
           label: Licence Valide
         email:
@@ -86,12 +88,13 @@ generator:
               class: print_icon
           cancel_licence:
             credentials: [ValidLicence]
+            label: Annulée licence
             params:
               class: cancel_icon
           _edit:
             credentials: [ValidLicence]
           show:
-            label: Voir licence
+            label: Voir
             params:
               class: zoom_icon
       filter:

@@ -109,7 +109,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
       foreach($oLicences as $oLicence)
       {
         if ($oLicence->getDateValidation() == null ) {
-          $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur car il a créé des licences non payé.');
+          $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur car il a créé des licences non payées.');
           $this->redirect('@sf_guard_user');
         } else {
           $oLicence->setIdUser(null)->save();
@@ -122,7 +122,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
         foreach ($oPayments as $oPayment)
         {
           if ($oPayment->getIsPayed() == false) {
-            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisie des paiements non payé.');
+            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisi des paiements non payées.');
             $this->redirect('@sf_guard_user');
           } else {
             $oPayment->setIdUser(null)->save();
@@ -135,7 +135,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
         foreach ($oPayments as $oPayment)
         {
           if ($oPayment->getIsUsed() == false) {
-            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisie des avoirs non utilisé.');
+            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisi des avoirs non utilisés.');
             $this->redirect('@sf_guard_user');
           } else {
             $oPayment->setIdUser(null)->save();
@@ -148,7 +148,7 @@ class sfGuardUserActions extends autoSfGuardUserActions
         foreach ($oBordereaux as $oBordereau)
         {
           if ($oBordereau->getIsPayed() == false) {
-            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisie des bordereau non payé.');
+            $this->getUser()->setFlash('error', 'Impossible de supprimer cet utilisateur a saisi des bordereaux non payés.');
             $this->redirect('@sf_guard_user');
           } else {
             $oBordereau->setIdUser(null)->save();

@@ -88,7 +88,7 @@
 </script>
 <div>
     <div class="sb_bouton_a button_right">
-        <a href="#" onClick="cancelProfil()">annuler</a>
+        <a href="#" onClick="cancelProfil()">Annuler</a>
         <a href="#" onClick="validProfil()">Valider</a>
     </div>
 </div>

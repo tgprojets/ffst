@@ -94,41 +94,6 @@ class mobileActions extends sfActions
         }
         $nCompteur++;
       }
-/*      if ($oLicence) {
-        $oProfil = $oLicence->getTblProfil();
-        $reponse['licence']['response']['profil'][0]['name'] = $oProfil->getName();
-        if ($oLicence->getDateValidation() != null)
-        {
-          $reponse['licence']['response']['profil'][0]['valide'] = 'OUI';
-        } else {
-          $reponse['licence']['response']['profil'][0]['valide'] = 'NON';
-        }
-        $reponse['licence']['response']['profil'][0]['num'] = substr($oLicence->getNum(), 0, 7);
-      } else {
-        $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyPress, false);
-        $nCompteur = 0;
-        foreach ($oProfils as $oProfil)
-        {
-          $reponse['licence']['response']['profil'][$nCompteur]['name'] = $oProfil->getName();
-          //Récupére la licence de cette année
-
-          $oLicence = Doctrine::getTable('tbl_licence')->findByProfil(Licence::getDateLicence(), $oProfil->getId());
-          if ($oLicence) {
-            if ($oLicence->getDateValidation() != null)
-            {
-              $reponse['licence']['response']['profil'][$nCompteur]['valide'] = 'OUI';
-            } else {
-              $reponse['licence']['response']['profil'][$nCompteur]['valide'] = 'NON';
-            }
-            $reponse['licence']['response']['profil'][$nCompteur]['num'] = substr($oLicence->getNum(), 0, 7);
-          } else {
-            $reponse['licence']['response']['profil'][$nCompteur]['valide'] = 'NON';
-            $reponse['licence']['response']['profil'][$nCompteur]['num'] = '';
-          }
-
-          $nCompteur++;
-        }
-      }*/
     } else {
       $reponse['licence']['response'] = 0;
     }

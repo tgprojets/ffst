@@ -65,7 +65,7 @@
 </script>
 <div>
     <div class="sb_bouton_a button_right">
-        <a href="#tbl_ligue_id_user" onClick="cancelProfil()">annuler</a>
+        <a href="#tbl_ligue_id_user" onClick="cancelProfil()">Annuler</a>
         <a href="#tbl_ligue_id_user" onClick="validProfil()">Valider</a>
     </div>
 </div>

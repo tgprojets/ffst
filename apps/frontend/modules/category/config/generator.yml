@@ -15,8 +15,10 @@ generator:
     config:
       actions: ~
       fields:
+        lib:
+          label: Intitulé
         code:
-          label: code catégorie
+          label: Code catégorie
       list:
         title: Liste des catégories
         max_per_page: 20

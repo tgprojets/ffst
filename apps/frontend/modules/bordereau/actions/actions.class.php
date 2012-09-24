@@ -174,7 +174,7 @@ class bordereauActions extends autoBordereauActions
             {
                 $record->delete();
             } else {
-                $sMessage .= $record->getId().' Impossible de supprimé (déjà payé ou n\'appartient pas à cet utilisateur)';
+                $sMessage .= $record->getId().' Impossible de supprimer (déjà payé ou n\'appartient pas à cet utilisateur)';
             }
         }
 
