@@ -232,4 +232,20 @@ class tbl_licenceTable extends Doctrine_Table
 
         return $q->execute();
     }
+
+    public function findLicence($aValues)
+    {
+        $sYear = Licence::getDateLicence();
+        $sNumLicence = mb_strtoupper($aValues[0]);
+        $sLastName = mb_strtoupper($aValues[1]);
+        $sFirstName = mb_strtoupper($aValues[2]);
+        $q = $this->createQuery('l');
+        $q->leftJoin('l.tbl_profil p')
+          ->andWhere('year_licence = ?', $sYear)
+          ->andWhere('upper(p.first_name) = ? ', $sFirstName)
+          ->andWhere('upper(p.last_name) = ? ', $sLastName)
+          ->andWhere('l.num LIKE ?', $sNumLicence.'%');
+
+        return $q->fetchOne();
+    }
 }

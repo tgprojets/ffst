@@ -47,10 +47,10 @@ tbl_prixunit:
 tbl_grouplicence:
   tbl_grouplicence_1:
     lib: Licence Compétition dite "Monochien"
-    code: MON
+    code: COM
   tbl_grouplicence_2:
     lib: Licence Toutes Compétitions dite "Attelage"
-    code: ATT
+    code: COM
   tbl_grouplicence_3:
     lib: Licence Dirigeant
     code: DIG
@@ -60,6 +60,9 @@ tbl_grouplicence:
   tbl_grouplicence_5:
     lib: Licence Sport-Loisirs
     code: SPL
+  tbl_grouplicence_6:
+    lib: Licence Toutes Compétitions
+    code: COM
 tbl_typelicence:
   tbl_typelicence_1:
     lib: Attelage Junior Réduit

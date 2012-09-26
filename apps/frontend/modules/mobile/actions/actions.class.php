@@ -70,6 +70,48 @@ class mobileActions extends sfActions
     if ($this->getUser()->isAuthenticated()) {
       $keyPress = $request->getParameter('keyPress');
 
+      $aValues = explode(' ', $keyPress);
+       // print_r($aValues);
+       // die();
+      if (count($aValues) == 3) {
+        $reponse['licence']['response']['error'] = false;
+        $oLicence = Doctrine::getTable('tbl_licence')->findLicence($aValues);
+        if ($oLicence) {
+          $oProfil = $oLicence->getTblProfil();
+          $reponse['licence']['response']['profil']['name'] = $oProfil->getName();
+          if ($oLicence->getDateValidation() != null)
+          {
+            $reponse['licence']['response']['profil']['valide'] = true;
+          } else {
+            $reponse['licence']['response']['profil']['valide'] = false;
+          }
+          $reponse['licence']['response']['profil']['num'] = substr($oLicence->getNum(), 0, 7);
+          $oGroupeLicence = $oLicence->getTblTypelicence()->getTblGrouplicence();
+          if ($oGroupeLicence->getCode() == 'COM') {
+            $reponse['licence']['response']['profil']['com'] = true;
+          } else {
+            $reponse['licence']['response']['profil']['com'] = false;
+          }
+        } else {
+          $reponse['licence']['response']['error'] = true;
+        }
+      } else {
+        $reponse['licence']['response']['error'] = true;
+      }
+    } else {
+      $reponse['licence']['response'] = 0;
+    }
+
+    return $this->renderText(json_encode($reponse));
+  }
+
+  /*public function executeSearchLicenceAjax(sfWebRequest $request)
+  {
+    $this->getResponse()->setHttpHeader('Content-Type', 'application/json;');
+    $time = microtime(true);
+    if ($this->getUser()->isAuthenticated()) {
+      $keyPress = $request->getParameter('keyPress');
+
       //$oLicence = Doctrine::getTable('tbl_licence')->findOneBy('num', $keyPress.'.'.Licence::getDateLicence());
       $oLicences = Doctrine::getTable('tbl_licence')->findByKeypress($keyPress);
       $nCompteur = 0;
@@ -99,5 +141,5 @@ class mobileActions extends sfActions
     }
 
     return $this->renderText(json_encode($reponse));
-  }
+  }*/
 }

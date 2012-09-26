@@ -114,7 +114,7 @@ generator:
           _list:
           _save:
           _save_and_payed:
-            label: Mettre à jour et payé
+            label: Mettre à jour et payer
         display:
           "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
           "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
