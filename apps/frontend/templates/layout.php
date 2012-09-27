@@ -121,6 +121,7 @@
                       <li <?php echo $sf_params->get('module')=="params"?'class="sb_menu_select"':''?>><?php echo link_to('Date majoration', 'params/majorDate') ?></li>
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Modifier fichier Aide', 'main/aideForm') ?></li>
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Modifier documents', 'main/docForm') ?></li>
+                      <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion saison', 'main/saison') ?></li>
                       <?php endif; ?>
                     </ul>
                   </li>

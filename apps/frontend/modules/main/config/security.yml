@@ -1,3 +1,7 @@
+closeSaisonAjax:
+  credentials: [admin]
+saison:
+  credentials: [admin]
 aideForm:
   credentials: [admin]
 docForm:

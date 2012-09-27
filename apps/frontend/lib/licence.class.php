@@ -3,7 +3,14 @@
 class Licence {
   public static function getDateLicence()
   {
-    if (date('d') >= 1 && date('m') >= 7) {
+    //Récupère l'année encours
+    $oDateLicence = Doctrine::getTable('tbl_saison')->findOneBy('is_outstanding', true);
+    if ($oDateLicence) {
+      return $oDateLicence->getYearLicence();
+    } else {
+      return null;
+    }
+/*    if (date('d') >= 1 && date('m') >= 7) {
       $startDate = date('Y');
       $endDate   = date('Y')+1;
     } else {
@@ -12,7 +19,7 @@ class Licence {
     }
     $sDate = (string) $startDate.'/'.(string) $endDate;
 
-    return $sDate;
+    return $sDate;*/
   }
 
   public static function getDateMajor($sType, $sDate)
@@ -119,5 +126,33 @@ class Licence {
       $oBordereau = Doctrine::getTable('tbl_bordereau')->findOneBy('num', $sNumCommande);
     }
     return $sNumCommande;
+  }
+
+  public static function endSaison()
+  {
+    $oDateLicence = Doctrine::getTable('tbl_saison')->findOneBy('is_outstanding', true);
+    if ($oDateLicence) {
+      $aYears = explode('/', $oDateLicence->getYearLicence());
+      $year = date('Y');
+      if ($year == $aYears[0]) {
+        if (date('m') > $oDateLicence->getMonthBegin()) {
+          return false;
+        } elseif (date('m') == $oDateLicence->getMonthBegin() && date('d') >= $oDateLicence->getDayBegin()) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        if (date('m') == $oDateLicence->getMonthEnd()) {
+          return false;
+        } elseif (date('m') < $oDateLicence->getMonthEnd() && date('d') <= $oDateLicence->getDayEnd()) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    } else {
+      return true;
+    }
   }
 }

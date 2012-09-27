@@ -40,13 +40,13 @@ class ParamForm extends sfForm
       'date_major_int_day' => new sfValidatorInteger(
         array('required' => true, 'min' => 1, 'max' => 31),
           array(
-            'required' => 'Utilisateur requis',
+            'required' => 'Jour requis',
           )
       ),
       'date_major_int_month' => new sfValidatorInteger(
         array('required' => true, 'min' => 1, 'max' => 12),
           array(
-            'required' => 'Utilisateur requis',
+            'required' => 'Mois requis',
           )
       ),
     ));

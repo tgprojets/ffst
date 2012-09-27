@@ -254,4 +254,54 @@ class mainActions extends sfActions
   {
     $this->sDocument = file_get_contents(sfConfig::get('sf_upload_dir').'/contenu.txt');
   }
+
+  public function executeEndSaison(sfWebRequest $request)
+  {
+
+  }
+
+  public function executeSaison(sfWebRequest $request)
+  {
+    if (Licence::endSaison()) {
+      $nYear = date('Y')+1;
+      $this->yearLicence = date('Y').'/'.$nYear;
+      $oSaison = Doctrine::getTable('tbl_saison')->findOneBy('year_licence', $this->yearLicence);
+      if ($oSaison) {
+        $this->redirect('main/endSaison');
+      }
+      $this->bNewSaison = true;
+      $this->form = new tbl_saisonForm();
+    } else {
+      $oSaison = Doctrine::getTable('tbl_saison')->findOneBy('is_outstanding', true);
+      $this->yearLicence = $oSaison->getYearLicence();
+      $this->bNewSaison = false;
+      $this->form = new tbl_saisonForm($oSaison);
+    }
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter($this->form->getName()),
+                                  $request->getFiles($this->form->getName()));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->getUser()->setFlash('notice', 'Enregistré');
+      }
+    }
+  }
+
+  public function executeCloseSaisonAjax(sfWebRequest $request)
+  {
+    if ($request->isXmlHttpRequest()) {
+      $this->getResponse()->setHttpHeader('Content-Type', 'application/json;');
+      $time = microtime(true);
+      $oSaison = Doctrine::getTable('tbl_saison')->findOneBy('is_outstanding', true);
+      if ($oSaison) {
+        $oSaison->setIsOutstanding(false)->save();
+        $reponse['error'] = false;
+      } else {
+        $reponse['error'] = true;
+      }
+      return $this->renderText(json_encode($reponse));
+    }
+  }
 }
