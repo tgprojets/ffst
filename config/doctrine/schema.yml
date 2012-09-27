@@ -254,3 +254,16 @@ tbl_bordereau:
     sfGuardUser:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_bordereau }
     tbl_typepayment:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_typepayment, foreign: id, foreignAlias: tbl_bordereau }
     tbl_club:          { onDelete: CASCADE, onUpdate: CASCADE, local: id_club, foreign: id, foreignAlias: tbl_payment }
+
+tbl_saison:
+  options:
+    symfony:
+      filter: false
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    day_begin:         { type: integer(2), notnull: true }
+    month_begin:       { type: integer(2), notnull: true }
+    day_end:           { type: integer(2), notnull: true }
+    month_end:         { type: integer(2), notnull: true }
+    year_licence:      { type: string(9), notnull: true }
+    is_outstanding:    { type: boolean, default: true }

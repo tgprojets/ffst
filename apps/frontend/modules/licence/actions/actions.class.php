@@ -13,6 +13,26 @@ require_once dirname(__FILE__).'/../lib/licenceGeneratorHelper.class.php';
  */
 class licenceActions extends autoLicenceActions
 {
+  public function preExecute()
+  {
+    //Check fin de saison
+    if (Licence::endSaison()) {
+      $this->redirect('main/endSaison');
+    }
+
+    $this->configuration = new licenceGeneratorConfiguration();
+
+    if (!$this->getUser()->hasCredential($this->configuration->getCredentials($this->getActionName())))
+    {
+      $this->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+    }
+
+    $this->dispatcher->notify(new sfEvent($this, 'admin.pre_execute', array('configuration' => $this->configuration)));
+
+    $this->helper = new licenceGeneratorHelper();
+
+    parent::preExecute();
+  }
   public function executeListValidSaisie(sfWebRequest $request)
   {
     $this->nValider = true;
