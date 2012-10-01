@@ -72,8 +72,9 @@ class tbl_licenceTable extends Doctrine_Table
             }
             $q->andWhereIn('id_club', $aClub);
         }
-
-        $q->andWhereNotIn('year_licence', Licence::getDateLicence());
+        if (Licence::getDateLicence() != null) {
+            $q->andWhereNotIn('year_licence', Licence::getDateLicence());
+        }
 
         return $q;
     }

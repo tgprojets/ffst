@@ -67,7 +67,7 @@ class Licence {
       $oCategory       = $oLicence->getTblCategory();
       $sLicence .= $oLicence->getNum().$sSep;
       $sLicence .= $oProfil->getSexe().$sSep;
-      $sLicence .= $oProfil->getName().$sSep;
+      $sLicence .= strtoupper($oProfil->getName()).$sSep;
       $sLicence .= $oClub->getName().$sSep;
       $sLicence .= (string) $oClub->getNum().$sSep;
       $sLicence .= Licence::getBoolean($oLicence->getIsNew(), true).$sSep;
