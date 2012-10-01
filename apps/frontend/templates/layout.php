@@ -6,6 +6,7 @@
     <?php include_title() ?>
     <link rel="shortcut icon" href="/favicon.ico" />
     <?php include_stylesheets() ?>
+    <link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
     <?php include_javascripts() ?>
   </head>
   <body>

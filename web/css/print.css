@@ -1,0 +1,128 @@
+* {
+    color: #000;
+}
+.sb_bandeau {
+    display: none;
+}
+.sb_baspage {
+    display: none;
+}
+#sf_admin_bar {
+    display: none;
+}
+.sf_admin_actions {
+    display: none;
+}
+table {
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0px;
+    font:10px Arial;
+}
+table th a {
+    color: #000;
+    text-decoration: none;
+}
+table td,
+table th {
+    background-color: transparent;
+    z-index: 1;
+    border-right: 0;
+    border-bottom: 0;
+    width: 150px;
+    padding-left: 5px;
+    overflow: hidden;
+    height: 10px;
+}
+
+table th {
+    color: #000;
+}
+table td {
+    color: #000;
+}
+table th:before,
+table td:before {
+    content: "";
+    padding: 0;
+    width: 1px;
+    margin: 10px -999px -999px -2px;
+    display: block;
+    border: 0;
+    z-index: -1;
+    position:relative;
+    top: -6px;
+}
+
+table th:before {
+    border-top: 999px solid #ccc;
+    border-left: 999px solid #ccc;
+}
+
+table td:before {
+    border-top: 999px solid #fff;
+    border-left: 999px solid #fff;
+}
+td div.grid_3{
+    overflow: hidden;
+}
+table .row td{
+    border-bottom: #d6d6d6 1px solid;
+    width: 110px;
+}
+/*#sf_admin_container td, #sf_admin_container th
+{
+  text-align: left;
+  vertical-align: top;
+  color: #fff;
+  border: 0px;
+}
+#sf_admin_container th a {
+  color: #fff;
+  text-decoration: none;
+  background-color: #083a99;
+}
+#sf_admin_container th a:hover {
+  text-decoration: underline;
+}
+#sf_admin_container td {
+    color: #000;
+}
+#sf_admin_container thead{
+    background-color: #083a99;
+}
+#sf_admin_content tfoot{
+    background-color: #083a99;
+}
+#sf_admin_container th
+{
+  color: #fff;
+  white-space: nowrap;
+  border: 0px;
+}
+#sf_admin_container td a
+{
+  color: #000;
+}
+#sf_admin_container tr
+{
+  border: 0px;
+}*/
+#sf_admin_list_th_actions, .sf_admin_td_actions, #sf_admin_list_batch_checkbox, .sf_admin_batch_checkbox {
+   display: none;
+}
+#sf_admin_container .sf_admin_form_row {
+    float: left;
+    overflow: hidden;
+    width: 100%;
+}
+#sf_admin_container label, .text_show {
+    display: block;
+    padding: 0 1em 3px 0;
+    margin-top: 10px;
+    float: left;
+    width: 13em;
+    color: black;
+    font-size: 12px;
+    font-weight: normal !important;
+}
