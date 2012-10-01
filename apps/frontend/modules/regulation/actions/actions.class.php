@@ -63,6 +63,7 @@ class regulationActions extends autoRegulationActions
                        ->setIdTypepayment($nType)
                        ->save();
 
+                $this->valideLicence($record);
             } else {
                 $sMessage = 'Vous ne pouvez pas régulariser un paiement qui est déjà réglé ou encours de validation';
             }
@@ -71,5 +72,14 @@ class regulationActions extends autoRegulationActions
         $this->getUser()->setFlash('notice', 'Terminé.'.$sMessage);
         $this->redirect('@tbl_payment');
 
+    }
+    private function valideLicence($oPaiement)
+    {
+        if ($oPaiement->getIdLicence() != null) {
+            $oLicence = $oPaiement->getTblLicence();
+            if ($oLicence->getDateValidation() == null) {
+                $oLicence->setDateValidation(date("Y-m-d H:i:s"))->save();
+            }
+        }
     }
 }

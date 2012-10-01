@@ -45,7 +45,7 @@ generator:
           label: Club / Licencié / Ligue
       list:
         display: [lib, amount, _link, date_payment, is_payed, tbl_typepayment, created_at]
-        max_per_page: 20
+        max_per_page: 100
         title: Liste des paiements
         table_method: retrieveByValide
         actions:
