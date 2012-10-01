@@ -25,7 +25,6 @@ generator:
           label: est connecté
       list:
         title: Liste des connexions
-        table_method: retrieveSortDate
         display: [username, ip, date_connexion, is_connected]
         max_per_page: 20
         batch_actions:
