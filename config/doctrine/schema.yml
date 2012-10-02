@@ -16,7 +16,7 @@ tbl_ligue:
     name:           { type: string(50), notnull: true, unique: true }
     num:            { type: string(3), notnull: true, unique: true }
     affiliation:    { type: string(4), notnull: true }
-    sigle:          { type: string(3) }
+    sigle:          { type: string(10) }
     logo:           { type: string(250) }
     organisation:   { type: boolean }
     id_address:     { type: integer(4) }
