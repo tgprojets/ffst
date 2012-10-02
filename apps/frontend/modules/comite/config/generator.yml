@@ -1,0 +1,46 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_comite
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_comite
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        id_position:
+          label: Position
+        tbl_position:
+          label: Position
+        id_user:
+          label: Utilisateur
+        id_profil:
+          label: Profil licencié (nom prénom)
+        tbl_profil:
+          label: Profil
+        nb_mandat:
+          label: Nombre de mandats
+      list:
+        title: Liste des comités
+        display: [tbl_profil, _poste, _nb_mandat, tbl_position, _licence, _licence_valide]
+        batch_actions: {}
+        object_actions:
+          _edit: ~
+          mandat:
+            label: Mandats
+          _delete: ~
+      filter:
+        display: [id_position]
+      form:
+        actions:
+          _list:
+          _save:
+        display: [id_user, id_profil, id_position]
+      new:     ~

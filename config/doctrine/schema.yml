@@ -267,3 +267,34 @@ tbl_saison:
     month_end:         { type: integer(2), notnull: true }
     year_licence:      { type: string(9), notnull: true }
     is_outstanding:    { type: boolean, default: true }
+
+tbl_comite:
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    lib:               { type: string(50) }
+    id_profil:         { type: integer(4), notnull: true }
+    id_user:           { type: integer, notnull: true }
+    id_position:       { type: integer(4) }
+  relations:
+    sfGuardUser:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_comite }
+    tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_comite }
+    tbl_position:      { onDelete: CASCADE, onUpdate: CASCADE, local: id_position, foreign: id, foreignAlias: tbl_comite }
+
+tbl_position:
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    lib:               { type: string(50), notnull: true }
+
+tbl_mandat:
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    date_begin:        { type: timestamp }
+    date_end:          { type: timestamp }
+    fonction_actuel:   { type: string(50) }
+    id_profil:         { type: integer(4) }
+  relations:
+    tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_mandat }

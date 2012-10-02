@@ -1,3 +1,12 @@
+tbl_comite:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_comite
+    module:               comite
+    prefix_path:          /comite
+    column:               id
+    with_wildcard_routes: true
+
 tbl_bordereau:
   class: sfDoctrineRouteCollection
   options:
