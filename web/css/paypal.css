@@ -1,0 +1,54 @@
+.paypal_retour {
+    float:left;
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.paypal_retour h2 {
+  display:block;
+  font-size: 2em;
+  color: #083a99;
+  text-shadow: 2px 2px 4px #b0aeae ;
+  padding: 4px 10px;
+  margin: 20px 0;
+  text-align:left;
+}
+
+.message_paypal_success {
+  position: relative;
+  margin: 10px 10px;
+  padding: 4px 4px 4px 30px;
+  background: #f9ffce url(../images/tick.png) no-repeat 10px 4px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+  behavior: url(/PIE.htc);
+  border: 2px #3d3533 solid;
+}
+
+.message_paypal_error {
+  position: relative;
+  color: #A71418;
+  margin: 10px 10px;
+  padding: 4px 4px 4px 30px;
+  background: #f9ffce url(../images/error.png) no-repeat 6px 6px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+  behavior: url(/PIE.htc);
+  border: 2px #A71418 solid;
+}
+
+#paypal_action li {
+  float: left;
+  width: auto;
+  min-height: 30px;
+}
+
+#paypal_action .marg_paypal_button {
+  margin-top: 3px;
+}
+#paypal_action form {
+  margin: 0;
+}

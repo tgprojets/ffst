@@ -1,0 +1,4 @@
+all:
+  credentials: [[admin, superuser]]
+editpassword:
+  credentials: [[admin, club, ligue]]

@@ -1,0 +1,77 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           sfGuardUser
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sf_guard_user
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
+        email_address:
+          label: Email
+        username:
+          label: Identifiant
+        password:
+          label: Mot de passe
+        is_active:
+          label: Compte activé
+        is_super_admin:
+          label: Super utilisateur
+        last_login:
+          label: Dernière connexion
+        created_at:
+          label: Date de création
+        groups_list:
+          label: Groupe permission
+        permissions_list:
+          label: List de permission
+        is_super_admin:
+          label: Super administrateur
+
+
+      list:
+        title: Liste des utilisateurs
+        display: [username, is_active, is_super_admin, last_login, created_at]
+        batch_actions: {}
+        object_actions:
+          activate:
+            label: Activer/Désactiver
+            params:
+              class: icone_power
+          editPassword:
+            label: 'Modifier mot de passe'
+          _edit:
+            label: Modifier
+          _delete:
+            label: Supprimer
+      filter:
+        display: [username, first_name, last_name, email_address]
+      form:
+      edit:
+        title: Modification du compte %%username%%
+        display: [first_name, last_name, email_address, username, is_active, is_super_admin, groups_list]
+        actions:
+          _list:
+          _delete:
+          _save:
+          _save_and_list:
+      new:
+        title: Nouveau compte utilisateur
+        display: [first_name, last_name, email_address, username, password, is_active, is_super_admin, groups_list]
+        actions:
+          _list:
+          _delete:
+          _save:
+          _save_and_list:

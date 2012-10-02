@@ -1,0 +1,65 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_typelicence
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_typelicence
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        code:
+          label: Code licence
+        rank:
+          label: Ordre
+      list:
+        title: Liste des prix de licences
+        table_method: retrieveSortTypeLicenceList
+        display: [rank, code, lib, prix]
+        batch_actions: {}
+        object_actions:
+          movedown:
+            label: 'Descencre'
+            params:
+              class: down_rank
+          moveup:
+            label: 'Monter'
+            params:
+              class: up_rank
+          _edit: ~
+          _delete:
+            credentials: [admin]
+      filter:
+        display: [code]
+      form:
+        fields:
+          code:
+            label: Code licence
+            help: requis
+          lib:
+            label: Libellé de la licence
+            help: requis
+          prix:
+            label: Prix de la licence
+            help: requis (en €)
+          description:
+            help: faculatif
+          is_familly:
+            label: Tarif réduit
+          is_minor:
+            label: Tarif junior
+          id_group:
+            label: Groupe de licence
+            help: Requis
+        display: [id_group, code, lib, prix, description, is_familly, is_minor]
+      edit:
+        title: Edition du type de licence %%lib%%
+      new:
+        title: Nouveau type de la licence

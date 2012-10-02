@@ -1,0 +1,44 @@
+#myform input[type=text], #myform input[type=password] {
+  position: relative;
+  width: 20px;
+  font-size: 14px;
+  background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #DDD), to(#FFFFFF));
+  background: -moz-linear-gradient(top, #FFFFFF, #DDD 1px, #FFFFFF 25px);
+  -pie-background: linear-gradient(#FFFFFF, #DDD);
+  behavior: url(/PIE.htc);
+  border: 1px solid #E5E5E5;
+  display: block;
+  float: left;
+  font: normal normal normal 14px/100% Verdana, Tahoma, sans-serif;
+  outline: 0px;
+  padding: 7px;
+}
+
+#myform input {
+  color: #2b4c37;
+  font-size: 14px;
+  height: 16px;
+  margin: 0 0 7px;
+  width: 20px;
+}
+
+#myform span {
+  font-size: 10px;
+  margin-right: 20px;
+  display:block;
+  float: left;
+  width: 220px;
+  text-align: right;
+}
+
+#myform label {
+  color: #000;
+  display: block;
+  float: left;
+  margin: 0 10px 0px 0;
+  padding-top: 2px;
+  text-align: left;
+  width: 220px;
+  font-size: 14px;
+}
+

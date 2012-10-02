@@ -1,0 +1,74 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_ligue
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_ligue
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        address1:
+          label: Adresse
+        address2:
+          label: Adresse complémentaire
+        tel:
+          label: Téléphone
+        gsm:
+          label: Portable
+        username:
+          label: Identifiant
+          help: Pour la connexion
+        id_gen:
+          label: Titre
+        name:
+          label: Nom de la ligue
+        affiliation:
+          label: Affiliation
+        image_logo:
+          label: Logo
+        tbl_address:
+          label: Adresse
+        sfGuardUser:
+          label: Utilisateur
+        id_affectation:
+          label: Affectation
+        num:
+          label: Numéro
+        organisation:
+          label: Organisateur de course
+      list:
+        title: Liste des ligues
+        display: [_image_logo, num, sigle, name, sfGuardUser]
+        max_per_page: 20
+        batch_actions: {}
+        object_actions:
+          _edit: ~
+          edit_password:
+            label: Modifier mot de passe
+          _delete:
+            credentials: [admin]
+      filter:
+        display: [name, num, affiliation, id_affectation]
+      form:
+      edit:
+        title: Edition de la ligue %%name%%
+        display:
+          "NONE": [name, num, affiliation, id_affectation, sigle, logo]
+          "Information utilisateur": [id_user, _profil_exist, id_gen, email, username, nom, prenom]
+          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax]
+          "Divers": [organisation]
+      new:
+        title: Nouvelle ligue
+        display:
+          "NONE": [name, num, affiliation, id_affectation, sigle, logo]
+          "Information utilisateur": [id_user, _profil_exist, id_gen, email, username, _generate_password, password, nom, prenom]
+          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax]
+          "Divers": [organisation]

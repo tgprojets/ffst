@@ -1,0 +1,14 @@
+closeSaisonAjax:
+  credentials: [admin]
+saison:
+  credentials: [admin]
+aideForm:
+  credentials: [admin]
+docForm:
+  credentials: [admin]
+doc:
+  is_secure: true
+404:
+  is_secure: false
+compatibility:
+  is_secure: false

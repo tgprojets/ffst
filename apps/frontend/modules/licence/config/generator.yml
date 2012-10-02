@@ -1,0 +1,146 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_licence
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_licence
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_valid:
+          label: Licence Valide
+        email:
+          help: Requis
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
+        birthday:
+          label: Date anniversaire
+          help: Requis
+        address1:
+          label: Adresse
+          help: Requis
+        address2:
+          label: Adresse complémentaire
+        tel:
+          label: Téléphone
+        gsm:
+          label: Portable
+        fax:
+          label: Fax
+        id_club:
+          label: Club
+        id_category:
+          label: Catégorie
+        id_familly:
+          help: Licence du tuteur (valide)
+        id_typelicence:
+          label: Type de licence
+        is_familly:
+          label: Famille
+        date_medical:
+          label: Date certificat médical
+        tbl_club:
+          label: Club
+        tbl_category:
+          label: Catégorie
+        tbl_typelicence:
+          label: Type de licence
+        check_date:
+          label: Validation
+        tbl_profil:
+          label: Licencié
+        num:
+          label: Numéro de licence
+        is_brouillon:
+          label: Brouillon (encours de saisie)
+      list:
+        title: Liste des licenciés
+        display: [num, is_brouillon, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
+        table_method: retrieveByClub
+        batch_actions: {}
+        actions:
+          _new:
+          export_data:
+            label: Export vers Excel
+          valid_saisie:
+          cancel_saisie:
+          commande:
+            credentials: [[account_club, account_ligue]]
+        object_actions:
+          _edit: ~
+          valid_licence:
+            label: Valider
+            credentials: [ValidLicence]
+            params:
+              confirm: Etes vous sur de valider la licence ?
+          _delete:
+            credentials: [admin]
+      filter:
+        display: [num, id_typelicence, last_name, first_name, id_category, id_club, is_valid]
+      form:
+        fields:
+          id_club:
+            label: Club
+            help: Requis
+          id_typelicence:
+            label: Type de licence
+            help: Requis
+          id_category:
+            label: Catégorie
+            help: Requis
+          is_medical:
+            label: Certificat valide
+          is_familly:
+            label: Tarif réduit famille
+          first_name:
+            label: Prénom
+            help: Requis
+          last_name:
+            label: Nom
+            help: Requis
+          is_foreign:
+            label: Pays étrangers
+          country:
+            label: Pays
+            help: Requis
+          cp_foreign:
+            label: Code postal
+            help: Requis
+          city_foreign:
+            label: Ville
+            help: Requis
+          id_codepostaux:
+            help: Requis
+      edit:
+        title: Edition de la licence de %%tbl_profil%%
+        actions:
+          _list:
+          _save:
+          _save_and_payed:
+            label: Mettre à jour et payer
+        display:
+          "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
+          "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Licence": [_checkfamilly, _checkmedical, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical]
+      new:
+        title: Nouvelle licence
+        actions:
+          _list:
+          _save:
+          _save_and_add:
+          _save_and_saisie:
+        display:
+          "Rechercher licencié existant": [id_profil, _profil_exist]
+          "Saisir licencié": [sexe, email, last_name, first_name, birthday]
+          "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Licence": [_checkfamilly, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical]

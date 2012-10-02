@@ -6,15 +6,15 @@ default:
     content-type: text/html
 
   metas:
-    #title:        symfony project
-    #description:  symfony project
-    #keywords:     symfony, project
-    #language:     en
-    #robots:       index, follow
+    title:        Gestion des licence FFST
+    description:  Gestion des licence FFST
+    keywords:     Gestion licence ffst, traineau
+    language:     fr
+    robots:       index, follow
 
-  stylesheets:    [main.css]
+  stylesheets:    [main.css, menu_bandeau.css]
 
-  javascripts:    []
+  javascripts:    [jquery-1.7.1.js]
 
   has_layout:     true
   layout:         layout

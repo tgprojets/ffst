@@ -1,10 +1,196 @@
+tbl_comite:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_comite
+    module:               comite
+    prefix_path:          /comite
+    column:               id
+    with_wildcard_routes: true
+
+tbl_bordereau:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_bordereau
+    module:               bordereau
+    prefix_path:          /bordereau
+    column:               id
+    with_wildcard_routes: true
+
+tbl_payment:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_payment
+    module:               regulation
+    prefix_path:          /regulation
+    column:               id
+    with_wildcard_routes: true
+
+tbl_avoir:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_avoir
+    module:               avoir
+    prefix_path:          /avoir
+    column:               id
+    with_wildcard_routes: true
+
+notifypaypal_sb:
+  url: /notifypaypal_sb.php
+  param: { module: payment, action: notifypaypalSb }
+
+notifypaypal:
+  url: /notifypaypal.php
+  param: { module: payment, action: notifypaypal }
+
+notifypaypal_dev:
+  url: /notifypaypal_dev.php
+  param: { module: payment, action: notifypaypalDev }
+
+paypal_cancel:
+  url: /paypal_cancel.php
+  param: { module: payment, action: paypalCancel }
+
+paypal_validation:
+  url: /validation.php
+  param: { module: payment, action: paypalValidation }
+
+tbl_tarifreduit:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_tarifreduit
+    module:               tarifreduit
+    prefix_path:          /tarifreduit
+    column:               id
+    with_wildcard_routes: true
+
+licence_old:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_licence
+    module:               licenceold
+    prefix_path:          /licenceold
+    column:               id
+    with_wildcard_routes: true
+
+tbl_licence:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_licence
+    module:               licence
+    prefix_path:          /licence
+    column:               id
+    with_wildcard_routes: true
+
+check_profil:
+  url:   /ajax/check_profil
+  param:  { module: main, action: checkProfil }
+
+check_user:
+  url:   /ajax/check_user
+  param:  { module: main, action: checkUser }
+
+check_user_cancel_club:
+  url:   /ajax/check_user_cencel_club
+  param:  { module: main, action: checkUserCancelClub }
+
+check_user_cancel_ligue:
+  url:   /ajax/check_user_cencel_ligue
+  param:  { module: main, action: checkUserCancelLigue }
+
+generate_password:
+  url:   /ajax/generate_password
+  param:  { module: main, action: generatePassword }
+
+ajax_getLicence:
+  url:   /ajax/getLicence
+  param:  { module: main, action: getLicence }
+
+ajax_getUser:
+  url:   /ajax/getProfil
+  param:  { module: main, action: getProfil }
+
+ajax_getCitys:
+  url:   /ajax/getCitys
+  param:  { module: codepostaux, action: getCitys }
+
+tbl_codepostaux:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_codepostaux
+    module:               codepostaux
+    prefix_path:          /codepostaux
+    column:               id
+    with_wildcard_routes: true
+
+tbl_category:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_category
+    module:               category
+    prefix_path:          /category
+    column:               id
+    with_wildcard_routes: true
+
+tbl_prixunit:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_prixunit
+    module:               prixunit
+    prefix_path:          /prixunit
+    column:               id
+    with_wildcard_routes: true
+
+tbl_typelicence:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_typelicence
+    module:               typelicence
+    prefix_path:          /typelicence
+    column:               id
+    with_wildcard_routes: true
+
+tbl_club:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_club
+    module:               club
+    prefix_path:          /club
+    column:               id
+    with_wildcard_routes: true
+
+tbl_ligue:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_ligue
+    module:               ligue
+    prefix_path:          /ligue
+    column:               id
+    with_wildcard_routes: true
+
+tbl_tracability:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_tracability
+    module:               tracability
+    prefix_path:          /tracability
+    column:               id
+    with_wildcard_routes: true
+
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
+sf_guard_user:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                sfGuardUser
+    module:               sfGuardUser
+    prefix_path:          /sfGuardUser
+    column:               id
+    with_wildcard_routes: true
 # default rules
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: main, action: index }
 
 # generic rules
 # please, remove them by adding more specific rules

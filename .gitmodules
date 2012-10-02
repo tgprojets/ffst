@@ -10,3 +10,9 @@
 [submodule "plugins/sfDoctrineGuardPlugin"]
 	path = plugins/sfDoctrineGuardPlugin
 	url = git@tgprojets.fr:/sfGuardDoctrinePlugin.git
+[submodule "plugin/sfTCPDFPlugin"]
+	path = plugin/sfTCPDFPlugin
+	url = git@tgprojets.fr:sfTCPDFPlugin
+[submodule "plugins/sfTCPDFPlugin"]
+	path = plugins/sfTCPDFPlugin
+	url = git@tgprojets.fr:sfTCPDFPlugin

@@ -1,0 +1,1 @@
+Fin de saison pas de saisie de licences

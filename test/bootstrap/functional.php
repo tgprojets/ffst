@@ -19,6 +19,7 @@ if (!isset($app))
 }
 
 require_once dirname(__FILE__).'/../../config/ProjectConfiguration.class.php';
+require_once dirname(__FILE__).'/../lib/browserTestFunctional.class.php';
 $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', isset($debug) ? $debug : true);
 sfContext::createInstance($configuration);
 

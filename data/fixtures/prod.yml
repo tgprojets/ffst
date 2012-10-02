@@ -1,0 +1,284 @@
+tbl_prixunit:
+  tbl_prixunit_1:
+    lib: Cotisation annuelle
+    code: CA
+    prix: 30
+  tbl_prixunit_2:
+    lib: Cotisation Tranche 1
+    code: CT1
+    prix: 15
+  tbl_prixunit_3:
+    lib: Cotisation Tranche 2
+    code: CT2
+    prix: 2
+  tbl_prixunit_4:
+    lib: Cotisation Tranche 3
+    code: CT3
+    prix: 4
+  tbl_prixunit_5:
+    lib: Majoration dépassement de délai
+    code: MDD
+    prix: 5
+  tbl_prixunit_6:
+    lib: Majoration international
+    code: MJI
+    prix: 5
+  tbl_prixunit_7:
+    lib: Supplément pour changement de licence
+    code: S1
+    prix: 20
+  tbl_prixunit_8:
+    lib: Supplément pour changement d'adresse
+    code: S2
+    prix: 20
+  tbl_prixunit_9:
+    lib: Supplément pour changement de profil
+    code: S3
+    prix: 20
+  tbl_prixunit_10:
+    lib: Supplément pour changement d'email
+    code: S4
+    prix: 20
+  tbl_prixunit_6:
+    lib: International
+    code: INT
+    prix: 20
+
+tbl_grouplicence:
+  tbl_grouplicence_1:
+    lib: Licence Compétition dite "Monochien"
+    code: COM
+  tbl_grouplicence_2:
+    lib: Licence Toutes Compétitions dite "Attelage"
+    code: COM
+  tbl_grouplicence_3:
+    lib: Licence Dirigeant
+    code: DIG
+  tbl_grouplicence_4:
+    lib: Licence Professionnel "Mucher Pro"
+    code: PRO
+  tbl_grouplicence_5:
+    lib: Licence Sport-Loisirs
+    code: SPL
+  tbl_grouplicence_6:
+    lib: Licence Toutes Compétitions
+    code: COM
+tbl_typelicence:
+  tbl_typelicence_1:
+    lib: Attelage Junior Réduit
+    code: AT1
+    prix: 12
+    is_minor: true
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_2:
+    lib: Attelage Junior
+    code: AT2
+    prix: 20
+    is_minor: true
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_3:
+    lib: Attelage réduit
+    code: AT3
+    prix: 20
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_4:
+    lib: Attelage
+    code: AT4
+    prix: 30
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_5:
+    lib: Monochien Junior Réduit
+    code: MO1
+    prix: 25
+    is_minor: true
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_6:
+    lib: Monochien Junior
+    code: MO2
+    prix: 35
+    is_minor: true
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_7:
+    lib: Monochien Réduit
+    code: MO3
+    prix: 35
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_8:
+    lib: Monochien
+    code: MO4
+    prix: 45
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_9:
+    lib: "Dirigeant"
+    code: DP1
+    prix: 35
+    tbl_grouplicence: tbl_grouplicence_3
+  tbl_typelicence_10:
+    lib: "Professionnel"
+    code: DP2
+    prix: 35
+    tbl_grouplicence: tbl_grouplicence_4
+  tbl_typelicence_11:
+    lib: Sport-Loisir
+    code: SP
+    prix: 15
+    tbl_grouplicence: tbl_grouplicence_5
+tbl_typepayment:
+  tbl_typepayment_1:
+    lib: Paypal
+  tbl_typepayment_2:
+    lib: Chèque
+  tbl_typepayment_3:
+    lib: CB
+  tbl_typepayment_4:
+    lib: Espèce
+tbl_category:
+  tbl_category_1:
+    lib: Canicross
+    code: CC
+  tbl_category_2:
+    lib: VTT 1 chien
+    code: VTT
+  tbl_category_3:
+    lib: Ski-Joëring
+    code: SKJ
+  tbl_category_4:
+    lib: Ski-Pulka
+    code: SKP
+  tbl_category_5:
+    lib: 2 chiens
+    code: 2
+  tbl_category_6:
+    lib: 4 chiens
+    code: 4
+  tbl_category_7:
+    lib: 6 chiens
+    code: 6
+  tbl_category_8:
+    lib: 8 chiens
+    code: 8
+  tbl_category_9:
+    lib: illimité (chiens)
+    code: IL
+tbl_affectation:
+  tbl_affectation_1:
+    code: N
+    lib: Neige
+  tbl_affectation_2:
+    code: T
+    lib: Terre
+  tbl_affectation_3:
+    code: M
+    lib: Mixte
+tbl_gen:
+  tbl_gen_1:
+    lib: Mr
+  tbl_gen_2:
+    lib: Mme
+  tbl_gen_3:
+    lib: Mlle
+sfGuardUser:
+  User_admin:
+    first_name:     Thomas
+    last_name:      Gilbert
+    email_address:  tgilbert@tgprojets.fr
+    username:       tgilbert
+    password:       sophie
+    is_super_admin: true
+    Groups:         [Group_admin]
+  User_admin_N1:
+    first_name:     Admin
+    last_name:      Admin
+    email_address:  admin@laffst.com
+    username:       admin
+    password:       zi0Iothi
+    is_super_admin: false
+    Groups:         [Group_admin]
+  User_tresorier:
+    first_name:     Denis
+    last_name:      Chéoux
+    email_address:  ffst@free.fr
+    username:       dcheoux
+    password:       aiNub3pa
+    is_super_admin: true
+    Groups:         [Group_admin, Group_tresorier]
+
+sfGuardGroup:
+  Group_admin:
+    name:           N1
+    description:    Super Administrateur
+    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_tresorier:
+    name:           N2A
+    description:    Administrateur tresorier
+    Permissions:    [Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_federal_affiliation:
+    name:           N2B
+    description:    Administrateur fédéral affiliation
+    Permissions:    [Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_federal_licence:
+    name:           N2C
+    description:    Administrateur fédéral licences
+    Permissions:    [Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_technique:
+    name:           N2D
+    description:    Administrateur Group_technique
+    Permissions:    [Permission_categorie, Permission_stats, Permission_visuel]
+  Group_federal_statistique:
+    name:           N3
+    description:    Administrateur fédéral statistique
+    Permissions:    [Permission_stats, Permission_visuel]
+  Group_federal:
+    name:           N4
+    description:    Administrateur fédéral visuel
+    Permissions:    [Permission_visuel]
+  Group_club:
+    name:           CLUB
+    description:    Droit concernant les Clubs
+    Permissions:    [Permission_club_account]
+  Group_ligue:
+    name:           LIGUE
+    description:    Droit concernant les ligues
+    Permissions:    [Permission_ligue_account]
+
+sfGuardPermission:
+  Permission_admin:
+    name:           admin
+    description:    Administrator permission
+  Permission_connexion:
+    name:           connexion_history
+    description:    Permission module liste des connexions
+  Permission_pxunit:
+    name:           pxunit
+    description:    Permission module prix unit
+  Permission_valid_licence:
+    name:           ValidLicence
+    description:    Permission pour valider les licences
+  Permission_club_all:
+    name:           club
+    description:    Permission pour ajouter / modifier / supprimer club
+  Permission_ligue_all:
+    name:           ligue
+    description:    Permission pour ajouter / modifier / supprimer ligue
+  Permission_licencie:
+    name:           licence
+    description:    Permission pour ajouter / modifier / supprimer un licencié
+  Permission_categorie:
+    name:           categorie
+    description:    Permission catégorie
+  Permission_stats:
+    name:           stats
+    description:    Permission pour exporter les données vers tableur ou impression
+  Permission_visuel:
+    name:           visuel
+    description:    "Permission pour visualiser l'ensemble des clubs, licenciés, catégories"
+  Permission_club_account:
+    name:           account_club
+    description:    "Club pouvant ajouter ses Licenciés"
+  Permission_ligue_account:
+    name:           account_ligue
+    description:    "Ligue pouvant voir les Licenciés de ses clubs"

@@ -2,6 +2,8 @@
 # http://www.symfony-project.org/reference/1_4/en/05-Factories
 
 prod:
+  storage:
+    class: sessionMobile
   logger:
     class:   sfNoLogger
     param:
@@ -40,3 +42,6 @@ all:
     param:
       cache_key_use_vary_headers: true
       cache_key_use_host_name:    true
+
+  storage:
+    class: sessionMobile

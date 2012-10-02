@@ -1,0 +1,42 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_category
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_category
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        lib:
+          label: Intitulé
+        code:
+          label: Code catégorie
+      list:
+        title: Liste des catégories
+        max_per_page: 20
+        batch_actions: {}
+        object_actions:
+          _edit: ~
+          _delete:
+            credentials: [admin]
+      filter:  ~
+      form:
+        fields:
+          code:
+            label: Code catégorie
+            help: requis
+          lib:
+            label: Libellé de la licence
+            help: requis
+      edit:
+        title: Edition de la catégorie %%lib%%
+      new:
+        title: Nouvelle catégorie

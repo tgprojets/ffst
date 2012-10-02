@@ -1,17 +1,892 @@
-# # Populate this file with data to be loaded by your ORM's *:data-load task.
-# # You can create multiple files in this directory (i.e. 010_users.yml,
-# # 020_articles.yml, etc) which will be loaded in alphabetical order.
-# # 
-# # See documentation for your ORM's *:data-load task for more information.
-# 
-# User:
-#   fabien:
-#     username: fabien
-#     password: changeme
-#     name:     Fabien Potencier
-#     email:    fabien.potencier@symfony-project.com
-#   kris:
-#     username: Kris.Wallsmith
-#     password: changeme
-#     name:     Kris Wallsmith
-#     email:    kris.wallsmith@symfony-project.com
+tbl_prixunit:
+  tbl_prixunit_1:
+    lib: Cotisation annuelle
+    code: CA
+    prix: 30
+  tbl_prixunit_2:
+    lib: Cotisation Tranche 1
+    code: CT1
+    prix: 15
+  tbl_prixunit_3:
+    lib: Cotisation Tranche 2
+    code: CT2
+    prix: 2
+  tbl_prixunit_4:
+    lib: Cotisation Tranche 3
+    code: CT3
+    prix: 4
+  tbl_prixunit_5:
+    lib: Majoration dépassement de délai
+    code: MDD
+    prix: 5
+  tbl_prixunit_6:
+    lib: Majoration international
+    code: MJI
+    prix: 5
+  tbl_prixunit_7:
+    lib: Supplément pour changement de licence
+    code: S1
+    prix: 20
+  tbl_prixunit_8:
+    lib: Supplément pour changement d'adresse
+    code: S2
+    prix: 20
+  tbl_prixunit_9:
+    lib: Supplément pour changement de profil
+    code: S3
+    prix: 20
+  tbl_prixunit_10:
+    lib: Supplément pour changement d'email
+    code: S4
+    prix: 20
+  tbl_prixunit_6:
+    lib: International
+    code: INT
+    prix: 20
+
+tbl_grouplicence:
+  tbl_grouplicence_1:
+    lib: Licence Compétition dite "Monochien"
+    code: COM
+  tbl_grouplicence_2:
+    lib: Licence Toutes Compétitions dite "Attelage"
+    code: COM
+  tbl_grouplicence_3:
+    lib: Licence Dirigeant
+    code: DIG
+  tbl_grouplicence_4:
+    lib: Licence Professionnel "Mucher Pro"
+    code: PRO
+  tbl_grouplicence_5:
+    lib: Licence Sport-Loisirs
+    code: SPL
+  tbl_grouplicence_6:
+    lib: Licence Toutes Compétitions
+    code: COM
+tbl_typelicence:
+  tbl_typelicence_1:
+    lib: Attelage Junior Réduit
+    code: AT1
+    prix: 12
+    is_minor: true
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_2:
+    lib: Attelage Junior
+    code: AT2
+    prix: 20
+    is_minor: true
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_3:
+    lib: Attelage réduit
+    code: AT3
+    prix: 20
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_4:
+    lib: Attelage
+    code: AT4
+    prix: 30
+    tbl_grouplicence: tbl_grouplicence_2
+  tbl_typelicence_5:
+    lib: Monochien Junior Réduit
+    code: MO1
+    prix: 25
+    is_minor: true
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_6:
+    lib: Monochien Junior
+    code: MO2
+    prix: 35
+    is_minor: true
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_7:
+    lib: Monochien Réduit
+    code: MO3
+    prix: 35
+    is_familly: true
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_8:
+    lib: Monochien
+    code: MO4
+    prix: 45
+    tbl_grouplicence: tbl_grouplicence_1
+  tbl_typelicence_9:
+    lib: "Dirigeant"
+    code: DP1
+    prix: 35
+    tbl_grouplicence: tbl_grouplicence_3
+  tbl_typelicence_10:
+    lib: "Professionnel"
+    code: DP2
+    prix: 35
+    tbl_grouplicence: tbl_grouplicence_4
+  tbl_typelicence_11:
+    lib: Sport-Loisir
+    code: SP
+    prix: 15
+    tbl_grouplicence: tbl_grouplicence_5
+tbl_typepayment:
+  tbl_typepayment_1:
+    lib: Paypal
+  tbl_typepayment_2:
+    lib: Chèque
+  tbl_typepayment_3:
+    lib: CB
+  tbl_typepayment_4:
+    lib: Espèce
+tbl_category:
+  tbl_category_1:
+    lib: Canicross
+    code: CC
+  tbl_category_2:
+    lib: BJ
+    code: BJ
+  tbl_category_3:
+    lib: SPJ
+    code: SPJ
+  tbl_category_4:
+    lib: 2
+    code: 2
+  tbl_category_5:
+    lib: 4
+    code: 4
+  tbl_category_6:
+    lib: 6
+    code: 6
+  tbl_category_7:
+    lib: 8
+    code: 8
+  tbl_category_8:
+    lib: U
+    code: U
+  tbl_category_9:
+    lib: MD
+    code: MD
+  tbl_category_10:
+    lib: LD
+    code: LD
+tbl_affectation:
+  tbl_affectation_1:
+    code: N
+    lib: Neige
+  tbl_affectation_2:
+    code: T
+    lib: Terre
+  tbl_affectation_3:
+    code: M
+    lib: Mixte
+tbl_gen:
+  tbl_gen_1:
+    lib: Mr
+  tbl_gen_2:
+    lib: Mme
+  tbl_gen_3:
+    lib: Mlle
+sfGuardUser:
+  User_admin:
+    first_name:     Thomas
+    last_name:      Gilbert
+    email_address:  tgilbert@tgprojets.fr
+    username:       admin
+    password:       admin
+    is_super_admin: true
+    Groups:         [Group_admin]
+  User_admin_N1:
+    first_name:     AdminN1
+    last_name:      AdminN1
+    email_address:  AdminN1@tgprojets.fr
+    username:       adminN1
+    password:       adminN1
+    is_super_admin: false
+    Groups:         [Group_admin]
+  User_tresorier:
+    first_name:     Denis
+    last_name:      Chéoux
+    email_address:  contact@tgprojets.fr
+    username:       dcheoux
+    password:       dcheoux
+    is_super_admin: true
+    Groups:         [Group_admin, Group_tresorier]
+  User_federal1:
+    first_name:     federal1
+    last_name:      federal1
+    email_address:  federal1@tgprojets.fr
+    username:       federal1
+    password:       federal1
+    Groups:         [Group_federal_affiliation]
+  User_federal2:
+    first_name:     federal2
+    last_name:      federal2
+    email_address:  federal2@tgprojets.fr
+    username:       federal2
+    password:       federal2
+    Groups:         [Group_federal_licence]
+  User_teco:
+    first_name:     teco
+    last_name:      teco
+    email_address:  teco@tgprojets.fr
+    username:       teco
+    password:       teco
+    Groups:         [Group_technique]
+  User_stats:
+    first_name:     stats
+    last_name:      stats
+    email_address:  stats@tgprojets.fr
+    username:       stats
+    password:       stats
+    Groups:         [Group_federal_statistique]
+  User_visuel:
+    first_name:     visuel
+    last_name:      visuel
+    email_address:  visuel@tgprojets.fr
+    username:       visuel
+    password:       visuel
+    Groups:         [Group_federal]
+  User_club_1:
+    first_name:     club1
+    last_name:      club1
+    email_address:  club1@tgprojets.fr
+    username:       club1
+    password:       club1
+    Groups:         [Group_club]
+  User_club_2:
+    first_name:     club2
+    last_name:      club2
+    email_address:  club2@tgprojets.fr
+    username:       club2
+    password:       club2
+    Groups:         [Group_club]
+  User_club_3:
+    first_name:     club3
+    last_name:      club3
+    email_address:  club3@tgprojets.fr
+    username:       club3
+    password:       club3
+    Groups:         [Group_club]
+  User_club_4:
+    first_name:     club4
+    last_name:      club4
+    email_address:  club4@tgprojets.fr
+    username:       club4
+    password:       club4
+    Groups:         [Group_club]
+
+  User_ligue_1:
+    first_name:     ligue1
+    last_name:      ligue1
+    email_address:  ligue1@tgprojets.fr
+    username:       ligue1
+    password:       ligue1
+    Groups:         [Group_ligue]
+  User_ligue_2:
+    first_name:     ligue2
+    last_name:      ligue2
+    email_address:  ligue2@tgprojets.fr
+    username:       ligue2
+    password:       ligue2
+    Groups:         [Group_ligue]
+
+sfGuardGroup:
+  Group_admin:
+    name:           N1
+    description:    Super Administrateur
+    Permissions:    [Permission_admin, Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_tresorier:
+    name:           N2A
+    description:    Administrateur tresorier
+    Permissions:    [Permission_pxunit, Permission_valid_licence, Permission_connexion, Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_federal_affiliation:
+    name:           N2B
+    description:    Administrateur fédéral affiliation
+    Permissions:    [Permission_club_all, Permission_ligue_all, Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_federal_licence:
+    name:           N2C
+    description:    Administrateur fédéral licences
+    Permissions:    [Permission_licencie, Permission_categorie, Permission_stats, Permission_visuel]
+  Group_technique:
+    name:           N2D
+    description:    Administrateur Group_technique
+    Permissions:    [Permission_categorie]
+  Group_federal_statistique:
+    name:           N3
+    description:    Administrateur fédéral statistique
+    Permissions:    [Permission_stats, Permission_visuel]
+  Group_federal:
+    name:           N4
+    description:    Administrateur fédéral visuel
+    Permissions:    [Permission_visuel]
+  Group_club:
+    name:           CLUB
+    description:    Droit concernant les Clubs
+    Permissions:    [Permission_club_account]
+  Group_ligue:
+    name:           LIGUE
+    description:    Droit concernant les ligues
+    Permissions:    [Permission_ligue_account]
+
+sfGuardPermission:
+  Permission_admin:
+    name:           admin
+    description:    Administrator permission
+  Permission_connexion:
+    name:           connexion_history
+    description:    Permission module liste des connexions
+  Permission_pxunit:
+    name:           pxunit
+    description:    Permission module prix unit
+  Permission_valid_licence:
+    name:           ValidLicence
+    description:    Permission pour valider les licences
+  Permission_club_all:
+    name:           club
+    description:    Permission pour ajouter / modifier / supprimer club
+  Permission_ligue_all:
+    name:           ligue
+    description:    Permission pour ajouter / modifier / supprimer ligue
+  Permission_licencie:
+    name:           licence
+    description:    Permission pour ajouter / modifier / supprimer un licencié
+  Permission_categorie:
+    name:           categorie
+    description:    Permission catégorie
+  Permission_stats:
+    name:           stats
+    description:    Permission pour exporter les données vers tableur ou impression
+  Permission_visuel:
+    name:           visuel
+    description:    "Permission pour visualiser l'ensemble des clubs, licenciés, catégories"
+  Permission_club_account:
+    name:           account_club
+    description:    "Club pouvant ajouter ses Licenciés"
+  Permission_ligue_account:
+    name:           account_ligue
+    description:    "Ligue pouvant voir les Licenciés de ses clubs"
+tbl_tracability:
+  tbl_tracability_1:
+    ip: 1.0.0.0.1
+    username: admin
+
+tbl_address:
+  tbl_address_1:
+    address1: 10 rue André P..
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_2:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_3:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_4:
+    address1: 10 rue André P..
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_5:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_6:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_7:
+    address1: 10 rue André P..
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_8:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_9:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_10:
+    address1: 10 rue André P..
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_11:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_12:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_13:
+    address1: 10 rue André P..
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_14:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_15:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_16:
+    address1: 10 rue André P..
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_17:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+  tbl_address_18:
+    address1: 10 cours Victor Hugo
+    address2:
+    tel: 010101010
+    gsm: 001000100
+    fax: 000010010
+
+tbl_club:
+  tbl_club_1:
+    name: DE1
+    num: 300
+    affiliation: 001
+    sfGuardUser: User_club_1
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_1
+    tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_1
+
+  tbl_club_2:
+    name: DE2
+    num: 311
+    affiliation: 002
+    sfGuardUser: User_club_2
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_2
+    tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_2
+
+  tbl_club_3:
+    name: DE3
+    num: 312
+    affiliation: 002
+    sfGuardUser: User_club_3
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_2
+    tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_2
+
+  tbl_club_4:
+    name: DE4
+    num: 313
+    affiliation: 003
+    sfGuardUser: User_club_4
+    tbl_address: tbl_address_1
+    tbl_affectation: tbl_affectation_1
+    tbl_gen: tbl_gen_1
+    tbl_ligue: tbl_ligue_1
+
+tbl_ligue:
+  tbl_ligue_1:
+    name: PEC
+    num: 400
+    affiliation: 101
+    sfGuardUser: User_ligue_1
+    tbl_address: tbl_address_2
+    tbl_affectation: tbl_affectation_1
+    tbl_gen: tbl_gen_1
+  tbl_ligue_2:
+    name: PE1
+    num: 411
+    affiliation: 103
+    sfGuardUser: User_ligue_2
+    tbl_address: tbl_address_2
+    tbl_affectation: tbl_affectation_2
+    tbl_gen: tbl_gen_1
+
+tbl_profil:
+  tbl_profil_1:
+    first_name: Damien
+    last_name: Lasperche
+    email: damien.lasperche@free.fr
+    birthday: '1968-04-20'
+    sexe: H
+    tbl_address: tbl_address_3
+  tbl_profil_2:
+    first_name: Pierre
+    last_name: Richard
+    email: pierre.richard@free.fr
+    birthday: '1978-03-10'
+    sexe: H
+    tbl_address: tbl_address_4
+  tbl_profil_3:
+    first_name: Francis
+    last_name: Lemesle
+    email: francis.lemesle@free.fr
+    birthday: '1949-07-22'
+    sexe: H
+    tbl_address: tbl_address_5
+  tbl_profil_4:
+    first_name: Sebastien
+    last_name: Gain
+    email: sebastien.gain@free.fr
+    birthday: '1982-07-01'
+    sexe: H
+    tbl_address: tbl_address_6
+  tbl_profil_5:
+    first_name: Stéphane
+    last_name: Panis
+    email: stephane.panis@free.fr
+    birthday: '1993-08-28'
+    sexe: H
+    tbl_address: tbl_address_7
+  tbl_profil_6:
+    first_name: Valérie
+    last_name: Master
+    email: valerie.master@free.fr
+    birthday: '1976-01-20'
+    sexe: F
+    tbl_address: tbl_address_8
+  tbl_profil_7:
+    first_name: Pascal
+    last_name: plus
+    email: pascal.plus@free.fr
+    birthday: '1955-09-04'
+    sexe: H
+    tbl_address: tbl_address_9
+  tbl_profil_8:
+    first_name: Fabien
+    last_name: Melun
+    email: fabien.melun@free.fr
+    birthday: '1995-04-20'
+    sexe: H
+    tbl_address: tbl_address_10
+  tbl_profil_9:
+    first_name: Jean
+    last_name: Lafleur
+    email: jean.lafleur@free.fr
+    birthday: '1968-01-20'
+    sexe: H
+    tbl_address: tbl_address_11
+  tbl_profil_10:
+    first_name: Isabelle
+    last_name: Mutte
+    email: isabelle.mutte@free.fr
+    birthday: '1968-04-20'
+    sexe: F
+    tbl_address: tbl_address_12
+  tbl_profil_11:
+    first_name: Yvan
+    last_name: Corneille
+    email: yvan.corneille@free.fr
+    birthday: '1987-09-12'
+    sexe: H
+    tbl_address: tbl_address_13
+  tbl_profil_12:
+    first_name: Stéphane
+    last_name: Blanchard
+    email: stephane.blanchard@free.fr
+    birthday: '1988-10-13'
+    sexe: H
+    tbl_address: tbl_address_14
+  tbl_profil_13:
+    first_name: Fabrice
+    last_name: Carré
+    email: fabrice.carre@free.fr
+    birthday: '1972-06-20'
+    sexe: H
+    tbl_address: tbl_address_15
+  tbl_profil_14:
+    first_name: David
+    last_name: Carré
+    email: david.carre@free.fr
+    birthday: '1998-02-20'
+    sexe: H
+    tbl_address: tbl_address_16
+  tbl_profil_15:
+    first_name: Stéphanie
+    last_name: Carré
+    email: stephanie.carre@free.fr
+    birthday: '1996-04-20'
+    sexe: F
+    tbl_address: tbl_address_17
+  tbl_profil_16:
+    first_name: Sophie
+    last_name: Panter
+    email: sophie.panter@free.fr
+    birthday: '1967-04-20'
+    sexe: H
+    tbl_address: tbl_address_18
+
+tbl_licence:
+  tbl_licence_1:
+    num: '300 001 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-10-04'
+    year_licence: '2011/2012'
+    date_validation: '2011-10-02'
+    tbl_profil: tbl_profil_1
+    tbl_club: tbl_club_1
+    tbl_category: tbl_category_2
+    tbl_typelicence: tbl_typelicence_4
+  tbl_licence_2:
+    num: '300 002 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-11-02'
+    year_licence: '2011/2012'
+    date_validation: '2011-10-25'
+    tbl_profil: tbl_profil_2
+    tbl_club: tbl_club_1
+    tbl_category: tbl_category_1
+    tbl_typelicence: tbl_typelicence_4
+  tbl_licence_3:
+    num: '300 003 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-11-04'
+    year_licence: '2011/2012'
+    date_validation: '2011-11-01'
+    tbl_profil: tbl_profil_3
+    tbl_club: tbl_club_1
+    tbl_category: tbl_category_1
+    tbl_typelicence: tbl_typelicence_4
+  tbl_licence_4:
+    num: '300 004 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-11-10'
+    year_licence: '2011/2012'
+    date_validation: '2011-11-10'
+    tbl_profil: tbl_profil_4
+    tbl_club: tbl_club_1
+    tbl_category: tbl_category_2
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_5:
+    num: '311 001 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-09-04'
+    year_licence: '2011/2012'
+    date_validation: '2011-09-02'
+    tbl_profil: tbl_profil_5
+    tbl_club: tbl_club_2
+    tbl_category: tbl_category_2
+    tbl_typelicence: tbl_typelicence_4
+  tbl_licence_6:
+    num: '311 002 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-09-20'
+    year_licence: '2011/2012'
+    date_validation: '2011-09-25'
+    tbl_profil: tbl_profil_6
+    tbl_club: tbl_club_2
+    tbl_category: tbl_category_1
+    tbl_typelicence: tbl_typelicence_4
+  tbl_licence_7:
+    num: '311 003 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-10-04'
+    year_licence: '2011/2012'
+    date_validation: '2011-10-01'
+    tbl_profil: tbl_profil_7
+    tbl_club: tbl_club_2
+    tbl_category: tbl_category_4
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_8:
+    num: '311 004 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: true
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-12-10'
+    year_licence: '2011/2012'
+    date_validation: '2011-12-20'
+    tbl_profil: tbl_profil_8
+    tbl_club: tbl_club_2
+    tbl_category: tbl_category_2
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_9:
+    num: '312 001 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-09-15'
+    year_licence: '2011/2012'
+    date_validation: '2011-09-15'
+    tbl_profil: tbl_profil_9
+    tbl_club: tbl_club_3
+    tbl_category: tbl_category_3
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_10:
+    num: '312 002 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-09-20'
+    year_licence: '2011/2012'
+    date_validation: '2011-09-25'
+    tbl_profil: tbl_profil_10
+    tbl_club: tbl_club_3
+    tbl_category: tbl_category_1
+    tbl_typelicence: tbl_typelicence_4
+  tbl_licence_11:
+    num: '312 003 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-10-14'
+    year_licence: '2011/2012'
+    date_validation: '2011-10-15'
+    tbl_profil: tbl_profil_11
+    tbl_club: tbl_club_3
+    tbl_category: tbl_category_4
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_12:
+    num: '312 004 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    date_medical: '2012-01-10'
+    year_licence: '2011/2012'
+    date_validation: '2012-01-12'
+    tbl_profil: tbl_profil_12
+    tbl_club: tbl_club_3
+    tbl_category: tbl_category_1
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_13:
+    num: '313 001 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: true
+    is_familly: true
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-11-15'
+    year_licence: '2011/2012'
+    date_validation: '2011-11-15'
+    tbl_profil: tbl_profil_13
+    tbl_club: tbl_club_4
+    tbl_category: tbl_category_3
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_14:
+    num: '313 002 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: true
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-11-15'
+    year_licence: '2011/2012'
+    date_validation: '2011-11-15'
+    tbl_profil: tbl_profil_14
+    tbl_club: tbl_club_4
+    tbl_category: tbl_category_1
+    tbl_typelicence: tbl_typelicence_4
+  tbl_licence_15:
+    num: '313 003 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: true
+    is_brouillon: false
+    cnil: false
+    date_medical: '2011-11-15'
+    year_licence: '2011/2012'
+    date_validation: '2011-11-15'
+    tbl_profil: tbl_profil_15
+    tbl_club: tbl_club_4
+    tbl_category: tbl_category_4
+    tbl_typelicence: tbl_typelicence_8
+  tbl_licence_16:
+    num: '313 004 2011/2012'
+    is_new: true
+    international: false
+    race_nordique: false
+    is_familly: false
+    is_brouillon: false
+    cnil: false
+    year_licence: '2011/2012'
+    tbl_profil: tbl_profil_16
+    tbl_club: tbl_club_4
+    tbl_category: tbl_category_1
+    tbl_typelicence: tbl_typelicence_8

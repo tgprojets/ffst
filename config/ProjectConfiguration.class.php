@@ -11,5 +11,6 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfThumbnailPlugin');
     $this->enablePlugins('sfFormExtraPlugin');
     $this->enablePlugins('sfDoctrineGuardPlugin');
+    $this->enablePlugins('sfTCPDFPlugin');
   }
 }

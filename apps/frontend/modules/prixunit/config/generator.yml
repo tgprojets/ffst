@@ -1,0 +1,40 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_prixunit
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_prixunit
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        lib:
+          label: Libellé
+        prix:
+          label: Prix en €
+      list:
+        title: Liste prix des articles
+        max_per_page: 20
+        batch_actions: {}
+        actions: {}
+        object_actions:
+          _edit: ~
+      filter:
+        class: false
+      form:
+        display: [lib, prix]
+        actions:
+          _list:
+          _save:
+          _save_and_list:
+      edit:
+        title: Edition du prix %%lib%%
+      new:
+        title: Nouveau prix

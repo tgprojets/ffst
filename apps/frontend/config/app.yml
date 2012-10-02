@@ -2,4 +2,32 @@
 # http://www.symfony-project.org/reference/1_4/en/11-App
 
 # default values
-#all:
+prod:
+  paypal:
+    business:  ffst@free.fr
+    url: https://www.paypal.com/cgi-bin/webscr
+    cancel: http://www.laffst.com/paypal_cancel.php
+    notify: http://www.laffst.com/notifypaypal.php
+    return: http://www.laffst.com/validation.php
+sandbox:
+  paypal:
+    business: tgilbe_1273247786_biz@tgprojets.fr
+    url: https://www.sandbox.paypal.com/cgi-bin/webscr
+    cancel: http://sandbox.laffst.com/paypal_cancel.php
+    notify: http://sandbox.laffst.com/notifypaypal_sb.php
+    return: http://sandbox.laffst.com/validation.php
+all:
+  paypal:
+    business: tgprojets.fr
+    url: notifypaypal_dev
+    cancel: paypal_cancel.php
+    notify: notifypaypal_dev.php
+    return: validation.php
+  images:
+    logo: logo
+    thumbnail: thumbnail
+  majordate:
+    renew_day: '31'
+    renew_month: '10'
+    int_day: '15'
+    int_month: '11'
