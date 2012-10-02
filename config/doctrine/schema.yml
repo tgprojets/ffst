@@ -68,6 +68,9 @@ tbl_address:
     tel:            { type: string(20) }
     gsm:            { type: string(20) }
     fax:            { type: string(20) }
+    country:        { type: string(2) }
+    cp_foreign:     { type: string(50) }
+    city_foreign:   { type: string(50) }
     id_codepostaux: { type: integer(6) }
   relations:
     tbl_codepostaux:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_codepostaux, foreign: id, foreignAlias: tbl_address }

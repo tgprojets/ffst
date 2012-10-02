@@ -124,6 +124,19 @@ generator:
           year_licence:
             label: Année de la licence
             help: 20XX/20XX (Requis)
+          is_foreign:
+            label: Pays étrangers
+          country:
+            label: Pays
+            help: Requis
+          cp_foreign:
+            label: Code postal
+            help: Requis
+          city_foreign:
+            label: Ville
+            help: Requis
+          id_codepostaux:
+            help: Requis
       edit:
         title: Edition de la licence de %%tbl_profil%%
         actions:
@@ -131,7 +144,7 @@ generator:
           _save:
         display:
           "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
-          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [_yearlicence, _checkmedical, id_club, id_typelicence, id_category, international, race_nordique, cnil, is_medical, date_medical, date_validation]
       new:
         title: Nouvelle licence
@@ -142,6 +155,6 @@ generator:
         display:
           "Rechercher licencié existant": [id_profil, _profil_exist]
           "Saisir licencié": [sexe, email, last_name, first_name, birthday]
-          "Adresse": [id_codepostaux, address1, address2, tel, gsm, fax, id_address]
+          "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [year_licence, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, cnil, is_medical, date_medical, date_validation]
 
