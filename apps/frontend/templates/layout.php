@@ -123,6 +123,7 @@
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Modifier fichier Aide', 'main/aideForm') ?></li>
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Modifier documents', 'main/docForm') ?></li>
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion saison', 'main/saison') ?></li>
+                      <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion comité', '@tbl_comite') ?></li>
                       <?php endif; ?>
                     </ul>
                   </li>

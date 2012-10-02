@@ -21,4 +21,36 @@ class tbl_profil extends Basetbl_profil
     {
         return $this->getFirstName().' '.$this->getLastName();
     }
+    public function getLastLicence()
+    {
+      $oLicences = $this->getTblLicence();
+      if (Licence::getDateLicence() != null)
+      {
+        foreach($oLicences as $oLicence)
+        {
+          if ($oLicence->getYearLicence() == Licence::getDateLicence()) {
+            return $oLicence->getTblTypelicence();
+          }
+        }
+      }
+      return '';
+    }
+    public function getLastLicenceValide()
+    {
+      $oLicences = $this->getTblLicence();
+      if (Licence::getDateLicence() != null)
+      {
+        foreach($oLicences as $oLicence)
+        {
+          if ($oLicence->getYearLicence() == Licence::getDateLicence()) {
+            if ($oLicence->getDateValidation()) {
+                return true;
+            } else {
+                return false;
+            }
+          }
+        }
+      }
+      return false;
+    }
 }
