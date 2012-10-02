@@ -83,8 +83,18 @@ class Licence {
       $sLicence .= $oProfil->getBirthday().$sSep;
       $sLicence .= $oAddress->getAddress1().$sSep;
       $sLicence .= $oAddress->getAddress2().$sSep;
-      $sLicence .= $oCP->getCodePostaux().$sSep;
-      $sLicence .= $oCP->getVille().$sSep;
+      if ($oCP) {
+        $sLicence .= $oCP->getCodePostaux().$sSep;
+        $sLicence .= $oCP->getVille().$sSep;
+      } else {
+        $sLicence .= $oAddress->getCpForeign().$sSep;
+        $sLicence .= $oAddress->getCityForeign().$sSep;
+      }
+      if ($oAddress->getCountry()) {
+        $sLicence .= sfContext::getInstance()->getI18N()->getCountry($oAddress->getCountry()).$sSep;
+      } else {
+        $sLicence .= 'France'.$sSep;
+      }
       $sLicence .= $oAddress->getTel().$sSep;
       $sLicence .= $oAddress->getGsm().$sSep;
       $sLicence .= $oProfil->getEmail().$sSep;

@@ -56,8 +56,18 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
                  ->setGsm($aValues['gsm'])
                  ->setFax($aValues['fax'])
                  ->save();
-        if ($aValues['id_codepostaux'] != '') {
-          $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
+        if ($aValues['is_foreign'] == 0) {
+          $oAddress->setIdCodepostaux($aValues['id_codepostaux'])
+                   ->setCountry('')
+                   ->setCpForeign('')
+                   ->setCityForeign('')
+                   ->save();
+        } else {
+          $oAddress->setIdCodepostaux(null)
+                   ->setCountry($aValues['country'])
+                   ->setCpForeign($aValues['cp_foreign'])
+                   ->setCityForeign($aValues['city_foreign'])
+                   ->save();
         }
         $oProfil->setEmail($aValues['email'])
                 ->setFirstName($aValues['first_name'])
@@ -90,8 +100,18 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
                  ->setGsm($aValues['gsm'])
                  ->setFax($aValues['fax'])
                  ->save();
-        if ($aValues['id_codepostaux'] != '') {
-          $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
+        if ($aValues['is_foreign'] == 0) {
+          $oAddress->setIdCodepostaux($aValues['id_codepostaux'])
+                   ->setCountry('')
+                   ->setCpForeign('')
+                   ->setCityForeign('')
+                   ->save();
+        } else {
+          $oAddress->setIdCodepostaux(null)
+                   ->setCountry($aValues['country'])
+                   ->setCpForeign($aValues['cp_foreign'])
+                   ->setCityForeign($aValues['city_foreign'])
+                   ->save();
         }
           $oProfil->setEmail($aValues['email'])
                   ->setSexe($aValues['sexe'])
@@ -152,6 +172,10 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
       ));
+      $this->widgetSchema['country']               = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
+      $this->widgetSchema['is_foreign']            = new sfWidgetFormInputCheckbox();
+      $this->widgetSchema['city_foreign']          = new sfWidgetFormInputText();
+      $this->widgetSchema['cp_foreign']            = new sfWidgetFormInputText();
       $this->widgetSchema['date_validation']           = new sfWidgetFormI18nDate(array(
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
@@ -213,6 +237,11 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
     $this->setValidator('id_category', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_category'), 'required' => false)));
+    $this->setValidator('is_foreign',   new sfValidatorBoolean(array('required' => false)));
+    $this->setValidator('country',      new sfValidatorString(array('required' => false)));
+    $this->setValidator('city_foreign', new sfValidatorString(array('required' => false)));
+    $this->setValidator('cp_foreign',   new sfValidatorString(array('required' => false)));
+
     $this->setValidator('date_validation',   new sfValidatorDate(array('required' => false)));
     if ($this->isNew()) {
       $this->setValidator('year_licence',  new sfValidatorString(array('min_length' => 9, 'max_length' => 9, 'required' => true)));
@@ -225,6 +254,7 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
               new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkCategory'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieLicence'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkCountry'))),
        ))
     );
 
@@ -243,7 +273,6 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
         $this->setDefault('tel', $oAddress->getTel());
         $this->setDefault('fax', $oAddress->getFax());
         $this->setDefault('gsm', $oAddress->getGsm());
-        $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
         $this->setDefault('id_profil', $oUser->getId());
         $this->setDefault('sexe', $oUser->getSexe());
         if ($this->getObject()->getDateMedical())
@@ -254,7 +283,17 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
         {
           $this->setDefault('is_familly', true);
         }
+        if ($oAddress->getIdCodepostaux() != null) {
+          $this->setDefault('country', 'FR');
+          $this->setDefault('id_codepostaux', $oAddress->getIdCodepostaux());
+        } else {
+          $this->setDefault('country', $oAddress->getCountry());
+          $this->setDefault('cp_foreign', $oAddress->getCpForeign());
+          $this->setDefault('city_foreign', $oAddress->getCityForeign());
+          $this->setDefault('is_foreign', true);
+        }
     } else {
+      $this->setDefault('country', 'FR');
       $this->setDefault('sexe', 'H');
       $this->setDefault('is_checked', '0');
     }
@@ -380,6 +419,20 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
             throw new sfValidatorError($validator, 'Veuillez choisir aucune catégorie pour ce type de licence.');
           }
         break;
+      }
+    }
+    return $values;
+  }
+  public function checkCountry($validator, $values)
+  {
+    if ($values['is_foreign'] == 0)
+    {
+      if (empty($values['id_codepostaux'])) {
+        throw new sfValidatorError($validator, 'Veuillez saisir une adresse');
+      }
+    } else {
+      if (empty($values['country']) || empty($values['cp_foreign']) || empty($values['city_foreign'])) {
+        throw new sfValidatorError($validator, 'Veuillez saisir un code postal et une ville pour le pays étrangers.');
       }
     }
     return $values;
