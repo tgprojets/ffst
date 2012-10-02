@@ -596,7 +596,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     if ($values['is_foreign'] == 0)
     {
       if (empty($values['id_codepostaux'])) {
-        throw new sfValidatorError($validator, 'Veuillez saisir une adresse');
+        throw new sfValidatorError($validator, 'Veuillez saisir une ville et un code postal');
       }
     } else {
       if (empty($values['country']) || empty($values['cp_foreign']) || empty($values['city_foreign'])) {
