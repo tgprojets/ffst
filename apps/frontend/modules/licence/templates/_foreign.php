@@ -1,6 +1,5 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        console.log('sqd');
         if ($('#tbl_licence_is_foreign').attr("checked") == undefined)
         {
             $('.sf_admin_form_field_country').hide();

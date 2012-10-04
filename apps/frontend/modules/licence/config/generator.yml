@@ -109,7 +109,7 @@ generator:
             label: Nom
             help: Requis
           is_foreign:
-            label: Pays étrangers
+            label: Adresse à l'étranger
           country:
             label: Pays
             help: Requis

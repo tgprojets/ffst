@@ -125,7 +125,7 @@ generator:
             label: Année de la licence
             help: 20XX/20XX (Requis)
           is_foreign:
-            label: Pays étrangers
+            label: Adresse à l'étranger
           country:
             label: Pays
             help: Requis

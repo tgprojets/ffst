@@ -49,7 +49,6 @@
                   } else {
                     profil = sData.profil;
                     $('#tbl_licence_email').val(profil.email);
-                        console.debug(profil.sexe);
                     if (profil.sexe == 'H') {
                         $('#tbl_licence_sexe_H').attr('checked', true);
                     } else {
