@@ -3,6 +3,10 @@
 
 # default values
 prod:
+  mail:
+    test: ffst@free.fr
+    contact: contact@laffst.com
+    returnpath: contact@laffst.com
   paypal:
     business:  ffst@free.fr
     url: https://www.paypal.com/cgi-bin/webscr
@@ -10,6 +14,10 @@ prod:
     notify: http://www.laffst.com/notifypaypal.php
     return: http://www.laffst.com/validation.php
 sandbox:
+  mail:
+    test: ffst@free.fr
+    contact: contact@laffst.com
+    returnpath: contact@laffst.com
   paypal:
     business: tgilbe_1273247786_biz@tgprojets.fr
     url: https://www.sandbox.paypal.com/cgi-bin/webscr
@@ -17,6 +25,10 @@ sandbox:
     notify: http://sandbox.laffst.com/notifypaypal_sb.php
     return: http://sandbox.laffst.com/validation.php
 all:
+  mail:
+    test: t.gilbert1@gmail.com
+    contact: tgilbert@tgilbert-fixe
+    returnpath: tgilbert@tgilbert-fixe
   paypal:
     business: tgprojets.fr
     url: notifypaypal_dev

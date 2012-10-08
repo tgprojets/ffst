@@ -53,7 +53,8 @@ class regulationActions extends autoRegulationActions
           ->execute();
 
         $sMessage = "";
-
+        $aClub       = array();
+        $aRegulation = array();
         foreach ($records as $record)
         {
             if ($record->getIsBrouillon() == false && $record->getIsPayed() == false)
@@ -64,11 +65,24 @@ class regulationActions extends autoRegulationActions
                        ->save();
 
                 $this->valideLicence($record);
+                if ($record->getTblClub())
+                {
+                    $nIdClub = $record->getTblClub()->getId();
+                    if (!in_array($nIdClub, $aClub))
+                    {
+                        $aClub[] = $nIdClub;
+                    }
+                    $aRegulation[$nIdClub][] = $record;
+                }
             } else {
                 $sMessage = 'Vous ne pouvez pas régulariser un paiement qui est déjà réglé ou encours de validation';
             }
         }
-
+        //Envoi message
+        foreach($aClub as $nClub) {
+            $oClub = Doctrine::getTable('tbl_club')->find($nClub);
+            $this->sendMailContact(sfConfig::get('app_mail_contact'),  $this->getUser()->getEmailToSend($oClub), 'Règlements', $oClub, $aRegulation[$nClub]);
+        }
         $this->getUser()->setFlash('notice', 'Terminé.'.$sMessage);
         $this->redirect('@tbl_payment');
 
@@ -81,5 +95,19 @@ class regulationActions extends autoRegulationActions
                 $oLicence->setDateValidation(date("Y-m-d H:i:s"))->save();
             }
         }
+    }
+
+    public function sendMailContact($psFrom, $psTo, $psSujet, $oClub, $paRegulation=array()) {
+        $sDate = strtotime("now");
+        $message = Swift_Message::newInstance();
+        $cid = $message->embed(Swift_Image::fromPath('images/logo_mail.png'));
+        $message->setFrom($psFrom);
+        $message->setTo($psTo);
+        $message->setReturnPath(sfConfig::get('app_mail_returnpath'));
+        $message->setSubject($psSujet);
+        $message->setBody($this->getPartial('contactMail', $arguments = array('cid' => $cid, 'aRegulations' => $paRegulation, 'oClub' => $oClub), 'text/html' ));
+        $message->setDate($sDate);
+        $message->setContentType('text/html');
+        $this->getMailer()->send($message);
     }
 }

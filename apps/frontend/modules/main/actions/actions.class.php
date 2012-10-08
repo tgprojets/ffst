@@ -304,4 +304,30 @@ class mainActions extends sfActions
       return $this->renderText(json_encode($reponse));
     }
   }
+
+ /**
+  * Executes A propos de action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeTestSendMail(sfWebRequest $request)
+  {
+    if ($request->isMethod('post'))
+    {
+       $this->sendMailClassique($request->getParameter('mailfrom'), $request->getParameter('mailto'), 'Test mail', 'corps');
+    }
+  }
+
+  public function sendMailClassique($psFrom, $psTo, $psSujet, $psBody) {
+      $sDate = strtotime("now");
+      $message = Swift_Message::newInstance();
+      $message->setFrom($psFrom);
+      $message->setTo($psTo);
+      $message->setReturnPath(sfConfig::get('app_mail_returnpath'));
+      $message->setSubject($psSujet);
+      $message->setBody($psBody);
+      $message->setDate($sDate);
+      $message->setContentType('text/html');
+      sfContext::getInstance()->getMailer()->send($message);
+  }
 }
