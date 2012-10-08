@@ -38,6 +38,7 @@ all:
   images:
     logo: logo
     thumbnail: thumbnail
+    profil: profil
   majordate:
     renew_day: '31'
     renew_month: '10'

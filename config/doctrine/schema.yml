@@ -135,6 +135,7 @@ tbl_profil:
     id:                { type: integer(4), primary: true,  autoincrement: true }
     last_name:         { type: string(50), notnull: true  }
     first_name:        { type: string(50), notnull: true  }
+    image:             { type: string(50) }
     id_address:        { type: integer(4) }
     email:             { type: string(150), notnull: true  }
     birthday:          { type: timestamp, notnull: true  }

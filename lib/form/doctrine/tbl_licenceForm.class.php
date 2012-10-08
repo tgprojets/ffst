@@ -93,6 +93,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
                 ->setSexe($aValues['sexe'])
                 ->setBirthday($aValues['birthday'])
                 ->setIdAddress($oAddress->getId())
+                ->setImage($aValues['image'])
                 ->save();
       }
       $oLicence->setNum($sNum)
@@ -139,11 +140,13 @@ class tbl_licenceForm extends Basetbl_licenceForm
         if ($oLicence->getDateValidation() != null && $this->bClub) {
           $oProfil->setEmail($aValues['email'])
                   ->setSexe($aValues['sexe'])
+                  ->setImage($aValues['image'])
                   ->save();
         } else {
 
           $oProfil->setEmail($aValues['email'])
                   ->setSexe($aValues['sexe'])
+                  ->setImage($aValues['image'])
                   ->setFirstName($aValues['first_name'])
                   ->setLastName($aValues['last_name'])
                   ->setBirthday($aValues['birthday'])
@@ -180,6 +183,19 @@ class tbl_licenceForm extends Basetbl_licenceForm
       $this->widgetSchema['gsm']                       = new sfWidgetFormInputText();
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
+      $sFileThumbnailPicture = "";
+      if ($this->getObject()->getTblProfil()->getImage()) {
+        $sFileThumbnailPicture = '/uploads/'.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR.$this->getObject()->getTblProfil()->getImage();
+      }
+      $this->widgetSchema['image'] = new sfWidgetFormInputFileEditable(array(
+        'label'        => 'Photo',
+        'file_src'     => $sFileThumbnailPicture,
+        'is_image'     => true,
+        'edit_mode'    => !$this->isNew(),
+        'template'     => '<div><img src="'.$sFileThumbnailPicture.'" width="40px"/><br />%input%<br />%delete% %delete_label%</div>',
+        'delete_label' => 'Enlever l\'image',
+    ));
+
       $this->widgetSchema['id_typelicence']            = new sfWidgetFormDoctrineChoice(
         array(
           'model'        => $this->getRelatedModelName('tbl_typelicence'),
@@ -295,6 +311,12 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('city_foreign', new sfValidatorString(array('required' => false)));
     $this->setValidator('cp_foreign',   new sfValidatorString(array('required' => false)));
     $this->setValidator('id_familly',   new sfValidatorString(array('required' => false)));
+    $this->validatorSchema['image'] = new sfValidatorFile(array(
+      'required'   => false,
+      'mime_types' => 'web_images',
+      'path'       => sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR,
+    ));
+    $this->validatorSchema['image_delete'] = new sfValidatorPass();
     if ($this->isNew()) {
       $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
       $this->setValidator('is_checked', new sfValidatorString(array('required' => false)));

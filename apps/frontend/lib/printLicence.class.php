@@ -4,6 +4,7 @@ class PrintLicence {
 
     private $pdf;
     private $image;
+    private $imageProfil;
     private $config;
     private $oLicence;
     private $oProfil;
@@ -30,8 +31,9 @@ class PrintLicence {
         // add a new page
         sfContext::getInstance()->getConfiguration()->loadHelpers('Date');
 
-        $this->image = sfConfig::get('sf_web_dir').'/images/'.PDF_HEADER_LOGO;
-        $imageBack = sfConfig::get('sf_web_dir').'/images/background.jpg';
+        $this->image       = sfConfig::get('sf_web_dir').'/images/'.PDF_HEADER_LOGO;
+        $this->imageProfil = sfConfig::get('sf_upload_dir').'/profil/'.$this->oProfil->getImage();
+        $imageBack         = sfConfig::get('sf_web_dir').'/images/background.jpg';
         $this->pdf->setPageOrientation(PDF_PAGE_ORIENTATION);
         $this->pdf->setEqualColumns(2, 150);
 
@@ -105,6 +107,10 @@ class PrintLicence {
         $this->pdf->SetFont('helvetica', 'B', 10);
         $this->pdf->Cell(35, 0, format_date($this->oProfil->getBirthday(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
 
+        //Image
+        if ($this->imageProfil != '' && $this->imageProfil != null) {
+            $this->pdf->Image($this->imageProfil, 110, 65, 25, '', '', '', '', true, 300, '', false, false, 0);
+        }
         //Sexe
         $yPos = $this->pdf->getY();
         $this->pdf->SetFont('helvetica', '', 10);
