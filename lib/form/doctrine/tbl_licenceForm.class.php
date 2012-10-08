@@ -194,7 +194,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         'edit_mode'    => !$this->isNew(),
         'template'     => '<div><img src="'.$sFileThumbnailPicture.'" width="40px"/><br />%input%<br />%delete% %delete_label%</div>',
         'delete_label' => 'Enlever l\'image',
-    ));
+      ));
 
       $this->widgetSchema['id_typelicence']            = new sfWidgetFormDoctrineChoice(
         array(

@@ -67,9 +67,11 @@ generator:
           label: Brouillon (encours de saisie)
         is_cancel:
           label: Licence annulée
+        image_profil:
+          label: Photo
       list:
         title: Liste des licenciés
-        display: [num, is_cancel, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
+        display: [_image_profil, num, is_cancel, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
         table_method: retrieveByClubOld
         max_per_page: 20
         batch_actions: {}
@@ -143,7 +145,7 @@ generator:
           _list:
           _save:
         display:
-          "Profile": [sexe, email, last_name, first_name, birthday, id_profil]
+          "Profile": [sexe, image, email, last_name, first_name, birthday, id_profil]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [_yearlicence, _checkmedical, id_club, id_typelicence, id_category, international, race_nordique, cnil, is_medical, date_medical, date_validation]
       new:
@@ -154,7 +156,7 @@ generator:
           _save_and_add:
         display:
           "Rechercher licencié existant": [id_profil, _profil_exist]
-          "Saisir licencié": [sexe, email, last_name, first_name, birthday]
+          "Saisir licencié": [sexe, image, email, last_name, first_name, birthday]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [year_licence, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, cnil, is_medical, date_medical, date_validation]
 
