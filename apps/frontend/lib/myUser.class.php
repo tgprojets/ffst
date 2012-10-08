@@ -173,5 +173,27 @@ class myUser extends sfGuardSecurityUser
         }
         return 'FFST';
     }
+
+    public function getEmailToSend($oClub)
+    {
+        if (sfConfig::get('sf_environment') == 'prod') {
+            if ($oClub->getSfGuardUser()) {
+                return $oClub->getSfGuardUser()->getEmailAddress();
+            } else {
+                return sfConfig::get('app_mail_test');
+            }
+        } else {
+            return sfConfig::get('app_mail_test');
+        }
+    }
+
+    public function testMail($oClub)
+    {
+        if ($oClub->getSfGuardUser()) {
+            return $oClub->getSfGuardUser()->getEmailAddress();
+        } else {
+            return sfConfig::get('app_mail_test');
+        }
+    }
 }
 
