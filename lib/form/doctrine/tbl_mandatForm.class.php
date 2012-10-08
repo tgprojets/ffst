@@ -12,16 +12,20 @@ class tbl_mandatForm extends Basetbl_mandatForm
 {
   public function configure()
   {
+    $sNow = date('Y');
+    $years = range($sNow, 1980);
     $this->widgetSchema['id_profil']                 = new sfWidgetFormInputHidden();
     $nIdProfil = $this->options['id_profil'];
     $this->setDefault('id_profil', $nIdProfil);
     $this->widgetSchema['date_begin']              = new sfWidgetFormI18nDate(array(
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
+          'years' => array_combine($years, $years)
     ));
     $this->widgetSchema['date_end']              = new sfWidgetFormI18nDate(array(
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
+          'years' => array_combine($years, $years)
     ));
     $this->setValidator('date_begin',   new sfValidatorDate(array('required' => true)));
     $this->setValidator('date_end',   new sfValidatorDate(array('required' => true)));
