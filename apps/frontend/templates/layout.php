@@ -124,6 +124,7 @@
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Modifier documents', 'main/docForm') ?></li>
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion saison', 'main/saison') ?></li>
                       <li <?php echo $sf_params->get('module')=="main"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion comité', '@tbl_comite') ?></li>
+                      <li <?php echo $sf_params->get('module')=="tbl_params"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion paramètres', '@tbl_params') ?></li>
                       <?php endif; ?>
                     </ul>
                   </li>

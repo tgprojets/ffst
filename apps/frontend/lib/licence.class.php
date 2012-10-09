@@ -165,4 +165,17 @@ class Licence {
       return true;
     }
   }
+
+  public static function getParam($sCode, $bDescription=true)
+  {
+    $oParam = Doctrine::getTable('tbl_params')->findOneBy('code', $sCode);
+    if ($oParam) {
+      if ($bDescription) {
+        return $oParam->getDescription();
+      } else {
+        return $oParam->getLib();
+      }
+    }
+    return '';
+  }
 }

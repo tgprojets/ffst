@@ -1,0 +1,30 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_params
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_params
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Liste des paramètres
+        display: [id, code, lib]
+        batch_actions: {}
+        actions: {}
+        object_actions:
+          _edit: ~
+      filter:
+        display: [code, lib]
+      form:
+        display: [_label_code, description]
+      edit:
+        title: Edition %%lib%%
