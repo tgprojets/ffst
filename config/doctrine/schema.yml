@@ -302,3 +302,10 @@ tbl_mandat:
     id_profil:         { type: integer(4) }
   relations:
     tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_mandat }
+
+tbl_params:
+  columns:
+    id:                { type: integer(4), primary: true,  autoincrement: true }
+    code:              { type: string(20) }
+    lib:               { type: string(150) }
+    description:       { type: string(2000) }
