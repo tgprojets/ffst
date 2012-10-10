@@ -165,6 +165,9 @@ tbl_licence:
     id_typelicence:    { type: integer(4), notnull: true  }
     id_user:           { type: integer }
     is_cancel:         { type: boolean, default: false }
+    lastname_doctor:   { type: string(50) }
+    firstname_doctor:  { type: string(50) }
+    rpps:              { type: string(11) }
   relations:
     sfGuardUser:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_licence }
     tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_licence }
