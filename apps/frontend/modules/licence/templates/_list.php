@@ -11,7 +11,7 @@
       </thead>
       <tfoot>
         <tr>
-          <th colspan="8">
+          <th colspan="9">
             <?php if ($pager->haveToPaginate()): ?>
               <?php include_partial('licence/pagination', array('pager' => $pager)) ?>
             <?php endif; ?>
