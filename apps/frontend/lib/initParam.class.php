@@ -4,9 +4,13 @@ class InitParam {
 
     private $sFichier;
 
-    public function __construct()
+    public function __construct($sFiles='')
     {
-        $this->sFichier  = sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'param.ini';
+        if ($sFiles == '') {
+            $this->sFichier  = sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'param.ini';
+        } else {
+            $this->sFichier = $sFiles;
+        }
     }
 
     public function getValueByKey($sGroup, $sKey)

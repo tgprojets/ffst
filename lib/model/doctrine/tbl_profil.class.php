@@ -53,4 +53,25 @@ class tbl_profil extends Basetbl_profil
       }
       return false;
     }
+
+  public function generateImageFilename(sfValidatedFile $file, $objectSlug = null)
+  {
+    $sFiles = $this->getImage();
+    //Delete thumbnail
+    if (!empty($sFiles)) {
+      myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil'));
+    }
+    return $file->generateFilename();
+  }
+
+  public function postDelete($event)
+  {
+    $sFiles = $this->getImage();
+    //Delete files
+    if (file_exists(sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR.$sFiles)) {
+      @unlink(sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR.$sFiles);
+    }
+    //Delete thumbnail
+    myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_thumbnail'));
+  }
 }

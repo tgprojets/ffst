@@ -75,6 +75,7 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
                 ->setSexe($aValues['sexe'])
                 ->setBirthday($aValues['birthday'])
                 ->setIdAddress($oAddress->getId())
+                ->setImage($aValues['image'])
                 ->save();
       }
       $oLicence->setNum($sNum)
@@ -83,6 +84,9 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
                ->setIsBrouillon(false)
                ->setCnil($aValues['cnil'])
                ->setDateMedical($aValues['date_medical'])
+               ->setLastnameDoctor($aValues['lastname_doctor'])
+               ->setFirstnameDoctor($aValues['firstname_doctor'])
+               ->setRpps($aValues['rpps'])
                ->setIdClub($aValues['id_club'])
                ->setIdProfil($oProfil->getId())
                ->setIdCategory($aValues['id_category'])
@@ -115,6 +119,7 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
         }
           $oProfil->setEmail($aValues['email'])
                   ->setSexe($aValues['sexe'])
+                  ->setImage($aValues['image'])
                   ->setFirstName($aValues['first_name'])
                   ->setLastName($aValues['last_name'])
                   ->setBirthday($aValues['birthday'])
@@ -142,6 +147,18 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
       $this->widgetSchema['gsm']                       = new sfWidgetFormInputText();
       $this->widgetSchema['fax']                       = new sfWidgetFormInputText();
       $this->widgetSchema['id_address']                = new sfWidgetFormInputHidden();
+      $sFileThumbnailPicture = "";
+      if ($this->getObject()->getTblProfil()->getImage()) {
+        $sFileThumbnailPicture = '/uploads/'.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR.$this->getObject()->getTblProfil()->getImage();
+      }
+      $this->widgetSchema['image'] = new sfWidgetFormInputFileEditable(array(
+        'label'        => 'Photo',
+        'file_src'     => $sFileThumbnailPicture,
+        'is_image'     => true,
+        'edit_mode'    => !$this->isNew(),
+        'template'     => '<div><img src="'.$sFileThumbnailPicture.'" width="40px"/><br />%input%<br />%delete% %delete_label%</div>',
+        'delete_label' => 'Enlever l\'image',
+      ));
       $this->widgetSchema['id_typelicence']            = new sfWidgetFormDoctrineChoice(
         array(
           'model'        => $this->getRelatedModelName('tbl_typelicence'),
@@ -172,6 +189,9 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
       ));
+      $this->widgetSchema['lastname_doctor']       = new sfWidgetFormInputText();
+      $this->widgetSchema['firstname_doctor']      = new sfWidgetFormInputText();
+      $this->widgetSchema['rpps']                  = new sfWidgetFormInputText();
       $this->widgetSchema['country']               = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
       $this->widgetSchema['is_foreign']            = new sfWidgetFormInputCheckbox();
       $this->widgetSchema['city_foreign']          = new sfWidgetFormInputText();
@@ -233,6 +253,9 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
     $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
     $this->setValidator('is_medical',     new sfValidatorBoolean(array('required' => false)));
     $this->setValidator('date_medical',   new sfValidatorDate(array('required' => false)));
+    $this->setValidator('lastname_doctor',     new sfValidatorString(array('required' => false)));
+    $this->setValidator('firstname_doctor',    new sfValidatorString(array('required' => false)));
+    $this->setValidator('rpps',                new sfValidatorString(array('required' => false)));
     $this->setValidator('id_typelicence', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_typelicence'))));
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
@@ -241,7 +264,12 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
     $this->setValidator('country',      new sfValidatorString(array('required' => false)));
     $this->setValidator('city_foreign', new sfValidatorString(array('required' => false)));
     $this->setValidator('cp_foreign',   new sfValidatorString(array('required' => false)));
-
+    $this->validatorSchema['image'] = new sfValidatorFile(array(
+      'required'   => false,
+      'mime_types' => 'web_images',
+      'path'       => sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR,
+    ));
+    $this->validatorSchema['image_delete'] = new sfValidatorPass();
     $this->setValidator('date_validation',   new sfValidatorDate(array('required' => false)));
     if ($this->isNew()) {
       $this->setValidator('year_licence',  new sfValidatorString(array('min_length' => 9, 'max_length' => 9, 'required' => true)));
@@ -255,6 +283,7 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
               new sfValidatorCallback(array('callback'=> array($this, 'checkCategory'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieLicence'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkCountry'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkDateMedical'))),
        ))
     );
 
@@ -433,6 +462,26 @@ class tbl_licenceoldForm extends Basetbl_licenceForm
     } else {
       if (empty($values['country']) || empty($values['cp_foreign']) || empty($values['city_foreign'])) {
         throw new sfValidatorError($validator, 'Veuillez saisir un code postal et une ville pour le pays étrangers.');
+      }
+    }
+    return $values;
+  }
+
+  public function checkDateMedical($validator, $values)
+  {
+    if (!empty($values['date_medical']))
+    {
+      if (empty($values['lastname_doctor']))
+      {
+        throw new sfValidatorError($validator, 'Veuillez saisir le nom du Docteur.');
+      }
+      if (empty($values['firstname_doctor']))
+      {
+        throw new sfValidatorError($validator, 'Veuillez saisir le prénom du Docteur.');
+      }
+      if (empty($values['rpps']))
+      {
+        throw new sfValidatorError($validator, 'Veuillez saisir le N° RPPS du Docteur.');
       }
     }
     return $values;

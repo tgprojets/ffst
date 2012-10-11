@@ -132,6 +132,10 @@ class bordereauActions extends autoBordereauActions
                        ->save();
             }
             $this->oBordereau->setIsPayed(true)->save();
+            if ($this->oBordereau->getTblClub())
+            {
+                $this->sendMailContact(sfConfig::get('app_mail_contact'), $this->getUser()->getEmailToSend($this->oBordereau->getTblClub()), 'Règlement bordereau', $this->oBordereau->getTblClub(), $this->oBordereau, $oPayments, $oAvoirs);
+            }
         }
         $this->redirect('@tbl_bordereau');
     }
@@ -179,5 +183,19 @@ class bordereauActions extends autoBordereauActions
         }
 
         return $sMessage;
+    }
+
+    public function sendMailContact($psFrom, $psTo, $psSujet, $oClub, $oBordereau, $oPayments, $oAvoirs) {
+        $sDate = strtotime("now");
+        $message = Swift_Message::newInstance();
+        $cid = $message->embed(Swift_Image::fromPath('images/logo_mail.png'));
+        $message->setFrom($psFrom);
+        $message->setTo($psTo);
+        $message->setReturnPath(sfConfig::get('app_mail_returnpath'));
+        $message->setSubject($psSujet);
+        $message->setBody($this->getPartial('contactMail', $arguments = array('cid' => $cid, 'oClub' => $oClub, 'oBordereau' => $oBordereau, 'oAvoirs' => $oAvoirs, 'oPayments' => $oPayments), 'text/html' ));
+        $message->setDate($sDate);
+        $message->setContentType('text/html');
+        $this->getMailer()->send($message);
     }
 }

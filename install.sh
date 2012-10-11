@@ -19,6 +19,10 @@ if [ ! -d web/uploads/logo ]; then
   mkdir -p web/uploads/logo
   chmod -R 777 web/uploads/logo
 fi
+if [ ! -d web/uploads/profil ]; then
+  mkdir -p web/uploads/profil
+  chmod -R 777 web/uploads/profil
+fi
 if [ ! -d web/pdf ]; then
   mkdir -p web/pdf
   chmod -R 777 web/pdf

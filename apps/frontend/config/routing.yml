@@ -1,3 +1,12 @@
+tbl_params:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tbl_params
+    module:               tbl_params
+    prefix_path:          /tbl_params
+    column:               id
+    with_wildcard_routes: true
+
 tbl_comite:
   class: sfDoctrineRouteCollection
   options:

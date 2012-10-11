@@ -53,4 +53,15 @@ class tbl_licence extends Basetbl_licence
         }
 
     }
+
+    public function getImage()
+    {
+        $oProfil = $this->getTblProfil();
+        if ($oProfil)
+        {
+            return $oProfil->getImage();
+        } else {
+            return null;
+        }
+    }
 }
