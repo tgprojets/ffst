@@ -123,6 +123,12 @@ generator:
             help: Requis
           id_codepostaux:
             help: Requis
+          lastname_doctor:
+            label: Nom Docteur
+          firstname_doctor:
+            label: Prénom Docteur
+          rpps:
+            label: N° RPPS
       edit:
         title: Edition de la licence de %%tbl_profil%%
         actions:
@@ -133,7 +139,7 @@ generator:
         display:
           "Profile": [sexe, image, email, last_name, first_name, birthday, id_profil]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [_checkfamilly, _checkmedical, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical]
+          "Licence": [_checkfamilly, _checkmedical, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical, lastname_doctor, firstname_doctor, rpps]
       new:
         title: Nouvelle licence
         actions:
@@ -145,4 +151,4 @@ generator:
           "Rechercher licencié existant": [id_profil, _profil_exist]
           "Saisir licencié": [sexe, image, email, last_name, first_name, birthday]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [_checkfamilly, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical]
+          "Licence": [_checkfamilly, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical, lastname_doctor, firstname_doctor, rpps]

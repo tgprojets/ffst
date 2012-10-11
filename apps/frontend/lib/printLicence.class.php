@@ -12,6 +12,8 @@ class PrintLicence {
     private $oTypeLicence;
     private $oGroupLicence;
     private $oCategory;
+    private $bCertificatValide;
+    private $oProfilClub;
 
     public function __construct($oLicence)
     {
@@ -24,6 +26,13 @@ class PrintLicence {
         $this->oTypeLicence  = $oLicence->getTblTypelicence();
         $this->oCategory     = $oLicence->getTblCategory();
         $this->oGroupLicence = $this->oTypeLicence->getTblGrouplicence();
+        if ($oLicence->getDateMedical() != null)
+        {
+            $this->bCertificatValide = true;
+        } else {
+            $this->bCertificatValide = false;
+        }
+        $this->oProfilClub = $oLicence->getTblClub()->getSfGuardUser();
     }
 
     public function createLic()
@@ -108,7 +117,7 @@ class PrintLicence {
         $this->pdf->Cell(35, 0, format_date($this->oProfil->getBirthday(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
 
         //Image
-        if ($this->imageProfil != '' && $this->imageProfil != null) {
+        if ($this->oProfil->getImage() != '' && $this->oProfil->getImage() != null) {
             $this->pdf->Image($this->imageProfil, 110, 65, 25, '', '', '', '', true, 300, '', false, false, 1);
         }
         //Sexe
@@ -199,7 +208,7 @@ class PrintLicence {
 
         //Type de licence
         $yPos = $this->pdf->getY()+4;
-        $xPos = 80;
+        $xPos = 70;
         $this->pdf->setY($yPos);
         $this->pdf->Cell(70, 10, '', 1, 2, 'L', 0, '', 0);
         $this->pdf->setY($yPos);
@@ -213,9 +222,11 @@ class PrintLicence {
                 $this->caseCheck(true, $this->oCategory->getLib(), $xPos, $yPos, 40);
             }
             $yPos = $yPos+4;
-            $this->pdf->setXY(80, $yPos);
-            $this->caseCheck($this->oTypeLicence->getIsMinor(), '< 18 ans', $xPos, $yPos, 20);
-            $xPos += 20;
+            if ($this->oTypeLicence->getIsMinor()) {
+                $this->pdf->setXY(70, $yPos);
+                $this->caseCheck($this->oTypeLicence->getIsMinor(), '< 18 ans', $xPos, $yPos, 20);
+                $xPos += 20;
+            }
             $this->pdf->setXY($xPos, $yPos);
             $this->caseCheck($this->oLicence->getInternational(), 'INTERNATIONAL', $xPos, $yPos, 30);
         } elseif ($this->oGroupLicence->getCode() == 'DIG' || $this->oGroupLicence->getCode() == 'PRO') {
@@ -261,67 +272,68 @@ class PrintLicence {
         $this->getHeaderImage(245);
 
         //Bloc important
-        $this->pdf->SetFont('helvetica', '', 11);
+        $this->pdf->SetFont('helvetica', '', 10);
         $this->pdf->setXY(150, 40);
-        $this->pdf->MultiCell(140, 0, Licence::getParam("ct_important"), 1, 'C');
+        $sImportant = $this->bCertificatValide?Licence::getParam("ct_important_ok"):Licence::getParam("ct_important_ko");
+        $this->pdf->MultiCell(140, 0, $sImportant, 1, 'C');
 
         //Champs
         $yDep = 3;
         $xPos = 152;
-        $this->pdf->SetFont('helvetica', '', 11);
         $yPos = $this->pdf->getY();
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(15, 0, "Date :", 0, 1, 'L', 0, '', 0);
         if ($this->oLicence->getDateMedical() != null)
         {
             $this->pdf->setXY($xPos+15, $yPos+$yDep);
-            $this->pdf->SetFont('helvetica', 'B', 11);
+            $this->pdf->SetFont('helvetica', 'B', 10);
             $this->pdf->Cell(30, 0, format_date($this->oLicence->getDateMedical(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
-            $this->pdf->SetFont('helvetica', '', 11);
+            $this->pdf->SetFont('helvetica', '', 10);
         }
 
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(80, 0, "Je soussigné(e), Docteur en médecine :", 0, 1, 'L', 0, '', 0);
-
-        $yPos = $this->pdf->getY();
-        $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(55, 0, "Certifie que l'état de santé de :", 0, 1, 'L', 0, '', 0);
-        $this->pdf->setXY($xPos+55, $yPos+$yDep);
-        $this->pdf->SetFont('helvetica', '', 11);
+        if ($this->bCertificatValide) {
+            $sSoussigne = 'Je soussigné(e), '.$this->oProfilClub->getLastName().', '.$this->oProfilClub->getFirstName().' au vu du certificat médical en ma possession et établi par le Docteur en médecine '.$this->oLicence->getLastnameDoctor().', '.$this->oLicence->getFirstnameDoctor().', '.$this->oLicence->getRpps().' ayantcertifié que l\'état de santé de :';
+            $this->pdf->MultiCell(140, 0, $sSoussigne, 0, 'L');
+        } else {
+            $this->pdf->Cell(80, 0, "Je soussigné(e), Docteur en médecine :", 0, 1, 'L', 0, '', 0);
+            $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
+            $this->pdf->Cell(55, 0, "Certifie que l'état de santé de :", 0, 1, 'L', 0, '', 0);
+        }
 
         $yPos = $this->pdf->getY()+$yDep;
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep+$yDep);
         $this->pdf->Cell(28, 0, "Nom, prénom :", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($xPos+28, $yPos+$yDep);
-        $this->pdf->SetFont('helvetica', 'B', 11);
+        $this->pdf->SetFont('helvetica', 'B', 10);
         $this->pdf->Cell(60, 0, $this->oProfil->getLastName().', '.$this->oProfil->getFirstName(), 0, 1, 'L', 0, '', 0);
-        $this->pdf->SetFont('helvetica', '', 11);
+        $this->pdf->SetFont('helvetica', '', 10);
 
         $yPos = $this->pdf->getY();
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(18, 0, "Né(e) le :", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($xPos+18, $yPos+$yDep);
-        $this->pdf->SetFont('helvetica', 'B', 11);
+        $this->pdf->SetFont('helvetica', 'B', 10);
         $this->pdf->Cell(30, 0, format_date($this->oProfil->getBirthday(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
-        $this->pdf->SetFont('helvetica', '', 11);
+        $this->pdf->SetFont('helvetica', '', 10);
 
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         $this->pdf->MultiCell(140, 0, "Ne présente aucune contre-indication cliniquement décelable à la pratique des Sports de traîneau, de ski-pulka/joëring et de cross canins", 0, 'L');
 
         //Type de prestation
         $yPos = $this->pdf->getY()+$yDep;
-        $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
-        $this->caseCheck($this->oGroupLicence->getCode()=='DIG'?true:false, 'en tant que cadre dirigeant bénévole', $xPos, $yPos, 70);
+        $this->pdf->setXY($xPos+10, $this->pdf->getY()+$yDep);
+        $this->caseCheck($this->oGroupLicence->getCode()=='DIG'?true:false, 'en tant que cadre dirigeant bénévole', $xPos+10, $yPos, 70);
         $yPos = $this->pdf->getY()+$yDep;
-        $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
-        $this->caseCheck($this->oGroupLicence->getCode()=='SPL'?true:false, 'dans le cadre de l\'activité sportive', $xPos, $yPos, 70);
+        $this->pdf->setXY($xPos+10, $this->pdf->getY()+$yDep);
+        $this->caseCheck($this->oGroupLicence->getCode()=='SPL'?true:false, 'dans le cadre de l\'activité sportive', $xPos+10, $yPos, 70);
         $yPos = $this->pdf->getY()+$yDep;
-        $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
+        $this->pdf->setXY($xPos+10, $this->pdf->getY()+$yDep);
         $bGroup = false;
         if ($this->oGroupLicence->getCode()=='COM') {
             $bGroup = true;
         }
-        $this->caseCheck($bGroup, 'y compris en compétition', $xPos, $yPos, 70);
+        $this->caseCheck($bGroup, 'y compris en compétition', $xPos+10, $yPos, 70);
 
 
 
@@ -330,14 +342,21 @@ class PrintLicence {
         $yPos = $this->pdf->getY();
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(140, 30, '', 1, 2, 'L', 0, '', 0);
-        $this->pdf->SetFont('helvetica', '', 11);
-        $this->pdf->setXY($xPos+4, $yPos+4);
-        $this->pdf->MultiCell(130, 0, Licence::getParam("ct_signature"), 0, 'L');
-        $yPos = $this->pdf->getY()-2;
-        $this->pdf->setXY($xPos+4, $yPos);
-        $this->pdf->Cell(30, 15, "Cachet du médecin :", 0, 2, 'L', 0, '', 0);
-        $this->pdf->setXY($xPos+80, $yPos);
-        $this->pdf->Cell(30, 15, "Signature du médecin :", 0, 2, 'L', 0, '', 0);
+        if ($this->bCertificatValide) {
+            $this->pdf->setXY($xPos+4, $yPos+4);
+            $this->pdf->MultiCell(130, 0, Licence::getParam("ct_signature"), 0, 'L');
+            $yPos = $this->pdf->getY()-2;
+            $this->pdf->setXY($xPos+4, $yPos);
+            $this->pdf->Cell(30, 15, "Signature :", 0, 2, 'L', 0, '', 0);
+            $this->pdf->setXY($xPos+80, $yPos);
+            $this->pdf->Cell(30, 15, "Cachet du club :", 0, 2, 'L', 0, '', 0);
+        } else {
+            $yPos = $this->pdf->getY()-2;
+            $this->pdf->setXY($xPos+4, $yPos);
+            $this->pdf->Cell(30, 15, "Signature du médecin :", 0, 2, 'L', 0, '', 0);
+            $this->pdf->setXY($xPos+80, $yPos);
+            $this->pdf->Cell(30, 15, "Cachet du médecin :", 0, 2, 'L', 0, '', 0);
+        }
         $this->getFooter();
     }
 

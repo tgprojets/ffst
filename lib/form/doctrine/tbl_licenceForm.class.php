@@ -103,6 +103,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->setIdFamilly($aValues['id_familly']==""?null:$aValues['id_familly'])
                ->setCnil($aValues['cnil'])
                ->setDateMedical($aValues['date_medical'])
+               ->setLastnameDoctor($aValues['lastname_doctor'])
+               ->setFirstnameDoctor($aValues['firstname_doctor'])
+               ->setRpps($aValues['rpps'])
                ->setIdClub($aValues['id_club'])
                ->setIdProfil($oProfil->getId())
                ->setIdCategory($aValues['id_category'])
@@ -233,6 +236,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
       ));
+      $this->widgetSchema['lastname_doctor']       = new sfWidgetFormInputText();
+      $this->widgetSchema['firstname_doctor']      = new sfWidgetFormInputText();
+      $this->widgetSchema['rpps']                  = new sfWidgetFormInputText();
+
       $this->widgetSchema['is_familly']            = new sfWidgetFormInputCheckbox();
       $this->widgetSchema['country']               = new sfWidgetFormI18nChoiceCountry(array('culture' => 'fr'));
       $this->widgetSchema['is_foreign']            = new sfWidgetFormInputCheckbox();
@@ -294,24 +301,27 @@ class tbl_licenceForm extends Basetbl_licenceForm
         array(
           'required' => 'Adresse est requise'
         )));
-    $this->setValidator('address2',       new sfValidatorString(array('max_length' => 250, 'required' => false)));
-    $this->setValidator('tel',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
-    $this->setValidator('gsm',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
-    $this->setValidator('fax',            new sfValidatorString(array('max_length' => 50, 'required' => false)));
-    $this->setValidator('id_codepostaux', new sfValidatorString(array('required' => false)));
-    $this->setValidator('is_medical',     new sfValidatorBoolean(array('required' => false)));
-    $this->setValidator('date_medical',   new sfValidatorDate(array('required' => false)));
-    $this->setValidator('id_typelicence', new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_typelicence'))));
+    $this->setValidator('address2',            new sfValidatorString(array('max_length' => 250, 'required' => false)));
+    $this->setValidator('tel',                 new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('gsm',                 new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('fax',                 new sfValidatorString(array('max_length' => 50, 'required' => false)));
+    $this->setValidator('id_codepostaux',      new sfValidatorString(array('required' => false)));
+    $this->setValidator('is_medical',          new sfValidatorBoolean(array('required' => false)));
+    $this->setValidator('date_medical',        new sfValidatorDate(array('required' => false)));
+    $this->setValidator('lastname_doctor',     new sfValidatorString(array('required' => false)));
+    $this->setValidator('firstname_doctor',    new sfValidatorString(array('required' => false)));
+    $this->setValidator('rpps',                new sfValidatorString(array('required' => false)));
+    $this->setValidator('id_typelicence',      new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_typelicence'))));
     $this->validatorSchema['id_address']     = new sfValidatorString(array('required' => false));
-    $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
-    $this->setValidator('id_category',  new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_category'), 'required' => false)));
-    $this->setValidator('is_familly',   new sfValidatorBoolean(array('required' => false)));
-    $this->setValidator('is_foreign',   new sfValidatorBoolean(array('required' => false)));
-    $this->setValidator('country',      new sfValidatorString(array('required' => false)));
-    $this->setValidator('city_foreign', new sfValidatorString(array('required' => false)));
-    $this->setValidator('cp_foreign',   new sfValidatorString(array('required' => false)));
-    $this->setValidator('id_familly',   new sfValidatorString(array('required' => false)));
-    $this->validatorSchema['image'] = new sfValidatorFile(array(
+    $this->errorSchema =                       new sfValidatorErrorSchema($this->validatorSchema);
+    $this->setValidator('id_category',         new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('tbl_category'), 'required' => false)));
+    $this->setValidator('is_familly',          new sfValidatorBoolean(array('required' => false)));
+    $this->setValidator('is_foreign',          new sfValidatorBoolean(array('required' => false)));
+    $this->setValidator('country',             new sfValidatorString(array('required' => false)));
+    $this->setValidator('city_foreign',        new sfValidatorString(array('required' => false)));
+    $this->setValidator('cp_foreign',          new sfValidatorString(array('required' => false)));
+    $this->setValidator('id_familly',          new sfValidatorString(array('required' => false)));
+    $this->validatorSchema['image'] =          new sfValidatorFile(array(
       'required'   => false,
       'mime_types' => 'web_images',
       'path'       => sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR,
@@ -330,6 +340,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
               new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieLicence'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkFamilly'))),
               new sfValidatorCallback(array('callback'=> array($this, 'checkCountry'))),
+              new sfValidatorCallback(array('callback'=> array($this, 'checkDateMedical'))),
        ))
     );
 
@@ -623,6 +634,26 @@ class tbl_licenceForm extends Basetbl_licenceForm
     } else {
       if (empty($values['country']) || empty($values['cp_foreign']) || empty($values['city_foreign'])) {
         throw new sfValidatorError($validator, 'Veuillez saisir un code postal et une ville pour le pays étrangers.');
+      }
+    }
+    return $values;
+  }
+
+  public function checkDateMedical($validator, $values)
+  {
+    if (!empty($values['date_medical']))
+    {
+      if (empty($values['lastname_doctor']))
+      {
+        throw new sfValidatorError($validator, 'Veuillez saisir le nom du Docteur.');
+      }
+      if (empty($values['firstname_doctor']))
+      {
+        throw new sfValidatorError($validator, 'Veuillez saisir le prénom du Docteur.');
+      }
+      if (empty($values['rpps']))
+      {
+        throw new sfValidatorError($validator, 'Veuillez saisir le N° RPPS du Docteur.');
       }
     }
     return $values;
