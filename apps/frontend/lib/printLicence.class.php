@@ -41,6 +41,7 @@ class PrintLicence {
         sfContext::getInstance()->getConfiguration()->loadHelpers('Date');
 
         $this->image       = sfConfig::get('sf_web_dir').'/images/'.PDF_HEADER_LOGO;
+        //$this->imageProfil = myGenerique::generateThumbnailSetNewFilenamePrint(sfConfig::get('app_images_profil'), sfConfig::get('app_images_thumbnail'), $this->oProfil->getImage(), '80_80', 80, 80);
         $this->imageProfil = sfConfig::get('sf_upload_dir').'/profil/'.$this->oProfil->getImage();
         $imageBack         = sfConfig::get('sf_web_dir').'/images/background.jpg';
         $this->pdf->setPageOrientation(PDF_PAGE_ORIENTATION);
@@ -118,7 +119,8 @@ class PrintLicence {
 
         //Image
         if ($this->oProfil->getImage() != '' && $this->oProfil->getImage() != null) {
-            $this->pdf->Image($this->imageProfil, 110, 65, 25, '', '', '', '', true, 300, '', false, false, 1);
+            //$this->pdf->Image($this->imageProfil, 110, 65, '', '', '', '', '', true, 300, '', false, false, 1);
+            $this->pdf->Image($this->imageProfil, 110, 65, 22, '', '', '', '', false, 300, '', false, false, 1);
         }
         //Sexe
         $yPos = $this->pdf->getY();
@@ -293,7 +295,7 @@ class PrintLicence {
 
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         if ($this->bCertificatValide) {
-            $sSoussigne = 'Je soussigné(e), '.$this->oProfilClub->getLastName().', '.$this->oProfilClub->getFirstName().' au vu du certificat médical en ma possession et établi par le Docteur en médecine '.$this->oLicence->getLastnameDoctor().', '.$this->oLicence->getFirstnameDoctor().', '.$this->oLicence->getRpps().' ayantcertifié que l\'état de santé de :';
+            $sSoussigne = 'Je soussigné(e), '.$this->oProfilClub->getLastName().', '.$this->oProfilClub->getFirstName().' au vu du certificat médical en ma possession et établi par le Docteur en médecine '.$this->oLicence->getLastnameDoctor().', '.$this->oLicence->getFirstnameDoctor().', '.$this->oLicence->getRpps().' ayant certifié que l\'état de santé de :';
             $this->pdf->MultiCell(140, 0, $sSoussigne, 0, 'L');
         } else {
             $this->pdf->Cell(80, 0, "Je soussigné(e), Docteur en médecine :", 0, 1, 'L', 0, '', 0);
@@ -351,10 +353,9 @@ class PrintLicence {
             $this->pdf->setXY($xPos+80, $yPos);
             $this->pdf->Cell(30, 15, "Cachet du club :", 0, 2, 'L', 0, '', 0);
         } else {
-            $yPos = $this->pdf->getY()-2;
-            $this->pdf->setXY($xPos+4, $yPos);
+            $this->pdf->setXY($xPos+4, $yPos+4);
             $this->pdf->Cell(30, 15, "Signature du médecin :", 0, 2, 'L', 0, '', 0);
-            $this->pdf->setXY($xPos+80, $yPos);
+            $this->pdf->setXY($xPos+80, $yPos+4);
             $this->pdf->Cell(30, 15, "Cachet du médecin :", 0, 2, 'L', 0, '', 0);
         }
         $this->getFooter();
