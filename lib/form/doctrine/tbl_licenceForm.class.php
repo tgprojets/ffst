@@ -195,7 +195,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         'file_src'     => $sFileThumbnailPicture,
         'is_image'     => true,
         'edit_mode'    => !$this->isNew(),
-        'template'     => '<div><img src="'.$sFileThumbnailPicture.'" width="40px"/><br />%input%<br />%delete% %delete_label%</div>',
+        'template'     => '<div><img src="'.$sFileThumbnailPicture.'" width="200px"/><br />%input%<br />%delete% %delete_label%</div>',
         'delete_label' => 'Enlever l\'image',
       ));
 

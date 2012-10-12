@@ -67,11 +67,9 @@ generator:
           label: Brouillon (encours de saisie)
         is_cancel:
           label: Licence annulée
-        image_profil:
-          label: Photo
       list:
         title: Liste des licenciés
-        display: [_image_profil, num, is_cancel, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date]
+        display: [num, is_cancel, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date, date_validation]
         table_method: retrieveByClubOld
         max_per_page: 20
         batch_actions: {}

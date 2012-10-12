@@ -74,4 +74,14 @@ class tbl_profil extends Basetbl_profil
     //Delete thumbnail
     myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_thumbnail'));
   }
+
+  public function getPhotoUrl()
+  {
+    if ($this->getImage() == '')
+    {
+      return '/images/default_photo.jpg';
+    } else {
+      return '/uploads'.DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR.$this->getImage();
+    }
+  }
 }

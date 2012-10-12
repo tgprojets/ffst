@@ -5,6 +5,9 @@
         <fieldset id="sf_fieldset_none">
             <h2>Profil</h2>
             <div class="sf_admin_form_row">
+                <img src="<?php echo $oProfil->getPhotoUrl(); ?>" width="100px" />
+            </div>
+            <div class="sf_admin_form_row">
                 <label for="">Sexe</label>
                 <div class="text_show"><?php echo $oProfil->getSexe() ?></div>
             </div>
@@ -14,7 +17,7 @@
             </div>
             <div class="sf_admin_form_row">
                 <label for="">Date anniversaire</label>
-                <div class="text_show"><?php echo $oProfil->getBirthday() ?></div>
+                <div class="text_show"><?php echo format_date($oProfil->getBirthday(), 'dd MMMM yyyy') ?></div>
             </div>
             <div class="sf_admin_form_row">
                 <label for="">Email</label>
@@ -51,6 +54,10 @@
         </fieldset>
         <fieldset id="sf_fieldset_none">
             <h2>Licence</h2>
+            <div class="sf_admin_form_row">
+                <label for="">Date validation</label>
+                <div class="text_show"><?php echo format_date($oLicence->getDateValidation(), 'dd MMMM yyyy') ?></div>
+            </div>
             <div class="sf_admin_form_row">
                 <label for="">Club</label>
                 <div class="text_show"><?php echo $oLicence->getTblClub() ?></div>

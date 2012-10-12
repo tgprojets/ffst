@@ -42,7 +42,11 @@ class PrintLicence {
 
         $this->image       = sfConfig::get('sf_web_dir').'/images/'.PDF_HEADER_LOGO;
         //$this->imageProfil = myGenerique::generateThumbnailSetNewFilenamePrint(sfConfig::get('app_images_profil'), sfConfig::get('app_images_thumbnail'), $this->oProfil->getImage(), '80_80', 80, 80);
-        $this->imageProfil = sfConfig::get('sf_upload_dir').'/profil/'.$this->oProfil->getImage();
+        if ($this->oProfil->getImage() != "") {
+            $this->imageProfil = sfConfig::get('sf_upload_dir').'/profil/'.$this->oProfil->getImage();
+        } else {
+            $this->imageProfil = sfConfig::get('sf_web_dir').'/images/default_photo.jpg';
+        }
         $imageBack         = sfConfig::get('sf_web_dir').'/images/background.jpg';
         $this->pdf->setPageOrientation(PDF_PAGE_ORIENTATION);
         $this->pdf->setEqualColumns(2, 150);
@@ -118,10 +122,8 @@ class PrintLicence {
         $this->pdf->Cell(35, 0, format_date($this->oProfil->getBirthday(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
 
         //Image
-        if ($this->oProfil->getImage() != '' && $this->oProfil->getImage() != null) {
-            //$this->pdf->Image($this->imageProfil, 110, 65, '', '', '', '', '', true, 300, '', false, false, 1);
-            $this->pdf->Image($this->imageProfil, 110, 65, 22, '', '', '', '', false, 300, '', false, false, 1);
-        }
+        $this->pdf->Image($this->imageProfil, 110, 65, 22, '', '', '', '', false, 300, '', false, false, 1);
+
         //Sexe
         $yPos = $this->pdf->getY();
         $this->pdf->SetFont('helvetica', '', 10);
