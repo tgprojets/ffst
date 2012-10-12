@@ -22,6 +22,21 @@ class Licence {
     return $sDate;*/
   }
 
+  public static function getDateEndSaison($sSaison)
+  {
+    $oDateLicence = Doctrine::getTable('tbl_saison')->findOneBy('year_licence', $sSaison);
+    if ($oDateLicence) {
+      $sDay   = str_pad($oDateLicence->getDayEnd(), 2, "0", STR_PAD_LEFT);
+      $sMonth = str_pad($oDateLicence->getMonthEnd(), 2, "0", STR_PAD_LEFT);
+    } else {
+      $sDay   = '30';
+      $sMonth = '06';
+    }
+    $sYear = substr($sSaison, 5);
+    return $sDay.'/'.$sMonth.'/'.$sYear;
+
+  }
+
   public static function getDateMajor($sType, $sDate)
   {
     $oInitParam = new InitParam();

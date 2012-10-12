@@ -94,7 +94,14 @@ class PrintLicence {
         $this->pdf->Cell(20, 0, "Délivrée le :", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($this->pdf->getX()+20, $yPos);
         $this->pdf->SetFont('helvetica', 'B', 10);
-        $this->pdf->Cell(50, 0, format_date($this->oLicence->getDateValidation(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
+        $this->pdf->Cell(50, 0, format_date($this->oLicence->getDateValidation(), 'dd/MM/yyyy'), 0, 1, 'L', 0, '', 0);
+
+        $this->pdf->SetFont('helvetica', '', 10);
+        $this->pdf->setXY($this->pdf->getX()+60, $yPos);
+        $this->pdf->Cell(20, 0, "Date validité :", 0, 1, 'L', 0, '', 0);
+        $this->pdf->SetFont('helvetica', 'B', 10);
+        $this->pdf->setXY($this->pdf->getX()+82, $yPos);
+        $this->pdf->Cell(50, 0, Licence::getDateEndSaison($this->oLicence->getYearLicence()), 0, 1, 'L', 0, '', 0);
 
         //NOM / Prénom /Date de naissance
         $yPos = $this->pdf->getY();
@@ -297,7 +304,7 @@ class PrintLicence {
 
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
         if ($this->bCertificatValide) {
-            $sSoussigne = 'Je soussigné(e), '.$this->oProfilClub->getLastName().', '.$this->oProfilClub->getFirstName().' au vu du certificat médical en ma possession et établi par le Docteur en médecine '.$this->oLicence->getLastnameDoctor().', '.$this->oLicence->getFirstnameDoctor().', '.$this->oLicence->getRpps().' ayant certifié que l\'état de santé de :';
+            $sSoussigne = 'Je soussigné(e), '.strtoupper($this->oProfilClub->getLastName()).', '.$this->oProfilClub->getFirstName().' au vu du certificat médical en ma possession et établi par le Docteur en médecine '.strtoupper($this->oLicence->getLastnameDoctor()).', '.strtoupper($this->oLicence->getFirstnameDoctor()).', '.strtoupper($this->oLicence->getRpps()).' ayant certifié que l\'état de santé de :';
             $this->pdf->MultiCell(140, 0, $sSoussigne, 0, 'L');
         } else {
             $this->pdf->Cell(80, 0, "Je soussigné(e), Docteur en médecine :", 0, 1, 'L', 0, '', 0);
