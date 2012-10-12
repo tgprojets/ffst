@@ -322,7 +322,7 @@ class PrintLicence {
         $this->pdf->SetFont('helvetica', '', 10);
 
         $this->pdf->setXY($xPos, $this->pdf->getY()+$yDep);
-        $this->pdf->MultiCell(140, 0, "Ne présente aucune contre-indication cliniquement décelable à la pratique des Sports de traîneau, de ski-pulka/joëring et de cross canins", 0, 'L');
+        $this->pdf->MultiCell(140, 0, Licence::getParam("ct_contre_indication"), 0, 'L');
 
         //Type de prestation
         $yPos = $this->pdf->getY()+$yDep;
@@ -379,14 +379,14 @@ class PrintLicence {
         $this->pdf->SetFont('helvetica', 'B', 8);
         $this->pdf->Cell(140, 0, Licence::getParam("ct_foot"), 0, 2, 'C', 0, '', 0);
         $this->pdf->SetFont('helvetica', '', 8);
-        $this->pdf->Cell(140, 0, "130, chemin des Charbonneaux", 0, 2, 'C', 0, '', 0);
-        $this->pdf->Cell(140, 0, "38250 LANS EN VERCORS", 0, 2, 'C', 0, '', 0);
+        $this->pdf->Cell(140, 0, Licence::getParam("address_ffst"), 0, 2, 'C', 0, '', 0);
+        $this->pdf->Cell(140, 0, Licence::getParam("ville_ffst"), 0, 2, 'C', 0, '', 0);
         $yPos = $this->pdf->getY();
         $xPos = $this->pdf->getX();
         $this->pdf->Cell(70, 0, "Mel : ", 0, 2, 'R', 0, '', 0);
         $this->pdf->setXY($xPos+70, $yPos);
         $this->pdf->SetFont('helvetica', 'I', 8);
-        $HTML = '<a href="#">ffst@free.fr</a>';
+        $HTML = '<a href="#">'.Licence::getParam("email_ffst").'</a>';
         $this->pdf->writeHTML($HTML, true, false, false, false, '');
     }
 }
