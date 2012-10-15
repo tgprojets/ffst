@@ -658,3 +658,20 @@ table.mceToolbar, .defaultSkin tr.mceFirst .mceToolbar tr td, .defaultSkin tr.mc
   padding-left: 20px;
   background: url('../images/zoom.png') no-repeat;
 }
+
+.image_profil {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 100px;
+}
+.image_profil_view {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 50px;
+}
+#sf_admin_container .line_view .sf_admin_form_row {
+  margin: 0;
+  padding: 0 10px;
+}

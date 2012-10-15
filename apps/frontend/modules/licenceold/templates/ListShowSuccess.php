@@ -1,12 +1,10 @@
 <?php use_stylesheet('admin.css') ?>
 <div id="sf_admin_container" style="color:#fff;">
     <h1><?php echo $oProfil->getName() ?></h1>
-    <div class="sf_admin_content">
+    <div class="sf_admin_content line_view">
         <fieldset id="sf_fieldset_none">
             <h2>Profil</h2>
-            <div class="sf_admin_form_row">
-                <img src="<?php echo $oProfil->getPhotoUrl(); ?>" width="100px" />
-            </div>
+            <img src="<?php echo $oProfil->getPhotoUrl(); ?>" class="image_profil_view"/>
             <div class="sf_admin_form_row">
                 <label for="">Sexe</label>
                 <div class="text_show"><?php echo $oProfil->getSexe() ?></div>
