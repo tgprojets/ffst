@@ -1,6 +1,8 @@
 <?php if (!$sf_user->isLigue()): ?>
-  <?php if ($sf_user->hasSaisie() > 0 && $sf_user->hasCredential(array(0 => array(0 => 'account_club', 1 => 'licence'  ),))): ?>
+  <?php if ($sf_user->hasCredential(array(0 => array(0 => 'account_club', 1 => 'licence'  ),))): ?>
     <?php echo $helper->linkToNew(array(  'params' =>   array(  ),  'class_suffix' => 'new',  'label' => 'New',)) ?>
+  <?php endif; ?>
+  <?php if ($sf_user->hasSaisie() > 0 && $sf_user->hasCredential(array(0 => array(0 => 'account_club', 1 => 'licence'  ),))): ?>
     <li class="sf_admin_action_cancel_saisie sb_bouton_a">
       <?php echo link_to(__('Annuler la saisie', array(), 'messages'), 'licence/ListCancelSaisie', array()) ?>
     </li>
