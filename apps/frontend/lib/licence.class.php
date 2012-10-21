@@ -72,7 +72,7 @@ class Licence {
   public static function exportData($oLicences)
   {
     $sSep = ";";
-    $sLicence = "Numéro de licence;sexe;nom & prénom;nom club;num club;renouvellement;annuler;type licence;categorie;international;race nordique;cnil;date medical;date validation;année de la licence;date anniversaire;adresse;lieu-dit;cp;ville;tel;gsm;email"."\n";
+    $sLicence = "Numéro de licence;sexe;nom;prénom;nom club;num club;renouvellement;annuler;type licence;categorie;international;race nordique;cnil;date medical;date validation;année de la licence;date anniversaire;adresse;lieu-dit;cp;ville;pays;tel;gsm;email"."\n";
     foreach ($oLicences as $oLicence) {
       $oProfil         = $oLicence->getTblProfil();
       $oAddress        = $oProfil->getTblAddress();
@@ -82,7 +82,8 @@ class Licence {
       $oCategory       = $oLicence->getTblCategory();
       $sLicence .= $oLicence->getNum().$sSep;
       $sLicence .= $oProfil->getSexe().$sSep;
-      $sLicence .= strtoupper($oProfil->getName()).$sSep;
+      $sLicence .= strtoupper($oProfil->getLastName()).$sSep;
+      $sLicence .= strtoupper($oProfil->getFirstName()).$sSep;
       $sLicence .= $oClub->getName().$sSep;
       $sLicence .= (string) $oClub->getNum().$sSep;
       $sLicence .= Licence::getBoolean($oLicence->getIsNew(), true).$sSep;
