@@ -266,9 +266,9 @@ class mainActions extends sfActions
       $nYear = date('Y')+1;
       $this->yearLicence = date('Y').'/'.$nYear;
       $oSaison = Doctrine::getTable('tbl_saison')->findOneBy('year_licence', $this->yearLicence);
-      if ($oSaison) {
-        $this->redirect('main/endSaison');
-      }
+      // if ($oSaison) {
+      //   $this->redirect('main/endSaison');
+      // }
       $this->bNewSaison = true;
       $this->form = new tbl_saisonForm();
     } else {
