@@ -16,11 +16,13 @@ class CalculLicence {
     private $nUser;
     private $oProfil;
     private $oLicence;
+    private $bNewLicence;
 
 
-    public function __construct($nLicence)
+    public function __construct($nLicence, $bNewLicence=false)
     {
-        $this->nLicence = $nLicence;
+        $this->nLicence        = $nLicence;
+        $this->bNewLicence     = $bNewLicence;
         $oLicence              = Doctrine::getTable('tbl_licence')->find($nLicence);
         $this->oProfil         = $oLicence->getTblProfil();
         $this->bInternational  = $oLicence->getInternational();
@@ -119,12 +121,19 @@ class CalculLicence {
 
     private function setYearLicence()
     {
-        if ((int) date('m') >= 7 && (int) date('d') >= 1) {
-            $this->YearStart = date('Y');
-            $this->YearEnd   = date('Y', strtotime('+1 year'));
+        if ($this->bNewLicence == false) {
+            if ((int) date('m') >= 7 && (int) date('d') >= 1) {
+                $this->YearStart = date('Y');
+                $this->YearEnd   = date('Y', strtotime('+1 year'));
+            } else {
+                $this->YearStart = date('Y', strtotime('-1 year'));
+                $this->YearEnd   = date('Y');
+            }
         } else {
-            $this->YearStart = date('Y', strtotime('-1 year'));
-            $this->YearEnd   = date('Y');
+            $oSaison = Doctrine::getTable('tbl_saison')->findOneBy('is_outstanding', true);
+            $yearLicence = explode('/', $oSaison->getYearLicence());
+            $this->YearStart = $yearLicence[0];
+            $this->YearEnd   = $yearLicence[1];
         }
 
     }

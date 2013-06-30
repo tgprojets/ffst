@@ -55,10 +55,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $oAddress = $oProfil->getTblAddress();
         if ($oLicence->getDateValidation() == null)
         {
-          $oCalcul = new CalculLicence($oLicence->getId());
+          $oCalcul = new CalculLicence($oLicence->getId(), true);
           $oCalcul->calcLicenceEdit($aValues, $oLicence->getIsBrouillon());
         } else {
-          $oCalcul = new CalculLicence($oLicence->getId());
+          $oCalcul = new CalculLicence($oLicence->getId(), true);
           $oCalcul->calcLicenceEditDateValid($aValues);
 
           if ($oLicence->getIdTypelicence() != $aValues['id_typelicence']) {
@@ -117,7 +117,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
                  ->setYearLicence(Licence::getDateLicence())
                  ->setIsNew($bIsNew)
                  ->save();
-        $oCalcul = new CalculLicence($oLicence->getId());
+        $oCalcul = new CalculLicence($oLicence->getId(), true);
         $oCalcul->calcCotisationLicence();
         $oCalcul->calcLicence();
       } else {

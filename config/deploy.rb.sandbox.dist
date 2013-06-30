@@ -38,7 +38,6 @@ namespace :deploydb do
   DESC
   task :default do
     deploy.default
-    migration.createlink
     migration.migrate
     migration.getnumversion
     ffst.createlink
