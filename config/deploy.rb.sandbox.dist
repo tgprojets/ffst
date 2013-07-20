@@ -1,6 +1,6 @@
 set :application, "frontend"
 set :domain,      "tgprojets.fr"
-set :domaingit,   "tgprojets.fr"
+set :domaingit,   "sans-bouger.fr"
 set :deploy_to,   "/srv/sitesweb/sandbox/ffst/"
 
 set :repository,  "git@#{domaingit}:ffst.git"

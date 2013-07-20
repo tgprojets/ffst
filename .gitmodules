@@ -3,16 +3,13 @@
 	url = https://github.com/symfony/symfony1.git
 [submodule "plugins/sfFormExtraPlugin"]
 	path = plugins/sfFormExtraPlugin
-	url = git@tgprojets.fr:/sfFormExtraPlugin.git
+	url = git@sans-bouger.fr:/sfFormExtraPlugin.git
 [submodule "plugins/sfThumbnailPlugin"]
 	path = plugins/sfThumbnailPlugin
-	url = git@tgprojets.fr:/sfThumbnailPlugin.git
+	url = git@sans-bouger.fr:/sfThumbnailPlugin.git
 [submodule "plugins/sfDoctrineGuardPlugin"]
 	path = plugins/sfDoctrineGuardPlugin
-	url = git@tgprojets.fr:/sfGuardDoctrinePlugin.git
+	url = git@sans-bouger.fr:/sfGuardDoctrinePlugin.git
 [submodule "plugin/sfTCPDFPlugin"]
 	path = plugin/sfTCPDFPlugin
-	url = git@tgprojets.fr:sfTCPDFPlugin
-[submodule "plugins/sfTCPDFPlugin"]
-	path = plugins/sfTCPDFPlugin
-	url = git@tgprojets.fr:sfTCPDFPlugin
+	url = git@sans-bouger.fr:sfTCPDFPlugin
