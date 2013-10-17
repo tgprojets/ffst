@@ -21,7 +21,14 @@ class Licence {
 
     return $sDate;*/
   }
-
+  public static function getSaison()
+  {
+    //Récupère l'année encours
+    $oDateLicence = Doctrine::getTable('tbl_saison')->findOneBy('is_outstanding', true);
+    if ($oDateLicence) {
+      return $oDateLicence;
+    }
+  }
   public static function getDateEndSaison($sSaison)
   {
     $oDateLicence = Doctrine::getTable('tbl_saison')->findOneBy('year_licence', $sSaison);

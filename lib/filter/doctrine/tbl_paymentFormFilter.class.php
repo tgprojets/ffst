@@ -24,7 +24,12 @@ class tbl_paymentFormFilter extends Basetbl_paymentFormFilter
 
         array('choices' => array_keys($aYearLicence), 'required' => false)
       );
+
       $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
+      $oSaison = Licence::getSaison();
+      if ($oSaison) {
+        $this->setDefault('list_yearlicence', $oSaison->getId());
+      }
   }
   public function addListYearlicenceColumnQuery(Doctrine_Query $query, $field, $values)
   {

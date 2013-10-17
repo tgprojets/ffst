@@ -110,4 +110,30 @@ class regulationActions extends autoRegulationActions
         $message->setContentType('text/html');
         $this->getMailer()->send($message);
     }
+  protected function buildQuery()
+  {
+    $tableMethod = $this->configuration->getTableMethod();
+    if (null === $this->filters)
+    {
+      $this->filters = $this->configuration->getFilterForm($this->getFilters());
+    }
+
+    $this->filters->setTableMethod($tableMethod);
+
+    $oSaison = Licence::getSaison();
+    if (count($this->getFilters()) == 0 && $oSaison) {
+        $aSaison["list_yearlicence"] = $oSaison->getId();
+        $query = $this->filters->buildQuery($aSaison);
+    } else {
+        $query = $this->filters->buildQuery($this->getFilters());
+    }
+    // }
+
+    $this->addSortQuery($query);
+
+    $event = $this->dispatcher->filter(new sfEvent($this, 'admin.build_query'), $query);
+    $query = $event->getReturnValue();
+
+    return $query;
+  }
 }
