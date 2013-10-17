@@ -63,7 +63,7 @@ generator:
         object_actions:
           _edit: ~
       filter:
-        display: [date_payment, is_payed, id_typepayment, id_club, id_ligue, id_profil]
+        display: [list_yearlicence, date_payment, is_payed, id_typepayment, id_club, id_ligue, id_profil]
       form:    ~
       edit:    ~
       new:

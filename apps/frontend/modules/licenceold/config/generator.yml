@@ -98,7 +98,7 @@ generator:
             params:
               class: zoom_icon
       filter:
-        display: [list_yearlicence, num, last_name, first_name, id_typelicence, id_category, id_club, is_valid]
+        display: [list_yearlicence, num, last_name, first_name, id_typelicence, international, id_category, id_club, is_valid]
       form:
         class: tbl_licenceoldForm
         fields:

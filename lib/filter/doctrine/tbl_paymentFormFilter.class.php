@@ -18,6 +18,35 @@ class tbl_paymentFormFilter extends Basetbl_paymentFormFilter
             'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
             'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence'), 'config' => "{max: 20}"),
         ));
-        $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
+      $aYearLicence = Doctrine::getTable('tbl_saison')->getSaisonLicence();
+      $this->widgetSchema['list_yearlicence']   = new sfWidgetFormChoice(array('choices'  => $aYearLicence));
+      $this->validatorSchema['list_yearlicence']        = new sfValidatorChoice(
+
+        array('choices' => array_keys($aYearLicence), 'required' => false)
+      );
+      $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
+  }
+  public function addListYearlicenceColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values) || $values[0] == 0)
+    {
+      return;
+    }
+    $sRootAlias = $query->getRootAlias();
+    $oSaison = Doctrine::getTable('tbl_saison')->find($values[0]);
+    if ($oSaison) {
+      $year = explode("/", $oSaison->getYearLicence());
+      $dateDebut = date('Y-m-d', mktime(0, 0, 0, $oSaison->getMonthBegin(), $oSaison->getDayBegin(), $year[0]));
+      $dateFin   = date('Y-m-d', mktime(0, 0, 0, $oSaison->getMonthEnd(), $oSaison->getDayEnd(), $year[1]));
+      $query->andWhere('date_payment >= ?',  $dateDebut);
+      $query->andWhere('date_payment <= ?',  $dateFin);
+    } else {
+      var_dump($oSaison);
+    }
   }
 }

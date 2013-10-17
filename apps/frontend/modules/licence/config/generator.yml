@@ -86,7 +86,7 @@ generator:
           _delete:
             credentials: [admin]
       filter:
-        display: [num, id_typelicence, last_name, first_name, id_category, id_club, is_valid]
+        display: [num, id_typelicence, international, last_name, first_name, id_category, id_club, is_valid]
       form:
         fields:
           id_club:

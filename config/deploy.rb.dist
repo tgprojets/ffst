@@ -1,12 +1,12 @@
 set :application, "frontend"
 set :domain,      "tgprojets.fr"
-set :domaingit,   "sans-bouger.fr"
-set :deploy_to,   "/srv/sitesweb/ffst/"
+set :domaingit,   "tgprojets.fr"
+set :deploy_to,   "/srv/sitesweb/sandbox/ffst/"
 
 set :repository,  "git@#{domaingit}:ffst.git"
 set :scm,         :git
 set :git_enable_submodules, 1
-set :branch,      "release-1.0"
+set :branch,      "master"
 set  :deploy_via,             :remote_cache
 
 role :web,        domain                         # Your HTTP server, Apache/etc
@@ -18,17 +18,18 @@ set :user, 'tgilbert'
 set :password, 'sophie'
 set :keep_releases,  3
 
-set :symfony_env, "prod"
-set :symfony_env_prod, "prod"
+set :symfony_env, "sandbox"
+set :symfony_env_prod, "sandbox"
 
 set :rake,           "rake"
 set :rails_env,      "production"
-set :migrate_env,    "prod"
+set :migrate_env,    "sandbox"
 set :migrate_target, :latest
 
-set :tg_db_user,        "ffst"
-set :tg_db_pwd,         "NicudOaltij7"
-set :tg_db_name,        "ffst"
+set :tg_db_type,        "mysql"
+set :tg_db_user,        "ffst_sb"
+set :tg_db_pwd,         "pho4raCh"
+set :tg_db_name,        "ffst_sb"
 
 namespace :deploydb do
 
@@ -37,9 +38,9 @@ namespace :deploydb do
   DESC
   task :default do
     deploy.default
-    migration.createlink
     migration.migrate
     migration.getnumversion
+    ffst.createlink
   end
   desc <<-DESC
     Deployer la version antérieure + maj bdd en arriere
@@ -47,6 +48,24 @@ namespace :deploydb do
   task :rollback do
     deploy.rollback.default
     migration.migratecurrent
+  end
+
+end
+
+namespace :ffst do
+  desc <<-DESC
+    Initialisation répertoire
+  DESC
+  task :setup do
+    run "mkdir -p #{shared_path}/web/pdf"
+    run "chmod -R 777 #{shared_path}/web/pdf"
+  end
+
+  desc <<-DESC
+    Lien vers Pdf
+  DESC
+  task :createlink do
+    run "ln -s #{shared_path}/web/pdf #{current_path}/web/"
   end
 
 end
@@ -125,6 +144,23 @@ namespace :migration do
    Récupère le numéro de version migration inscrit en base de données
   DESC
   task :getnumversion do
-    run "export PGUSER=#{tg_db_user}; export PGPASSWORD=#{tg_db_pwd}; psql -h localhost -t -c 'select version from migration_version;' #{tg_db_name} > #{current_path}/numversion;"
+    case #{tg_db_type}
+    when 'mysql'
+      begin
+        run "mysql -h localhost -u #{tg_db_user} --password=#{tg_db_pwd} -N -b -s  #{tg_db_name} -e 'select version from migration_version;' > #{current_path}/numversion;"
+      rescue Exception => error
+        migration.versionvide
+      end
+    when 'pgsql'
+      begin
+        run "export PGUSER=#{tg_db_user}; export PGPASSWORD=#{tg_db_pwd}; psql -h localhost -t -c 'select version from migration_version;' #{tg_db_name} > #{current_path}/numversion;"
+      rescue Exception => error
+        migration.versionvide
+      end
+    end
+  end
+
+  task :versionvide do
+    run "echo '0' > #{current_path}/numversion"
   end
 end
