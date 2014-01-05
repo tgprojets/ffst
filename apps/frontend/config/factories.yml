@@ -18,8 +18,8 @@ prod:
       transport:
         class: Swift_SmtpTransport
         param:
-          host:       smtp.tgprojets.com
-          port:       587
+          host:       localhost
+          port:       25
 
 sandbox:
   storage:
@@ -38,8 +38,8 @@ sandbox:
       transport:
         class: Swift_SmtpTransport
         param:
-          host:       smtp.tgprojets.com
-          port:       587
+          host:       localhost
+          port:       25
 test:
   storage:
     class: sfSessionTestStorage
