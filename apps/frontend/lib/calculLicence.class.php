@@ -140,7 +140,7 @@ class CalculLicence {
 
     public function payMajorInternational()
     {
-        if ($this->bInternational) {
+        if ($this->bInternational && $this->bNew == false) {
             if (Licence::getDateMajor('int', 'month') > 6) {
                 if (date('Y', strtotime($this->DateSaisie)) == $this->YearStart) {
                     if ((int) date('d', strtotime($this->DateSaisie)) >= Licence::getDateMajor('int', 'day') &&
