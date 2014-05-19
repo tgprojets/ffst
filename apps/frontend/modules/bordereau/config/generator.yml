@@ -43,7 +43,7 @@ generator:
               class: zoom_icon
         actions: {}
       filter:
-        display: [num]
+        display: [num, is_payed]
       form:    ~
       edit:    ~
       new:     ~

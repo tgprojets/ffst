@@ -43,6 +43,8 @@ generator:
           label: Date de paiement
         link:
           label: Club / Licencié / Ligue
+        list_yearlicence:
+          label: Année de licence
       list:
         display: [lib, amount, _link, date_payment, is_payed, tbl_typepayment, created_at]
         max_per_page: 100

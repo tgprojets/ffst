@@ -10,4 +10,10 @@
  */
 class avoirGeneratorConfiguration extends BaseAvoirGeneratorConfiguration
 {
+    public function getFilterDefaults()
+    {
+        return array(
+            'is_used' => 0,
+            );
+    }
 }

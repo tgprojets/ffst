@@ -26,10 +26,7 @@ class tbl_paymentFormFilter extends Basetbl_paymentFormFilter
       );
 
       $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
-      $oSaison = Licence::getSaison();
-      if ($oSaison) {
-        $this->setDefault('list_yearlicence', $oSaison->getId());
-      }
+
   }
   public function addListYearlicenceColumnQuery(Doctrine_Query $query, $field, $values)
   {
@@ -48,8 +45,9 @@ class tbl_paymentFormFilter extends Basetbl_paymentFormFilter
       $year = explode("/", $oSaison->getYearLicence());
       $dateDebut = date('Y-m-d', mktime(0, 0, 0, $oSaison->getMonthBegin(), $oSaison->getDayBegin(), $year[0]));
       $dateFin   = date('Y-m-d', mktime(0, 0, 0, $oSaison->getMonthEnd(), $oSaison->getDayEnd(), $year[1]));
-      $query->andWhere('date_payment >= ?',  $dateDebut);
-      $query->andWhere('date_payment <= ?',  $dateFin);
+
+      $query->andWhere('created_at >= ?',  $dateDebut);
+      $query->andWhere('created_at <= ?',  $dateFin);
     } else {
       var_dump($oSaison);
     }

@@ -10,4 +10,10 @@
  */
 class bordereauGeneratorConfiguration extends BaseBordereauGeneratorConfiguration
 {
+    public function getFilterDefaults()
+    {
+        return array(
+            'is_payed' => 0,
+            );
+    }
 }

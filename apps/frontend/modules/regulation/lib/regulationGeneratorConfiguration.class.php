@@ -10,4 +10,12 @@
  */
 class regulationGeneratorConfiguration extends BaseRegulationGeneratorConfiguration
 {
+    public function getFilterDefaults()
+    {
+        $oSaison = Licence::getSaison();
+        return array(
+            'is_payed' => 0,
+            'list_yearlicence' => $oSaison->getId()
+            );
+    }
 }
