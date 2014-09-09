@@ -2,6 +2,13 @@
 <?php use_stylesheet('paypal.css') ?>
 <div id="sf_admin_container" style="color:#fff;">
     <h1>A régler par chèque</h1>
+
+  <?php if ($sf_user->hasFlash('notice')): ?>
+    <div class="warning">
+        <?php echo $sf_user->getFlash('notice') ?>
+    </div>
+    <br>
+  <?php endif; ?>
   <div class="sf_admin_list">
     <table cellspacing="0">
       <thead>

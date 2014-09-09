@@ -307,6 +307,24 @@ input[type=submit] {
   margin: 4px 20px;
   list-style: none;
 }
+
+#sf_admin_container .warning
+{
+  position: relative;
+  height: 40px;
+  color: #A71418;
+  margin: 4px 0;
+  padding: 10px 6px 6px 50px;
+  background: #f9ffce url(../images/attention.png) no-repeat 10px 2px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+  behavior: url(/PIE.htc);
+  border: 2px #A71418 solid;
+  margin: 4px 20px;
+  list-style: none;
+}
+
 #sf_admin_content .sf_admin_row {
   background-color: #fff;
 }

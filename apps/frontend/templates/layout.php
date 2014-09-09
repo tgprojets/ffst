@@ -147,7 +147,7 @@
     <div class="sb_baspage">
       <div class="info_mail_footer">
         contact :  <a href="mailto:<?php echo Licence::getParam("email_ffst") ?>"><?php echo Licence::getParam("email_ffst") ?></a>
-        Sites internet : <a href="http://www.ffstraineau.com/">www.ffstraineau.com</a>
+        Sites internet : <a href="http://<?php echo Licence::getParam("site_www") ?>/" title="<?php echo Licence::getParam("site_www", false) ?>"><?php echo Licence::getParam("site_www") ?></a>
       </div>
       <?php if ($sf_user->isClub() || $sf_user->isLigue()): ?>
         <div class="info_footer_address">

@@ -153,7 +153,8 @@ class licenceActions extends autoLicenceActions
         $this->nAmountAvoirClub    = Doctrine::getTable('tbl_avoir')->getAmountAvoirClubBordereau($oClub->getId(), $this->oBordereau->getId());
         $this->nAmountTotal        = $this->nAmountClub - $this->nAmountAvoirClub;
         $this->oBordereau->setAmount($this->nAmountTotal)->save();
-
+        $alerte = "Alerte Paiement par chèque : 'Vous avez choisi le paiement de ce bordereau par chèque, à l'ordre de la ".Licence::getParam("cheque_ordre").". Celui-ci doit être envoyé sous 48h à : ".Licence::getParam("cheque_ordre_nom")." ".Licence::getParam("cheque_ordre_prenom")." ".Licence::getParam("cheque_adresse1")." \n".Licence::getParam("cheque_adresse2")." ".Licence::getParam("cheque_cp_ville");
+        $this->getUser()->setFlash('notice', $alerte);
     } else {
         $this->redirect('@tbl_licence');
     }
