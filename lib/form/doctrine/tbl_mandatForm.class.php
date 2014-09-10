@@ -12,7 +12,7 @@ class tbl_mandatForm extends Basetbl_mandatForm
 {
   public function configure()
   {
-    $sNow = date('Y');
+    $sNow = date('Y')+10;
     $years = range($sNow, 1980);
     $this->widgetSchema['id_profil']                 = new sfWidgetFormInputHidden();
     $nIdProfil = $this->options['id_profil'];
