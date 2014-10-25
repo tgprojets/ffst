@@ -32,4 +32,9 @@ class tbl_club extends Basetbl_club
     //Delete thumbnail
     myGenerique::deleteThumbnail($sFiles, sfConfig::get("sf_upload_dir").DIRECTORY_SEPARATOR.sfConfig::get('app_images_thumbnail'));
   }
+
+  // public function getPrix()
+  // {
+  //   return 0;
+  // }
 }

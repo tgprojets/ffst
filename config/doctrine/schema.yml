@@ -45,12 +45,14 @@ tbl_club:
     id_gen:         { type: integer(2) }
     id_ligue:       { type: integer(4) }
     id_affectation: { type: integer(2) }
+    id_federation:  { type: integer(4) }
   relations:
     sfGuardUser:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_club }
     tbl_address:     { onDelete: CASCADE, onUpdate: CASCADE, local: id_address, foreign: id, foreignAlias: tbl_club }
     tbl_gen:         { onDelete: CASCADE, onUpdate: CASCADE, local: id_gen, foreign: id, foreignAlias: tbl_club }
     tbl_ligue:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_ligue, foreign: id, foreignAlias: tbl_club }
     tbl_affectation: { onDelete: CASCADE, onUpdate: CASCADE, local: id_affectation, foreign: id, foreignAlias: tbl_club }
+    tbl_federation:  { onDelete: CASCADE, onUpdate: CASCADE, local: id_federation, foreign: id, foreignAlias: tbl_club }
 
 tbl_affectation:
   columns:
@@ -312,3 +314,19 @@ tbl_params:
     code:              { type: string(20) }
     lib:               { type: string(150) }
     description:       { type: string(2000) }
+
+tbl_federation:
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    name:           { type: string(50), notnull: true, unique: true }
+    lib:            { type: string(255), notnull: false }
+
+tbl_prixlicence:
+  columns:
+    id:             { type: integer(4), primary: true,  autoincrement: true }
+    prix:           { type: float(8), notnull: true }
+    id_typelicence: { type: integer(4) }
+    id_federation:  { type: integer(4) }
+  relations:
+    tbl_typelicence:  { onDelete: CASCADE, onUpdate: CASCADE, local: id_typelicence, foreign: id, foreignAlias: tbl_prixlicence }
+    tbl_federation:   { onDelete: CASCADE, onUpdate: CASCADE, local: id_federation, foreign: id, foreignAlias: tbl_prixlicence }
