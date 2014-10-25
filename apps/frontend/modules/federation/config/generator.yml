@@ -1,0 +1,37 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_federation
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_federation
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        name:
+          label: Nom
+        lib:
+          label: Libellé
+      list:
+        title: Liste des fédérations
+        display: [name, lib]
+        batch_actions: {}
+        object_actions:
+          _edit: ~
+          _delete:
+            credentials: [admin]
+      filter:
+        class: false
+      form:
+        display: [name, lib]
+      edit:
+        title: Edition de la fédération %%name%%
+      new:
+        title: Nouvelle fédération

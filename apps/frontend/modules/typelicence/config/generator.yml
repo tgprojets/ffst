@@ -20,7 +20,7 @@ generator:
         rank:
           label: Ordre
       list:
-        title: Liste des prix de licences
+        title: Liste des types de licences
         table_method: retrieveSortTypeLicenceList
         display: [rank, code, lib, prix]
         batch_actions: {}

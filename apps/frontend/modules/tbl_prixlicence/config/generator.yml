@@ -1,0 +1,42 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           tbl_prixlicence
+    theme:                 admin
+    css:                   admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          tbl_prixlicence
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        id_federation:
+          label: Fédération
+        id_typelicence:
+          label: Type de licence
+        tbl_federation:
+          label: Fédération
+        tbl_typelicence:
+          label: Type de licence
+      list:
+        title: Liste des prix des licences
+        display: [tbl_federation, tbl_typelicence, prix]
+        batch_actions: {}
+        object_actions:
+          _edit: ~
+          _delete:
+            credentials: [admin]
+      filter:
+        display: [id_federation, id_typelicence]
+      form:
+      edit:
+        title: Edition du prix "%%tbl_typelicence%%" pour la fédération "%%tbl_federation%%"
+        display: [prix]
+      new:
+        title: Nouveau prix
+        display: [id_federation, id_typelicence, prix]

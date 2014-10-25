@@ -63,6 +63,9 @@
                     <li> <a href="#">Affiliation</a>
                       <ul>
                   <?php endif; ?>
+                  <?php if ($sf_user->hasCredential('admin')): ?>
+                    <li <?php echo $sf_params->get('module')=="federation"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion des Fédérations', '@tbl_federation') ?></li>
+                  <?php endif; ?>
                   <?php if ($sf_user->hasCredential('admin') || $sf_user->hasCredential('ligue')): ?>
                     <li <?php echo $sf_params->get('module')=="ligue"?'class="sb_menu_select"':''?>><?php echo link_to('Gestion Ligues', '@tbl_ligue') ?></li>
                   <?php endif; ?>
@@ -79,6 +82,7 @@
                     <li> <a href="#">Prix</a>
                       <ul>
                         <li <?php echo $sf_params->get('module')=="typelicence"?'class="sb_menu_select"':''?>><?php echo link_to('Type de licence', '@tbl_typelicence') ?></li>
+                        <li <?php echo $sf_params->get('module')=="tbl_prixlicence"?'class="sb_menu_select"':''?>><?php echo link_to('Prix des licences', '@tbl_prixlicence') ?></li>
                         <li <?php echo $sf_params->get('module')=="prix"?'class="sb_menu_select"':''?>><?php echo link_to('Article', '@tbl_prixunit') ?></li>
                       </ul>
                     </li>
