@@ -14,8 +14,12 @@ class tbl_typelicence extends Basetbl_typelicence
 {
     public function __toString()
     {
-        return $this->getLib();
+        if ($this->getLib()) {
+          return $this->getLib();
+        }
+        return "";
     }
+
   public function delete(Doctrine_Connection $conn = null)
   {
 
