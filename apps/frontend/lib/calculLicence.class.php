@@ -30,6 +30,7 @@ class CalculLicence {
         $this->bFamilly        = $oLicence->getIsFamilly();
         $this->DateSaisie      = $oLicence->getCreatedAt();
         $this->nClub           = $oLicence->getIdClub();
+        $this->federation      = $oLicence->getTblClub()->getTblFederation();
         $this->nUser           = sfContext::getInstance()->getUser()->getGuardUser()->getId();
         $this->setYearLicence();
         $this->setNumLicence($oLicence->getNum());
@@ -86,15 +87,22 @@ class CalculLicence {
 
     private function getPrixLicence($code, $bPrice = true)
     {
-        $oPrix = Doctrine::getTable('tbl_typelicence')->findOneBy('code', $code);
-
+        $oTypeLicence = Doctrine::getTable('tbl_typelicence')->findOneBy('code', $code);
+        $oPrix        = Doctrine::getTable('tbl_prixlicence')->getPrixByKey($oTypeLicence->getId(), $this->federation->getId());
         if ($oPrix)
         {
             if ($bPrice)
             {
                 return $oPrix->getPrix();
             } else {
-                return $oPrix->getLib();
+                return $oTypeLicence->getLib();
+            }
+        } else {
+            if ($bPrice)
+            {
+                return 0;
+            } else {
+                return "";
             }
         }
 
