@@ -74,7 +74,8 @@ class tbl_clubForm extends Basetbl_clubForm
           $oAddress->setIdCodepostaux($aValues['id_codepostaux'])->save();
         }
 
-        $oClub->setName($aValues['name'])
+        $oClub->setIdFederation($aValues['id_federation'])
+              ->setName($aValues['name'])
               ->setNum($aValues['num'])
               ->setAffiliation($aValues['affiliation'])
               ->setIdAffectation($aValues['id_affectation'])
