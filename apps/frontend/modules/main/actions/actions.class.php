@@ -49,13 +49,15 @@ class mainActions extends sfActions
       $jsonresponse['profil']['tel'] = $oAddress->getTel();
       $jsonresponse['profil']['gsm'] = $oAddress->getGsm();
       $jsonresponse['profil']['fax'] = $oAddress->getFax();
-
-      $jsonresponse['profil']['id_category'] = $oLicence->getTblCategory()->getId();
-      $jsonresponse['profil']['id_typelicence'] = $oLicence->getTblTypelicence()->getId();
-      $jsonresponse['profil']['international'] = $oLicence->getInternational();
-      $jsonresponse['profil']['race_nordique'] = $oLicence->getRaceNordique();
-      $jsonresponse['profil']['is_familly'] = $oLicence->getIsFamilly();
-      $jsonresponse['profil']['cnil'] = $oLicence->getCnil();
+      
+      if ($oLicence) {
+          $jsonresponse['profil']['id_category'] = $oLicence->getTblCategory()->getId();
+          $jsonresponse['profil']['id_typelicence'] = $oLicence->getTblTypelicence()->getId();
+          $jsonresponse['profil']['international'] = $oLicence->getInternational();
+          $jsonresponse['profil']['race_nordique'] = $oLicence->getRaceNordique();
+          $jsonresponse['profil']['is_familly'] = $oLicence->getIsFamilly();
+          $jsonresponse['profil']['cnil'] = $oLicence->getCnil();
+      }
 
       return $this->renderText(json_encode($jsonresponse));
     }
