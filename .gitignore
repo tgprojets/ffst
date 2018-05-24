@@ -6,6 +6,7 @@
 /data/dump/*
 /web/uploads/*
 /web/cache/*
+/web/pdf/*
 web/sfFormExtraPlugin
 web/sfDoctrinePlugin
 web/sfTCPDFPlugin
