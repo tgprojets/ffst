@@ -49,7 +49,7 @@ class mainActions extends sfActions
       $jsonresponse['profil']['tel'] = $oAddress->getTel();
       $jsonresponse['profil']['gsm'] = $oAddress->getGsm();
       $jsonresponse['profil']['fax'] = $oAddress->getFax();
-      
+
       if ($oLicence) {
           $jsonresponse['profil']['id_category'] = $oLicence->getTblCategory()->getId();
           $jsonresponse['profil']['id_typelicence'] = $oLicence->getTblTypelicence()->getId();
@@ -82,11 +82,17 @@ class mainActions extends sfActions
   {
     $keyword = $request->getParameter('q');
 
+    $club = $this->getUser()->getClub();
+
     $limit = $request->getParameter('limit');
     if (strlen($keyword) <= 2) {
       return $this->renderText(json_encode(array()));
     }
-    $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
+    if ($club) {
+        $oProfils = Doctrine::getTable('tbl_profil')->findByKeywordClub($keyword, $club);
+    } else {
+        $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
+    }
     $list = array();
     foreach($oProfils as $oProfil)
     {

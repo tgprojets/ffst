@@ -27,4 +27,20 @@ class tbl_profilTable extends Doctrine_Table
         }
         return $q->execute();
     }
+
+    public function findByKeywordClub($keyword, $club, $bLimit=true)
+    {
+        $sName = mb_strtoupper($keyword);
+        $q = $this->createQuery('p')
+              ->leftJoin('p.tbl_licence l')
+              ->leftJoin('l.tbl_club c')
+              ->where('l.id_club = ?', $club->getId())
+              ->andWhere('upper(p.first_name) LIKE ?', $sName.'%')
+              ->orWhere('upper(p.last_name) LIKE ?', $sName.'%');
+        if ($bLimit) {
+            $q->limit(0, 20);
+        }
+        return $q->execute();
+    }
+
 }
