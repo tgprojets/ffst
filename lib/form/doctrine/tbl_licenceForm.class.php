@@ -195,8 +195,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
         'file_src'     => $sFileThumbnailPicture,
         'is_image'     => true,
         'edit_mode'    => !$this->isNew(),
-        'template'     => '<div><br />%input%<br />%delete% %delete_label%</div>',
-        'delete_label' => 'Enlever l\'image',
+        'template'     => '<div><br />%input%<br /></div>'
       ));
 
       $this->widgetSchema['id_typelicence']            = new sfWidgetFormDoctrineChoice(
@@ -322,11 +321,10 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('cp_foreign',          new sfValidatorString(array('required' => false)));
     $this->setValidator('id_familly',          new sfValidatorString(array('required' => false)));
     $this->validatorSchema['image'] =          new sfValidatorFile(array(
-      'required'   => false,
+      'required'   => $this->isNew()?true:false,
       'mime_types' => 'web_images',
       'path'       => sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR,
     ));
-    $this->validatorSchema['image_delete'] = new sfValidatorPass();
     if ($this->isNew()) {
       $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
       $this->setValidator('is_checked', new sfValidatorString(array('required' => false)));
