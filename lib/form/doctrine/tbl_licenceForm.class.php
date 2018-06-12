@@ -653,6 +653,19 @@ class tbl_licenceForm extends Basetbl_licenceForm
       {
         throw new sfValidatorError($validator, 'Veuillez saisir le N° RPPS du Docteur.');
       }
+      $dateMedical = new DateTime($values['date_medical']);
+      $dateToday = new DateTime();
+      if ($dateMedical < $dateToday) {
+          $diff = $dateMedical->diff($dateToday);
+          $y = $diff->format("%y");
+          $m = $diff->format("%m");
+          $d = $diff->format("%d");
+          if ($y < 3 || ($y == 3 && $m == 0 && $d == 0)) {
+          } else {
+              throw new sfValidatorError($validator, 'Date de certificat invalide < 3 ans.');
+          }
+      }
+
     }
     return $values;
   }
