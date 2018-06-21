@@ -230,7 +230,6 @@ class tbl_licenceForm extends Basetbl_licenceForm
             'years' => array_combine($years, $years)
         ));
       }
-      $this->widgetSchema['is_medical']                = new sfWidgetFormInputCheckbox();
       $this->widgetSchema['date_medical']              = new sfWidgetFormI18nDate(array(
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
@@ -305,8 +304,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('gsm',                 new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('fax',                 new sfValidatorString(array('max_length' => 50, 'required' => false)));
     $this->setValidator('id_codepostaux',      new sfValidatorString(array('required' => false)));
-    $this->setValidator('is_medical',          new sfValidatorBoolean(array('required' => false)));
-    $this->setValidator('date_medical',        new sfValidatorDate(array('required' => false)));
+    $this->setValidator('date_medical',        new sfValidatorDate(array('required' => true)));
     $this->setValidator('lastname_doctor',     new sfValidatorString(array('required' => false)));
     $this->setValidator('firstname_doctor',    new sfValidatorString(array('required' => false)));
     $this->setValidator('rpps',                new sfValidatorString(array('required' => false)));
@@ -359,10 +357,6 @@ class tbl_licenceForm extends Basetbl_licenceForm
         $this->setDefault('gsm', $oAddress->getGsm());
         $this->setDefault('id_profil', $oUser->getId());
         $this->setDefault('sexe', $oUser->getSexe());
-        if ($this->getObject()->getDateMedical())
-        {
-          $this->setDefault('is_medical', true);
-        }
         if ($this->getObject()->getIdFamilly())
         {
           $this->setDefault('is_familly', true);

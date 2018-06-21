@@ -49,6 +49,7 @@ generator:
           label: Famille
         date_medical:
           label: Date certificat médical
+          help: Requis
         tbl_club:
           label: Club
         tbl_category:
@@ -98,8 +99,6 @@ generator:
           id_category:
             label: Catégorie
             help: Requis
-          is_medical:
-            label: Certificat valide
           is_familly:
             label: Tarif réduit famille
           first_name:
@@ -127,6 +126,8 @@ generator:
             label: Prénom Docteur
           rpps:
             label: N° RPPS
+          image:
+            help: requis
       edit:
         title: Edition de la licence de %%tbl_profil%%
         actions:
@@ -137,7 +138,7 @@ generator:
         display:
           "Profile": [_image_profil, sexe, image, email, last_name, first_name, birthday, id_profil]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [_date_valide, _checkfamilly, _checkmedical, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical, lastname_doctor, firstname_doctor, rpps]
+          "Licence": [_date_valide, _checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, lastname_doctor, firstname_doctor, rpps]
       new:
         title: Nouvelle licence
         actions:
@@ -149,4 +150,4 @@ generator:
           "Rechercher licencié existant": [id_profil, _profil_exist]
           "Saisir licencié": [sexe, image, email, last_name, first_name, birthday]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [_checkfamilly, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, is_medical, date_medical, lastname_doctor, firstname_doctor, rpps]
+          "Licence": [_checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, lastname_doctor, firstname_doctor, rpps]
