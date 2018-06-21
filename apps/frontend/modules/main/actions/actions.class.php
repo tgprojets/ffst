@@ -94,11 +94,16 @@ class mainActions extends sfActions
         $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
     }
     $list = array();
+    $sYearLicence = Licence::getDateLicence();
     foreach($oProfils as $oProfil)
     {
-      $Birthday  = $oProfil->getBirthday();
-      $sBirthday = substr($Birthday, 8, 2).'/'.substr($Birthday, 5, 2).'/'.substr($Birthday, 0, 4);
-      $list[$oProfil->getId()] = sprintf('%s %s %s', $oProfil->getLastName(), $oProfil->getFirstName(), $sBirthday);
+      $licence = Doctrine::getTable('tbl_licence')->findByProfil($sYearLicence, $oProfil->getId());
+        if (!$licence) {
+
+          $Birthday  = $oProfil->getBirthday();
+          $sBirthday = substr($Birthday, 8, 2).'/'.substr($Birthday, 5, 2).'/'.substr($Birthday, 0, 4);
+          $list[$oProfil->getId()] = sprintf('%s %s %s', $oProfil->getLastName(), $oProfil->getFirstName(), $sBirthday);
+        }
     }
     return $this->renderText(json_encode($list));
   }
