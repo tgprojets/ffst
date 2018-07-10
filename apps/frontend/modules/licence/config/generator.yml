@@ -48,7 +48,7 @@ generator:
         is_familly:
           label: Famille
         date_medical:
-          label: Date certificat médical
+          label: Date certificat médical ou questionnaire sportif
           help: Requis
         tbl_club:
           label: Club

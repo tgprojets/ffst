@@ -35,8 +35,8 @@ class tbl_profilTable extends Doctrine_Table
               ->leftJoin('p.tbl_licence l')
               ->leftJoin('l.tbl_club c')
               ->where('l.id_club = ?', $club->getId())
-              ->andWhere('upper(p.first_name) LIKE ?', $sName.'%')
-              ->orWhere('upper(p.last_name) LIKE ?', $sName.'%');
+              ->andWhere('upper(p.last_name) LIKE ? OR upper(p.first_name) LIKE ?', array($sName.'%', $sName.'%'));
+              //->andWhere('upper(p.first_name) LIKE ?', $sName.'%');
         if ($bLimit) {
             $q->limit(0, 20);
         }

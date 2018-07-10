@@ -50,7 +50,7 @@ generator:
         is_familly:
           label: Famille
         date_medical:
-          label: Date certificat médical
+          label: Date certificat médical ou questionnaire sportif
         tbl_club:
           label: Club
         tbl_category:
@@ -163,4 +163,3 @@ generator:
           "Saisir licencié": [sexe, image, email, last_name, first_name, birthday]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
           "Licence": [year_licence, _checkmedical,  id_club, id_typelicence, id_category, international, race_nordique, cnil, is_medical, date_medical, lastname_doctor, firstname_doctor, rpps, date_validation]
-

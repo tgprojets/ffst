@@ -658,6 +658,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
           } else {
               throw new sfValidatorError($validator, 'Date de certificat invalide < 3 ans.');
           }
+      } else {
+          throw new sfValidatorError($validator, 'Date de certificat invalide ne peut être dans le futur.');
       }
 
     }
