@@ -107,6 +107,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
                ->setFirstnameDoctor($aValues['firstname_doctor'])
                ->setRpps($aValues['rpps'])
                ->setIdClub($aValues['id_club'])
+               ->setIsQs($aValues['is_qs'])
                ->setIdProfil($oProfil->getId())
                ->setIdCategory($aValues['id_category'])
                ->setIdTypelicence($aValues['id_typelicence'])
@@ -234,6 +235,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'culture' => 'fr',
           'format' => '%day% %month% %year%',
       ));
+      $this->widgetSchema['is_qs']                 = new sfWidgetFormChoice(array('choices'  => array(0 => 'CM', 1 => 'QS'), 'multiple' => false, 'expanded' => true));
       $this->widgetSchema['lastname_doctor']       = new sfWidgetFormInputText();
       $this->widgetSchema['firstname_doctor']      = new sfWidgetFormInputText();
       $this->widgetSchema['rpps']                  = new sfWidgetFormInputText();
@@ -268,6 +270,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
     $this->validatorSchema['sexe']        = new sfValidatorChoice(
       array('choices' => array_keys($aSexe), 'required' => false)
+    );
+    $this->validatorSchema['is_qs']        = new sfValidatorChoice(
+      array('choices' => array_keys(array(0 => 'CM', 1 => 'QS')), 'required' => false)
     );
     $this->setValidator('email', new sfValidatorEmail(
         array('required' => true),
@@ -328,17 +333,18 @@ class tbl_licenceForm extends Basetbl_licenceForm
       $this->setValidator('is_checked', new sfValidatorString(array('required' => false)));
     }
     $this->validatorSchema->setPostValidator(new sfValidatorAnd(
-            array(
-              new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
-              new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
-              new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieClub'))),
-              new sfValidatorCallback(array('callback'=> array($this, 'checkCategory'))),
-              new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieLicence'))),
-              new sfValidatorCallback(array('callback'=> array($this, 'checkFamilly'))),
-              new sfValidatorCallback(array('callback'=> array($this, 'checkCountry'))),
-              new sfValidatorCallback(array('callback'=> array($this, 'checkDateMedical'))),
-       ))
+          array(
+            new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieClub'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkCategory'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieLicence'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkFamilly'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkCountry'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkDateMedical'))),
+     ))
     );
+
 
   }
   public function defaultsWidget()
@@ -373,6 +379,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     } else {
       $this->setDefault('country', 'FR');
       $this->setDefault('sexe', 'H');
+      $this->setDefault('is_qs', 0);
       $this->setDefault('is_checked', '0');
       if ($this->bClub) {
         $oClub = sfContext::getInstance()->getUser()->getClub();
@@ -656,7 +663,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           $d = $diff->format("%d");
           if ($y < 3 || ($y == 3 && $m == 0 && $d == 0)) {
           } else {
-              throw new sfValidatorError($validator, 'Date de certificat invalide < 3 ans.');
+              throw new sfValidatorError($validator, 'Date de certificat invalide > 3 ans.');
           }
       } else {
           throw new sfValidatorError($validator, 'Date de certificat invalide ne peut être dans le futur.');

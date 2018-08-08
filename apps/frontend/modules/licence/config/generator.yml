@@ -64,6 +64,8 @@ generator:
           label: Numéro de licence
         is_brouillon:
           label: Brouillon (encours de saisie)
+        is_qs:
+          label: Document produit
       list:
         title: Liste des licenciés
         display: [num, is_brouillon, tbl_profil, tbl_club, tbl_typelicence, tbl_category, _check_date, date_validation]
@@ -138,7 +140,7 @@ generator:
         display:
           "Profile": [_image_profil, sexe, image, email, last_name, first_name, birthday, id_profil]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [_date_valide, _checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, lastname_doctor, firstname_doctor, rpps]
+          "Licence": [_date_valide, _checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, is_qs, lastname_doctor, firstname_doctor, rpps]
       new:
         title: Nouvelle licence
         actions:
@@ -150,4 +152,4 @@ generator:
           "Rechercher licencié existant": [id_profil, _profil_exist]
           "Saisir licencié": [sexe, image, email, last_name, first_name, birthday]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [_checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, lastname_doctor, firstname_doctor, rpps]
+          "Licence": [_checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, is_qs, lastname_doctor, firstname_doctor, _checkmedical, rpps]
