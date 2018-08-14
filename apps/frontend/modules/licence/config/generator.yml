@@ -152,4 +152,4 @@ generator:
           "Rechercher licencié existant": [id_profil, _profil_exist]
           "Saisir licencié": [sexe, image, email, last_name, first_name, birthday]
           "Adresse": [_foreign, is_foreign, country, cp_foreign, city_foreign, id_codepostaux, address1, address2, tel, gsm, fax, id_address]
-          "Licence": [_checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, is_qs, lastname_doctor, firstname_doctor, _checkmedical, rpps]
+          "Licence": [_checkfamilly, id_club, id_typelicence, id_category, international, race_nordique, is_familly, id_familly, cnil, date_medical, is_qs, lastname_doctor, firstname_doctor, rpps, _checkmedical]
