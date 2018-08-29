@@ -132,6 +132,10 @@ ajax_getLicence:
   url:   /ajax/getLicence
   param:  { module: main, action: getLicence }
 
+ajax_getLicence_famille:
+  url:   /ajax/getLicenceFamille
+  param:  { module: main, action: getLicenceFamille }
+
 ajax_getUser:
   url:   /ajax/getProfil
   param:  { module: main, action: getProfil }

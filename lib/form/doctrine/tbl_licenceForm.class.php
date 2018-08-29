@@ -249,7 +249,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'label'            => 'Tarif famille <br /> (Nom prénom du licencié)',
           'choices'          => array(),
           'renderer_class'   => 'sfWidgetFormDoctrineJQueryAutocompleter',
-          'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence'), 'config' => "{max: 20}"),
+          'renderer_options' => array('model' => 'tbl_profil', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getLicence_famille'), 'config' => "{max: 20}"),
       ));
       if ($this->isNew()) {
         $this->widgetSchema['id_profil']            = new sfWidgetFormChoice(array(
@@ -557,15 +557,15 @@ class tbl_licenceForm extends Basetbl_licenceForm
     if (! empty($values['id_familly']))
     {
       //Check id famille appartient au club
-      $nbr = Doctrine_Query::create()
-        ->from('tbl_licence l')
-        ->where("l.id_club = ?", $values['id_club'])
-        ->andWhere("l.id_profil = ?", $values['id_familly'])
-        ->andWhere("l.year_licence = ?", Licence::getDateLicence())
-        ->count();
-        if ($nbr==0) {
-          throw new sfValidatorError($validator, 'Le licencié de la famille ne fait pas partie de ce club ou n\' a pas de licence encours.');
-        }
+      // $nbr = Doctrine_Query::create()
+      //   ->from('tbl_licence l')
+      //   ->where("l.id_club = ?", $values['id_club'])
+      //   ->andWhere("l.id_profil = ?", $values['id_familly'])
+      //   ->andWhere("l.year_licence = ?", Licence::getDateLicence())
+      //   ->count();
+      //   if ($nbr==0) {
+      //     throw new sfValidatorError($validator, 'Le licencié de la famille ne fait pas partie de ce club ou n\' a pas de licence encours.');
+      //   }
       //Check id famille a une licence classique
       $nbr = Doctrine_Query::create()
         ->from('tbl_licence l')

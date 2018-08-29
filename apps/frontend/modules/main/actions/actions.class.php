@@ -114,6 +114,42 @@ class mainActions extends sfActions
    * @param sfWebRequest $request
    * @return Json return Json array of matching City objects converted to string
    */
+  public function executeGetLicenceFamille(sfWebRequest $request)
+  {
+    $keyword = $request->getParameter('q');
+
+    $club = $this->getUser()->getClub();
+
+    $limit = $request->getParameter('limit');
+    if (strlen($keyword) <= 2) {
+      return $this->renderText(json_encode(array()));
+    }
+    if ($club) {
+        $oProfils = Doctrine::getTable('tbl_profil')->findByKeywordClub($keyword, $club);
+    } else {
+        $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
+    }
+    $list = array();
+    $sYearLicence = Licence::getDateLicence();
+    foreach($oProfils as $oProfil)
+    {
+      $licence = Doctrine::getTable('tbl_licence')->findByProfil($sYearLicence, $oProfil->getId());
+        if ($licence && $licence->getDateValidation()) {
+
+          $Birthday  = $oProfil->getBirthday();
+          $sBirthday = substr($Birthday, 8, 2).'/'.substr($Birthday, 5, 2).'/'.substr($Birthday, 0, 4);
+          $list[$oProfil->getId()] = sprintf('%s %s %s', $oProfil->getLastName(), $oProfil->getFirstName(), $sBirthday);
+        }
+    }
+    return $this->renderText(json_encode($list));
+  }
+
+  /**
+   * Récupère la liste des villes en ajax
+   *
+   * @param sfWebRequest $request
+   * @return Json return Json array of matching City objects converted to string
+   */
   public function executeGetProfil(sfWebRequest $request)
   {
     $keyword = $request->getParameter('q');
