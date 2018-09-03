@@ -14,7 +14,7 @@ config_lic:
   # page format
   PDF_PAGE_FORMAT: "A4"
   # page orientation (P=portrait, L=landscape)
-  PDF_PAGE_ORIENTATION: "L"
+  PDF_PAGE_ORIENTATION: "P"
   # document creator
   PDF_CREATOR: "Thomas GILBERT"
   # document author
