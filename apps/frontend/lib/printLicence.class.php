@@ -212,7 +212,7 @@ class PrintLicence {
         $this->pdf->Cell(35, 0, "Tél : ".$this->oAddress->getTel(), 0, 1, 'L', 0, '', 0);
 
         //Image
-        $this->pdf->Image($this->imageProfil, 110, $y, 22, '', '', '', '', false, 300, '', false, false, 1);
+        $this->pdf->Image($this->imageProfil, 160, $y, 22, '', '', '', '', false, 300, '', false, false, 1);
 
         // $yPos = $this->pdf->getY();
         // $this->pdf->setXY($this->pdf->getX()+35, $yPos);
