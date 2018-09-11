@@ -134,7 +134,7 @@ class mainActions extends sfActions
     foreach($oProfils as $oProfil)
     {
       $licence = Doctrine::getTable('tbl_licence')->findByProfil($sYearLicence, $oProfil->getId());
-        if ($licence && $licence->getDateValidation()) {
+        if ($licence ) {
 
           $Birthday  = $oProfil->getBirthday();
           $sBirthday = substr($Birthday, 8, 2).'/'.substr($Birthday, 5, 2).'/'.substr($Birthday, 0, 4);

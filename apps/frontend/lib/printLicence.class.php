@@ -23,7 +23,7 @@ class PrintLicence {
         $this->oProfil       = $oLicence->getTblProfil();
         $this->club          = $this->oLicence->getTblClub();
         $this->oAddress      = $this->oProfil->getTblAddress();
-        $this->oAddressClub  = $this->oProfil->getTblAddress();
+        $this->oAddressClub  = $this->club->getTblAddress();
         $this->oCodePostal   = $this->oAddress->getTblCodepostaux();
         $this->oTypeLicence  = $oLicence->getTblTypelicence();
         $this->oCategory     = $oLicence->getTblCategory();
@@ -70,12 +70,12 @@ class PrintLicence {
         $this->pdf->selectColumn();
         $yPos = 14;
         $yDep = 1;
-        $this->getHeaderImage(0);
+        $this->getHeaderImage(0, 0);
 
         $this->pdf->setXY(70, $yPos);
         $this->pdf->Cell(125, 28, '', 1, 2, 'C', 0, '', 0);
         $this->pdf->setXY(105, $yPos + $yDep);
-        $this->pdf->SetFont('helvetica', 'I', 6);
+        $this->pdf->SetFont('times', 'I', 6);
         $this->pdf->Cell(10, 0, "Fédération délégataire et agréée par le ministère des Sports", 0, 2, 'L', 0, '', 0);
         $this->pdf->setXY(100, $this->pdf->getY() + $yDep);
         $this->pdf->Cell(10, 0, "Affiliée au Comité National Olympique et Sportif Français (CNOSF)", 0, 2, 'L', 0, '', 0);
@@ -86,13 +86,14 @@ class PrintLicence {
         $this->pdf->setXY(110, $this->pdf->getY() + $yDep);
         $this->pdf->Cell(10, 0, "15300 Neussargues en Pinatelle – France", 0, 2, 'L', 0, '', 0);
         $this->pdf->setXY(105, $this->pdf->getY() + $yDep);
-        $this->pdf->Cell(10, 0, "Tél :04.71.20.93.38 Mobile : 06.84.10.84.60", 0, 2, 'L', 0, '', 0);
+        $this->pdf->Cell(10, 0, "Tél : 04.71.20.93.38 Mobile : 06.84.10.84.60", 0, 2, 'L', 0, '', 0);
         $this->pdf->setXY(115, $this->pdf->getY() + $yDep);
         $this->pdf->Cell(70, 0, "Courriel licences : ffst@free.fr", 0, 2, 'L', 0, '', 0);
 
         //club
+        $y = 50;
         $this->pdf->SetFont('helvetica', 'B', 10);
-        $this->pdf->setXY(15, 50);
+        $this->pdf->setXY(15, $y);
         $this->pdf->Cell(18, 0, $this->club, 0, 1, 'L', 0, '', 0);
         $this->pdf->SetFont('helvetica', '', 10);
         $this->pdf->setXY(15, $this->pdf->getY()+$yDep);
@@ -111,9 +112,9 @@ class PrintLicence {
         //Identité du licencié
         $this->pdf->setXY(90, $this->pdf->getY()+$yDep);
         if ($this->oProfil->getSexe() == 'H') {
-            $genre = "M.";
+            $genre = "Monsieur";
         } else {
-            $genre = "Mme";
+            $genre = "Madame";
         }
         $nom = $genre." ".$this->oProfil->getLastName()." ".$this->oProfil->getFirstName();
         $this->pdf->Cell(35, 0, $nom, 0, 1, 'L', 0, '', 0);
@@ -139,7 +140,7 @@ class PrintLicence {
         $this->pdf->setXY(15, $this->pdf->getY()+($yDep*2));
         $this->pdf->MultiCell(180, 0, "Comme suite à votre demande dont nous vous remercions, nous vous demandons de bien vouloir trouver, ci-après, la licence citée en objet avec les spécifications suivantes :", 0, 'L');
         $this->pdf->setXY(30, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(35, 0, "Type licence : ".$this->oGroupLicence->getLib(), 0, 1, 'L', 0, '', 0);
+        $this->pdf->Cell(35, 0, "Type licence : ".$this->oGroupLicence->getCode()." ".$this->oGroupLicence->getLib(), 0, 1, 'L', 0, '', 0);
         if ($this->oGroupLicence->getCode() == 'COM')
         {
             if ($this->oCategory->getId()) {
@@ -148,7 +149,7 @@ class PrintLicence {
             }
         }
         $this->pdf->setXY(30, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(35, 0, "Valide du ".Licence::getDateStartSaison($this->oLicence->getYearLicence())." au ".Licence::getDateEndSaison($this->oLicence->getYearLicence()), 0, 1, 'L', 0, '', 0);
+        $this->pdf->Cell(35, 0, "Valide du ".format_date($this->oLicence->getDateValidation(),'dd/MM/yyyy') , 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(15, $this->pdf->getY()+($yDep*2));
         //TODO: texte en fonction type de licence
         $this->pdf->MultiCell(180, 0, "Nous vous rappelons que vous devez l’avoir avec vous pour toute manifestation à laquelle vous participez, qu’elle est strictement personnelle, non-cessible (Si licence Sport-loisir, et que celle-ci n’est pas valable en compétition. Et si non-pratiquant (Dirigeant, Muscher Pro...) qu’elle n’autorise aucune pratique sportive, entraînement et/ou compétition.)", 0, 'L');
@@ -161,13 +162,17 @@ class PrintLicence {
         $this->pdf->setXY(90, $this->pdf->getY()+($yDep*2));
         $this->pdf->Cell(35, 0, "Le Responsable du Club chargé des Licences fédérales,", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(90, $this->pdf->getY()+($yDep*10));
-        $this->pdf->Cell(35, 0, $nom, 0, 1, 'L', 0, '', 0);
+        $userClub = $this->club->getSfGuardUser();
+        $nomClub = $userClub->getLastName().' '.$userClub->getFirstName();
+        $this->pdf->Cell(35, 0, $nomClub, 0, 1, 'L', 0, '', 0);
 
         //Bloc licencié en bas
         $this->pdf->SetFont('helvetica', 'B', 8);
         $x = 15;
         $yDep = 1;
         $y = $this->pdf->getY()+35;
+        $x = 19;
+        $y = 250;
         $this->pdf->setXY($x, $y);
         $this->pdf->Cell(35, 0, "Licence saison ".Licence::getStartYearLicence()."/".Licence::getEndYearLicence(), 0, 1, 'L', 0, '', 0);
         $this->pdf->SetFont('helvetica', '', 8);
@@ -188,6 +193,8 @@ class PrintLicence {
         $this->caseCheck(!$this->oLicence->getIsNew(), 'oui', $x+24, $this->pdf->getY()-($yDep*4), 4);
 
         $x = 95;
+        $x = 106;
+        $y = 250;
         $this->pdf->SetFont('helvetica', '', 8);
         $this->pdf->setXY($x, $y+$yDep);
         $this->pdf->Cell(35, 0, "Nom : ".$this->oProfil->getLastName(), 0, 1, 'L', 0, '', 0);
@@ -212,7 +219,7 @@ class PrintLicence {
         $this->pdf->Cell(35, 0, "Tél : ".$this->oAddress->getTel(), 0, 1, 'L', 0, '', 0);
 
         //Image
-        $this->pdf->Image($this->imageProfil, 160, $y, 22, '', '', '', '', false, 300, '', false, false, 1);
+        $this->pdf->Image($this->imageProfil, 160, $y, 20, 20, '', '', '', false, 300, '', false, false, 1);
 
         // $yPos = $this->pdf->getY();
         // $this->pdf->setXY($this->pdf->getX()+35, $yPos);
@@ -410,7 +417,7 @@ class PrintLicence {
         $this->pdf->setXY(180, 10);
 
         //image et texte
-        $this->getHeaderImage(245);
+        $this->getHeaderImage(245, 0);
 
         //Bloc important
         $this->pdf->SetFont('helvetica', '', 10);
@@ -502,11 +509,12 @@ class PrintLicence {
 
 
 
-    private function getHeaderImage($xPostion)
+    private function getHeaderImage($xPostion, $yPosition)
     {
-        $this->pdf->Image($this->image, $xPostion, 4, 54, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+
+        $this->pdf->Image($this->image, $xPostion, $yPosition+4, 54, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
         $this->pdf->SetFont('helvetica', 'B', 5);
-        $this->pdf->setXY(6, 35);
+        $this->pdf->setXY($xPostion+6, $yPosition+35);
         $this->pdf->MultiCell(50, 0, Licence::getParam("ct_head"), 0, 'C');
     }
 
