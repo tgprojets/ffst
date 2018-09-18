@@ -54,10 +54,10 @@ class PrintLicence {
         $this->pdf->setEqualColumns(2, 150);
 
         $this->pdf->SetFont("helvetica", "", 12);
-
         $this->pdf->AddPage();
         $this->pdf->Image($imageBack, 50, 100, 140, 93, '', '', '', false, 300, '', false, false, 0);
 
+        $this->pdf->setAutoPageBreak(TRUE, 0);
         $this->getLicence();
         //$this->getMedical();
 
@@ -166,11 +166,22 @@ class PrintLicence {
         $nomClub = $userClub->getLastName().' '.$userClub->getFirstName();
         $this->pdf->Cell(35, 0, $nomClub, 0, 1, 'L', 0, '', 0);
 
+        //En tête du bloc
+        $this->pdf->SetFont('helvetica', 'B', 8);
+        $y = 240;
+        $x = 19;
+        $this->pdf->setXY($x, $y);
+        $this->pdf->Cell(60, 0, $this->club, 0, 1, 'C', 0, '', 0);
+
+        $this->pdf->SetFont('helvetica', 'BI', 6);
+        $y = 238;
+        $x = 106;
+        $this->pdf->setXY($x, $y);
+        $this->pdf->MultiCell(60, 0, "FEDERATION FRANÇAISE DES SPORTS DE TRAîNEAU DE SKI / VTT - JOËRING ET DE CANICROSS", 0, 'C');
+
         //Bloc licencié en bas
         $this->pdf->SetFont('helvetica', 'B', 8);
-        $x = 15;
         $yDep = 1;
-        $y = $this->pdf->getY()+35;
         $x = 19;
         $y = 250;
         $this->pdf->setXY($x, $y);
@@ -190,9 +201,8 @@ class PrintLicence {
         $this->pdf->Cell(35, 0, "Certificat médical ou Attestation : ".format_date($this->oLicence->getDateMedical(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($x, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(25, 0, "Renouvellement : ", 0, 1, 'L', 0, '', 0);
-        $this->caseCheck(!$this->oLicence->getIsNew(), 'oui', $x+24, $this->pdf->getY()-($yDep*4), 4);
+        //$this->caseCheck(!$this->oLicence->getIsNew(), 'oui', $x+24, $this->pdf->getY()-($yDep*4), 4);
 
-        $x = 95;
         $x = 106;
         $y = 250;
         $this->pdf->SetFont('helvetica', '', 8);
@@ -216,10 +226,14 @@ class PrintLicence {
         $this->pdf->setXY($x, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(35, 0, "Mail : ".$this->oProfil->getEmail(), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($x+50, $this->pdf->getY()-($yDep*3));
-        $this->pdf->Cell(35, 0, "Tél : ".$this->oAddress->getTel(), 0, 1, 'L', 0, '', 0);
+        if ($this->oAddress->getTel()) {
+            $this->pdf->Cell(35, 0, "Tél : ".$this->oAddress->getTel(), 0, 1, 'L', 0, '', 0);
+        }
 
         //Image
         $this->pdf->Image($this->imageProfil, 160, $y, 20, 20, '', '', '', false, 300, '', false, false, 1);
+
+        $this->getFooter(19, $this->pdf->getY()+8);
 
         // $yPos = $this->pdf->getY();
         // $this->pdf->setXY($this->pdf->getX()+35, $yPos);
@@ -382,7 +396,7 @@ class PrintLicence {
         // } elseif ($this->oGroupLicence->getCode() == 'SPL') {
         //     $this->pdf->Cell(60, 0, 'Non valide en compétition', 0, 'L');
         // }
-        //$this->getFooter();
+
     }
 
     public function caseCheck($bValue, $text, $xPos, $yPos, $nLen)
@@ -518,20 +532,20 @@ class PrintLicence {
         $this->pdf->MultiCell(50, 0, Licence::getParam("ct_head"), 0, 'C');
     }
 
-    private function getFooter()
+    private function getFooter($x, $y)
     {
-        $this->pdf->setY(175);
-        $this->pdf->SetFont('helvetica', 'B', 8);
-        $this->pdf->Cell(140, 0, Licence::getParam("ct_foot"), 0, 2, 'C', 0, '', 0);
-        $this->pdf->SetFont('helvetica', '', 8);
-        $this->pdf->Cell(140, 0, Licence::getParam("address_ffst"), 0, 2, 'C', 0, '', 0);
-        $this->pdf->Cell(140, 0, Licence::getParam("ville_ffst"), 0, 2, 'C', 0, '', 0);
-        $yPos = $this->pdf->getY();
-        $xPos = $this->pdf->getX();
-        $this->pdf->Cell(70, 0, "Mel : ", 0, 2, 'R', 0, '', 0);
-        $this->pdf->setXY($xPos+70, $yPos);
-        $this->pdf->SetFont('helvetica', 'I', 8);
-        $HTML = '<a href="#">'.Licence::getParam("email_ffst").'</a>';
-        $this->pdf->writeHTML($HTML, true, false, false, false, '');
+        $this->pdf->setXY($x, $y);
+        $this->pdf->SetFont('times', 'I', 8);
+        $this->pdf->Cell(70, 0, "FFST - Cz M. Antoine LEMOINE Les Lacous, Chavagnac", 0, 1, 'C', 0, '', 0);
+        $this->pdf->setXY($x+80, $y);
+        $this->pdf->Cell(70, 0, "15300 Neussargues En Pinatelle - Mail licences : ", 0, 1, 'R', 0, '', 0);
+        // $this->pdf->Cell(140, 0, Licence::getParam("ville_ffst"), 0, 2, 'C', 0, '', 0);
+        // $yPos = $this->pdf->getY();
+        // $xPos = $this->pdf->getX();
+        // $this->pdf->Cell(70, 0, "Mel : ", 0, 2, 'R', 0, '', 0);
+        // $this->pdf->setXY($xPos+70, $yPos);
+        // $this->pdf->SetFont('helvetica', 'I', 8);
+        // $HTML = '<a href="#">'.Licence::getParam("email_ffst").'</a>';
+        // $this->pdf->writeHTML($HTML, true, false, false, false, '');
     }
 }

@@ -30,17 +30,17 @@ config_lic:
   # document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch]
   PDF_UNIT: "mm"
   # header margin
-  PDF_MARGIN_HEADER: "5"
+  PDF_MARGIN_HEADER: "1"
   # footer margin
-  PDF_MARGIN_FOOTER: "5"
+  PDF_MARGIN_FOOTER: "1"
   # top margin
-  PDF_MARGIN_TOP: "5"
+  PDF_MARGIN_TOP: "1"
   # bottom margin
-  PDF_MARGIN_BOTTOM: "5"
+  PDF_MARGIN_BOTTOM: "1"
   # left margin
-  PDF_MARGIN_LEFT: "5"
+  PDF_MARGIN_LEFT: "1"
   # right margin
-  PDF_MARGIN_RIGHT: "5"
+  PDF_MARGIN_RIGHT: "1"
   # default main font name
   PDF_FONT_NAME_MAIN: "helvetica"
   # default main font size
