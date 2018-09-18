@@ -94,17 +94,22 @@ class PrintLicence {
         $y = 50;
         $this->pdf->SetFont('helvetica', 'B', 10);
         $this->pdf->setXY(15, $y);
+        //Nom du club
         $this->pdf->Cell(18, 0, $this->club, 0, 1, 'L', 0, '', 0);
         $this->pdf->SetFont('helvetica', '', 10);
         $this->pdf->setXY(15, $this->pdf->getY()+$yDep);
+        //Adresse du club
         $this->pdf->Cell(18, 0, $this->oAddressClub->getAddress1(), 0, 1, 'L', 0, '', 0);
+        //Adresse du club complémentaire
         if ($this->oAddressClub->getAddress2()) {
             $this->pdf->setXY(15, $this->pdf->getY()+$yDep);
             $this->pdf->Cell(18, 0, $this->oAddressClub->getAddress2(), 0, 1, 'L', 0, '', 0);
         }
         $this->pdf->setXY(15, $this->pdf->getY()+$yDep);
+        //CP ville club
         $this->pdf->Cell(18, 0, $this->oAddressClub->getTblCodepostaux()->getCodePostaux()." ".$this->oAddressClub->getTblCodepostaux()->getVille(), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(15, $this->pdf->getY()+$yDep);
+        //Tel du club
         if ($this->oAddressClub->getTel()) {
             $this->pdf->Cell(18, 0, $this->oAddressClub->getTel(), 0, 1, 'L', 0, '', 0);
         }
@@ -116,18 +121,22 @@ class PrintLicence {
         } else {
             $genre = "Madame";
         }
-        $nom = $genre." ".$this->oProfil->getLastName()." ".$this->oProfil->getFirstName();
+        // Genre - Prénom - nom
+        $nom = $genre." ".$this->oProfil->getFirstName()." ".$this->oProfil->getLastName();
         $this->pdf->Cell(35, 0, $nom, 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(90, $this->pdf->getY()+$yDep);
+        //Adresse Licencié
         $this->pdf->Cell(35, 0, $this->oAddress->getAddress1(), 0, 1, 'L', 0, '', 0);
+        //Adresse complémentaire Licencié
         if ($this->oAddress->getAddress2()) {
             $this->pdf->setXY(90, $this->pdf->getY()+$yDep);
             $this->pdf->Cell(35, 0, $this->oAddress->getAddress2(), 0, 1, 'L', 0, '', 0);
         }
         $this->pdf->setXY(90, $this->pdf->getY()+$yDep);
+        //Cp ville licencié
         $this->pdf->Cell(35, 0, $this->oAddress->getTblCodepostaux()->getCodePostaux()." ".$this->oAddress->getTblCodepostaux()->getVille(), 0, 1, 'L', 0, '', 0);
-
         $this->pdf->setXY(90, $this->pdf->getY()+($yDep*3));
+        //Ville club, date validation licence
         $this->pdf->Cell(35, 0, $this->oAddressClub->getTblCodepostaux()->getVille()." le, ".format_date($this->oLicence->getDateValidation(), 'dd/MM/yyyy'), 0, 1, 'L', 0, '', 0);
 
         // Lettre
@@ -136,6 +145,7 @@ class PrintLicence {
         $this->pdf->setXY(15, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(35, 0, "Numéro de licence: ".$this->oLicence->getNum(), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(15, $this->pdf->getY()+($yDep*3));
+
         $this->pdf->Cell(35, 0, $genre.",", 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(15, $this->pdf->getY()+($yDep*2));
         $this->pdf->MultiCell(180, 0, "Comme suite à votre demande dont nous vous remercions, nous vous demandons de bien vouloir trouver, ci-après, la licence citée en objet avec les spécifications suivantes :", 0, 'L');
@@ -149,10 +159,19 @@ class PrintLicence {
             }
         }
         $this->pdf->setXY(30, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(35, 0, "Valide du ".format_date($this->oLicence->getDateValidation(),'dd/MM/yyyy') , 0, 1, 'L', 0, '', 0);
+
+        $this->pdf->Cell(35, 0, "Valide du ".format_date($this->oLicence->getDateValidation(),'dd/MM/yyyy')." au ".Licence::getDateEndSaison($this->oLicence->getYearLicence()), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(15, $this->pdf->getY()+($yDep*2));
-        //TODO: texte en fonction type de licence
-        $this->pdf->MultiCell(180, 0, "Nous vous rappelons que vous devez l’avoir avec vous pour toute manifestation à laquelle vous participez, qu’elle est strictement personnelle, non-cessible (Si licence Sport-loisir, et que celle-ci n’est pas valable en compétition. Et si non-pratiquant (Dirigeant, Muscher Pro...) qu’elle n’autorise aucune pratique sportive, entraînement et/ou compétition.)", 0, 'L');
+        $texte = "Nous vous rappelons que vous devez l’avoir avec vous pour toute manifestation à laquelle vous participez, qu’elle est strictement personnelle ";
+        if ($this->oGroupLicence->getCode() == 'COM')
+        {
+            $texte .= "et non-cessible.";
+        } elseif ($this->oGroupLicence->getCode() == 'SPL') {
+            $texte .= ", non-cessible et que celle-ci n'est pas valable en compétition.";
+        } else {
+            $texte .= ", non-cessible et qu'elle n'autorise aucune pratique sportive, entraînement et/ou compétition.";
+        }
+        $this->pdf->MultiCell(180, 0, $texte, 0, 'L');
         $this->pdf->setXY(15, $this->pdf->getY()+($yDep*2));
         $this->pdf->Cell(35, 0, "Nous vous souhaitons une excellente saison ".Licence::getStartYearLicence()."/".Licence::getEndYearLicence(), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY(15, $this->pdf->getY()+($yDep*2));
@@ -172,12 +191,18 @@ class PrintLicence {
         $x = 19;
         $this->pdf->setXY($x, $y);
         $this->pdf->Cell(60, 0, $this->club, 0, 1, 'C', 0, '', 0);
+        if ($this->club->getLogo() <> '')
+        {
+            $imageLogoClub = sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_logo').DIRECTORY_SEPARATOR.$this->club->getLogo();
+            $this->pdf->Image($imageLogoClub, 85, $y-3, 10, 10, '', '', '', false, 300, '', false, false, 1);
+        }
 
         $this->pdf->SetFont('helvetica', 'BI', 6);
         $y = 238;
         $x = 106;
         $this->pdf->setXY($x, $y);
         $this->pdf->MultiCell(60, 0, "FEDERATION FRANÇAISE DES SPORTS DE TRAîNEAU DE SKI / VTT - JOËRING ET DE CANICROSS", 0, 'C');
+        $this->pdf->Image($this->image, 170, $y-1, 10, 10, '', '', '', false, 300, '', false, false, 1);
 
         //Bloc licencié en bas
         $this->pdf->SetFont('helvetica', 'B', 8);
@@ -200,7 +225,11 @@ class PrintLicence {
         $this->pdf->setXY($x, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(35, 0, "Certificat médical ou Attestation : ".format_date($this->oLicence->getDateMedical(), 'dd MMMM yyyy'), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($x, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(25, 0, "Renouvellement : ", 0, 1, 'L', 0, '', 0);
+        $renouvellement = "oui";
+        if ($this->oLicence->getIsNew()) {
+            $renouvellement = "non";
+        }
+        $this->pdf->Cell(25, 0, "Renouvellement : ".$renouvellement, 0, 1, 'L', 0, '', 0);
         //$this->caseCheck(!$this->oLicence->getIsNew(), 'oui', $x+24, $this->pdf->getY()-($yDep*4), 4);
 
         $x = 106;
