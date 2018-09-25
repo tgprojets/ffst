@@ -4,6 +4,7 @@ generator:
     model_class:           tbl_typelicence
     theme:                 admin
     css:                   admin
+    actions_base_class:    sfActions
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -15,51 +16,30 @@ generator:
     config:
       actions: ~
       fields:
-        code:
-          label: Code licence
         rank:
-          label: Ordre
+            label: Ordre
+        is_familly:
+            label: Famille
+        is_minor:
+            label: Mineur
+        tbl_grouplicence:
+            label: Groupe
+        id_group:
+            label: Groupe
       list:
-        title: Liste des types de licences
-        table_method: retrieveSortTypeLicenceList
-        display: [rank, code, lib, prix]
+        title: Liste des types de licence
+        display: [rank, lib, code, is_familly, is_minor, tbl_grouplicence]
         batch_actions: {}
         object_actions:
-          movedown:
-            label: 'Descencre'
-            params:
-              class: down_rank
-          moveup:
-            label: 'Monter'
-            params:
-              class: up_rank
           _edit: ~
           _delete:
             credentials: [admin]
       filter:
-        display: [code]
+        display: [id_group, code, lib]
       form:
-        fields:
-          code:
-            label: Code licence
-            help: requis
-          lib:
-            label: Libellé de la licence
-            help: requis
-          prix:
-            label: Prix de la licence
-            help: requis (en €)
-          description:
-            help: faculatif
-          is_familly:
-            label: Tarif réduit
-          is_minor:
-            label: Tarif junior
-          id_group:
-            label: Groupe de licence
-            help: Requis
-        display: [id_group, code, lib, prix, description, is_familly, is_minor]
       edit:
-        title: Edition du type de licence %%lib%%
+        title: Edition du type de licence "%%lib%%"
+        display: [lib, code, is_familly, is_minor, description, id_group, rank, prix]
       new:
-        title: Nouveau type de la licence
+        title: Nouveau type de licence
+        display: [lib, code, is_familly, is_minor, description, id_group, rank, prix]

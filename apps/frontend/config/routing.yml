@@ -1,6 +1,15 @@
 tbl_federation:
   class: sfDoctrineRouteCollection
   options:
+    model:                tbl_typelicence
+    module:               typelicence
+    prefix_path:          /typelicence
+    column:               id
+    with_wildcard_routes: true
+
+tbl_federation:
+  class: sfDoctrineRouteCollection
+  options:
     model:                tbl_federation
     module:               federation
     prefix_path:          /federation
