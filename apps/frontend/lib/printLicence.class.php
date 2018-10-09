@@ -187,8 +187,8 @@ class PrintLicence {
 
         //En tête du bloc
         $this->pdf->SetFont('helvetica', 'B', 8);
-        $y = 240;
-        $x = 19;
+        $y = 225;
+        $x = 27;
         $this->pdf->setXY($x, $y);
         $this->pdf->Cell(60, 0, $this->club, 0, 1, 'C', 0, '', 0);
         if ($this->club->getLogo() <> '')
@@ -198,22 +198,26 @@ class PrintLicence {
         }
 
         $this->pdf->SetFont('helvetica', 'BI', 6);
-        $y = 238;
-        $x = 106;
+        $y = 223;
+        $x = 113;
         $this->pdf->setXY($x, $y);
         $this->pdf->MultiCell(60, 0, "FEDERATION FRANÇAISE DES SPORTS DE TRAîNEAU DE SKI / VTT - JOËRING ET DE CANICROSS", 0, 'C');
-        $this->pdf->Image($this->image, 170, $y-1, 10, 10, '', '', '', false, 300, '', false, false, 1);
+        $this->pdf->Image($this->image, 178, $y-1, 10, 10, '', '', '', false, 300, '', false, false, 1);
 
         //Bloc licencié en bas
         $this->pdf->SetFont('helvetica', 'B', 8);
         $yDep = 1;
-        $x = 19;
-        $y = 250;
+        $x = 27;
+        $y = 235;
         $this->pdf->setXY($x, $y);
         $this->pdf->Cell(35, 0, "Licence saison ".Licence::getStartYearLicence()."/".Licence::getEndYearLicence(), 0, 1, 'L', 0, '', 0);
         $this->pdf->SetFont('helvetica', '', 8);
         $this->pdf->setXY($x, $this->pdf->getY()+$yDep);
-        $this->pdf->Cell(35, 0, "N° Licence : ".$this->oLicence->getNum(), 0, 1, 'L', 0, '', 0);
+        $international = "";
+        if ($this->oLicence->getInternational()) {
+            $international = " <international> ";
+        }
+        $this->pdf->Cell(45, 0, "N° Licence : ".$this->oLicence->getNum().$international, 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($x, $this->pdf->getY()+$yDep);
         $this->pdf->Cell(35, 0, "Délivré le : ".format_date($this->oLicence->getDateValidation(), 'dd/MM/yyyy'), 0, 1, 'L', 0, '', 0);
         $this->pdf->setXY($x, $this->pdf->getY()+$yDep);
@@ -232,8 +236,8 @@ class PrintLicence {
         $this->pdf->Cell(25, 0, "Renouvellement : ".$renouvellement, 0, 1, 'L', 0, '', 0);
         //$this->caseCheck(!$this->oLicence->getIsNew(), 'oui', $x+24, $this->pdf->getY()-($yDep*4), 4);
 
-        $x = 106;
-        $y = 250;
+        $x = 113;
+        $y = 235;
         $this->pdf->SetFont('helvetica', '', 8);
         $this->pdf->setXY($x, $y+$yDep);
         $this->pdf->Cell(35, 0, "Nom : ".$this->oProfil->getLastName(), 0, 1, 'L', 0, '', 0);
@@ -260,9 +264,9 @@ class PrintLicence {
         }
 
         //Image
-        $this->pdf->Image($this->imageProfil, 160, $y, 20, 20, '', '', '', false, 300, '', false, false, 1);
+        $this->pdf->Image($this->imageProfil, 168, $y, 20, 20, '', '', '', false, 300, '', false, false, 1);
 
-        $this->getFooter(19, $this->pdf->getY()+8);
+        $this->getFooter(27, $this->pdf->getY()+28);
 
         // $yPos = $this->pdf->getY();
         // $this->pdf->setXY($this->pdf->getX()+35, $yPos);
