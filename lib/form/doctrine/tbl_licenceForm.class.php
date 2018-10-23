@@ -326,6 +326,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->validatorSchema['image'] =          new sfValidatorFile(array(
       'required'   => $this->isNew()?true:false,
       'mime_types' => 'web_images',
+      'max_size'   => 1024000,
       'path'       => sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR,
     ));
     if ($this->isNew()) {
@@ -531,7 +532,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           return $values;
         } else {
           // Login pas dispo
-          throw new sfValidatorError($validator, 'Ce licencié existe déjà.');
+          throw new sfValidatorError($validator, 'STOP : Ce licencié existe déjà. Contactez l\'Administrateur !');
         }
       } else {
         $nbr = Doctrine_Query::create()
@@ -547,7 +548,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
           return $values;
         } else {
           // Login pas dispo
-          throw new sfValidatorError($validator, 'Ce licencié existe déjà.');
+          throw new sfValidatorError($validator, 'STOP : Ce licencié existe déjà. Contactez l\'administrateur !');
         }
       }
     }
