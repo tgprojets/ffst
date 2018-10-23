@@ -1,7 +1,7 @@
 <td>
   <ul class="sf_admin_td_actions">
     <?php if (!$sf_user->isLigue() && $tbl_licence->getIsCancel() == false): ?>
-      <?php if ($tbl_licence->getDateValidation() != null && $sf_user->hasCredential(array(0 => array(0 => 'account_club', 1 => 'licence')))): ?>
+      <?php if ($tbl_licence->getTblProfil()->getImage() != null && $tbl_licence->getDateValidation() != null && $sf_user->hasCredential(array(0 => array(0 => 'account_club', 1 => 'licence')))): ?>
         <li>
             <?php echo link_to('Imprimer', 'licence/ListImprimer?id='.$tbl_licence->getId(), array('class' => 'print_icon')) ?>
         </li>
