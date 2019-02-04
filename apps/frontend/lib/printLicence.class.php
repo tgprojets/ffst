@@ -74,6 +74,9 @@ class PrintLicence {
 		{
 			$this->getMedical();
 		}
+        $this->oLicence->setCopie($this->oLicence->getCopie()+1);
+        $this->oLicence->save();
+
         $this->pdf->Output(sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.'licence.pdf', 'FD');
         throw new sfStopException();
     }
@@ -159,8 +162,13 @@ class PrintLicence {
             $this->pdf->Cell(35, 0, "Objet : Votre licence Saison ".Licence::getStartYearLicence()."/".Licence::getEndYearLicence(), 0, 1, 'L', 0, '', 0);
             $this->pdf->setXY(15, $this->pdf->getY()+$yDep);
             $this->pdf->Cell(35, 0, "Numéro de licence : ".$this->oLicence->getNum(), 0, 1, 'L', 0, '', 0);
-			//$this->pdf->setXY(15, $this->pdf->getY()+$yDep);
-            //$this->pdf->Cell(35, 0, "N° Edition : "."", 0, 1, 'L', 0, '', 0);
+			$this->pdf->setXY(15, $this->pdf->getY()+$yDep);
+            if ($this->oLicence->getCopie() > 0) {
+                // code...
+                $this->pdf->Cell(35, 0, "Edition : Copie ".$this->oLicence->getCopie(), 0, 1, 'L', 0, '', 0);
+            } else {
+                $this->pdf->Cell(35, 0, "Edition : Originale", 0, 1, 'L', 0, '', 0);
+            }
             $this->pdf->setXY(15, $this->pdf->getY()+($yDep*7));	// ($yDep*3)
 
             $this->pdf->Cell(35, 0, $genre.",", 0, 1, 'L', 0, '', 0);
@@ -644,12 +652,12 @@ class PrintLicence {
     {
 		if ($this->lDocument = true)
 		{
-			$cLibelle = "15300 Neussargues En Pinatelle - Mail licences : ".Licence::getParam("email_ffst");		// New line
+			$cLibelle = Licence::getParam("pdf_address_footer")." - Mail licences : ".Licence::getParam("email_ffst");		// New line
 			$this->pdf->setXY($x, $y);
 			$this->pdf->SetFont('times', 'I', 8);
-			$this->pdf->Cell(80, 0, "FFST - Cz M. Antoine LEMOINE Les Lacous, Chavagnac", 0, 1, 'C', 0, '', 0);		// 70
-			$this->pdf->setXY($x, $y+2);	// 80, 0
-			$this->pdf->Cell(80, 0, $cLibelle, 0, 1, 'C', 0, '', 0);		// 70 - 'R'
+            $this->pdf->Cell(80, 0, $cLibelle, 0, 1, 'C', 0, '', 0);		// 70 - 'R'
+            $this->pdf->setXY($x, $y+3);	// 80, 0
+			$this->pdf->Cell(80, 0, "FFST - ".Licence::getParam("pdf_nom_footer"), 0, 1, 'C', 0, '', 0);		// 70
         } else {
 			$this->pdf->setY(175);
 			$this->pdf->SetFont('helvetica', 'B', 8);

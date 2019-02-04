@@ -259,9 +259,13 @@ class licenceActions extends autoLicenceActions
 
       $oLicence = $this->getRoute()->getObject();
       if ($oLicence->getDateValidation() != null) {
-        $oPdf = new PrintLicence($oLicence);
+          if (Licence::getParam('modele_impression') == '1') {
+              // code...
+              $oPdf = new PrintLicence($oLicence);
+          } else {
+              $oPdf = new PrintLicenceOld($oLicence);
+          }
         $oPdf->createLic();
-
         $this->getUser()->setFlash('notice', 'Impression de la licence: '.$oLicence->getTblProfil());
       } else {
         $this->getUser()->setFlash('error', 'Licence pas valide: '.$oLicence->getTblProfil());
