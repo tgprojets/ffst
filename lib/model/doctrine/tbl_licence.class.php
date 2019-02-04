@@ -64,4 +64,14 @@ class tbl_licence extends Basetbl_licence
             return null;
         }
     }
+
+    public function isValide()
+    {
+        $profil = $this->getTblProfil();
+        $address = $profil->getTblAddress();
+        if ($profil->getImage() && $profil->getEmail() && $profil->getLastName() && $profil->getFirstName() && $profil->getBirthday() && $address->getAddress1() && $address->getIdCodepostaux()) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -34,6 +34,16 @@ class mainActions extends sfActions
       $oLicence = $oProfil->getTblLicence()->getLast();
 
       $oAddress = $oProfil->getTblAddress();
+      $club = $this->getUser()->getClub();
+      if ($club) {
+          if ($club != $oLicence->getTblClub()) {
+              $jsonresponse['profil']['is_other_club'] = true;
+          } else {
+              $jsonresponse['profil']['is_other_club'] = false;
+          }
+      } else {
+          $jsonresponse['profil']['is_other_club'] = false;
+      }
       $jsonresponse['profil']['email'] = $oProfil->getEmail();
       $jsonresponse['profil']['sexe'] = $oProfil->getSexe();
       $jsonresponse['profil']['last_name'] = $oProfil->getLastName();
@@ -88,13 +98,13 @@ class mainActions extends sfActions
     if (strlen($keyword) <= 2) {
       return $this->renderText(json_encode(array()));
     }
-    if ($club) {
-        $oProfils = Doctrine::getTable('tbl_profil')->findByKeywordClub($keyword, $club);
-    } else {
-        $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
-    }
-    $list = array();
+    // if ($club) {
+    //     $oProfils = Doctrine::getTable('tbl_profil')->findByKeywordClub($keyword, $club);
+    // } else {
+    // }
+    $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
     $sYearLicence = Licence::getDateLicence();
+    $list = array();
     foreach($oProfils as $oProfil)
     {
       $licence = Doctrine::getTable('tbl_licence')->findByProfil($sYearLicence, $oProfil->getId());

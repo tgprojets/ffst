@@ -48,34 +48,41 @@
                     alert(sData.error);
                   } else {
                     profil = sData.profil;
-                    $('#tbl_licence_email').val(profil.email);
-                    if (profil.sexe == 'H') {
-                        $('#tbl_licence_sexe_H').attr('checked', true);
-                    } else {
-                        $('#tbl_licence_sexe_F').attr('checked', true);
+                    r = true;
+                    if (profil.is_other_club) {
+                        r = confirm('Ce licencié est dans un autre club souhaitez vous le transférer vers votre club');
                     }
-                    $('#tbl_licence_sexe').val(profil.sexe);
-                    $('#tbl_licence_last_name').val(profil.last_name);
-                    $('#tbl_licence_first_name').val(profil.first_name);
-                    $('#tbl_licence_birthday_day').val(profil.birthday_day);
-                    $('#tbl_licence_birthday_month').val(profil.birthday_month);
-                    $('#tbl_licence_birthday_year').val(profil.birthday_year);
+                    if (r == true) {
+                        $('#tbl_licence_email').val(profil.email);
+                        if (profil.sexe == 'H') {
+                            $('#tbl_licence_sexe_H').attr('checked', true);
+                        } else {
+                            $('#tbl_licence_sexe_F').attr('checked', true);
+                        }
+                        $('#tbl_licence_sexe').val(profil.sexe);
+                        $('#tbl_licence_last_name').val(profil.last_name);
+                        $('#tbl_licence_first_name').val(profil.first_name);
+                        $('#tbl_licence_birthday_day').val(profil.birthday_day);
+                        $('#tbl_licence_birthday_month').val(profil.birthday_month);
+                        $('#tbl_licence_birthday_year').val(profil.birthday_year);
 
-                    $('#tbl_licence_id_codepostaux').val(profil.id_codepostaux);
-                    $('#autocomplete_tbl_licence_id_codepostaux').val(profil.ville);
-                    $('#tbl_licence_address1').val(profil.address1);
-                    $('#tbl_licence_address2').val(profil.address2);
-                    $('#tbl_licence_tel').val(profil.tel);
-                    $('#tbl_licence_gsm').val(profil.gsm);
-                    $('#tbl_licence_fax').val(profil.fax);
-                    $('#tbl_licence_id_category').val(profil.id_category);
-                    $('#tbl_licence_id_typelicence').val(profil.id_typelicence);
-                    if (profil.international == 1) { $('#tbl_licence_international').attr('checked', true); }
-                    if (profil.race_nordique == 1) { $('#tbl_licence_race_nordique').attr('checked', true); }
-                    if (profil.is_familly == 1) { $('#tbl_licence_is_familly').attr('checked', true); }
-                    if (profil.cnil == 1) { $('#tbl_licence_cnil').attr('checked', true); }
-                    $('#tbl_licence_is_checked').val('1');
-
+                        $('#tbl_licence_id_codepostaux').val(profil.id_codepostaux);
+                        $('#autocomplete_tbl_licence_id_codepostaux').val(profil.ville);
+                        $('#tbl_licence_address1').val(profil.address1);
+                        $('#tbl_licence_address2').val(profil.address2);
+                        $('#tbl_licence_tel').val(profil.tel);
+                        $('#tbl_licence_gsm').val(profil.gsm);
+                        $('#tbl_licence_fax').val(profil.fax);
+                        $('#tbl_licence_id_category').val(profil.id_category);
+                        $('#tbl_licence_id_typelicence').val(profil.id_typelicence);
+                        if (profil.international == 1) { $('#tbl_licence_international').attr('checked', true); }
+                        if (profil.race_nordique == 1) { $('#tbl_licence_race_nordique').attr('checked', true); }
+                        if (profil.is_familly == 1) { $('#tbl_licence_is_familly').attr('checked', true); }
+                        if (profil.cnil == 1) { $('#tbl_licence_cnil').attr('checked', true); }
+                        $('#tbl_licence_is_checked').val('1');
+                    } else {
+                        cancelProfil();
+                    }
                   }
                 },
                 error: function (sData) {

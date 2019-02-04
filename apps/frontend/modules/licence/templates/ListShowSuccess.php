@@ -17,10 +17,6 @@
                 <label for="">Date anniversaire</label>
                 <div class="text_show"><?php echo format_date($oProfil->getBirthday(), 'dd MMMM yyyy') ?></div>
             </div>
-            <div class="sf_admin_form_row">
-                <label for="">Email</label>
-                <div class="text_show"><?php echo $oProfil->getEmail() ?></div>
-            </div>
         </fieldset>
         <fieldset id="sf_fieldset_none">
             <h2>Adresse et coordonnées</h2>
