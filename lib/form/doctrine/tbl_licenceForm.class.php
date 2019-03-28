@@ -32,6 +32,15 @@ class tbl_licenceForm extends Basetbl_licenceForm
         if ($aValues['id_profil'] != "" && $aValues['is_checked'] == 1) {
           $oProfil = Doctrine::getTable('tbl_profil')->find($aValues['id_profil']);
           $bIsNew = false;
+        } elseif ($aValues['transfert']) {
+          $profil = Doctrine_Query::create()
+            ->from('tbl_profil p')
+            ->where('upper(p.first_name) LIKE ?', mb_strtoupper($aValues['first_name']).'%')
+            ->andWhere('upper(p.last_name) LIKE ?', mb_strtoupper($aValues['last_name']).'%')
+            ->andWhere('p.birthday = ?', $aValues['birthday'])
+            ->execute();
+          $oProfil = $profil[0];
+          $bIsNew = false;
         } else {
           $oProfil = new tbl_profil();
           $bIsNew = true;
@@ -217,6 +226,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
           'renderer_options' => array('model' => 'tbl_codepostaux', 'url' => sfContext::getInstance()->getController()->genUrl('@ajax_getCitys'), 'config' => "{max: 20}"),
 
       ));
+      if ($this->isNew()) {
+          $this->widgetSchema['transfert']            = new sfWidgetFormInputCheckbox();
+      }
       if (!$this->isNew() && $this->getObject()->getDateValidation() != null && $this->bClub)
       {
         $this->widgetSchema['last_name']                 = new sfWidgetFormInputHidden();
@@ -330,8 +342,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
       'path'       => sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR,
     ));
     if ($this->isNew()) {
-      $this->setValidator('id_profil', new sfValidatorString(array('required' => false)));
+      $this->setValidator('id_profil',  new sfValidatorString(array('required' => false)));
       $this->setValidator('is_checked', new sfValidatorString(array('required' => false)));
+      $this->setValidator('transfert',  new sfValidatorBoolean(array('required' => false)));
     }
     $this->validatorSchema->setPostValidator(new sfValidatorAnd(
           array(
@@ -343,6 +356,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
             new sfValidatorCallback(array('callback'=> array($this, 'checkFamilly'))),
             new sfValidatorCallback(array('callback'=> array($this, 'checkCountry'))),
             new sfValidatorCallback(array('callback'=> array($this, 'checkDateMedical'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkTransfert'))),
      ))
     );
 
@@ -518,6 +532,9 @@ class tbl_licenceForm extends Basetbl_licenceForm
     {
       return $values;
     }
+    if ($values['transfert']) {
+      return $values;
+    }
     if (! empty($values['last_name']) && ! empty($values['first_name']) && ! empty($values['birthday'])) {
       if ($this->isNew() && $values['is_checked'] == 0) {
         $nbr = Doctrine_Query::create()
@@ -672,5 +689,66 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
     }
     return $values;
+  }
+
+  public function checkTransfert($validator, $values)
+  {
+      if ($this->isNew()) {
+          // Traitement
+          if ($values['transfert']) {
+              if ($values['id_profil'] != "") {
+                  throw new sfValidatorError($validator, 'Impossible de transférer par rapport un profil sélectionné.');
+              } else {
+                $profil = Doctrine_Query::create()
+                  ->from('tbl_profil p')
+                  ->where('upper(p.first_name) LIKE ?', mb_strtoupper($values['first_name']).'%')
+                  ->andWhere('upper(p.last_name) LIKE ?', mb_strtoupper($values['last_name']).'%')
+                  ->andWhere('p.birthday = ?', $values['birthday'])
+                  ->execute();
+                if (count($profil) > 0) {
+                  $profilfirst = $profil[0];
+                  if (!$profilfirst->getLastClub()) {
+                    throw new sfValidatorError($validator, 'Ce profil n\'a pas de club.');
+                  } else {
+                    if ($profilfirst->getLastClub()->getId() == $values['id_club']) {
+                      throw new sfValidatorError($validator, 'Ce profil existe dans ce club (désactivez le transfert et sélectionnez le licencié).');
+                    }
+                  }
+                } else {
+                   throw new sfValidatorError($validator, 'Ce profil n\'existe pas pour le transfert.');
+                }
+
+                // Cas du transfert
+                // Effectuer une recherche en fonction du nom et de la date de naissance
+                // Profil id existant => erreur
+
+              }
+          } else {
+              // Cas normal
+              // Si profil id
+              if ($values['id_profil'] == "") {
+                // Si pas profil id : effectuer une recherche en fonction du nom et de la date de naissance
+                $profil = Doctrine_Query::create()
+                  ->from('tbl_profil p')
+                  ->where('upper(p.first_name) LIKE ?', mb_strtoupper($values['first_name']).'%')
+                  ->andWhere('upper(p.last_name) LIKE ?', mb_strtoupper($values['last_name']).'%')
+                  ->andWhere('p.birthday = ?', $values['birthday'])
+                  ->execute();
+                if (count($profil) > 0) {
+                  $profilFirst = $profil[0];
+                  // var_dump($profilFirst->getLastClub()->getId());
+                  // var_dump($values['id_club']);
+                  // die();
+                  if ($profilFirst->getLastClub()->getId() == $values['id_club']) {
+                    throw new sfValidatorError($validator, 'Ce profil existe dans ce club (Rechercher le profil).');
+                  } else {
+                    throw new sfValidatorError($validator, 'Ce profil existe dans un autre club (activer le transfert).');
+                  }
+                }
+              }
+          }
+
+      }
+      return $values;
   }
 }

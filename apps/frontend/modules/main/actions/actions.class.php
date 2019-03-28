@@ -98,11 +98,11 @@ class mainActions extends sfActions
     if (strlen($keyword) <= 2) {
       return $this->renderText(json_encode(array()));
     }
-    // if ($club) {
-    //     $oProfils = Doctrine::getTable('tbl_profil')->findByKeywordClub($keyword, $club);
-    // } else {
-    // }
-    $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
+    if ($club) {
+        $oProfils = Doctrine::getTable('tbl_profil')->findByKeywordClub($keyword, $club);
+    } else {
+        $oProfils = Doctrine::getTable('tbl_profil')->findByKeyword($keyword);
+    }
     $sYearLicence = Licence::getDateLicence();
     $list = array();
     foreach($oProfils as $oProfil)

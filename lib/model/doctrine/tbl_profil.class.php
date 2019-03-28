@@ -35,6 +35,20 @@ class tbl_profil extends Basetbl_profil
       }
       return '';
     }
+    public function getLastClub()
+    {
+      $oLicences = $this->getTblLicence();
+      $maxLicence = 0;
+      $club = null;
+      foreach($oLicences as $oLicence)
+      {
+        if ($oLicence->getYearLicence() > $maxLicence) {
+          $maxLicence = $oLicence->getYearLicence();
+          $club = $oLicence->getTblClub();
+        }
+      }
+      return $club;
+    }
     public function getLastLicenceValide()
     {
       $oLicences = $this->getTblLicence();

@@ -171,7 +171,8 @@ tbl_licence:
     firstname_doctor:  { type: string(50) }
     rpps:              { type: string(11) }
     is_qs:             { type: boolean, default: false }
-    copie:             { type: integer, default: 0 } 
+    copie:             { type: integer, default: 0 }
+    transfert:         { type: boolean, default: false }
   relations:
     sfGuardUser:       { onDelete: CASCADE, onUpdate: CASCADE, local: id_user, foreign: id, foreignAlias: tbl_licence }
     tbl_profil:        { onDelete: CASCADE, onUpdate: CASCADE, local: id_profil, foreign: id, foreignAlias: tbl_licence }
