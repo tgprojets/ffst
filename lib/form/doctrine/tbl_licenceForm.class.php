@@ -453,6 +453,26 @@ class tbl_licenceForm extends Basetbl_licenceForm
       }
 
     }
+    // Cas de transfert
+    if ($values['transfert']) {
+        $profil = Doctrine_Query::create()
+          ->from('tbl_profil p')
+          ->where('upper(p.first_name) LIKE ?', mb_strtoupper($values['first_name']).'%')
+          ->andWhere('upper(p.last_name) LIKE ?', mb_strtoupper($values['last_name']).'%')
+          ->andWhere('p.birthday = ?', $values['birthday'])
+          ->execute();
+        if (count($profil) > 0) {
+            $nbr = Doctrine_Query::create()
+                ->from('tbl_licence l')
+                ->where("l.id_profil = ?", $profil[0]['id'])
+                ->andWhere("l.year_licence = ?", Licence::getDateLicence())
+                ->andWhere("l.is_cancel = ?", false)
+                ->count();
+            if ($nbr>0) {
+              throw new sfValidatorError($validator, 'Ce licencié a déjà une licence.');
+            }
+        }
+    }
     return $values;
   }
 
