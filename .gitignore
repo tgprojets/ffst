@@ -13,3 +13,4 @@ web/sfTCPDFPlugin
 Capfile
 .tags
 /config/databases.yml
+.history/

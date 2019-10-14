@@ -31,6 +31,14 @@ generator:
         display: [rank, lib, code, is_familly, is_minor, tbl_grouplicence]
         batch_actions: {}
         object_actions:
+          movedown:
+            label: 'Descencre'
+            params:
+              class: down_rank
+          moveup:
+            label: 'Monter'
+            params:
+              class: up_rank
           _edit: ~
           _delete:
             credentials: [admin]
