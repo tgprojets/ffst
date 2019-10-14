@@ -54,6 +54,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
         //Calcul num licence
         $oClub = Doctrine::getTable('tbl_club')->find($aValues['id_club']);
+
         $nMember = Doctrine::getTable('tbl_licence')->countLicenceClub($aValues['id_club'], Licence::getDateLicence());
         $nMember = str_pad($nMember,3,"0",STR_PAD_LEFT);
         $sNum = $oClub->getNum().'.'.$nMember.'.'.Licence::getDateLicence();
@@ -336,7 +337,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->setValidator('cp_foreign',          new sfValidatorString(array('required' => false)));
     $this->setValidator('id_familly',          new sfValidatorString(array('required' => false)));
     $this->validatorSchema['image'] =          new sfValidatorFile(array(
-      'required'   => $this->isNew()?true:false,
+      'required'   => false,
       'mime_types' => 'web_images',
       'max_size'   => 1024000,
       'path'       => sfConfig::get('sf_upload_dir').DIRECTORY_SEPARATOR.sfConfig::get('app_images_profil').DIRECTORY_SEPARATOR,
@@ -349,6 +350,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     $this->validatorSchema->setPostValidator(new sfValidatorAnd(
           array(
             new sfValidatorCallback(array('callback'=> array($this, 'checkNameBirthday'))),
+            new sfValidatorCallback(array('callback'=> array($this, 'checkPhoto'))),
             new sfValidatorCallback(array('callback'=> array($this, 'checkYearLicence'))),
             new sfValidatorCallback(array('callback'=> array($this, 'checkSaisieClub'))),
             new sfValidatorCallback(array('callback'=> array($this, 'checkCategory'))),
@@ -612,6 +614,8 @@ class tbl_licenceForm extends Basetbl_licenceForm
         ->andWhere("l.id_profil = ?", $values['id_familly'])
         ->andWhere("l.year_licence = ?", Licence::getDateLicence())
         ->andWhere("tl.is_familly = ?", false)
+        ->andWhere("l.is_brouillon = ?", false)
+        ->andWhere("l.is_cancel = ?", false)
         ->count();
         if ($nbr==0) {
           throw new sfValidatorError($validator, 'Le licencié n\'a pas de licence classique.');
@@ -770,5 +774,21 @@ class tbl_licenceForm extends Basetbl_licenceForm
 
       }
       return $values;
+  }
+  public function checkPhoto($validator, $values)
+  {
+    if ($this->isNew()) {
+      if ($values['id_profil'] != "") {
+        $oProfil = Doctrine::getTable('tbl_profil')->find($values['id_profil']);
+        if (!$oProfil->getImage()) {
+          throw new sfValidatorError($validator, 'Image requis !');
+        }
+      } else {
+        if (!$values['image']) {
+          throw new sfValidatorError($validator, 'Image requis !');
+        }
+      }
+    }
+    return $values;
   }
 }

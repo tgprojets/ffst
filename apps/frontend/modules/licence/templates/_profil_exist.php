@@ -36,6 +36,7 @@
         if ($('#tbl_licence_id_profil').val() != '') {
             nIdProfil = $('#tbl_licence_id_profil').val();
             nIdClub   = $('#tbl_licence_id_club').val();
+            
             //Ajax on rempli les champs
             $.ajax({
                 type: "POST",
@@ -62,6 +63,8 @@
                         $('#tbl_licence_sexe').val(profil.sexe);
                         $('#tbl_licence_last_name').val(profil.last_name);
                         $('#tbl_licence_first_name').val(profil.first_name);
+                        // $('#tbl_licence_image').val(profil.image);
+
                         $('#tbl_licence_birthday_day').val(profil.birthday_day);
                         $('#tbl_licence_birthday_month').val(profil.birthday_month);
                         $('#tbl_licence_birthday_year').val(profil.birthday_year);
@@ -79,10 +82,13 @@
                         if (profil.race_nordique == 1) { $('#tbl_licence_race_nordique').attr('checked', true); }
                         if (profil.is_familly == 1) { $('#tbl_licence_is_familly').attr('checked', true); }
                         if (profil.cnil == 1) { $('#tbl_licence_cnil').attr('checked', true); }
+                        $('#tbl_licence_lastname_doctor').val(profil.lastname_doctor);
+                        $('#tbl_licence_firstname_doctor').val(profil.firstname_doctor);
+                        $('#tbl_licence_rpps').val(profil.rpps);
                         $('#tbl_licence_is_checked').val('1');
                     } else {
                         cancelProfil();
-                    }
+                    }                        
                   }
                 },
                 error: function (sData) {

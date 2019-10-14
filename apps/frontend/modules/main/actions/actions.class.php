@@ -48,6 +48,7 @@ class mainActions extends sfActions
       $jsonresponse['profil']['sexe'] = $oProfil->getSexe();
       $jsonresponse['profil']['last_name'] = $oProfil->getLastName();
       $jsonresponse['profil']['first_name'] = $oProfil->getFirstName();
+      $jsonresponse['profil']['image'] = $oProfil->getImage();
       $Birthday  = $oProfil->getBirthday();
       $jsonresponse['profil']['birthday_day'] = (int) substr($Birthday, 8, 2);
       $jsonresponse['profil']['birthday_month'] = (int) substr($Birthday, 5, 2);
@@ -67,6 +68,9 @@ class mainActions extends sfActions
           $jsonresponse['profil']['race_nordique'] = $oLicence->getRaceNordique();
           $jsonresponse['profil']['is_familly'] = $oLicence->getIsFamilly();
           $jsonresponse['profil']['cnil'] = $oLicence->getCnil();
+          $jsonresponse['profil']['lastname_doctor'] = $oLicence->getLastnameDoctor();
+          $jsonresponse['profil']['firstname_doctor'] = $oLicence->getFirstnameDoctor();
+          $jsonresponse['profil']['rpps'] = $oLicence->getRpps();
       }
 
       return $this->renderText(json_encode($jsonresponse));
