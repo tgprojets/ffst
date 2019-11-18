@@ -68,8 +68,23 @@ class mainActions extends sfActions
           $jsonresponse['profil']['race_nordique'] = $oLicence->getRaceNordique();
           $jsonresponse['profil']['is_familly'] = $oLicence->getIsFamilly();
           $jsonresponse['profil']['cnil'] = $oLicence->getCnil();
-          $jsonresponse['profil']['lastname_doctor'] = $oLicence->getLastnameDoctor();
-          $jsonresponse['profil']['firstname_doctor'] = $oLicence->getFirstnameDoctor();
+          if ($oLicence->getDateMedical()) {
+              $dateMedical = new \DateTime($oLicence->getDateMedical());
+              $dateDiff = $dateMedical->diff(new \DateTime());
+              
+              if ($dateDiff->y > 3 || ($dateDiff->y == 3 && ($dateDiff->m >=1 || $dateDiff->d >= 1))) {
+                  $jsonresponse['profil']['valide_doctor'] = false;
+                } else {
+                    $jsonresponse['profil']['valide_doctor'] = true;
+                    $jsonresponse['profil']['lastname_doctor'] = $oLicence->getLastnameDoctor();
+                    $jsonresponse['profil']['firstname_doctor'] = $oLicence->getFirstnameDoctor();
+                    $jsonresponse['profil']['datemedical_day'] = $dateMedical->format('d');
+                    $jsonresponse['profil']['datemedical_month'] = $dateMedical->format('m');
+                    $jsonresponse['profil']['datemedical_year'] = $dateMedical->format('Y');
+                }
+          } else {
+              $jsonresponse['profil']['valide_doctor'] = false;
+          }
           $jsonresponse['profil']['rpps'] = $oLicence->getRpps();
       }
 
