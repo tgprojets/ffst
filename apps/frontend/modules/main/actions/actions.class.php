@@ -78,8 +78,8 @@ class mainActions extends sfActions
                     $jsonresponse['profil']['valide_doctor'] = true;
                     $jsonresponse['profil']['lastname_doctor'] = $oLicence->getLastnameDoctor();
                     $jsonresponse['profil']['firstname_doctor'] = $oLicence->getFirstnameDoctor();
-                    $jsonresponse['profil']['datemedical_day'] = $dateMedical->format('d');
-                    $jsonresponse['profil']['datemedical_month'] = $dateMedical->format('m');
+                    $jsonresponse['profil']['datemedical_day'] = (int)$dateMedical->format('d');
+                    $jsonresponse['profil']['datemedical_month'] = (int)$dateMedical->format('m');
                     $jsonresponse['profil']['datemedical_year'] = $dateMedical->format('Y');
                 }
           } else {
@@ -163,8 +163,8 @@ class mainActions extends sfActions
     foreach($oProfils as $oProfil)
     {
       $licence = Doctrine::getTable('tbl_licence')->findByProfil($sYearLicence, $oProfil->getId());
-        if ($licence ) {
-
+        if ($licence && $licence->getIsFamilly() == false && $licence->getIsBrouillon() == false && $licence->getIsCancel() == false && $licence->getDateValidation()) {
+        
           $Birthday  = $oProfil->getBirthday();
           $sBirthday = substr($Birthday, 8, 2).'/'.substr($Birthday, 5, 2).'/'.substr($Birthday, 0, 4);
           $list[$oProfil->getId()] = sprintf('%s %s %s', $oProfil->getLastName(), $oProfil->getFirstName(), $sBirthday);

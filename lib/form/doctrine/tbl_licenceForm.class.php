@@ -97,13 +97,16 @@ class tbl_licenceForm extends Basetbl_licenceForm
                    ->setCityForeign($aValues['city_foreign'])
                    ->save();
         }
+        
+        if ($aValues['id_profil'] == "" || $aValues['image']) {
+            $oProfil->setImage($aValues['image']);
+        }
         $oProfil->setEmail($aValues['email'])
                 ->setFirstName($aValues['first_name'])
                 ->setLastName($aValues['last_name'])
                 ->setSexe($aValues['sexe'])
                 ->setBirthday($aValues['birthday'])
                 ->setIdAddress($oAddress->getId())
-                ->setImage($aValues['image'])
                 ->save();
       }
       $oLicence->setNum($sNum)
@@ -780,7 +783,7 @@ class tbl_licenceForm extends Basetbl_licenceForm
     if ($this->isNew()) {
       if ($values['id_profil'] != "") {
         $oProfil = Doctrine::getTable('tbl_profil')->find($values['id_profil']);
-        if (!$oProfil->getImage()) {
+        if (!$oProfil->getImage() && !$values['image']) {
           throw new sfValidatorError($validator, 'Image requis !');
         }
       } else {
